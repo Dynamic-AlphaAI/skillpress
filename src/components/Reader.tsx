@@ -117,12 +117,12 @@ interface PageCtx {
   onInstall: () => void;
 }
 
-function licenseLine(license: string) {
-  if (license === "Apache-2.0") return "Text © Anthropic, PBC. Licensed under the Apache License, Version 2.0.";
-  if (license === "MIT") return "Text © Anthropic, PBC. Licensed under the MIT License.";
+function licenseLine(license: string, holder: string) {
+  if (license === "Apache-2.0") return `Text © ${holder}. Licensed under the Apache License, Version 2.0.`;
+  if (license === "MIT") return `Text © ${holder}. Licensed under the MIT License.`;
   if (license === "Unspecified")
-    return "Text © Anthropic, PBC. This skill ships without its own license file; see the source repository for terms.";
-  return "Text © Anthropic, PBC. See LICENSE.txt in the source repository for terms.";
+    return `Text © ${holder}. This skill ships without its own license file; see the source repository for terms.`;
+  return `Text © ${holder}. See the license in the source repository for terms.`;
 }
 
 function SideView({ side, index, ctx }: { side: Side; index: number; ctx: PageCtx }) {
@@ -156,10 +156,17 @@ function SideView({ side, index, ctx }: { side: Side; index: number; ctx: PageCt
             <h1 className={s.titleH}>{d.title}</h1>
             <p className={s.titleSub}>{d.subtitle}</p>
           </div>
-          <div className={s.titleAuthor}>Anthropic</div>
+          <div className={s.titleAuthor}>{book.source.author}</div>
           <div className={s.imprint}>
             <span>Skill Press</span>
-            <span>No. {String(book.rank).padStart(2, "0")}</span>
+            {d.series ? (
+              <span>
+                {d.series}
+                {d.volume ? ` · Vol. ${d.volume}` : ""}
+              </span>
+            ) : (
+              <span>No. {String(book.rank).padStart(2, "0")}</span>
+            )}
           </div>
         </div>
       );
@@ -171,10 +178,13 @@ function SideView({ side, index, ctx }: { side: Side; index: number; ctx: PageCt
             <br />
             {d.subtitle}
           </p>
-          <p>{licenseLine(book.license)}</p>
+          <p>{licenseLine(book.license, book.source.copyright)}</p>
           <p>
-            Reproduced from <em>{library.source.repo}</em>, <span className={s.mono}>skills/{book.slug}/SKILL.md</span>, at
-            commit <span className={s.mono}>{library.source.commit.slice(0, 7)}</span> ({fmtDate(library.source.commitDate)}).
+            Reproduced from <em>{book.source.repo}</em>,{" "}
+            <span className={s.mono}>
+              {book.source.path}/{book.slug}/SKILL.md
+            </span>
+            , at commit <span className={s.mono}>{book.source.commit.slice(0, 7)}</span> ({fmtDate(book.source.commitDate)}).
           </p>
           <p>
             Skill name: <span className={s.mono}>{book.skillName}</span>
@@ -242,7 +252,7 @@ function SideView({ side, index, ctx }: { side: Side; index: number; ctx: PageCt
           <div className={s.colophonInstall}>
             <div className={s.epiLabel}>Install this skill</div>
             <code>
-              npx skills add {library.source.url}
+              npx skills add {book.source.url}
               <br />
               --skill {book.slug}
             </code>

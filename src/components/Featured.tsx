@@ -33,8 +33,8 @@ function ridge(seed: number, base: number, amp: number) {
 /** A painted landscape — sky, haze, receding ridges — in the book's palette. */
 function Backdrop({ book }: { book: Book }) {
   const d = book.design;
-  const id = `bd-${book.slug}`;
-  const seed = hashString(book.slug) % 997;
+  const id = `bd-${book.id}`;
+  const seed = hashString(book.id) % 997;
   const paper = "#f2ede2";
   // Pale covers would vanish into pale hills, so tint the land with the accent instead.
   const land = luminance(d.bg) > 0.55 ? mix(d.accent, d.bg, 0.25) : d.bg;
@@ -124,7 +124,7 @@ export function Featured({
     <div ref={ref} className={s.stage} {...handlers}>
       <div className={s.frame}>
         {layers.map((i, n) => (
-          <div key={books[i].slug} className={`${s.layer} ${n === layers.length - 1 && layers.length > 1 ? s.enter : ""}`}>
+          <div key={books[i].id} className={`${s.layer} ${n === layers.length - 1 && layers.length > 1 ? s.enter : ""}`}>
             <Backdrop book={books[i]} />
           </div>
         ))}
@@ -138,7 +138,7 @@ export function Featured({
           aria-label={`Open ${book.design.title}`}
         >
           <span className={s.shadow} />
-          <div key={book.slug} className={s.arrive}>
+          <div key={book.id} className={s.arrive}>
             <div className={s.bob}>
               <Book3D book={book} w={W} h={H} d={D} className={s.book} />
             </div>

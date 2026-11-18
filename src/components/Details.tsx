@@ -62,8 +62,8 @@ function CopyBlock({ text, label, kind }: { text: string; label: string; kind: s
   );
 }
 
-function GetSkill({ book, library }: { book: Book; library: Library }) {
-  const methods = installMethods(book, library);
+function GetSkill({ book }: { book: Book }) {
+  const methods = installMethods(book);
   const [tab, setTab] = useState(methods[0].id);
   useEffect(() => {
     try {
@@ -162,7 +162,7 @@ export function Details({
     if (focus !== "install" || !getRef.current || !panelRef.current) return;
     const panel = panelRef.current;
     panel.scrollTo({ top: getRef.current.offsetTop - 64, behavior: "smooth" });
-  }, [focus, book.slug]);
+  }, [focus, book.id]);
 
   const d = book.design;
   const category = categoryById(book.category);
@@ -202,13 +202,13 @@ export function Details({
             </div>
             <h2 className={s.title}>{d.title}</h2>
             <p className={s.subtitle}>{d.subtitle}</p>
-            <p className={s.author}>Anthropic</p>
+            <p className={s.author}>{book.source.author}</p>
           </div>
         </div>
 
-        <section ref={getRef} className={`${s.section} ${s.get} ${focus === "install" ? s.flash : ""}`} key={`${book.slug}-${focus}`}>
+        <section ref={getRef} className={`${s.section} ${s.get} ${focus === "install" ? s.flash : ""}`} key={`${book.id}-${focus}`}>
           <h3>Get this skill</h3>
-          <GetSkill key={book.slug} book={book} library={library} />
+          <GetSkill key={book.id} book={book} />
         </section>
 
         <section className={s.section}>
@@ -247,11 +247,15 @@ export function Details({
           </a>
         </div>
         <p className={s.fine}>
-          From <a href={library.source.url} target="_blank" rel="noopener noreferrer">{library.source.repo}</a> at{" "}
-          <span className={s.mono}>{library.source.commit.slice(0, 7)}</span>. Install counts from{" "}
-          <a href={library.ranking.source} target="_blank" rel="noopener noreferrer">skills.sh</a>. Want the whole library?{" "}
+          From <a href={book.source.url} target="_blank" rel="noopener noreferrer">{book.source.repo}</a> at{" "}
+          <span className={s.mono}>{book.source.commit.slice(0, 7)}</span>. Install counts from{" "}
+          <a href={library.ranking.source} target="_blank" rel="noopener noreferrer">skills.sh</a>. Download{" "}
+          <a href={book.source.download.zip} download>
+            every skill by {book.source.author} ({formatBytes(book.source.download.bytes)})
+          </a>{" "}
+          or{" "}
           <a href={library.allDownload.zip} download>
-            Download all {library.books.length} skills ({formatBytes(library.allDownload.bytes)})
+            all {library.books.length} on the shelf ({formatBytes(library.allDownload.bytes)})
           </a>
           .
         </p>

@@ -1,6 +1,9 @@
 /**
- * The four skill sets named in the anthropics/skills README. The repo doesn't tag skills
- * individually, so membership here is editorial (Document Skills mirrors its plugin).
+ * Subjects on the shelf. The first four are the skill sets named in the anthropics/skills
+ * README (the repo doesn't tag skills individually, so membership is editorial);
+ * Workflow & Process holds methodology libraries like Superpowers; Marketing & Growth holds
+ * Corey Haines's marketing skills. A skill not listed in
+ * `membership` falls back to its library's defaultCategory in sources.json.
  */
 export interface Category {
   id: string;
@@ -34,6 +37,18 @@ export const categories: Category[] = [
     short: "Enterprise",
     blurb: "Writing and working inside an organization: comms, brand, docs, and learning.",
   },
+  {
+    id: "workflow",
+    label: "Workflow & Process",
+    short: "Workflow",
+    blurb: "How an agent works: brainstorming, planning, test-driven development, debugging, review, and git.",
+  },
+  {
+    id: "marketing",
+    label: "Marketing & Growth",
+    short: "Marketing",
+    blurb: "Conversion, copy, SEO, paid, analytics, retention, pricing, and sales.",
+  },
 ];
 
 const membership: Record<string, string> = {
@@ -58,10 +73,8 @@ const membership: Record<string, string> = {
   "internal-comms": "enterprise",
 };
 
-export function categoryFor(slug: string, plugin: string | null): string {
-  if (membership[slug]) return membership[slug];
-  if (plugin === "document-skills") return "documents";
-  return "development";
+export function categoryFor(id: string, fallback: string): string {
+  return membership[id] ?? (categories.some((c) => c.id === fallback) ? fallback : "development");
 }
 
 export const categoryById = (id: string) => categories.find((c) => c.id === id);

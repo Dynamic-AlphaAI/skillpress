@@ -80,6 +80,16 @@
   margin-top: 1.2cqw;
   text-wrap: balance;
 }
+.seriesLabel {
+  position: absolute;
+  top: 8.5cqw;
+  left: 9cqw;
+  font-family: var(--font-mono);
+  font-size: 3.4cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
 .coverMark {
   position: absolute;
   top: 7cqw;
@@ -113,6 +123,17 @@
   background: linear-gradient(90deg, rgb(0 0 0 / 0.22), rgb(255 255 255 / 0.07) 18%, rgb(0 0 0 / 0) 45%, rgb(0 0 0 / 0.16));
   pointer-events: none;
 }
+/* Series books share a gold band near the head of the spine. */
+.spineBand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 13%;
+  height: 1.6%;
+  border-top: 1.5px solid var(--accent);
+  border-bottom: 1.5px solid var(--accent);
+  z-index: 1;
+}
 .spineInner {
   position: relative;
   z-index: 1;
@@ -135,9 +156,10 @@
   opacity: 0.85;
 }
 .spineTitle {
+  --fit: 1;
   writing-mode: vertical-rl;
   font-family: var(--font-serif);
-  font-size: min(52cqw, 5.4cqh);
+  font-size: min(52cqw, calc(5.4cqh * var(--fit)));
   line-height: 1;
   white-space: nowrap;
   flex: 1;

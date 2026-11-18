@@ -1,0 +1,43 @@
+{
+  "$comment": "Skill libraries on the shelf. Add an entry, run `npm run import`, push. Fields: id (short, unique), repo (owner/name on GitHub), path (folder holding one directory per skill), author + copyright (credited on covers and the copyright page), defaultCategory (see src/lib/categories.ts), plugin (how Claude Code installs it: \"marketplace.json\" to read the repo's own .claude-plugin/marketplace.json, or a fixed { name, marketplace, addMarketplace }), bundleNote (optional, shown with install steps).",
+  "sources": [
+    {
+      "id": "anthropic",
+      "repo": "anthropics/skills",
+      "path": "skills",
+      "author": "Anthropic",
+      "copyright": "Anthropic, PBC",
+      "authorUrl": "https://www.anthropic.com",
+      "defaultCategory": "development",
+      "plugin": "marketplace.json"
+    },
+    {
+      "id": "superpowers",
+      "repo": "obra/superpowers",
+      "path": "skills",
+      "author": "Jesse Vincent",
+      "copyright": "Jesse Vincent",
+      "authorUrl": "https://github.com/obra",
+      "series": "Superpowers",
+      "defaultCategory": "workflow",
+      "plugin": {
+        "name": "superpowers",
+        "marketplace": "claude-plugins-official",
+        "addMarketplace": null
+      },
+      "bundleNote": "Superpowers skills are written to work together — using-superpowers teaches the agent when to reach for the rest — so the full set gets the most out of any one of them."
+    },
+    {
+      "id": "marketing",
+      "repo": "coreyhaines31/marketingskills",
+      "path": "skills",
+      "author": "Corey Haines",
+      "copyright": "Corey Haines",
+      "authorUrl": "https://corey.co",
+      "series": "Marketing Skills",
+      "defaultCategory": "marketing",
+      "plugin": "marketplace.json",
+      "bundleNote": "These skills build on shared context: every one of them reads product-marketing first for your product, audience, and positioning, so install product-marketing alongside whichever you pick."
+    }
+  ]
+}

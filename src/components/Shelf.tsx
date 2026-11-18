@@ -58,7 +58,7 @@ export function Shelf({
           const z = isActive ? -d / 2 + H * 0.06 : -W / 2;
           return (
             <button
-              key={b.slug}
+              key={b.id}
               type="button"
               className={`${s.slot} ${isActive ? s.active : ""}`}
               style={

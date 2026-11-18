@@ -4,15 +4,15 @@ import matter from "gray-matter";
 import MarkdownIt, { type Token } from "markdown-it";
 import { categoryFor } from "./categories";
 import { designFor } from "./designs";
-import type { Book, Heading, Library } from "./types";
+import type { Author, Book, Heading, Library, Source } from "./types";
 
 const CONTENT = path.join(process.cwd(), "content");
 
 interface Catalog {
-  source: Library["source"];
+  sources: Source[];
   ranking: Library["ranking"];
   allDownload: Library["allDownload"];
-  books: Pick<Book, "slug" | "rank" | "installs" | "license" | "plugin" | "download">[];
+  books: (Pick<Book, "id" | "slug" | "rank" | "installs" | "license" | "plugin" | "download"> & { source: string })[];
 }
 
 function slugify(text: string) {
@@ -66,10 +66,12 @@ function createRenderer(blobBase: string) {
 export function loadLibrary(): Library {
   const catalog: Catalog = JSON.parse(fs.readFileSync(path.join(CONTENT, "catalog.json"), "utf8"));
 
+  const sources = new Map(catalog.sources.map((src) => [src.id, src]));
   const books: Book[] = catalog.books.map((entry) => {
-    const file = fs.readFileSync(path.join(CONTENT, "skills", entry.slug, "SKILL.md"), "utf8");
+    const source = sources.get(entry.source)!;
+    const file = fs.readFileSync(path.join(CONTENT, "skills", entry.id, "SKILL.md"), "utf8");
     const { data, content } = matter(file);
-    const blobBase = `${catalog.source.url}/blob/${catalog.source.commit}/skills/${entry.slug}/`;
+    const blobBase = `${source.url}/blob/${source.commit}/${source.path}/${entry.slug}/`;
     const md = createRenderer(blobBase);
     const tokens = md.parse(content, {});
 
@@ -107,11 +109,13 @@ export function loadLibrary(): Library {
     const description = String(data.description ?? "").trim();
 
     return {
+      id: entry.id,
       slug: entry.slug,
+      source,
       rank: entry.rank,
       installs: entry.installs,
       license: entry.license,
-      category: categoryFor(entry.slug, entry.plugin?.name ?? null),
+      category: categoryFor(entry.id, source.defaultCategory),
       plugin: entry.plugin,
       download: entry.download,
       skillName: String(data.name ?? entry.slug),
@@ -121,10 +125,18 @@ export function loadLibrary(): Library {
       headings,
       words,
       readingMinutes: Math.max(1, Math.round(words / 230)),
-      sourceUrl: `${catalog.source.url}/tree/${catalog.source.commit}/skills/${entry.slug}`,
-      design: designFor(entry.slug, originalTitle ?? undefined),
+      sourceUrl: `${source.url}/tree/${source.commit}/${source.path}/${entry.slug}`,
+      design: designFor(entry.id, originalTitle ?? undefined),
     };
   });
 
-  return { books, source: catalog.source, ranking: catalog.ranking, allDownload: catalog.allDownload };
+  const authors: Author[] = [];
+  for (const src of catalog.sources) {
+    const existing = authors.find((a) => a.id === src.authorId);
+    const count = books.filter((b) => b.source.id === src.id).length;
+    if (existing) existing.count += count;
+    else authors.push({ id: src.authorId, name: src.author, url: src.authorUrl, count });
+  }
+
+  return { books, sources: catalog.sources, authors, ranking: catalog.ranking, allDownload: catalog.allDownload };
 }

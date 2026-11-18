@@ -1,11 +1,16 @@
 # Skill Press
 
-Every official Anthropic agent skill, typeset and bound as a book you can page through and then install. The design takes its cues from [stripe.press](https://stripe.press).
+Agent skills, typeset and bound as books you can page through and then install. The design takes its cues from [stripe.press](https://stripe.press).
 
-- **Library:** all 19 skills in [anthropics/skills](https://github.com/anthropics/skills), Anthropic's official skill library.
+| Library | Author | Skills | License |
+|---|---|---|---|
+| [anthropics/skills](https://github.com/anthropics/skills) | Anthropic | 19 | Apache 2.0 (one skill has no license file) |
+| [obra/superpowers](https://github.com/obra/superpowers) | Jesse Vincent | 15 | MIT |
+| [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | Corey Haines | 53 | MIT |
+
 - **Ranking:** install counts from the [skills.sh](https://skills.sh) leaderboard. Skills it doesn't list yet are shelved last.
-- **Categories:** the four skill sets named in the repo's README: Document Skills, Creative & Design, Development & Technical, and Enterprise & Communication.
-- **Books:** each one is the skill's `SKILL.md`. The **downloads** are the whole skill folder, so they actually work.
+- **Filters:** browse by subject (Documents, Creative & Design, Development & Technical, Enterprise & Communication, Workflow & Process, Marketing & Growth) and by author.
+- **Books:** each one is the skill's `SKILL.md`. The **downloads** are the whole skill folder, plus the library's license.
 
 ## Run it
 
@@ -14,19 +19,22 @@ npm install
 npm run dev        # http://localhost:3000
 ```
 
-## Refresh the library
+## Add a library
 
-```bash
-npm run import                  # every skill in the repo
-npm run import -- --count 10    # only the most installed
-```
+1. Add an entry to `sources.json`: the repo, the folder holding the skills, the author, a default subject, and how Claude Code installs it.
+2. Run `npm run import`.
+3. Push. The new books appear with generated covers.
 
-This shallow-clones the repo, ranks it with skills.sh, and rewrites two folders:
+To give books their own titles and covers, add entries in `src/lib/designs.ts`. Superpowers and Marketing Skills each use one series template there, so a whole library takes one table. To file a skill under a different subject, add it in `src/lib/categories.ts`.
+
+## Keeping it up to date
+
+A GitHub Action (`.github/workflows/update-skills.yml`) runs `npm run import` every day at 06:17 UTC. If anything changed and the site still builds, it commits to `main`, and Vercel deploys that commit. You can also run it from the Actions tab.
+
+`npm run import` clones every library, ranks the skills with skills.sh, and rewrites two folders:
 
 - `content/`: the text each book is typeset from, plus `catalog.json`.
-- `public/downloads/`: `<skill>.zip` (the full folder: scripts, references, assets), `<skill>/SKILL.md`, and `anthropic-skills.zip` with everything.
-
-A new skill gets a generated cover. To give it its own title, palette, and cover motif, add an entry in `src/lib/designs.ts`. To shelve it under a category, add it in `src/lib/categories.ts`.
+- `public/downloads/`: `<skill>.zip`, `<skill>/SKILL.md`, `<library>-skills.zip`, and `skillpress-all.zip`. Zips are byte-identical when nothing changed, so the daily job doesn't keep re-committing them.
 
 ## Getting a skill
 
@@ -36,7 +44,7 @@ A new skill gets a generated cover. To give it its own title, palette, and cover
 - **SKILL.md only**: just the instructions.
 - **Agent prompt**: paste it into Claude Code, Codex, Cursor, or any agent that runs commands, and it installs the skill and reports back what it does.
 - **skills CLI**: `npx skills add https://github.com/anthropics/skills --skill <name>`.
-- **Claude Code**: `/plugin marketplace add anthropics/skills`, then `/plugin install <set>@anthropic-agent-skills`.
+- **Claude Code**: the plugin command published by each library.
 - **Claude.ai**: the toggle-or-upload steps.
 
 ## Using it
@@ -53,14 +61,16 @@ A new skill gets a generated cover. To give it its own title, palette, and cover
 | `Home` / `End`, the scrubber | jump |
 | `Esc` | close |
 
-Every state has a link: `/?category=documents`, `/?book=pdf&read&page=4`, `/?book=xlsx&install`, `/?view=featured`.
+Every state has a link: `/?category=documents`, `/?author=jesse-vincent`, `/?book=pdf&read&page=4`, `/?book=cro&install`, `/?view=featured`. With no book chosen, the shelf opens on its middle book.
 
 ## How it's built
 
+- `sources.json`: the libraries on the shelf.
 - `scripts/import-skills.mjs`: pulls the skills, ranks them, and builds the zips (with `fflate`, so no system `zip` is needed).
 - `src/lib/library.ts`: parses frontmatter and renders the markdown on the server. Raw HTML is escaped, relative links point at GitHub, and heading ids feed the contents pages.
-- `src/lib/install.ts`: the install methods. The commands match the repo README and skills.sh.
+- `src/lib/install.ts`: the install methods. The commands match each library's README and skills.sh.
 - `src/components/Shelf.tsx` and `Book3D.tsx`: the shelf. Each book is a CSS 3D box, and its thickness follows the word count.
 - `src/components/CoverArt.tsx`: generated SVG covers, one motif per skill.
+- `src/components/useUrlState.ts`: the URL is the single source of truth for what's on screen, and the page itself is fully static.
 - `src/components/Reader.tsx`: the book itself. Text flows through CSS columns at a fixed page size, so pagination is the same at every window size. The whole book is then scaled to fit. Pages turn with the Web Animations API, and the turning leaf stays mounted so long books turn smoothly.
 - `src/components/Details.tsx`: details, downloads, and copy-ready install instructions.

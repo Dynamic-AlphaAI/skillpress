@@ -22,7 +22,9 @@ export type Motif =
   | "bubbles"
   | "drafts"
   | "steps"
-  | "lens";
+  | "lens"
+  | "series"
+  | "marketing";
 
 export interface BookDesign {
   title: string;
@@ -42,6 +44,14 @@ export interface BookDesign {
   extra?: string[];
   /** Named swatches, for motifs that label their colours. */
   named?: { name: string; colors: string[] }[];
+  /** For books in a numbered series: the series name and this volume. */
+  series?: string;
+  volume?: number;
+  volumes?: number;
+  /** Small label across the top of the cover (a series line or a topic). */
+  kicker?: string;
+  /** Picks a sub-motif for motifs that have several. */
+  variant?: string;
 }
 
 export const designs: Record<string, BookDesign> = {
@@ -234,7 +244,285 @@ export const designs: Record<string, BookDesign> = {
     titleAt: "top",
     extra: ["#FFF6E5"],
   },
+
+  // Superpowers by Jesse Vincent — one series, numbered in the order the workflow uses them.
+  "using-superpowers": {
+    title: "Using Superpowers",
+    subtitle: "How to find and use a skill before anything else",
+    bg: "#23395B",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 1,
+    volumes: 15,
+  },
+  "brainstorming": {
+    title: "Brainstorming",
+    subtitle: "Shaping an idea into a design before building it",
+    bg: "#8E3B46",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 2,
+    volumes: 15,
+  },
+  "writing-plans": {
+    title: "Writing Plans",
+    subtitle: "Plans an engineer new to the codebase can follow",
+    bg: "#3D5A40",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 3,
+    volumes: 15,
+  },
+  "using-git-worktrees": {
+    title: "Using Git Worktrees",
+    subtitle: "An isolated workspace for every piece of work",
+    bg: "#4C3B6E",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 4,
+    volumes: 15,
+  },
+  "executing-plans": {
+    title: "Executing Plans",
+    subtitle: "Implementing a plan yourself, task by task",
+    bg: "#9C5B2E",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 5,
+    volumes: 15,
+  },
+  "subagent-driven-development": {
+    title: "Subagent-Driven Development",
+    subtitle: "A fresh subagent per task, reviewed between",
+    bg: "#1E5F74",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 6,
+    volumes: 15,
+  },
+  "dispatching-parallel-agents": {
+    title: "Dispatching Parallel Agents",
+    subtitle: "Splitting independent work across agents",
+    bg: "#6D2E46",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 7,
+    volumes: 15,
+  },
+  "test-driven-development": {
+    title: "Test-Driven Development",
+    subtitle: "No production code without a failing test first",
+    bg: "#8C2F39",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 8,
+    volumes: 15,
+  },
+  "systematic-debugging": {
+    title: "Systematic Debugging",
+    subtitle: "Find the root cause before attempting a fix",
+    bg: "#3A3F58",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 9,
+    volumes: 15,
+  },
+  "verification-before-completion": {
+    title: "Verification Before Completion",
+    subtitle: "Evidence before claims, always",
+    bg: "#5E6B2F",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 10,
+    volumes: 15,
+  },
+  "requesting-code-review": {
+    title: "Requesting Code Review",
+    subtitle: "Checking work against requirements before merging",
+    bg: "#7A3E1D",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 11,
+    volumes: 15,
+  },
+  "receiving-code-review": {
+    title: "Receiving Code Review",
+    subtitle: "Technical rigor, not performative agreement",
+    bg: "#2C4A6E",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 12,
+    volumes: 15,
+  },
+  "finishing-a-development-branch": {
+    title: "Finishing a Development Branch",
+    subtitle: "Verify, choose how the work lands, clean up",
+    bg: "#574B3A",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 13,
+    volumes: 15,
+  },
+  "writing-skills": {
+    title: "Writing Skills",
+    subtitle: "Test-driven development, applied to skills",
+    bg: "#24443A",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 14,
+    volumes: 15,
+  },
+  "diagnosing-superpowers": {
+    title: "Diagnosing Superpowers",
+    subtitle: "Working out why a session went wrong",
+    bg: "#42305A",
+    ink: "#F3EBDD",
+    accent: "#E8B04B",
+    motif: "series",
+    titleAt: "bottom",
+    series: "Superpowers",
+    volume: 15,
+    volumes: 15,
+  },
 };
+
+/**
+ * Marketing Skills by Corey Haines: one series, colour-coded by the topics in the repo's
+ * README (the README files 35 of the 53; the rest are placed here by hand). Shades step
+ * darker within a topic so neighbouring spines stay distinct.
+ */
+const marketingTopics: Record<string, { label: string; bg: string; accent: string; variant: string }> = {
+  conversion: { label: "Conversion Optimization", bg: "#B6452C", accent: "#F6C98E", variant: "funnel" },
+  content: { label: "Content & Copy", bg: "#2E5266", accent: "#F2C57C", variant: "quote" },
+  seo: { label: "SEO & Discovery", bg: "#3F6B3A", accent: "#F0D78C", variant: "search" },
+  paid: { label: "Paid & Distribution", bg: "#A86A12", accent: "#2A1A06", variant: "broadcast" },
+  measurement: { label: "Measurement & Testing", bg: "#4E4372", accent: "#F3B97A", variant: "abtest" },
+  retention: { label: "Retention", bg: "#94315F", accent: "#F7C6A3", variant: "loop" },
+  growth: { label: "Growth Engineering", bg: "#226B5A", accent: "#F4D06F", variant: "curve" },
+  strategy: { label: "Strategy & Monetization", bg: "#1F2A44", accent: "#E9B872", variant: "matrix" },
+  sales: { label: "Sales & RevOps", bg: "#6E4424", accent: "#F1CB8B", variant: "pipeline" },
+};
+const marketingBooks: [slug: string, title: string, subtitle: string, topic: string][] = [
+  ["cro", "Conversion Rate Optimization", "Pages and forms that convert", "conversion"],
+  ["signup", "Signup Flow CRO", "Registration flows people finish", "conversion"],
+  ["onboarding", "Onboarding CRO", "From signup to activation", "conversion"],
+  ["popups", "Popup CRO", "Modals and overlays that earn their place", "conversion"],
+  ["paywalls", "Paywalls & Upgrade Screens", "In-app upgrade moments", "conversion"],
+  ["lead-magnets", "Lead Magnets", "Free resources that capture demand", "conversion"],
+  ["copywriting", "Copywriting", "Marketing page copy", "content"],
+  ["copy-editing", "Copy Editing", "Editing and polishing existing copy", "content"],
+  ["cold-email", "Cold Email Writing", "B2B outreach emails and sequences", "content"],
+  ["emails", "Email Sequence Design", "Automated email flows", "content"],
+  ["social", "Social Content", "Posts, scheduling, and strategy", "content"],
+  ["content-strategy", "Content Strategy", "Deciding what to publish, and why", "content"],
+  ["image", "Images", "Generate, design, or photograph marketing images", "content"],
+  ["video", "Video", "Product demos and repeatable video with AI tools or code", "content"],
+  ["sms", "SMS Marketing", "Text-message campaigns and flows", "content"],
+  ["seo-audit", "SEO Audit", "Technical and on-page SEO", "seo"],
+  ["ai-seo", "AI SEO", "Optimizing for AI search: AEO, GEO, LLMO", "seo"],
+  ["link-building", "Link Building", "Earned links and mentions on AI-cited pages", "seo"],
+  ["programmatic-seo", "Programmatic SEO", "Pages generated at scale", "seo"],
+  ["site-architecture", "Site Architecture", "Hierarchy, navigation, and URL structure", "seo"],
+  ["competitors", "Competitor & Alternative Pages", "Comparison pages that rank and convert", "seo"],
+  ["schema", "Schema Markup", "Structured data for search", "seo"],
+  ["aso", "ASO Audit", "App store optimization", "seo"],
+  ["directory-submissions", "Directory Submissions", "Product Hunt, G2, Capterra, and the rest", "seo"],
+  ["ads", "Paid Ads", "Google, Meta, and LinkedIn campaigns", "paid"],
+  ["ad-creative", "Ad Creative", "Generating and iterating ad creative in bulk", "paid"],
+  ["events", "Event Marketing", "Webinars, conferences, sponsorships, speaking", "paid"],
+  ["influencer-marketing", "Influencer & Creator Marketing", "Working with creators", "paid"],
+  ["public-relations", "Public Relations & Earned Media", "Getting covered", "paid"],
+  ["analytics", "Analytics Tracking", "Event tracking setup", "measurement"],
+  ["conversion-tracking", "Conversion Tracking", "Pixels, tags, and server-side delivery", "measurement"],
+  ["ab-testing", "A/B Test Setup", "Experiment design", "measurement"],
+  ["attribution", "Attribution", "Which marketing actually drives revenue", "measurement"],
+  ["churn-prevention", "Churn Prevention", "Cancel flows, save offers, and dunning", "retention"],
+  ["co-marketing", "Co-Marketing", "Partners and joint campaigns", "growth"],
+  ["free-tools", "Free Tool Strategy", "Engineering as marketing", "growth"],
+  ["referrals", "Referral & Affiliate Programs", "Customers who bring customers", "growth"],
+  ["community-marketing", "Community Marketing", "Building a community people stay in", "growth"],
+  ["marketing-loops", "Marketing Loops", "Recurring jobs an agent runs on a cadence", "growth"],
+  ["product-marketing", "Product Marketing Context", "The foundation every other skill reads first", "strategy"],
+  ["marketing-plan", "Marketing Plan", "A full go-to-market plan, sequenced", "strategy"],
+  ["marketing-ideas", "Marketing Ideas for SaaS", "140 ideas to start from", "strategy"],
+  ["marketing-psychology", "Marketing Psychology", "Mental models and how buyers decide", "strategy"],
+  ["marketing-council", "Marketing Council", "A simulated board of famous marketers", "strategy"],
+  ["launch", "Launch Strategy", "Product launches and announcements", "strategy"],
+  ["pricing", "Pricing Strategy", "Pricing, packaging, and monetization", "strategy"],
+  ["offers", "Offer Design", "Value stacks, guarantees, and honest urgency", "strategy"],
+  ["competitor-profiling", "Competitor Profiling", "Dated, fair profiles of the competition", "strategy"],
+  ["customer-research", "Customer Research", "What customers say, and what it means", "strategy"],
+  ["reverse-engineer-marketing", "Reverse Engineer Marketing", "Growth teardowns, with plays to copy", "strategy"],
+  ["revops", "RevOps", "Lifecycle, scoring, routing, and pipeline", "sales"],
+  ["sales-enablement", "Sales Enablement", "Decks, one-pagers, objection docs, demo scripts", "sales"],
+  ["prospecting", "Prospecting", "Finding and qualifying buyers", "sales"],
+];
+
+const shade = (hex: string, t: number) =>
+  "#" +
+  [1, 3, 5]
+    .map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * (1 - t)).toString(16).padStart(2, "0"))
+    .join("");
+
+const seen: Record<string, number> = {};
+for (const [slug, title, subtitle, topic] of marketingBooks) {
+  const t = marketingTopics[topic];
+  const k = (seen[topic] = (seen[topic] ?? -1) + 1);
+  designs[slug] = {
+    title,
+    subtitle,
+    bg: shade(t.bg, (k % 4) * 0.07),
+    ink: "#F4EEE3",
+    accent: t.accent,
+    motif: "marketing",
+    variant: t.variant,
+    titleAt: "bottom",
+    series: "Marketing Skills",
+    kicker: t.label,
+  };
+}
 
 const fallbackPalettes: Pick<BookDesign, "bg" | "ink" | "accent">[] = [
   { bg: "#3B4A6B", ink: "#EEE8DC", accent: "#E8A33D" },
@@ -244,7 +532,7 @@ const fallbackPalettes: Pick<BookDesign, "bg" | "ink" | "accent">[] = [
   { bg: "#B8892D", ink: "#211C14", accent: "#F6EEDC" },
   { bg: "#22363A", ink: "#E4EDE8", accent: "#7FC2B0" },
 ];
-const fallbackMotifs: Motif[] = ["grid", "branches", "lines", "network", "cells", "folds", "targets", "slides", "blocks", "steps", "bubbles"];
+const fallbackMotifs: Motif[] = ["grid", "branches", "lines", "network", "cells", "folds", "targets", "slides", "blocks", "steps", "bubbles", "lens", "drafts"];
 
 export function hashString(s: string): number {
   let h = 2166136261;

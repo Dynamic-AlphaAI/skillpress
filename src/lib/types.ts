@@ -6,15 +6,48 @@ export interface Heading {
   id: string;
 }
 
+/** A skill library (one GitHub repo), from sources.json. */
+export interface Source {
+  id: string;
+  repo: string;
+  url: string;
+  /** Folder in the repo that holds one directory per skill. */
+  path: string;
+  commit: string;
+  commitDate: string;
+  author: string;
+  authorId: string;
+  authorUrl: string | null;
+  /** Credited on the copyright page. */
+  copyright: string;
+  series: string | null;
+  defaultCategory: string;
+  /** Shown with install steps when the skills are meant to be used as a set. */
+  bundleNote: string | null;
+  download: { zip: string; bytes: number };
+}
+
+export interface Plugin {
+  name: string;
+  marketplace: string;
+  /** `owner/repo` to register first; null when the marketplace ships with Claude Code. */
+  addMarketplace: string | null;
+  skills: string[];
+}
+
 export interface Book {
+  /** Unique on the shelf; usually the skill name. */
+  id: string;
+  /** The skill's folder name in its repo. */
   slug: string;
+  source: Source;
   rank: number;
   /** skills.sh installs; null when the leaderboard doesn't list the skill yet. */
   installs: number | null;
   license: string;
   category: string;
-  /** The Claude Code plugin in the source marketplace that ships this skill. */
-  plugin: { name: string; skills: string[] } | null;
+  /** The Claude Code plugin that ships this skill. */
+  plugin: Plugin | null;
   download: { zip: string; skillMd: string; bytes: number; files: number };
   /** `name` from the SKILL.md frontmatter. */
   skillName: string;
@@ -31,9 +64,17 @@ export interface Book {
   design: BookDesign;
 }
 
+export interface Author {
+  id: string;
+  name: string;
+  url: string | null;
+  count: number;
+}
+
 export interface Library {
   books: Book[];
-  source: { repo: string; url: string; commit: string; commitDate: string; marketplace: string | null };
+  sources: Source[];
+  authors: Author[];
   ranking: { source: string; metric: string; fetchedAt: string };
   allDownload: { zip: string; bytes: number };
 }

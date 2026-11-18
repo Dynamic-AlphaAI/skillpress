@@ -680,7 +680,323 @@ function lens({ a, d }: Ctx) {
   );
 }
 
+/** A series emblem: a sunburst whose rays and rings change with the volume, around its numeral. */
+function series({ a, d }: Ctx) {
+  const vol = d.volume ?? 1;
+  const cx = a.x + a.w / 2;
+  const cy = a.y + a.h / 2 + 4;
+  const R = Math.min(a.w, a.h) / 2 - 2;
+  const rays = 10 + vol * 2;
+  const rings = 1 + (vol % 3);
+  const turn = vol * 9;
+  return (
+    <g>
+      <g transform={`rotate(${turn} ${r1(cx)} ${r1(cy)})`}>
+        {Array.from({ length: rays }, (_, i) => {
+          const t = (i / rays) * Math.PI * 2;
+          const inner = R * 0.5;
+          const outer = R * (i % 2 ? 0.86 : 1);
+          return (
+            <line
+              key={i}
+              x1={r1(cx + Math.cos(t) * inner)}
+              y1={r1(cy + Math.sin(t) * inner)}
+              x2={r1(cx + Math.cos(t) * outer)}
+              y2={r1(cy + Math.sin(t) * outer)}
+              stroke={d.ink}
+              strokeWidth={i % 2 ? 0.7 : 1.3}
+              opacity={i % 2 ? 0.45 : 0.8}
+            />
+          );
+        })}
+      </g>
+      {Array.from({ length: rings }, (_, i) => (
+        <circle key={i} cx={r1(cx)} cy={r1(cy)} r={r1(R * (0.44 - i * 0.05))} fill="none" stroke={d.accent} strokeWidth={i ? 0.7 : 1.6} />
+      ))}
+      <circle cx={r1(cx)} cy={r1(cy)} r={r1(R * 0.3)} fill={d.accent} />
+      <text
+        x={r1(cx)}
+        y={r1(cy + R * 0.12)}
+        textAnchor="middle"
+        fontFamily="var(--font-serif)"
+        fontSize={r1(R * 0.36)}
+        fill={d.bg}
+      >
+        {vol}
+      </text>
+    </g>
+  );
+}
+
+/* ---- Marketing Skills: one sub-motif per topic, varied per book by its seed. ---- */
+
+function funnel({ a, d, rng }: Ctx) {
+  const tiers = 4 + Math.floor(rng() * 2);
+  const cx = a.x + a.w / 2;
+  const top = a.y + 26;
+  const th = (a.h - 46) / tiers;
+  const width = (t: number) => a.w * (0.94 - 0.66 * t);
+  return (
+    <g>
+      {Array.from({ length: 14 }, (_, i) => (
+        <circle key={`d${i}`} cx={r1(cx + (rng() - 0.5) * a.w * 0.8)} cy={r1(a.y + 4 + rng() * 16)} r={1.8} fill={d.ink} opacity={0.7} />
+      ))}
+      {Array.from({ length: tiers }, (_, i) => {
+        const y0 = top + i * th;
+        const w0 = width(i / tiers);
+        const w1 = width((i + 1) / tiers);
+        const last = i === tiers - 1;
+        return (
+          <path
+            key={i}
+            d={`M ${r1(cx - w0 / 2)} ${r1(y0)} H ${r1(cx + w0 / 2)} L ${r1(cx + w1 / 2)} ${r1(y0 + th - 4)} H ${r1(cx - w1 / 2)} Z`}
+            fill={last ? d.accent : d.ink}
+            opacity={last ? 1 : 0.16 + i * 0.14}
+          />
+        );
+      })}
+      <circle cx={r1(cx)} cy={r1(top + tiers * th + 8)} r={3} fill={d.accent} />
+    </g>
+  );
+}
+
+function quote({ a, d, rng }: Ctx) {
+  const rows = 7;
+  return (
+    <g>
+      <text x={a.x - 4} y={a.y + 86} fontFamily="var(--font-serif)" fontSize={128} fill={d.accent}>
+        “
+      </text>
+      {Array.from({ length: rows }, (_, i) => {
+        const y = a.y + 96 + i * 13;
+        const w = a.w * (i === rows - 1 ? 0.45 : 0.78 + rng() * 0.22);
+        const hot = i === 2;
+        return (
+          <g key={i}>
+            <rect x={a.x} y={r1(y)} width={r1(w)} height={4} rx={2} fill={d.ink} opacity={0.85} />
+            {hot && <line x1={a.x} x2={r1(a.x + w * 0.6)} y1={r1(y + 8)} y2={r1(y + 8)} stroke={d.accent} strokeWidth={1.4} />}
+          </g>
+        );
+      })}
+    </g>
+  );
+}
+
+function search({ a, d, rng }: Ctx) {
+  const rows = 4;
+  return (
+    <g>
+      <rect x={a.x} y={a.y + 6} width={a.w} height={26} rx={13} fill="none" stroke={d.ink} strokeWidth={1.4} />
+      <rect x={a.x + 14} y={a.y + 17} width={a.w * 0.48} height={4} rx={2} fill={d.ink} opacity={0.75} />
+      <circle cx={a.x + a.w - 22} cy={a.y + 18} r={6} fill="none" stroke={d.accent} strokeWidth={2} />
+      <line x1={a.x + a.w - 17.5} y1={a.y + 23} x2={a.x + a.w - 12} y2={a.y + 28} stroke={d.accent} strokeWidth={2.4} strokeLinecap="round" />
+      {Array.from({ length: rows }, (_, i) => {
+        const y = a.y + 50 + i * 36;
+        const first = i === 0;
+        return (
+          <g key={i} opacity={first ? 1 : 0.85 - i * 0.12}>
+            {first && <rect x={a.x - 8} y={y - 3} width={2.5} height={30} fill={d.accent} />}
+            <text x={a.x} y={y + 6} fontFamily="var(--font-mono)" fontSize={7} fill={d.ink} opacity={0.7}>
+              {i + 1}.
+            </text>
+            <rect x={a.x + 14} y={y} width={r1(a.w * (0.55 + rng() * 0.3))} height={5} rx={2.5} fill={first ? d.accent : d.ink} />
+            <rect x={a.x + 14} y={y + 10} width={r1(a.w * 0.3)} height={2.6} rx={1.3} fill={d.ink} opacity={0.5} />
+            <rect x={a.x + 14} y={y + 17} width={r1(a.w * (0.6 + rng() * 0.25))} height={2.6} rx={1.3} fill={d.ink} opacity={0.35} />
+          </g>
+        );
+      })}
+    </g>
+  );
+}
+
+function broadcast({ a, d, rng }: Ctx) {
+  const ox = a.x + 14;
+  const oy = a.y + a.h / 2;
+  const spread = (0.85 + rng() * 0.25) * (Math.PI / 3);
+  return (
+    <g>
+      {Array.from({ length: 8 }, (_, i) => {
+        const r = 26 + i * 22;
+        const x1 = ox + Math.cos(-spread) * r;
+        const y1 = oy + Math.sin(-spread) * r;
+        const x2 = ox + Math.cos(spread) * r;
+        const y2 = oy + Math.sin(spread) * r;
+        return (
+          <path
+            key={i}
+            d={`M ${r1(x1)} ${r1(y1)} A ${r} ${r} 0 0 1 ${r1(x2)} ${r1(y2)}`}
+            fill="none"
+            stroke={i % 3 === 1 ? d.accent : d.ink}
+            strokeWidth={i % 3 === 1 ? 3 : 1.4}
+            strokeLinecap="round"
+            opacity={1 - i * 0.08}
+          />
+        );
+      })}
+      <circle cx={ox} cy={oy} r={10} fill={d.accent} />
+      <circle cx={ox} cy={oy} r={16} fill="none" stroke={d.ink} strokeWidth={1} />
+    </g>
+  );
+}
+
+function abtest({ a, d, rng }: Ctx) {
+  const pw = (a.w - 14) / 2;
+  const panel = (x: number, label: string, winner: boolean) => {
+    const bars = Array.from({ length: 5 }, (_, i) => 0.25 + rng() * 0.5 + (winner && i === 4 ? 0.25 : 0));
+    const base = a.y + a.h - 8;
+    const bw = (pw - 24) / 5;
+    return (
+      <g key={label}>
+        <rect x={x} y={a.y + 4} width={pw} height={a.h - 4} fill="none" stroke={d.ink} strokeWidth={1.1} opacity={0.6} />
+        <text x={x + 10} y={a.y + 36} fontFamily="var(--font-serif)" fontSize={30} fill={winner ? d.accent : d.ink}>
+          {label}
+        </text>
+        <line x1={x + 10} x2={x + pw - 10} y1={base} y2={base} stroke={d.ink} strokeWidth={0.8} opacity={0.6} />
+        {bars.map((v, i) => {
+          const h = Math.min(1, v) * (a.h - 70);
+          return (
+            <rect
+              key={i}
+              x={r1(x + 12 + i * bw)}
+              y={r1(base - h)}
+              width={r1(bw - 4)}
+              height={r1(h)}
+              fill={winner && i === 4 ? d.accent : d.ink}
+              opacity={winner && i === 4 ? 1 : 0.55}
+            />
+          );
+        })}
+      </g>
+    );
+  };
+  return (
+    <g>
+      {panel(a.x, "A", false)}
+      {panel(a.x + pw + 14, "B", true)}
+    </g>
+  );
+}
+
+function loop({ a, d, rng }: Ctx) {
+  const cx = a.x + a.w / 2;
+  const cy = a.y + a.h / 2;
+  const r = Math.min(a.w, a.h) * 0.36;
+  const start = rng() * Math.PI * 2;
+  const pt = (t: number, rr = r) => ({ x: cx + Math.cos(t) * rr, y: cy + Math.sin(t) * rr });
+  const arc = (t0: number, t1: number, color: string, key: string) => {
+    const p0 = pt(t0);
+    const p1 = pt(t1);
+    const tip = pt(t1 + 0.12);
+    const l = pt(t1 - 0.02, r - 8);
+    const o = pt(t1 - 0.02, r + 8);
+    return (
+      <g key={key}>
+        <path d={`M ${r1(p0.x)} ${r1(p0.y)} A ${r1(r)} ${r1(r)} 0 0 1 ${r1(p1.x)} ${r1(p1.y)}`} fill="none" stroke={color} strokeWidth={5} />
+        <path d={`M ${r1(l.x)} ${r1(l.y)} L ${r1(tip.x)} ${r1(tip.y)} L ${r1(o.x)} ${r1(o.y)} Z`} fill={color} />
+      </g>
+    );
+  };
+  return (
+    <g>
+      <circle cx={r1(cx)} cy={r1(cy)} r={r1(r * 0.6)} fill="none" stroke={d.ink} strokeWidth={1} strokeDasharray="3 4" opacity={0.6} />
+      {arc(start, start + Math.PI - 0.35, d.ink, "a")}
+      {arc(start + Math.PI, start + Math.PI * 2 - 0.35, d.accent, "b")}
+      {[0.5, 1.6, 2.7, 3.8, 4.9].map((t, i) => {
+        const p = pt(start + t, r * 0.6);
+        return <circle key={i} cx={r1(p.x)} cy={r1(p.y)} r={3.2} fill={d.ink} />;
+      })}
+    </g>
+  );
+}
+
+function curve({ a, d, rng }: Ctx) {
+  const k = 2.2 + rng() * 1.6;
+  const pts = Array.from({ length: 9 }, (_, i) => {
+    const t = i / 8;
+    const v = (Math.exp(k * t) - 1) / (Math.exp(k) - 1);
+    return { x: a.x + t * a.w, y: a.y + a.h - 8 - v * (a.h - 20) };
+  });
+  return (
+    <g>
+      {Array.from({ length: 6 }, (_, i) => (
+        <line key={`h${i}`} x1={a.x} x2={a.x + a.w} y1={r1(a.y + 6 + i * ((a.h - 14) / 5))} y2={r1(a.y + 6 + i * ((a.h - 14) / 5))} stroke={d.ink} strokeWidth={0.5} opacity={0.3} />
+      ))}
+      <path
+        d={`M ${pts.map((p) => `${r1(p.x)} ${r1(p.y)}`).join(" L ")} L ${a.x + a.w} ${a.y + a.h - 8} L ${a.x} ${a.y + a.h - 8} Z`}
+        fill={d.ink}
+        opacity={0.12}
+      />
+      <path d={`M ${pts.map((p) => `${r1(p.x)} ${r1(p.y)}`).join(" L ")}`} fill="none" stroke={d.ink} strokeWidth={2} />
+      {pts.map((p, i) => (
+        <circle key={i} cx={r1(p.x)} cy={r1(p.y)} r={i === pts.length - 1 ? 6 : 2.6} fill={i === pts.length - 1 ? d.accent : d.ink} />
+      ))}
+    </g>
+  );
+}
+
+function matrix({ a, d, rng }: Ctx) {
+  const cx = a.x + a.w / 2;
+  const cy = a.y + a.h / 2;
+  const dots = Array.from({ length: 16 }, () => ({ x: a.x + 10 + rng() * (a.w - 20), y: a.y + 10 + rng() * (a.h - 20) }));
+  return (
+    <g>
+      <rect x={r1(cx)} y={a.y} width={r1(a.w / 2)} height={r1(a.h / 2)} fill={d.accent} opacity={0.22} />
+      <rect x={a.x} y={a.y} width={a.w} height={a.h} fill="none" stroke={d.ink} strokeWidth={1} opacity={0.5} />
+      <line x1={r1(cx)} x2={r1(cx)} y1={a.y} y2={a.y + a.h} stroke={d.ink} strokeWidth={1.4} />
+      <line x1={a.x} x2={a.x + a.w} y1={r1(cy)} y2={r1(cy)} stroke={d.ink} strokeWidth={1.4} />
+      {dots.map((p, i) => (
+        <circle key={i} cx={r1(p.x)} cy={r1(p.y)} r={2.4} fill={d.ink} opacity={0.75} />
+      ))}
+      <circle cx={r1(cx + a.w * 0.3)} cy={r1(cy - a.h * 0.28)} r={7} fill={d.accent} />
+      <circle cx={r1(cx + a.w * 0.3)} cy={r1(cy - a.h * 0.28)} r={12} fill="none" stroke={d.accent} strokeWidth={1} />
+    </g>
+  );
+}
+
+function pipeline({ a, d, rng }: Ctx) {
+  const stages = 4;
+  const sw = a.w / stages;
+  const h = a.h * 0.42;
+  const y = a.y + (a.h - h) / 2;
+  const counts = [14, 9, 5, 2 + Math.floor(rng() * 2)];
+  return (
+    <g>
+      {Array.from({ length: stages }, (_, i) => {
+        const x = a.x + i * sw;
+        const last = i === stages - 1;
+        return (
+          <g key={i}>
+            <path
+              d={`M ${r1(x)} ${r1(y)} H ${r1(x + sw - 10)} L ${r1(x + sw + 4)} ${r1(y + h / 2)} L ${r1(x + sw - 10)} ${r1(y + h)} H ${r1(x)} L ${r1(x + 14)} ${r1(y + h / 2)} Z`}
+              fill={last ? d.accent : d.ink}
+              opacity={last ? 1 : 0.2 + i * 0.16}
+            />
+            {Array.from({ length: counts[i] }, (_, j) => (
+              <circle
+                key={j}
+                cx={r1(x + 18 + (j % 3) * 8)}
+                cy={r1(y - 14 - Math.floor(j / 3) * 8)}
+                r={2.3}
+                fill={last ? d.accent : d.ink}
+                opacity={0.85}
+              />
+            ))}
+          </g>
+        );
+      })}
+    </g>
+  );
+}
+
+const marketingVariants: Record<string, (ctx: Ctx) => ReactNode> = { funnel, quote, search, broadcast, abtest, loop, curve, matrix, pipeline };
+
+function marketing(ctx: Ctx) {
+  return <>{(marketingVariants[ctx.d.variant ?? "funnel"] ?? funnel)(ctx)}</>;
+}
+
 const motifs = {
+  marketing,
+  series,
   grid,
   branches,
   slides,
@@ -710,7 +1026,8 @@ export function CoverArt({ slug, design, width = 240, height = 360 }: { slug: st
     ? { x: 0, y: 0, w: width, h: height }
     : design.titleAt === "top"
       ? { x: pad, y: height * 0.4, w: width - pad * 2, h: height * 0.6 - pad - 8 }
-      : { x: pad, y: pad + 6, w: width - pad * 2, h: height * 0.6 - pad };
+      : // Leave room for a kicker line (series or topic) across the top.
+        { x: pad, y: pad + 6 + (design.kicker || design.series ? 14 : 0), w: width - pad * 2, h: height * 0.6 - pad - (design.kicker || design.series ? 14 : 0) };
   return (
     <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <rect width={width} height={height} fill={design.bg} />

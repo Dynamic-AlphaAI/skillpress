@@ -25,7 +25,7 @@ export function TitleMarquee({ books, active, onSelect }: { books: Book[]; activ
       <div className={s.row} style={{ transform: `translateX(${shift}px)` }}>
         {books.map((b, i) => (
           <button
-            key={b.slug}
+            key={b.id}
             ref={(el) => {
               itemRefs.current[i] = el;
             }}
