@@ -154,7 +154,6 @@ async function main() {
       authorUrl: source.authorUrl ?? null,
       copyright: source.copyright ?? source.author,
       series: source.series ?? null,
-      defaultCategory: source.defaultCategory ?? "development",
       bundleNote: source.bundleNote ?? null,
       repoDir,
     });

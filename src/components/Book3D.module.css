@@ -59,3 +59,5 @@
 .bottom {
   transform: rotateX(-90deg) translateZ(calc(var(--h) / 2 - 2px));
 }
+.front, .back { border-radius: 1px 3px 3px 1px; box-shadow: 1px 1px 0 color-mix(in srgb, var(--bg), #17130c 35%), 2px 1px 0 color-mix(in srgb, var(--bg), #17130c 55%); }
+.pages { background: linear-gradient(0deg,#8c765d55,transparent 16%,#fff7 62%,#69594244),repeating-linear-gradient(91deg,#f0e9d7 0 1px,#bdaf99 1.3px 1.75px,#f3efde 2px 3px); }

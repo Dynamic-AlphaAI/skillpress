@@ -1,3 +1,4 @@
+import type { Topic } from "./categories";
 import type { BookDesign } from "./designs";
 
 export interface Heading {
@@ -21,7 +22,6 @@ export interface Source {
   /** Credited on the copyright page. */
   copyright: string;
   series: string | null;
-  defaultCategory: string;
   /** Shown with install steps when the skills are meant to be used as a set. */
   bundleNote: string | null;
   download: { zip: string; bytes: number };
@@ -45,7 +45,7 @@ export interface Book {
   /** skills.sh installs; null when the leaderboard doesn't list the skill yet. */
   installs: number | null;
   license: string;
-  category: string;
+  category: Topic;
   /** The Claude Code plugin that ships this skill. */
   plugin: Plugin | null;
   download: { zip: string; skillMd: string; bytes: number; files: number };
@@ -55,8 +55,6 @@ export interface Book {
   description: string;
   /** The skill's own H1, if it had one. */
   originalTitle: string | null;
-  /** Rendered body (frontmatter and leading H1 removed). */
-  html: string;
   headings: Heading[];
   words: number;
   readingMinutes: number;

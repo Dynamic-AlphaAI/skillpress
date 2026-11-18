@@ -62,14 +62,15 @@
   gap: 20px;
   align-items: end;
 }
-.cover {
-  aspect-ratio: 2 / 3;
-  box-shadow:
-    0 18px 30px -16px rgb(0 0 0 / 0.5),
-    0 2px 4px rgb(0 0 0 / 0.12);
-  border-radius: 1px 3px 3px 1px;
-  overflow: hidden;
+.inspect {
+  display: grid; place-items: center; gap: 13px; perspective: 650px; border: 0; background: transparent;
+  padding: 8px 0 0; color: var(--muted); cursor: grab; user-select: none; touch-action: pan-y;
 }
+.inspect:active { cursor: grabbing; }
+.inspect > div { transition: transform .35s ease-out; }
+.inspect:active > div { transition: none; }
+.inspect > span { font: 10px var(--font-mono), monospace; }
+@media(prefers-reduced-motion: reduce) { .inspect > div { transition: none; } }
 .kicker {
   font-family: var(--font-mono);
   font-size: 10px;

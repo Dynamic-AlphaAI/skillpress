@@ -4,6 +4,8 @@ import type { CSSProperties, ReactNode } from "react";
 import { categoryById } from "@/lib/categories";
 import type { Book, Heading, Library } from "@/lib/types";
 import { BackCover, Cover, PressMark } from "./BookParts";
+import { LibraryIcon } from "./LibraryIcons";
+import { playSound, toggleSound, useSound } from "./sound";
 import { replaceSearch } from "./useUrlState";
 import s from "./Reader.module.css";
 
@@ -289,28 +291,59 @@ function SideAt({ i, sides, ctx, book }: { i: number | undefined; sides: Side[];
 
 /* ---------------------------------------------------------------- reader */
 
-export function Reader({
-  book,
-  library,
-  onClose,
-  onInstall,
-  startPage,
-}: {
+interface ReaderProps {
   book: Book;
   library: Library;
   onClose: () => void;
-  /** Leave the book for its downloads and install instructions. */
   onInstall: () => void;
-  /** 1-based body page to open at (from ?page=); otherwise the cover opens itself. */
   startPage?: number;
-}) {
+}
+
+export function Reader(props: ReaderProps) {
+  const [body, setBody] = useState<string | null>(null);
+  const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
+  useEffect(() => {
+    const controller = new AbortController();
+    async function load() {
+      try {
+        const response = await fetch(`/editions/${encodeURIComponent(props.book.id)}`, { signal: controller.signal });
+        if (!response.ok) throw new Error("Edition unavailable");
+        const edition = await response.json();
+        if (!controller.signal.aborted) setBody(edition.html);
+      } catch {
+        if (!controller.signal.aborted) setFailed(true);
+      }
+    }
+    void load();
+    return () => controller.abort();
+  }, [props.book.id, attempt]);
+  const { onClose } = props;
+  useEffect(() => {
+    if (body !== null) return;
+    const escape = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", escape);
+    return () => window.removeEventListener("keydown", escape);
+  }, [body, onClose]);
+  if (body !== null) return <TypesetReader {...props} body={body} />;
+  return <div className={s.overlay} role="dialog" aria-modal="true" aria-label={`${props.book.design.title}, reader`}>
+    <header className={s.top}><button autoFocus className={s.uiBtn} onClick={onClose}>← Close</button></header>
+    <div className={s.loading} role="status"><strong>{props.book.design.title}</strong>
+      {failed ? <><span>This edition couldn’t be loaded.</span><button onClick={() => { setFailed(false); setAttempt(attempt + 1); }}>Try again</button></>
+      : <span>Opening book…</span>}
+    </div>
+  </div>;
+}
+
+function TypesetReader({ book, library, onClose, onInstall, startPage, body }: ReaderProps & { body: string }) {
+  const soundOn = useSound();
   const measureRef = useRef<HTMLDivElement>(null);
   const leafRef = useRef<HTMLDivElement>(null);
   const [layout, setLayout] = useState<Layout | null>(null);
   const [viewport, setViewport] = useState({ w: 1200, h: 800 });
   const [side, setSide] = useState(0);
   const [flip, setFlip] = useState<Flip | null>(null);
-  const html = useMemo(() => ({ __html: book.html }), [book.html]);
+  const html = useMemo(() => ({ __html: body }), [body]);
 
   const front = useMemo(() => frontMatter(book.headings), [book.headings]);
   const bodyStart = front.length;
@@ -393,6 +426,7 @@ export function Reader({
       const from = sideRef.current;
       const to = targetOf(dir, from);
       if (to === null) return;
+      playSound("paper");
       setFlip({ dir, from, to });
     },
     [targetOf],
@@ -501,8 +535,10 @@ export function Reader({
   /* --- keyboard --- */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      else if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
+      if (e.key === "Escape") { onClose(); return; }
+      if (e.target instanceof HTMLInputElement || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key === " " && e.target instanceof HTMLElement && e.target.closest("button, a")) return;
+      if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
         e.preventDefault();
         step(1);
       } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
@@ -631,7 +667,7 @@ export function Reader({
       style={{ "--page-accent": pageAccent(book), "--bg": book.design.bg } as CSSProperties}
     >
       <header className={s.top}>
-        <button type="button" className={s.uiBtn} onClick={onClose}>
+        <button type="button" autoFocus className={s.uiBtn} onClick={onClose}>
           ← Close <span className={s.key}>esc</span>
         </button>
         <div className={s.heading}>
@@ -639,6 +675,9 @@ export function Reader({
           <span className={s.headingSub}>{book.design.subtitle}</span>
         </div>
         <div className={s.topRight}>
+          <button type="button" className={s.uiBtn} aria-label={soundOn ? "Mute sound" : "Enable sound"} aria-pressed={soundOn} onClick={toggleSound}>
+            <LibraryIcon name={soundOn ? "sound" : "mute"} size={16} />
+          </button>
           <button type="button" className={s.getBtn} onClick={onInstall}>
             Get skill ↓
           </button>

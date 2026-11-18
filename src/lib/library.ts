@@ -2,7 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import MarkdownIt, { type Token } from "markdown-it";
-import { categoryFor } from "./categories";
+import { categories } from "./categories";
+import { categoryFor } from "./classifyTopic";
 import { designFor } from "./designs";
 import type { Author, Book, Heading, Library, Source } from "./types";
 
@@ -63,48 +64,65 @@ function createRenderer(blobBase: string) {
   return md;
 }
 
-export function loadLibrary(): Library {
-  const catalog: Catalog = JSON.parse(fs.readFileSync(path.join(CONTENT, "catalog.json"), "utf8"));
+export function readCatalog(): Catalog {
+  return JSON.parse(fs.readFileSync(path.join(CONTENT, "catalog.json"), "utf8"));
+}
 
+function parseEdition(entry: Catalog["books"][number], source: Source) {
+  const file = fs.readFileSync(path.join(CONTENT, "skills", entry.id, "SKILL.md"), "utf8");
+  const { data, content } = matter(file);
+  const blobBase = `${source.url}/blob/${source.commit}/${source.path}/${entry.slug}/`;
+  const md = createRenderer(blobBase);
+  const tokens = md.parse(content, {});
+
+  // Lift a leading H1 onto the title page instead of repeating it in the body.
+  let originalTitle: string | null = null;
+  const firstBlock = tokens.findIndex((t) => t.block && t.type !== "hr");
+  if (firstBlock !== -1 && tokens[firstBlock].type === "heading_open" && tokens[firstBlock].tag === "h1") {
+    originalTitle = inlineText(tokens[firstBlock + 1]);
+    tokens.splice(firstBlock, 3);
+  }
+
+  const headings: Heading[] = [];
+  const seen = new Map<string, number>();
+  tokens.forEach((t, i) => {
+    if (t.type !== "heading_open") return;
+    const inline = tokens[i + 1];
+    const raw = inlineText(inline);
+    const base = slugify(raw) || "section";
+    const n = seen.get(base) ?? 0;
+    seen.set(base, n + 1);
+    const id = n ? `${base}-${n}` : base;
+    t.attrSet("id", id);
+    const shown = displayHeading(raw);
+    if (shown !== raw && inline.children) {
+      inline.children = inline.children.map((c) => {
+        if (c.type === "text") c.content = displayHeading(c.content);
+        return c;
+      });
+    }
+    if (t.tag === "h1" || t.tag === "h2") headings.push({ level: t.tag === "h1" ? 1 : 2, text: shown, id });
+  });
+
+  return { data, content, originalTitle, headings, tokens, md };
+}
+
+/** The edition route only accepts ids from the checked-in catalogue. */
+export function readEdition(id: string): string | null {
+  const catalog = readCatalog();
+  const entry = catalog.books.find((b) => b.id === id);
+  const source = entry && catalog.sources.find((s) => s.id === entry.source);
+  if (!entry || !source) return null;
+  const { md, tokens } = parseEdition(entry, source);
+  return md.renderer.render(tokens, md.options, {});
+}
+
+export function loadLibrary(): Library {
+  const catalog = readCatalog();
   const sources = new Map(catalog.sources.map((src) => [src.id, src]));
   const books: Book[] = catalog.books.map((entry) => {
     const source = sources.get(entry.source)!;
-    const file = fs.readFileSync(path.join(CONTENT, "skills", entry.id, "SKILL.md"), "utf8");
-    const { data, content } = matter(file);
-    const blobBase = `${source.url}/blob/${source.commit}/${source.path}/${entry.slug}/`;
-    const md = createRenderer(blobBase);
-    const tokens = md.parse(content, {});
-
-    // Lift a leading H1 onto the title page instead of repeating it in the body.
-    let originalTitle: string | null = null;
-    const firstBlock = tokens.findIndex((t) => t.block && t.type !== "hr");
-    if (firstBlock !== -1 && tokens[firstBlock].type === "heading_open" && tokens[firstBlock].tag === "h1") {
-      originalTitle = inlineText(tokens[firstBlock + 1]);
-      tokens.splice(firstBlock, 3);
-    }
-
-    const headings: Heading[] = [];
-    const seen = new Map<string, number>();
-    tokens.forEach((t, i) => {
-      if (t.type !== "heading_open") return;
-      const inline = tokens[i + 1];
-      const raw = inlineText(inline);
-      const base = slugify(raw) || "section";
-      const n = seen.get(base) ?? 0;
-      seen.set(base, n + 1);
-      const id = n ? `${base}-${n}` : base;
-      t.attrSet("id", id);
-      const shown = displayHeading(raw);
-      if (shown !== raw && inline.children) {
-        inline.children = inline.children.map((c) => {
-          if (c.type === "text") c.content = displayHeading(c.content);
-          return c;
-        });
-      }
-      if (t.tag === "h1" || t.tag === "h2") headings.push({ level: t.tag === "h1" ? 1 : 2, text: shown, id });
-    });
-
-    const html = md.renderer.render(tokens, md.options, {});
+    const { data, content, originalTitle, headings } = parseEdition(entry, source);
     const words = content.split(/\s+/).filter(Boolean).length;
     const description = String(data.description ?? "").trim();
 
@@ -115,13 +133,12 @@ export function loadLibrary(): Library {
       rank: entry.rank,
       installs: entry.installs,
       license: entry.license,
-      category: categoryFor(entry.id, source.defaultCategory),
+      category: categoryFor(source.repo, entry.slug, description),
       plugin: entry.plugin,
       download: entry.download,
       skillName: String(data.name ?? entry.slug),
       description,
       originalTitle,
-      html,
       headings,
       words,
       readingMinutes: Math.max(1, Math.round(words / 230)),
@@ -129,6 +146,9 @@ export function loadLibrary(): Library {
       design: designFor(entry.id, originalTitle ?? undefined),
     };
   });
+
+  // Keep install rank within each subject as the collection grows.
+  const grouped = categories.flatMap(({ id }) => books.filter((book) => book.category === id));
 
   const authors: Author[] = [];
   for (const src of catalog.sources) {
@@ -138,5 +158,5 @@ export function loadLibrary(): Library {
     else authors.push({ id: src.authorId, name: src.author, url: src.authorUrl, count });
   }
 
-  return { books, sources: catalog.sources, authors, ranking: catalog.ranking, allDownload: catalog.allDownload };
+  return { books: grouped, sources: catalog.sources, authors, ranking: catalog.ranking, allDownload: catalog.allDownload };
 }

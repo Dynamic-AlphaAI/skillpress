@@ -18,7 +18,7 @@ export function TitleMarquee({ books, active, onSelect }: { books: Book[]; activ
     const el = itemRefs.current[active];
     if (!el || !width) return;
     setShift(width / 2 - (el.offsetLeft + el.offsetWidth / 2));
-  }, [active, width, fontsReady]);
+  }, [active, books, width, fontsReady]);
 
   return (
     <div ref={wrapRef} className={s.wrap}>

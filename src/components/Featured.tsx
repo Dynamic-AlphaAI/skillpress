@@ -112,10 +112,10 @@ export function Featured({
   const go = (dir: 1 | -1) => onSelect((active + dir + books.length) % books.length);
   const { handlers, consumedDrag } = useStepGestures(go);
   // Keep the outgoing backdrop underneath while the new one dissolves in.
-  const [layers, setLayers] = useState<number[]>([active]);
-  if (layers[layers.length - 1] !== active) setLayers([layers[layers.length - 1], active]);
-
   const book = books[active];
+  const [layers, setLayers] = useState<Book[]>([book]);
+  const previous = layers[layers.length - 1];
+  if (previous !== book) setLayers([previous, book]);
   const H = Math.round(Math.max(220, Math.min(height * 0.74, width * 0.5, 600)));
   const W = Math.round(H * 0.667);
   const D = bookThickness(book, H);
@@ -123,9 +123,9 @@ export function Featured({
   return (
     <div ref={ref} className={s.stage} {...handlers}>
       <div className={s.frame}>
-        {layers.map((i, n) => (
-          <div key={books[i].id} className={`${s.layer} ${n === layers.length - 1 && layers.length > 1 ? s.enter : ""}`}>
-            <Backdrop book={books[i]} />
+        {layers.map((layer, n) => (
+          <div key={layer.id} className={`${s.layer} ${n === layers.length - 1 && layers.length > 1 ? s.enter : ""}`}>
+            <Backdrop book={layer} />
           </div>
         ))}
       </div>

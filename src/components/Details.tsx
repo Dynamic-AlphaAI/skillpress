@@ -3,7 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { categoryById } from "@/lib/categories";
 import { formatBytes, installMethods } from "@/lib/install";
 import type { Book, Library } from "@/lib/types";
-import { Cover } from "./BookParts";
+import { Book3D } from "./Book3D";
+import { bookThickness } from "./Shelf";
+import { playSound } from "./sound";
 import s from "./Details.module.css";
 
 const TAB_KEY = "skillpress:install-tab";
@@ -60,6 +62,34 @@ function CopyBlock({ text, label, kind }: { text: string; label: string; kind: s
       </span>
     </div>
   );
+}
+
+function InspectBook({ book }: { book: Book }) {
+  const [degrees, setDegrees] = useState(18);
+  const drag = useRef<{ x: number; degrees: number } | null>(null);
+  const moved = useRef(false);
+  return <button type="button" className={s.inspect} aria-label={`Rotate ${book.design.title}`}
+    onPointerDown={(e) => {
+      if (e.button !== 0) return;
+      e.currentTarget.setPointerCapture(e.pointerId);
+      drag.current = { x: e.clientX, degrees }; moved.current = false;
+    }}
+    onPointerMove={(e) => {
+      if (!drag.current) return;
+      const dx = e.clientX - drag.current.x;
+      if (Math.abs(dx) > 3) moved.current = true;
+      if (moved.current) setDegrees(drag.current.degrees + dx * 1.65);
+    }}
+    onPointerCancel={() => { drag.current = null; }}
+    onPointerUp={() => { drag.current = null; }}
+    onClick={(e) => {
+      if (!moved.current || e.detail === 0) { setDegrees((angle) => angle + 90); playSound("book"); }
+      moved.current = false;
+    }}>
+    <Book3D book={book} w={113} h={170} d={bookThickness(book,170)} printedBack
+      style={{ transform: `rotateX(-5deg) rotateY(${degrees}deg)` }} />
+    <span aria-hidden="true">↻ Turn book</span>
+  </button>;
 }
 
 function GetSkill({ book }: { book: Book }) {
@@ -193,9 +223,7 @@ export function Details({
           </button>
         </div>
         <div className={s.hero}>
-          <div className={s.cover}>
-            <Cover book={book} />
-          </div>
+          <InspectBook key={book.id} book={book} />
           <div className={s.heroText}>
             <div className={s.kicker}>
               No. {String(book.rank).padStart(2, "0")} · <span className={s.mono}>{book.skillName}</span>

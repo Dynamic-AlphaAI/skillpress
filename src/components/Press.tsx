@@ -1,18 +1,25 @@
 "use client";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import { categories } from "@/lib/categories";
+import { resolveCategory } from "@/lib/categories";
+import { TopicFilters } from "./TopicFilters";
 import { formatBytes } from "@/lib/install";
 import type { Library } from "@/lib/types";
+import { LibraryIcon } from "./LibraryIcons";
+import { ReadingRoom } from "./ReadingRoom";
+import { playSound, toggleSound, useSound } from "./sound";
 import { Details } from "./Details";
 import { Featured } from "./Featured";
-import { Reader } from "./Reader";
+
 import { Shelf } from "./Shelf";
 import { TitleMarquee } from "./TitleMarquee";
 import { replaceSearch, useSearch } from "./useUrlState";
 import s from "./Press.module.css";
 
-type View = "catalogue" | "featured";
+const Reader = dynamic(() => import("./Reader").then((mod) => mod.Reader));
+
+type View = "library" | "catalogue" | "featured";
 type Panel = false | "info" | "install";
 
 /** Everything on screen, as it is spelled in the URL. */
@@ -22,6 +29,7 @@ interface PressState {
   /** Id of the book on the shelf; null means the middle of the shelf. */
   book: string | null;
   view: View;
+  walking: boolean;
   reading: boolean;
   details: Panel;
   /** Body page to open the reader at. */
@@ -38,16 +46,20 @@ const middleOf = <T,>(list: T[]) => list[Math.floor((list.length - 1) / 2)];
 
 function parseState(search: string, library: Library): PressState {
   const q = new URLSearchParams(search);
-  let category = categories.some((c) => c.id === q.get("category")) ? q.get("category")! : "all";
+  const id = q.get("book");
+  let category = resolveCategory(q.get("category"), library.books.find((b) => b.id === id)?.category);
   const author = library.authors.some((a) => a.id === q.get("author")) ? q.get("author")! : "all";
   if (!shelfFor(library, category, author).length) category = "all";
-  const id = q.get("book");
   const reading = q.has("read");
+  const legacyShelfLink = ["book", "category", "author", "read", "install", "details"].some((key) => q.has(key));
   return {
     category,
     author,
     book: shelfFor(library, category, author).some((b) => b.id === id) ? id : null,
-    view: q.get("view") === "featured" ? "featured" : "catalogue",
+    view: q.get("view") === "featured" ? "featured"
+      : q.get("view") === "shelf" || q.get("view") === "catalogue" ? "catalogue"
+      : q.get("view") === "library" || q.has("walk") || !legacyShelfLink ? "library" : "catalogue",
+    walking: q.has("walk"),
     reading,
     details: reading ? false : q.has("install") ? "install" : q.has("details") ? "info" : false,
     page: Number(q.get("page")) || undefined,
@@ -61,6 +73,9 @@ function serializeState(st: PressState, library: Library) {
   const fallback = middleOf(shelfFor(library, st.category, st.author))?.id;
   if (st.book && (st.book !== fallback || st.reading || st.details)) q.set("book", st.book);
   if (st.view === "featured") q.set("view", "featured");
+  else if (st.view === "catalogue") q.set("view", "shelf");
+  else if (q.size || st.reading || st.details) q.set("view", "library");
+  if (st.view === "library" && st.walking) q.set("walk", "");
   if (st.reading) {
     q.set("read", "");
     if (st.page) q.set("page", String(st.page));
@@ -71,9 +86,10 @@ function serializeState(st: PressState, library: Library) {
 
 export function Press({ library }: { library: Library }) {
   const { books } = library;
+  const soundOn = useSound();
   const search = useSearch();
   const state = useMemo(() => parseState(search, library), [search, library]);
-  const { category, author, view, reading, details } = state;
+  const { category, author, view, reading, details, walking } = state;
 
   // Every change goes through the URL, so reloads and shared links land in place.
   const update = useCallback(
@@ -84,13 +100,15 @@ export function Press({ library }: { library: Library }) {
     [library],
   );
 
-  const filterBar = useRef<HTMLDivElement>(null);
-  // Keep the chosen filters visible when the row scrolls (narrow screens).
+  const lastControl = useRef<HTMLElement | null>(null);
+  const hadOverlay = useRef(false);
   useEffect(() => {
-    filterBar.current
-      ?.querySelectorAll('[aria-selected="true"]')
-      .forEach((el) => el.scrollIntoView({ block: "nearest", inline: "nearest" }));
-  }, [category, author]);
+    if (reading || details) hadOverlay.current = true;
+    else if (hadOverlay.current) {
+      hadOverlay.current = false;
+      if (lastControl.current?.isConnected) lastControl.current.focus({ preventScroll: true });
+    }
+  }, [reading, details]);
 
   const visible = useMemo(() => shelfFor(library, category, author), [library, category, author]);
   const found = visible.findIndex((b) => b.id === state.book);
@@ -98,7 +116,10 @@ export function Press({ library }: { library: Library }) {
   const book = visible[active];
 
   const select = useCallback(
-    (i: number) => update({ book: visible[Math.max(0, Math.min(visible.length - 1, i))].id }),
+    (i: number) => {
+      playSound("book");
+      update({ book: visible[Math.max(0, Math.min(visible.length - 1, i))].id });
+    },
     [visible, update],
   );
   /** Change one filter (dropping the other if the shelf would be empty) and re-centre the shelf. */
@@ -108,7 +129,10 @@ export function Press({ library }: { library: Library }) {
     update({ ...next, book: null });
   };
   const open = useCallback(
-    (i: number) => update({ book: visible[i].id, details: false, reading: true, page: undefined }),
+    (i: number) => {
+      playSound("book");
+      update({ book: visible[i].id, details: false, reading: true, page: undefined });
+    },
     [visible, update],
   );
   const closeReader = useCallback(() => update({ reading: false, page: undefined }), [update]);
@@ -118,7 +142,7 @@ export function Press({ library }: { library: Library }) {
   useEffect(() => {
     if (reading || details) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (view === "library" || e.target instanceof HTMLInputElement || e.target instanceof HTMLSelectElement || e.metaKey || e.ctrlKey || e.altKey) return;
       const key = e.key.toLowerCase();
       if (e.key === "ArrowRight") select(active + 1);
       else if (e.key === "ArrowLeft") select(active - 1);
@@ -131,18 +155,6 @@ export function Press({ library }: { library: Library }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [active, reading, details, view, select, open, update]);
 
-  // Counts for each facet reflect the other facet's choice.
-  const categoryCounts = useMemo(() => {
-    const c: Record<string, number> = {};
-    for (const b of shelfFor(library, "all", author)) c[b.category] = (c[b.category] ?? 0) + 1;
-    return c;
-  }, [library, author]);
-  const authorCounts = useMemo(() => {
-    const c: Record<string, number> = {};
-    for (const b of shelfFor(library, category, "all")) c[b.source.authorId] = (c[b.source.authorId] ?? 0) + 1;
-    return c;
-  }, [library, category]);
-
   // "Download all" follows the author filter when that author has a single library.
   const authorSources = library.sources.filter((src) => src.authorId === author);
   const bundle =
@@ -151,76 +163,33 @@ export function Press({ library }: { library: Library }) {
       : { href: library.allDownload.zip, bytes: library.allDownload.bytes, label: `all ${books.length} skills` };
 
   return (
-    <div className={s.page}>
+    <div className={`${s.page} ${view === "library" ? s.libraryPage : ""}`}>
+      <div className={s.surface} inert={!!(reading || details)} onFocusCapture={(e) => { lastControl.current = e.target; }}>
       <header className={s.masthead}>
-        <Link
-          className={s.brand}
-          href="/"
-          onClick={(e) => {
-            e.preventDefault();
-            update({ category: "all", author: "all", book: null, reading: false, details: false, page: undefined });
-          }}
-        >
-          Skill Press
-        </Link>
-        <nav className={s.meta}>
-          <div className={s.tabs} role="tablist" aria-label="View">
-            <button type="button" role="tab" aria-selected={view === "catalogue"} onClick={() => update({ view: "catalogue" })}>
-              Shelf
-            </button>
-            <span aria-hidden="true">/</span>
-            <button type="button" role="tab" aria-selected={view === "featured"} onClick={() => update({ view: "featured" })}>
-              Featured
-            </button>
-          </div>
-          <a href={bundle.href} download title={`One .zip (${formatBytes(bundle.bytes)})`}>
-            [ ↓ <span className={s.hideSm}>Download {bundle.label}</span>
-            <span className={s.showSm}>All</span> ]
-          </a>
+        <Link className={s.brand} href="/" onClick={(e) => {
+          e.preventDefault();
+          update({ view: "library", walking: false, category: "all", author: "all", book: null, reading: false, details: false, page: undefined });
+        }}><LibraryIcon name="books" size={29} /> Skill Press</Link>
+        <nav className={s.viewNav} aria-label="Browse views">
+          {(["library", "catalogue", "featured"] as const).map((mode) =>
+            <button key={mode} aria-current={view === mode ? "page" : undefined}
+              onClick={() => update({ view: mode, walking: false })}>{mode === "library" ? "Library" : mode === "catalogue" ? "Shelf" : "Featured"}</button>)}
         </nav>
-      </header>
-
-      <div className={s.subbar}>
-        <div ref={filterBar} className={s.filters}>
-          <div className={s.group} role="tablist" aria-label="Subject">
-            {[{ id: "all", label: "All skills", short: "All" }, ...categories].map((c) => {
-              const n = c.id === "all" ? shelfFor(library, "all", author).length : (categoryCounts[c.id] ?? 0);
-              return (
-                <button
-                  key={c.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={category === c.id}
-                  className={n === 0 ? s.empty : undefined}
-                  onClick={() => filter({ category: c.id })}
-                >
-                  <span className={s.longLabel}>{c.label}</span>
-                  <span className={s.shortLabel}>{c.short}</span> <span className={s.count}>{n}</span>
-                </button>
-              );
-            })}
-          </div>
-          <div className={s.group} role="tablist" aria-label="Author">
-            <span className={s.groupLabel} aria-hidden="true">
-              By
-            </span>
-            {[{ id: "all", name: "Everyone" }, ...library.authors].map((a) => {
-              const n = a.id === "all" ? shelfFor(library, category, "all").length : (authorCounts[a.id] ?? 0);
-              return (
-                <button
-                  key={a.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={author === a.id}
-                  className={n === 0 ? s.empty : undefined}
-                  onClick={() => filter({ author: a.id })}
-                >
-                  {a.name} <span className={s.count}>{n}</span>
-                </button>
-              );
-            })}
-          </div>
+        <div className={s.tools}>
+          <button className={s.sound} onClick={toggleSound} aria-pressed={soundOn} aria-label={soundOn ? "Mute sound" : "Enable sound"}>
+            <LibraryIcon name={soundOn ? "sound" : "mute"} size={16} /><span>Sound {soundOn ? "on" : "off"}</span>
+          </button>
+          <a className={s.download} href={bundle.href} download aria-label={`Download ${bundle.label}`} title={`Download ${bundle.label} (${formatBytes(bundle.bytes)})`}>
+            <span aria-hidden="true">↓</span> <span>Download</span>
+          </a>
         </div>
+      </header>
+      {view === "library" ? <ReadingRoom library={library} books={visible} author={author} category={category}
+        walking={walking} paused={!!(reading || details)}
+        onWalk={(value) => update({ walking: value })} onFilter={filter} onOpen={open}
+        onDetails={(i) => update({ book: visible[i].id, details: "info" })} /> : <>
+      <div className={s.subbar}>
+        <TopicFilters library={library} category={category} author={author} onFilter={filter} />
       </div>
 
       <TitleMarquee books={visible} active={active} onSelect={select} />
@@ -257,6 +226,8 @@ export function Press({ library }: { library: Library }) {
           </button>
         </div>
       </footer>
+      </>}
+      </div>
 
       {details && (
         <Details book={book} library={library} focus={details} onClose={closeDetails} onOpen={() => open(active)} />

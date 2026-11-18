@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Book } from "@/lib/types";
-import { Cover, Spine } from "./BookParts";
+import { BackCover, Cover, Spine } from "./BookParts";
 import s from "./Book3D.module.css";
 
 /** A hardcover as a CSS 3D box. Faces cull with backface-visibility, so only what faces you renders. */
@@ -9,6 +9,7 @@ export function Book3D({
   w,
   h,
   d,
+  printedBack,
   className,
   style,
 }: {
@@ -16,6 +17,7 @@ export function Book3D({
   w: number;
   h: number;
   d: number;
+  printedBack?: boolean;
   className?: string;
   style?: CSSProperties;
 }) {
@@ -33,7 +35,7 @@ export function Book3D({
       <div className={`${s.face} ${s.front}`}>
         <Cover book={book} />
       </div>
-      <div className={`${s.face} ${s.back}`} />
+      <div className={`${s.face} ${s.back}`}>{printedBack && <BackCover book={book} />}</div>
       <div className={`${s.face} ${s.spine}`}>
         <Spine book={book} />
       </div>

@@ -750,3 +750,6 @@
 .flow strong {
   font-weight: 600;
 }
+.loading { place-self: center; display: grid; justify-items: center; gap: 12px; }
+.loading strong { font: 40px var(--font-serif), Georgia, serif; text-transform: none; }
+.loading button { padding: 8px 14px; font: inherit; cursor: pointer; }

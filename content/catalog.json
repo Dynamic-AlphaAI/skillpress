@@ -12,7 +12,6 @@
       "authorUrl": "https://www.anthropic.com",
       "copyright": "Anthropic, PBC",
       "series": null,
-      "defaultCategory": "development",
       "bundleNote": null,
       "download": {
         "zip": "/downloads/anthropic-skills.zip",
@@ -31,7 +30,6 @@
       "authorUrl": "https://github.com/obra",
       "copyright": "Jesse Vincent",
       "series": "Superpowers",
-      "defaultCategory": "workflow",
       "bundleNote": "Superpowers skills are written to work together — using-superpowers teaches the agent when to reach for the rest — so the full set gets the most out of any one of them.",
       "download": {
         "zip": "/downloads/superpowers-skills.zip",
@@ -50,7 +48,6 @@
       "authorUrl": "https://corey.co",
       "copyright": "Corey Haines",
       "series": "Marketing Skills",
-      "defaultCategory": "marketing",
       "bundleNote": "These skills build on shared context: every one of them reads product-marketing first for your product, audience, and positioning, so install product-marketing alongside whichever you pick.",
       "download": {
         "zip": "/downloads/marketing-skills.zip",
