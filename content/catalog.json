@@ -1,0 +1,506 @@
+{
+  "source": {
+    "repo": "anthropics/skills",
+    "url": "https://github.com/anthropics/skills",
+    "commit": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba",
+    "commitDate": "2026-11-16",
+    "marketplace": "anthropic-agent-skills"
+  },
+  "ranking": {
+    "source": "https://skills.sh",
+    "metric": "installs",
+    "fetchedAt": "2026-11-18T17:39:40.399Z"
+  },
+  "allDownload": {
+    "zip": "/downloads/anthropic-skills.zip",
+    "bytes": 4429918
+  },
+  "books": [
+    {
+      "slug": "frontend-design",
+      "rank": 1,
+      "installs": 1136364,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "example-skills",
+        "skills": [
+          "algorithmic-art",
+          "brand-guidelines",
+          "canvas-design",
+          "doc-coauthoring",
+          "frontend-design",
+          "internal-comms",
+          "mcp-builder",
+          "skill-creator",
+          "slack-gif-creator",
+          "theme-factory",
+          "web-artifacts-builder",
+          "webapp-testing"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/frontend-design.zip",
+        "skillMd": "/downloads/frontend-design/SKILL.md",
+        "bytes": 8320,
+        "files": 2
+      }
+    },
+    {
+      "slug": "skill-creator",
+      "rank": 2,
+      "installs": 436241,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "example-skills",
+        "skills": [
+          "algorithmic-art",
+          "brand-guidelines",
+          "canvas-design",
+          "doc-coauthoring",
+          "frontend-design",
+          "internal-comms",
+          "mcp-builder",
+          "skill-creator",
+          "slack-gif-creator",
+          "theme-factory",
+          "web-artifacts-builder",
+          "webapp-testing"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/skill-creator.zip",
+        "skillMd": "/downloads/skill-creator/SKILL.md",
+        "bytes": 74474,
+        "files": 18
+      }
+    },
+    {
+      "slug": "pptx",
+      "rank": 3,
+      "installs": 258713,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "document-skills",
+        "skills": [
+          "xlsx",
+          "docx",
+          "pptx",
+          "pdf"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/pptx.zip",
+        "skillMd": "/downloads/pptx/SKILL.md",
+        "bytes": 189397,
+        "files": 58
+      }
+    },
+    {
+      "slug": "pdf",
+      "rank": 4,
+      "installs": 232591,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "document-skills",
+        "skills": [
+          "xlsx",
+          "docx",
+          "pptx",
+          "pdf"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/pdf.zip",
+        "skillMd": "/downloads/pdf/SKILL.md",
+        "bytes": 25237,
+        "files": 12
+      }
+    },
+    {
+      "slug": "docx",
+      "rank": 5,
+      "installs": 221491,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "document-skills",
+        "skills": [
+          "xlsx",
+          "docx",
+          "pptx",
+          "pdf"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/docx.zip",
+        "skillMd": "/downloads/docx/SKILL.md",
+        "bytes": 175619,
+        "files": 61
+      }
+    },
+    {
+      "slug": "webapp-testing",
+      "rank": 6,
+      "installs": 208576,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "example-skills",
+        "skills": [
+          "algorithmic-art",
+          "brand-guidelines",
+          "canvas-design",
+          "doc-coauthoring",
+          "frontend-design",
+          "internal-comms",
+          "mcp-builder",
+          "skill-creator",
+          "slack-gif-creator",
+          "theme-factory",
+          "web-artifacts-builder",
+          "webapp-testing"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/webapp-testing.zip",
+        "skillMd": "/downloads/webapp-testing/SKILL.md",
+        "bytes": 9749,
+        "files": 6
+      }
+    },
+    {
+      "slug": "xlsx",
+      "rank": 7,
+      "installs": 201657,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "document-skills",
+        "skills": [
+          "xlsx",
+          "docx",
+          "pptx",
+          "pdf"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/xlsx.zip",
+        "skillMd": "/downloads/xlsx/SKILL.md",
+        "bytes": 175441,
+        "files": 53
+      }
+    },
+    {
+      "slug": "mcp-builder",
+      "rank": 8,
+      "installs": 144351,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "example-skills",
+        "skills": [
+          "algorithmic-art",
+          "brand-guidelines",
+          "canvas-design",
+          "doc-coauthoring",
+          "frontend-design",
+          "internal-comms",
+          "mcp-builder",
+          "skill-creator",
+          "slack-gif-creator",
+          "theme-factory",
+          "web-artifacts-builder",
+          "webapp-testing"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/mcp-builder.zip",
+        "skillMd": "/downloads/mcp-builder/SKILL.md",
+        "bytes": 56402,
+        "files": 11
+      }
+    },
+    {
+      "slug": "canvas-design",
+      "rank": 9,
+      "installs": 135317,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "example-skills",
+        "skills": [
+          "algorithmic-art",
+          "brand-guidelines",
+          "canvas-design",
+          "doc-coauthoring",
+          "frontend-design",
+          "internal-comms",
+          "mcp-builder",
+          "skill-creator",
+          "slack-gif-creator",
+          "theme-factory",
+          "web-artifacts-builder",
+          "webapp-testing"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/canvas-design.zip",
+        "skillMd": "/downloads/canvas-design/SKILL.md",
+        "bytes": 2719166,
+        "files": 83
+      }
+    },
+    {
+      "slug": "brand-guidelines",
+      "rank": 10,
+      "installs": 121323,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "example-skills",
+        "skills": [
+          "algorithmic-art",
+          "brand-guidelines",
+          "canvas-design",
+          "doc-coauthoring",
+          "frontend-design",
+          "internal-comms",
+          "mcp-builder",
+          "skill-creator",
+          "slack-gif-creator",
+          "theme-factory",
+          "web-artifacts-builder",
+          "webapp-testing"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/brand-guidelines.zip",
+        "skillMd": "/downloads/brand-guidelines/SKILL.md",
+        "bytes": 5378,
+        "files": 2
+      }
+    },
+    {
+      "slug": "web-artifacts-builder",
+      "rank": 11,
+      "installs": 121306,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "example-skills",
+        "skills": [
+          "algorithmic-art",
+          "brand-guidelines",
+          "canvas-design",
+          "doc-coauthoring",
+          "frontend-design",
+          "internal-comms",
+          "mcp-builder",
+          "skill-creator",
+          "slack-gif-creator",
+          "theme-factory",
+          "web-artifacts-builder",
+          "webapp-testing"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/web-artifacts-builder.zip",
+        "skillMd": "/downloads/web-artifacts-builder/SKILL.md",
+        "bytes": 30374,
+        "files": 5
+      }
+    },
+    {
+      "slug": "theme-factory",
+      "rank": 12,
+      "installs": 104384,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "example-skills",
+        "skills": [
+          "algorithmic-art",
+          "brand-guidelines",
+          "canvas-design",
+          "doc-coauthoring",
+          "frontend-design",
+          "internal-comms",
+          "mcp-builder",
+          "skill-creator",
+          "slack-gif-creator",
+          "theme-factory",
+          "web-artifacts-builder",
+          "webapp-testing"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/theme-factory.zip",
+        "skillMd": "/downloads/theme-factory/SKILL.md",
+        "bytes": 123677,
+        "files": 13
+      }
+    },
+    {
+      "slug": "doc-coauthoring",
+      "rank": 13,
+      "installs": 103561,
+      "license": "Unspecified",
+      "plugin": {
+        "name": "example-skills",
+        "skills": [
+          "algorithmic-art",
+          "brand-guidelines",
+          "canvas-design",
+          "doc-coauthoring",
+          "frontend-design",
+          "internal-comms",
+          "mcp-builder",
+          "skill-creator",
+          "slack-gif-creator",
+          "theme-factory",
+          "web-artifacts-builder",
+          "webapp-testing"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/doc-coauthoring.zip",
+        "skillMd": "/downloads/doc-coauthoring/SKILL.md",
+        "bytes": 6062,
+        "files": 1
+      }
+    },
+    {
+      "slug": "algorithmic-art",
+      "rank": 14,
+      "installs": 97292,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "example-skills",
+        "skills": [
+          "algorithmic-art",
+          "brand-guidelines",
+          "canvas-design",
+          "doc-coauthoring",
+          "frontend-design",
+          "internal-comms",
+          "mcp-builder",
+          "skill-creator",
+          "slack-gif-creator",
+          "theme-factory",
+          "web-artifacts-builder",
+          "webapp-testing"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/algorithmic-art.zip",
+        "skillMd": "/downloads/algorithmic-art/SKILL.md",
+        "bytes": 19557,
+        "files": 4
+      }
+    },
+    {
+      "slug": "internal-comms",
+      "rank": 15,
+      "installs": 87762,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "example-skills",
+        "skills": [
+          "algorithmic-art",
+          "brand-guidelines",
+          "canvas-design",
+          "doc-coauthoring",
+          "frontend-design",
+          "internal-comms",
+          "mcp-builder",
+          "skill-creator",
+          "slack-gif-creator",
+          "theme-factory",
+          "web-artifacts-builder",
+          "webapp-testing"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/internal-comms.zip",
+        "skillMd": "/downloads/internal-comms/SKILL.md",
+        "bytes": 10198,
+        "files": 6
+      }
+    },
+    {
+      "slug": "slack-gif-creator",
+      "rank": 16,
+      "installs": 82232,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "example-skills",
+        "skills": [
+          "algorithmic-art",
+          "brand-guidelines",
+          "canvas-design",
+          "doc-coauthoring",
+          "frontend-design",
+          "internal-comms",
+          "mcp-builder",
+          "skill-creator",
+          "slack-gif-creator",
+          "theme-factory",
+          "web-artifacts-builder",
+          "webapp-testing"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/slack-gif-creator.zip",
+        "skillMd": "/downloads/slack-gif-creator/SKILL.md",
+        "bytes": 16140,
+        "files": 7
+      }
+    },
+    {
+      "slug": "claude-api",
+      "rank": 17,
+      "installs": 81831,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "claude-api",
+        "skills": [
+          "claude-api"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/claude-api.zip",
+        "skillMd": "/downloads/claude-api/SKILL.md",
+        "bytes": 753455,
+        "files": 96
+      }
+    },
+    {
+      "slug": "academy-guide",
+      "rank": 18,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "academy-guide",
+        "skills": [
+          "academy-guide"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/academy-guide.zip",
+        "skillMd": "/downloads/academy-guide/SKILL.md",
+        "bytes": 7657,
+        "files": 2
+      }
+    },
+    {
+      "slug": "discernment-nudge",
+      "rank": 19,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": {
+        "name": "discernment-nudge",
+        "skills": [
+          "discernment-nudge"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/discernment-nudge.zip",
+        "skillMd": "/downloads/discernment-nudge/SKILL.md",
+        "bytes": 8983,
+        "files": 2
+      }
+    }
+  ]
+}

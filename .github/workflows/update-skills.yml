@@ -1,0 +1,59 @@
+# Pulls the latest skills from anthropics/skills and install counts from skills.sh every day.
+# If anything changed and the site still builds, it commits to main — and Vercel deploys that commit.
+# Run it by hand any time from the Actions tab ("Run workflow").
+name: Update skills
+
+on:
+  schedule:
+    - cron: "17 6 * * *" # 06:17 UTC daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-skills
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Import skills
+        run: npm run import
+
+      - name: Anything new?
+        id: diff
+        run: |
+          if [ -n "$(git status --porcelain -- content public/downloads)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git status --short -- content public/downloads | head -40
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check the site still builds
+        if: steps.diff.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Commit
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add content public/downloads
+          new=$(git diff --cached --name-only --diff-filter=A -- 'content/skills/*/SKILL.md' | cut -d/ -f3 | paste -sd, -)
+          msg="Update skills from anthropics/skills"
+          [ -n "$new" ] && msg="Add skills: $new"
+          git commit -m "$msg"
+          git push

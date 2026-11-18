@@ -1,0 +1,38 @@
+/* Skill Press is a print object: one warm paper palette in both color schemes. */
+:root {
+  --paper: #ebe8df;
+  --ink: #1b1a17;
+  --muted: #77726a;
+  --rule: rgb(27 26 23 / 0.85);
+  --rule-soft: rgb(27 26 23 / 0.14);
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-book), Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: rgb(212 71 46 / 0.25);
+}

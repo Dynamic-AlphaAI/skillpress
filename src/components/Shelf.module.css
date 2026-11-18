@@ -1,0 +1,82 @@
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  perspective: 1700px;
+  touch-action: pan-y;
+  user-select: none;
+}
+/* overflow:hidden on .stage flattens 3D, so the books share depth-sorting inside this row instead. */
+.row {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.slot {
+  --lift: 0px;
+  --pull: 0px;
+  position: absolute;
+  left: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform: translate3d(var(--x), var(--lift), var(--pull));
+  transition: transform 0.75s cubic-bezier(0.2, 0.75, 0.2, 1), width 0.75s cubic-bezier(0.2, 0.75, 0.2, 1);
+  z-index: 1;
+}
+.slot:focus-visible {
+  outline: none;
+}
+.slot:focus-visible .shadow {
+  outline: 1px dashed var(--ink);
+  outline-offset: 6px;
+}
+.slot:not(.active):hover {
+  --lift: -10px;
+  --pull: 12px;
+}
+.active {
+  z-index: 2;
+}
+.book {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transition: transform 0.75s cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+.shadow {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  height: 9%;
+  transform-origin: top left;
+  transform: skewX(42deg);
+  background: linear-gradient(to bottom, rgb(40 32 24 / 0.26), rgb(40 32 24 / 0) 90%);
+  filter: blur(4px);
+  transition: width 0.75s cubic-bezier(0.2, 0.75, 0.2, 1);
+  pointer-events: none;
+}
+.active .shadow {
+  height: 12%;
+  transform: translateY(2px) skewX(42deg);
+  background: linear-gradient(to bottom, rgb(40 32 24 / 0.34), rgb(40 32 24 / 0) 90%);
+}
+.floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(27 26 23 / 0.12) 15%, rgb(27 26 23 / 0.12) 85%, transparent);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot,
+  .book,
+  .shadow {
+    transition-duration: 0.01s;
+  }
+}
