@@ -1,14 +1,11 @@
 import * as T from "three";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import type { RoomShelf } from "@/lib/roomShelves";
 import type { Book } from "@/lib/types";
 import { playSound } from "./sound";
 
-export interface Bay {
-  label: string;
-  books: Book[];
-}
 type SceneEvents = { open: (id: string) => void; hover: (title: string) => void; lost: () => void };
-type Flight = { from: T.Vector3; to: T.Vector3; yaw: number; turn: number; pitch: number; elapsed: number };
+type Flight = { from: T.Vector3; to: T.Vector3; yaw: number; turn: number; pitch: number; targetPitch: number; elapsed: number };
 
 function paintTexture(w: number, h: number, paint: (ctx: CanvasRenderingContext2D) => void) {
   const canvas = document.createElement("canvas");
@@ -73,7 +70,8 @@ function spineTexture(book: Book) {
 
 function jacketTexture(book: Book, art: SVGSVGElement, ready: () => void) {
   const d = book.design;
-  const texture = paintTexture(384, 576, (ctx) => {
+  const texture = paintTexture(256, 384, (ctx) => {
+    ctx.scale(2 / 3, 2 / 3);
     ctx.fillStyle = d.bg;
     ctx.fillRect(0, 0, 384, 576);
   });
@@ -131,7 +129,7 @@ function jacketTexture(book: Book, art: SVGSVGElement, ready: () => void) {
 /** Local-space bookcases face the centre aisle. Camera coordinates are in metres. */
 export function createRoom(
   canvas: HTMLCanvasElement,
-  bays: Bay[],
+  shelves: RoomShelf[],
   jackets: HTMLDivElement,
   events: SceneEvents,
 ) {
@@ -144,7 +142,8 @@ export function createRoom(
   const camera = new T.PerspectiveCamera(61, 1, 0.055, 65);
   camera.rotation.order = "YXZ";
   const stride = 3.8;
-  const rows = Math.ceil(bays.length / 2);
+  const cases = Math.ceil(shelves.length / 4);
+  const rows = Math.ceil(cases / 2);
   const rear = -rows * stride + 1;
   const front = 5.4;
   const depth = front - rear;
@@ -171,6 +170,7 @@ export function createRoom(
     yaw: -0.045,
     turn: 0.045,
     pitch: -0.03,
+    targetPitch: -0.03,
     elapsed: 0,
   };
   let yaw = 0;
@@ -190,11 +190,6 @@ export function createRoom(
   const green = surface("#435349");
   const plaster = surface("#b7a88a");
   const brass = register(new T.MeshStandardMaterial({ color: "#b4904f", metalness: 0.4, roughness: 0.34 }));
-  const archive = new T.TextureLoader().load("/archive-bindings.webp", redraw);
-  archive.colorSpace = T.SRGBColorSpace;
-  archive.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
-  textures.add(archive);
-  const oldBooks = surface("#e2ccb0", archive);
   function block(
     x: number,
     y: number,
@@ -278,7 +273,7 @@ export function createRoom(
   rugTexture.repeat.y = depth / 1.83;
   textures.add(rugTexture);
   block(0, 0.008, middle, 1.83, 0.018, depth - 0.75, surface("#e3d8be", rugTexture));
-  const endWall = new T.TextureLoader().load("/window-wall.webp", redraw);
+  const endWall = new T.TextureLoader().load("/paneled-window.webp", redraw);
   endWall.colorSpace = T.SRGBColorSpace;
   textures.add(endWall);
   const endMaterial = register(new T.MeshBasicMaterial({ map: endWall, color: "#ead9be" }));
@@ -347,53 +342,64 @@ export function createRoom(
   }
 
   const pickable: T.Mesh[] = [];
-  const bayPositions: { side: number; z: number }[] = [];
-  bays.forEach((bay, i) => {
+  const shelfPositions: { side: number; z: number; height: number }[] = [];
+  const paper = surface("#e4d6b8");
+  const boards = new Map<string, T.Material>();
+  const hitMaterial = register(new T.MeshBasicMaterial());
+  for (let i = 0; i < cases; i++) {
+    const start = Math.floor((i * shelves.length) / cases);
+    const stack = shelves.slice(start, Math.floor(((i + 1) * shelves.length) / cases));
     const side = i % 2 ? 1 : -1;
     const z = -Math.floor(i / 2) * stride;
-    bayPositions.push({ side, z });
     const base = new T.Matrix4().makeRotationY((-side * Math.PI) / 2).setPosition(side * 3.78, 0, z);
     const timber = (x: number, y: number, distance: number, w: number, h: number, d: number, m: T.Material) =>
       block(x, y, distance, w, h, d, m, base);
-    timber(0, 1.91, 0.07, 3.69, 3.82, 0.18, dark);
-    timber(0, 0.42, 0.19, 3.49, 0.65, 0.1, oldBooks);
-    timber(0, 2.94, 0.19, 3.49, 1.4, 0.1, oldBooks);
+    const bottom = stack.length === 1 ? 1.14 : 0.61;
+    const step = 0.76;
+    const top = bottom + stack.length * step;
+    timber(0, top / 2, 0.07, 3.69, top, 0.18, dark);
     for (const x of [-1.78, 1.78]) {
-      timber(x, 1.88, 0.26, 0.13, 3.76, 0.39, walnut);
-      timber(x, 1.88, 0.47, 0.05, 3.65, 0.03, panel);
+      timber(x, top / 2, 0.26, 0.13, top, 0.39, walnut);
+      timber(x, top / 2, 0.47, 0.05, top, 0.03, panel);
     }
-    for (const y of [0.09, 0.77, 1.48, 2.21, 3.7]) {
-      timber(0, y, 0.28, 3.7, 0.08, 0.46, walnut);
-      timber(0, y + 0.025, 0.522, 3.7, 0.018, 0.025, panel);
+    for (const x of [-1.27, -0.43, 0.43, 1.27]) {
+      timber(x, bottom / 2, 0.33, 0.82, bottom - 0.06, 0.22, walnut);
+      timber(x, bottom / 2, 0.45, 0.67, bottom - 0.19, 0.035, panel);
+      timber(x + 0.25, bottom * 0.68, 0.49, 0.04, 0.04, 0.04, brass);
     }
-    timber(0, 3.79, 0.32, 3.8, 0.12, 0.55, panel);
-    timber(0, 2.24, 0.54, 0.99, 0.13, 0.06, brass);
-    const plaqueTexture = paintTexture(512, 64, (ctx) => {
-      ctx.fillStyle = "#ad915c";
-      ctx.fillRect(0, 0, 512, 64);
-      ctx.fillStyle = "#28251e";
-      ctx.font = "32px Georgia";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText(bay.label, 256, 34, 485);
-    });
-    textures.add(plaqueTexture);
-    timber(0, 2.24, 0.581, 0.96, 0.12, 0.012, surface("#ffffff", plaqueTexture));
-    const countPerRow = Math.ceil(bay.books.length / 2);
-    const nominalWidth = (b: Book) => 0.14 + Math.min(b.words / 22500, 0.075);
-    const paper = surface("#e4d6b8");
-    for (const row of [0, 1]) {
-      const books = bay.books.slice(row * countPerRow, (row + 1) * countPerRow);
-      const widths = books.map((b, i) => (i === 0 ? 0.48 : nominalWidth(b)));
-      let cursor = -(widths.reduce((a, b) => a + b, 0) + Math.max(0, books.length - 1) * 0.037) / 2;
-      books.forEach((book, column) => {
-        const faceOut = column === 0;
+    timber(0, top, 0.31, 3.8, 0.12, 0.54, panel);
+    stack.forEach((shelf, row) => {
+      const deck = bottom + step * row;
+      shelfPositions.push({ side, z, height: deck + 0.35 });
+      timber(0, deck, 0.29, 3.68, 0.095, 0.48, walnut);
+      timber(0, deck - 0.004, 0.54, 1.43, 0.104, 0.035, brass);
+      const plaqueTexture = paintTexture(512, 48, (ctx) => {
+        ctx.fillStyle = "#ad915c";
+        ctx.fillRect(0, 0, 512, 48);
+        ctx.fillStyle = "#28251e";
+        ctx.font = "32px Georgia";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(shelf.label, 256, 25, 490);
+      });
+      textures.add(plaqueTexture);
+      timber(0, deck - 0.004, 0.563, 1.4, 0.1, 0.012, surface("#ffffff", plaqueTexture));
+      const widths = shelf.books.map((b, j) => j < shelf.faceOutCount ? 0.46 : 0.15 + Math.min(b.words / 22000, 0.065));
+      const totalWidth = widths.reduce((a, b) => a + b, 0);
+      const gap = Math.min(0.13, (3.37 - totalWidth) / Math.max(1, widths.length - 1));
+      let cursor = -(totalWidth + (widths.length - 1) * gap) / 2;
+      shelf.books.forEach((book, column) => {
+        const faceOut = column < shelf.faceOutCount;
         const w = widths[column],
           h = faceOut ? 0.635 : 0.5 + (book.rank % 6) * 0.021;
         const x = cursor + w / 2,
-          y = 0.817 + row * 0.71 + h / 2;
-        cursor += w + 0.037;
-        const board = surface(book.design.bg);
+          y = deck + 0.05 + h / 2;
+        cursor += w + gap;
+        let board = boards.get(book.design.bg);
+        if (!board) {
+          board = surface(book.design.bg);
+          boards.set(book.design.bg, board);
+        }
         const d = faceOut ? 0.093 : 0.3;
         const front = 0.495;
         const center = front - d / 2;
@@ -420,12 +426,18 @@ export function createRoom(
         const binding = new T.Mesh(geo, surface("#fff5e3", map));
         binding.position.set(x, y, front + 0.002);
         binding.applyMatrix4(base);
-        binding.userData.book = book;
         scene.add(binding);
-        pickable.push(binding);
+        // The sides, page block and cover all open the same edition.
+        const hitBox = new T.Mesh(unit, hitMaterial);
+        hitBox.position.set(x, y, center);
+        hitBox.scale.set(w, h, d + 0.005);
+        hitBox.applyMatrix4(base);
+        hitBox.updateMatrixWorld();
+        hitBox.userData.book = book;
+        pickable.push(hitBox);
       });
-    }
-  });
+    });
+  }
   // Combine fixed joinery by material so the renderer does not draw each moulding individually.
   for (const [material, parts] of buckets) {
     const geometry = mergeGeometries(parts)!;
@@ -489,7 +501,7 @@ export function createRoom(
       const ease = t * t * (3 - 2 * t);
       camera.position.lerpVectors(flight.from, flight.to, ease);
       yaw = flight.yaw + flight.turn * ease;
-      pitch = flight.pitch * (1 - ease) - 0.03 * ease;
+      pitch = flight.pitch * (1 - ease) + flight.targetPitch * ease;
       if (t === 1) flight = null;
     } else if (keys.size) {
       moveCamera(dt);
@@ -503,7 +515,7 @@ export function createRoom(
     pointerStart = null;
   }
   function visit(index: number) {
-    const bay = bayPositions[index];
+    const bay = shelfPositions[index];
     const to = bay ? new T.Vector3(bay.side * 1.03, 1.64, bay.z) : entry;
     // Facing left is positive yaw, facing right is negative yaw.
     const targetYaw = bay ? (-bay.side * Math.PI) / 2 : 0;
@@ -513,6 +525,7 @@ export function createRoom(
       yaw,
       turn: Math.atan2(Math.sin(targetYaw - yaw), Math.cos(targetYaw - yaw)),
       pitch,
+      targetPitch: bay ? Math.atan2(bay.height - to.y, 2.3) : -0.03,
       elapsed: 0,
     };
     stop();

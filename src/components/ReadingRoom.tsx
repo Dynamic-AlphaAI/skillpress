@@ -78,8 +78,8 @@ export function ReadingRoom({
       ) : (
         <section className={s.hero} aria-labelledby="room-title">
           <Image
-            src="/reading-room.webp"
-            alt="Sunlight crosses the walnut shelves and reading tables of the library."
+            src="/entrance-hall.webp"
+            alt="Afternoon light falls across the oak floor and green settee in the library entrance."
             fill
             sizes="100vw"
             preload

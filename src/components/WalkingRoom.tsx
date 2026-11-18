@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
-import { categories } from "@/lib/categories";
+import { planShelves } from "@/lib/roomShelves";
 import type { Book } from "@/lib/types";
-import { createRoom, type Bay } from "./roomScene";
+import { createRoom } from "./roomScene";
 import { CoverArt } from "./CoverArt";
 import { LibraryIcon } from "./LibraryIcons";
 import s from "./WalkingRoom.module.css";
@@ -26,19 +26,9 @@ export default function WalkingRoom({
   const [selection, setSelection] = useState("");
   const [pointed, setPointed] = useState("");
   const [unavailable, setUnavailable] = useState(false);
-  const bays = useMemo(() => {
-    const result: Bay[] = [];
-    for (const category of categories) {
-      const items = books.filter((b) => b.category === category.id);
-      for (let i = 0; i < items.length; i += 18) {
-        const suffix = items.length > 18 ? ` · ${i / 18 + 1}` : "";
-        result.push({ label: category.label + suffix, books: items.slice(i, i + 18) });
-      }
-    }
-    return result;
-  }, [books]);
-  const at = destination < bays.length ? destination : -1;
-  const volumes = bays[at]?.books ?? books;
+  const shelves = useMemo(() => planShelves(books), [books]);
+  const at = destination < shelves.length ? destination : -1;
+  const volumes = shelves[at]?.books ?? books;
   const chosen = volumes.find((b) => b.id === selection) ?? volumes[0];
   const openBook = useEffectEvent((id: string) => {
     const index = books.findIndex((b) => b.id === id);
@@ -49,7 +39,7 @@ export default function WalkingRoom({
   useEffect(() => {
     if (!canvas.current) return;
     try {
-      const world = createRoom(canvas.current, bays, jackets.current!, {
+      const world = createRoom(canvas.current, shelves, jackets.current!, {
         open: openBook,
         hover: setPointed,
         lost: () => setUnavailable(true),
@@ -68,10 +58,10 @@ export default function WalkingRoom({
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setUnavailable(true);
     }
-  }, [bays]);
+  }, [shelves]);
   useEffect(() => {
     scene.current?.pause(paused);
-  }, [paused, bays]);
+  }, [paused, shelves]);
   function go(value: number) {
     setDestination(value);
     setSelection("");
@@ -88,9 +78,8 @@ export default function WalkingRoom({
       }}
     >
       <div hidden ref={jackets} aria-hidden="true">
-        {bays.flatMap((bay) =>
-          bay.books
-            .filter((_, i) => i === 0 || i === Math.ceil(bay.books.length / 2))
+        {shelves.flatMap((bay) =>
+          bay.books.slice(0, bay.faceOutCount)
             .map((b) => (
               <span key={b.id} data-jacket={b.id}>
                 <CoverArt slug={b.id} design={b.design} />
@@ -109,7 +98,7 @@ export default function WalkingRoom({
             ← Leave room
           </button>
           <span>
-            <LibraryIcon name="compass" size={16} /> {bays[at]?.label ?? "Entrance hall"}
+            <LibraryIcon name="compass" size={16} /> {shelves[at]?.label ?? "Entrance hall"}
           </span>
         </div>
         {unavailable ? (
@@ -176,7 +165,7 @@ export default function WalkingRoom({
           Shelf
           <select aria-label="Visit a shelf" value={at} onChange={(e) => go(Number(e.target.value))}>
             <option value={-1}>Entrance hall</option>
-            {bays.map((b, i) => (
+            {shelves.map((b, i) => (
               <option key={b.label} value={i}>
                 {b.label}
               </option>

@@ -53,24 +53,205 @@
         "zip": "/downloads/marketing-skills.zip",
         "bytes": 1991183
       }
+    },
+    {
+      "id": "googleworkspace",
+      "repo": "googleworkspace/cli",
+      "url": "https://github.com/googleworkspace/cli",
+      "path": "skills",
+      "commit": "cd3697e07eb520056dcf142d0c7439bbb9ba32e9",
+      "commitDate": "2026-10-30",
+      "author": "Google Workspace CLI",
+      "authorId": "google-workspace-cli",
+      "authorUrl": "https://github.com/googleworkspace",
+      "copyright": "Google Workspace CLI contributors",
+      "series": null,
+      "bundleNote": "Many Workspace recipes use the shared gws-shared skill and a service-specific skill. Install the Workspace collection to keep those prerequisites together.",
+      "download": {
+        "zip": "/downloads/googleworkspace-skills.zip",
+        "bytes": 485533
+      }
+    },
+    {
+      "id": "playwright",
+      "repo": "microsoft/playwright-cli",
+      "url": "https://github.com/microsoft/playwright-cli",
+      "path": "skills",
+      "commit": "c872a33cec77fa03c28fa7c6d1ad99d15d04ce42",
+      "commitDate": "2026-11-18",
+      "author": "Microsoft Playwright",
+      "authorId": "microsoft-playwright",
+      "authorUrl": "https://github.com/microsoft",
+      "copyright": "Microsoft Corporation",
+      "series": null,
+      "bundleNote": null,
+      "download": {
+        "zip": "/downloads/playwright-skills.zip",
+        "bytes": 32779
+      }
+    },
+    {
+      "id": "huggingface",
+      "repo": "huggingface/skills",
+      "url": "https://github.com/huggingface/skills",
+      "path": "skills",
+      "commit": "5291c2b9365e06b175dc04817610c778623f4836",
+      "commitDate": "2026-11-17",
+      "author": "Hugging Face",
+      "authorId": "hugging-face",
+      "authorUrl": "https://github.com/huggingface",
+      "copyright": "Hugging Face contributors",
+      "series": null,
+      "bundleNote": null,
+      "download": {
+        "zip": "/downloads/huggingface-skills.zip",
+        "bytes": 711128
+      }
+    },
+    {
+      "id": "stitch",
+      "repo": "google-labs-code/stitch-skills",
+      "url": "https://github.com/google-labs-code/stitch-skills",
+      "path": "plugins/stitch-build/skills",
+      "commit": "4cf4db8e4143b09e40f9bc887429d81f41ab3947",
+      "commitDate": "2026-11-17",
+      "author": "Google Labs Stitch",
+      "authorId": "google-labs-stitch",
+      "authorUrl": "https://github.com/google-labs-code",
+      "copyright": "Stitch Skills contributors",
+      "series": null,
+      "bundleNote": null,
+      "download": {
+        "zip": "/downloads/stitch-skills.zip",
+        "bytes": 253859
+      }
+    },
+    {
+      "id": "expo",
+      "repo": "expo/skills",
+      "url": "https://github.com/expo/skills",
+      "path": "plugins/expo/skills",
+      "commit": "dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d",
+      "commitDate": "2026-11-15",
+      "author": "Expo",
+      "authorId": "expo",
+      "authorUrl": "https://github.com/expo",
+      "copyright": "650 Industries, Inc.",
+      "series": null,
+      "bundleNote": null,
+      "download": {
+        "zip": "/downloads/expo-skills.zip",
+        "bytes": 341631
+      }
+    },
+    {
+      "id": "cloudflare",
+      "repo": "cloudflare/skills",
+      "url": "https://github.com/cloudflare/skills",
+      "path": "skills",
+      "commit": "5108325ecceabc899c761e07aa617b09c02445ee",
+      "commitDate": "2026-11-17",
+      "author": "Cloudflare",
+      "authorId": "cloudflare",
+      "authorUrl": "https://github.com/cloudflare",
+      "copyright": "Cloudflare contributors",
+      "series": null,
+      "bundleNote": null,
+      "download": {
+        "zip": "/downloads/cloudflare-skills.zip",
+        "bytes": 442054
+      }
+    },
+    {
+      "id": "supabase",
+      "repo": "supabase/agent-skills",
+      "url": "https://github.com/supabase/agent-skills",
+      "path": "skills",
+      "commit": "c9be0e931b7930f7d02126d04774d904c381e7d7",
+      "commitDate": "2026-10-02",
+      "author": "Supabase",
+      "authorId": "supabase",
+      "authorUrl": "https://github.com/supabase",
+      "copyright": "Supabase",
+      "series": null,
+      "bundleNote": null,
+      "download": {
+        "zip": "/downloads/supabase-skills.zip",
+        "bytes": 45337
+      }
+    },
+    {
+      "id": "stripe",
+      "repo": "stripe/ai",
+      "url": "https://github.com/stripe/ai",
+      "path": "skills",
+      "commit": "72e7e79e08e245063e87d61f60340e55e54c68f4",
+      "commitDate": "2026-11-18",
+      "author": "Stripe",
+      "authorId": "stripe",
+      "authorUrl": "https://github.com/stripe",
+      "copyright": "Stripe",
+      "series": null,
+      "bundleNote": null,
+      "download": {
+        "zip": "/downloads/stripe-skills.zip",
+        "bytes": 183581
+      }
+    },
+    {
+      "id": "hashicorp",
+      "repo": "hashicorp/agent-skills",
+      "url": "https://github.com/hashicorp/agent-skills",
+      "path": "plugins/packer/skills",
+      "commit": "5e30fa5c867ba6777c37e4206babfd08049c396f",
+      "commitDate": "2026-11-03",
+      "author": "HashiCorp",
+      "authorId": "hashicorp",
+      "authorUrl": "https://github.com/hashicorp",
+      "copyright": "HashiCorp contributors",
+      "series": null,
+      "bundleNote": null,
+      "download": {
+        "zip": "/downloads/hashicorp-skills.zip",
+        "bytes": 368241
+      }
+    },
+    {
+      "id": "wordpress",
+      "repo": "WordPress/agent-skills",
+      "url": "https://github.com/WordPress/agent-skills",
+      "path": "skills",
+      "commit": "7374e6f1c913b3b02b25465d266d9c0e0a04fc96",
+      "commitDate": "2026-11-05",
+      "author": "WordPress",
+      "authorId": "wordpress",
+      "authorUrl": "https://github.com/WordPress",
+      "copyright": "WordPress Contributors",
+      "series": null,
+      "bundleNote": null,
+      "download": {
+        "zip": "/downloads/wordpress-skills.zip",
+        "bytes": 376162
+      }
     }
   ],
   "ranking": {
     "source": "https://skills.sh",
     "metric": "installs",
-    "fetchedAt": "2026-11-18T18:33:18.498Z"
+    "fetchedAt": "2026-11-18T20:35:46.672Z"
   },
   "allDownload": {
     "zip": "/downloads/skillpress-all.zip",
-    "bytes": 6640096
+    "bytes": 9890077
   },
   "books": [
     {
       "id": "frontend-design",
       "slug": "frontend-design",
+      "sourcePath": "skills/frontend-design",
       "source": "anthropic",
       "rank": 1,
-      "installs": 1136364,
+      "installs": 1137240,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -99,11 +280,28 @@
       }
     },
     {
+      "id": "supabase-postgres-best-practices",
+      "slug": "supabase-postgres-best-practices",
+      "sourcePath": "skills/supabase-postgres-best-practices",
+      "source": "supabase",
+      "rank": 2,
+      "installs": 490657,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/supabase-postgres-best-practices.zip",
+        "skillMd": "/downloads/supabase-postgres-best-practices/SKILL.md",
+        "bytes": 34984,
+        "files": 37
+      }
+    },
+    {
       "id": "skill-creator",
       "slug": "skill-creator",
+      "sourcePath": "skills/skill-creator",
       "source": "anthropic",
-      "rank": 2,
-      "installs": 436241,
+      "rank": 3,
+      "installs": 436392,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -134,9 +332,10 @@
     {
       "id": "brainstorming",
       "slug": "brainstorming",
+      "sourcePath": "skills/brainstorming",
       "source": "superpowers",
-      "rank": 3,
-      "installs": 434140,
+      "rank": 4,
+      "installs": 434338,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -168,11 +367,28 @@
       }
     },
     {
+      "id": "supabase",
+      "slug": "supabase",
+      "sourcePath": "skills/supabase",
+      "source": "supabase",
+      "rank": 5,
+      "installs": 369537,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/supabase.zip",
+        "skillMd": "/downloads/supabase/SKILL.md",
+        "bytes": 9031,
+        "files": 5
+      }
+    },
+    {
       "id": "systematic-debugging",
       "slug": "systematic-debugging",
+      "sourcePath": "skills/systematic-debugging",
       "source": "superpowers",
-      "rank": 4,
-      "installs": 338744,
+      "rank": 6,
+      "installs": 338940,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -206,9 +422,10 @@
     {
       "id": "writing-plans",
       "slug": "writing-plans",
+      "sourcePath": "skills/writing-plans",
       "source": "superpowers",
-      "rank": 5,
-      "installs": 308258,
+      "rank": 7,
+      "installs": 308438,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -242,9 +459,10 @@
     {
       "id": "using-superpowers",
       "slug": "using-superpowers",
+      "sourcePath": "skills/using-superpowers",
       "source": "superpowers",
-      "rank": 6,
-      "installs": 291526,
+      "rank": 8,
+      "installs": 291677,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -278,9 +496,10 @@
     {
       "id": "requesting-code-review",
       "slug": "requesting-code-review",
+      "sourcePath": "skills/requesting-code-review",
       "source": "superpowers",
-      "rank": 7,
-      "installs": 285514,
+      "rank": 9,
+      "installs": 285669,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -314,9 +533,10 @@
     {
       "id": "test-driven-development",
       "slug": "test-driven-development",
+      "sourcePath": "skills/test-driven-development",
       "source": "superpowers",
-      "rank": 8,
-      "installs": 284585,
+      "rank": 10,
+      "installs": 284760,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -350,9 +570,10 @@
     {
       "id": "verification-before-completion",
       "slug": "verification-before-completion",
+      "sourcePath": "skills/verification-before-completion",
       "source": "superpowers",
-      "rank": 9,
-      "installs": 281550,
+      "rank": 11,
+      "installs": 281736,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -386,9 +607,10 @@
     {
       "id": "executing-plans",
       "slug": "executing-plans",
+      "sourcePath": "skills/executing-plans",
       "source": "superpowers",
-      "rank": 10,
-      "installs": 266207,
+      "rank": 12,
+      "installs": 266367,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -422,9 +644,10 @@
     {
       "id": "subagent-driven-development",
       "slug": "subagent-driven-development",
+      "sourcePath": "skills/subagent-driven-development",
       "source": "superpowers",
-      "rank": 11,
-      "installs": 260514,
+      "rank": 13,
+      "installs": 260668,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -458,9 +681,10 @@
     {
       "id": "copywriting",
       "slug": "copywriting",
+      "sourcePath": "skills/copywriting",
       "source": "marketing",
-      "rank": 12,
-      "installs": 259661,
+      "rank": 14,
+      "installs": 259891,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -532,9 +756,10 @@
     {
       "id": "seo-audit",
       "slug": "seo-audit",
+      "sourcePath": "skills/seo-audit",
       "source": "marketing",
-      "rank": 13,
-      "installs": 258918,
+      "rank": 15,
+      "installs": 259145,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -606,9 +831,10 @@
     {
       "id": "pptx",
       "slug": "pptx",
+      "sourcePath": "skills/pptx",
       "source": "anthropic",
-      "rank": 14,
-      "installs": 258713,
+      "rank": 16,
+      "installs": 258876,
       "license": "Apache-2.0",
       "plugin": {
         "name": "document-skills",
@@ -631,9 +857,10 @@
     {
       "id": "receiving-code-review",
       "slug": "receiving-code-review",
+      "sourcePath": "skills/receiving-code-review",
       "source": "superpowers",
-      "rank": 15,
-      "installs": 243642,
+      "rank": 17,
+      "installs": 243797,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -667,9 +894,10 @@
     {
       "id": "dispatching-parallel-agents",
       "slug": "dispatching-parallel-agents",
+      "sourcePath": "skills/dispatching-parallel-agents",
       "source": "superpowers",
-      "rank": 16,
-      "installs": 239597,
+      "rank": 18,
+      "installs": 239744,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -703,9 +931,10 @@
     {
       "id": "writing-skills",
       "slug": "writing-skills",
+      "sourcePath": "skills/writing-skills",
       "source": "superpowers",
-      "rank": 17,
-      "installs": 239321,
+      "rank": 19,
+      "installs": 239466,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -739,9 +968,10 @@
     {
       "id": "using-git-worktrees",
       "slug": "using-git-worktrees",
+      "sourcePath": "skills/using-git-worktrees",
       "source": "superpowers",
-      "rank": 18,
-      "installs": 238536,
+      "rank": 20,
+      "installs": 238685,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -775,9 +1005,10 @@
     {
       "id": "finishing-a-development-branch",
       "slug": "finishing-a-development-branch",
+      "sourcePath": "skills/finishing-a-development-branch",
       "source": "superpowers",
-      "rank": 19,
-      "installs": 235967,
+      "rank": 21,
+      "installs": 236113,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -811,9 +1042,10 @@
     {
       "id": "pdf",
       "slug": "pdf",
+      "sourcePath": "skills/pdf",
       "source": "anthropic",
-      "rank": 20,
-      "installs": 232591,
+      "rank": 22,
+      "installs": 232747,
       "license": "Apache-2.0",
       "plugin": {
         "name": "document-skills",
@@ -836,9 +1068,10 @@
     {
       "id": "docx",
       "slug": "docx",
+      "sourcePath": "skills/docx",
       "source": "anthropic",
-      "rank": 21,
-      "installs": 221491,
+      "rank": 23,
+      "installs": 221628,
       "license": "Apache-2.0",
       "plugin": {
         "name": "document-skills",
@@ -859,11 +1092,28 @@
       }
     },
     {
+      "id": "playwright-cli",
+      "slug": "playwright-cli",
+      "sourcePath": "skills/playwright-cli",
+      "source": "playwright",
+      "rank": 24,
+      "installs": 220644,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/playwright-cli.zip",
+        "skillMd": "/downloads/playwright-cli/SKILL.md",
+        "bytes": 32347,
+        "files": 12
+      }
+    },
+    {
       "id": "webapp-testing",
       "slug": "webapp-testing",
+      "sourcePath": "skills/webapp-testing",
       "source": "anthropic",
-      "rank": 22,
-      "installs": 208576,
+      "rank": 25,
+      "installs": 208708,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -894,9 +1144,10 @@
     {
       "id": "xlsx",
       "slug": "xlsx",
+      "sourcePath": "skills/xlsx",
       "source": "anthropic",
-      "rank": 23,
-      "installs": 201657,
+      "rank": 26,
+      "installs": 201800,
       "license": "Apache-2.0",
       "plugin": {
         "name": "document-skills",
@@ -919,9 +1170,10 @@
     {
       "id": "marketing-psychology",
       "slug": "marketing-psychology",
+      "sourcePath": "skills/marketing-psychology",
       "source": "marketing",
-      "rank": 24,
-      "installs": 180981,
+      "rank": 27,
+      "installs": 181137,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -993,9 +1245,10 @@
     {
       "id": "content-strategy",
       "slug": "content-strategy",
+      "sourcePath": "skills/content-strategy",
       "source": "marketing",
-      "rank": 25,
-      "installs": 180946,
+      "rank": 28,
+      "installs": 181117,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -1067,9 +1320,10 @@
     {
       "id": "ai-seo",
       "slug": "ai-seo",
+      "sourcePath": "skills/ai-seo",
       "source": "marketing",
-      "rank": 26,
-      "installs": 168306,
+      "rank": 29,
+      "installs": 168483,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -1141,9 +1395,10 @@
     {
       "id": "copy-editing",
       "slug": "copy-editing",
+      "sourcePath": "skills/copy-editing",
       "source": "marketing",
-      "rank": 27,
-      "installs": 165109,
+      "rank": 30,
+      "installs": 165249,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -1215,9 +1470,10 @@
     {
       "id": "programmatic-seo",
       "slug": "programmatic-seo",
+      "sourcePath": "skills/programmatic-seo",
       "source": "marketing",
-      "rank": 28,
-      "installs": 164338,
+      "rank": 31,
+      "installs": 164468,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -1287,11 +1543,28 @@
       }
     },
     {
+      "id": "cloudflare",
+      "slug": "cloudflare",
+      "sourcePath": "skills/cloudflare",
+      "source": "cloudflare",
+      "rank": 32,
+      "installs": 161381,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/cloudflare.zip",
+        "skillMd": "/downloads/cloudflare/SKILL.md",
+        "bytes": 141637,
+        "files": 131
+      }
+    },
+    {
       "id": "marketing-ideas",
       "slug": "marketing-ideas",
+      "sourcePath": "skills/marketing-ideas",
       "source": "marketing",
-      "rank": 29,
-      "installs": 160516,
+      "rank": 33,
+      "installs": 160649,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -1361,11 +1634,28 @@
       }
     },
     {
+      "id": "wrangler",
+      "slug": "wrangler",
+      "sourcePath": "skills/wrangler",
+      "source": "cloudflare",
+      "rank": 34,
+      "installs": 151810,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wrangler.zip",
+        "skillMd": "/downloads/wrangler/SKILL.md",
+        "bytes": 9831,
+        "files": 3
+      }
+    },
+    {
       "id": "ad-creative",
       "slug": "ad-creative",
+      "sourcePath": "skills/ad-creative",
       "source": "marketing",
-      "rank": 30,
-      "installs": 150051,
+      "rank": 35,
+      "installs": 150198,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -1435,11 +1725,28 @@
       }
     },
     {
+      "id": "workers-best-practices",
+      "slug": "workers-best-practices",
+      "sourcePath": "skills/workers-best-practices",
+      "source": "cloudflare",
+      "rank": 36,
+      "installs": 148936,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/workers-best-practices.zip",
+        "skillMd": "/downloads/workers-best-practices/SKILL.md",
+        "bytes": 19133,
+        "files": 6
+      }
+    },
+    {
       "id": "mcp-builder",
       "slug": "mcp-builder",
+      "sourcePath": "skills/mcp-builder",
       "source": "anthropic",
-      "rank": 31,
-      "installs": 144351,
+      "rank": 37,
+      "installs": 144425,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -1470,9 +1777,10 @@
     {
       "id": "cold-email",
       "slug": "cold-email",
+      "sourcePath": "skills/cold-email",
       "source": "marketing",
-      "rank": 32,
-      "installs": 141602,
+      "rank": 38,
+      "installs": 141739,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -1544,9 +1852,10 @@
     {
       "id": "site-architecture",
       "slug": "site-architecture",
+      "sourcePath": "skills/site-architecture",
       "source": "marketing",
-      "rank": 33,
-      "installs": 136740,
+      "rank": 39,
+      "installs": 136872,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -1618,9 +1927,10 @@
     {
       "id": "canvas-design",
       "slug": "canvas-design",
+      "sourcePath": "skills/canvas-design",
       "source": "anthropic",
-      "rank": 34,
-      "installs": 135317,
+      "rank": 40,
+      "installs": 135415,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -1651,9 +1961,10 @@
     {
       "id": "churn-prevention",
       "slug": "churn-prevention",
+      "sourcePath": "skills/churn-prevention",
       "source": "marketing",
-      "rank": 35,
-      "installs": 133357,
+      "rank": 41,
+      "installs": 133473,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -1725,9 +2036,10 @@
     {
       "id": "sales-enablement",
       "slug": "sales-enablement",
+      "sourcePath": "skills/sales-enablement",
       "source": "marketing",
-      "rank": 36,
-      "installs": 131884,
+      "rank": 42,
+      "installs": 132012,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -1797,11 +2109,44 @@
       }
     },
     {
+      "id": "web-perf",
+      "slug": "web-perf",
+      "sourcePath": "skills/web-perf",
+      "source": "cloudflare",
+      "rank": 43,
+      "installs": 131491,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/web-perf.zip",
+        "skillMd": "/downloads/web-perf/SKILL.md",
+        "bytes": 9583,
+        "files": 3
+      }
+    },
+    {
+      "id": "durable-objects",
+      "slug": "durable-objects",
+      "sourcePath": "skills/durable-objects",
+      "source": "cloudflare",
+      "rank": 44,
+      "installs": 131369,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/durable-objects.zip",
+        "skillMd": "/downloads/durable-objects/SKILL.md",
+        "bytes": 14029,
+        "files": 6
+      }
+    },
+    {
       "id": "customer-research",
       "slug": "customer-research",
+      "sourcePath": "skills/customer-research",
       "source": "marketing",
-      "rank": 37,
-      "installs": 129528,
+      "rank": 45,
+      "installs": 129661,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -1871,11 +2216,28 @@
       }
     },
     {
+      "id": "agents-sdk",
+      "slug": "agents-sdk",
+      "sourcePath": "skills/agents-sdk",
+      "source": "cloudflare",
+      "rank": 46,
+      "installs": 126754,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/agents-sdk.zip",
+        "skillMd": "/downloads/agents-sdk/SKILL.md",
+        "bytes": 29089,
+        "files": 22
+      }
+    },
+    {
       "id": "lead-magnets",
       "slug": "lead-magnets",
+      "sourcePath": "skills/lead-magnets",
       "source": "marketing",
-      "rank": 38,
-      "installs": 125981,
+      "rank": 47,
+      "installs": 126102,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -1947,9 +2309,10 @@
     {
       "id": "revops",
       "slug": "revops",
+      "sourcePath": "skills/revops",
       "source": "marketing",
-      "rank": 39,
-      "installs": 125738,
+      "rank": 48,
+      "installs": 125856,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2019,11 +2382,28 @@
       }
     },
     {
+      "id": "cloudflare-email-service",
+      "slug": "cloudflare-email-service",
+      "sourcePath": "skills/cloudflare-email-service",
+      "source": "cloudflare",
+      "rank": 49,
+      "installs": 122153,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/cloudflare-email-service.zip",
+        "skillMd": "/downloads/cloudflare-email-service/SKILL.md",
+        "bytes": 19655,
+        "files": 8
+      }
+    },
+    {
       "id": "brand-guidelines",
       "slug": "brand-guidelines",
+      "sourcePath": "skills/brand-guidelines",
       "source": "anthropic",
-      "rank": 40,
-      "installs": 121323,
+      "rank": 50,
+      "installs": 121378,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -2054,9 +2434,10 @@
     {
       "id": "web-artifacts-builder",
       "slug": "web-artifacts-builder",
+      "sourcePath": "skills/web-artifacts-builder",
       "source": "anthropic",
-      "rank": 41,
-      "installs": 121306,
+      "rank": 51,
+      "installs": 121376,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -2085,11 +2466,60 @@
       }
     },
     {
+      "id": "cloudflare-one",
+      "slug": "cloudflare-one",
+      "sourcePath": "skills/cloudflare-one",
+      "source": "cloudflare",
+      "rank": 52,
+      "installs": 113578,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/cloudflare-one.zip",
+        "skillMd": "/downloads/cloudflare-one/SKILL.md",
+        "bytes": 15192,
+        "files": 3
+      }
+    },
+    {
+      "id": "turnstile-spin",
+      "slug": "turnstile-spin",
+      "sourcePath": "skills/turnstile-spin",
+      "source": "cloudflare",
+      "rank": 53,
+      "installs": 112855,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/turnstile-spin.zip",
+        "skillMd": "/downloads/turnstile-spin/SKILL.md",
+        "bytes": 42751,
+        "files": 16
+      }
+    },
+    {
+      "id": "cloudflare-one-migrations",
+      "slug": "cloudflare-one-migrations",
+      "sourcePath": "skills/cloudflare-one-migrations",
+      "source": "cloudflare",
+      "rank": 54,
+      "installs": 109023,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/cloudflare-one-migrations.zip",
+        "skillMd": "/downloads/cloudflare-one-migrations/SKILL.md",
+        "bytes": 10797,
+        "files": 3
+      }
+    },
+    {
       "id": "competitor-profiling",
       "slug": "competitor-profiling",
+      "sourcePath": "skills/competitor-profiling",
       "source": "marketing",
-      "rank": 42,
-      "installs": 108322,
+      "rank": 55,
+      "installs": 108450,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2161,9 +2591,10 @@
     {
       "id": "cro",
       "slug": "cro",
+      "sourcePath": "skills/cro",
       "source": "marketing",
-      "rank": 43,
-      "installs": 107175,
+      "rank": 56,
+      "installs": 107334,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2235,9 +2666,10 @@
     {
       "id": "theme-factory",
       "slug": "theme-factory",
+      "sourcePath": "skills/theme-factory",
       "source": "anthropic",
-      "rank": 44,
-      "installs": 104384,
+      "rank": 57,
+      "installs": 104455,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -2268,9 +2700,10 @@
     {
       "id": "doc-coauthoring",
       "slug": "doc-coauthoring",
+      "sourcePath": "skills/doc-coauthoring",
       "source": "anthropic",
-      "rank": 45,
-      "installs": 103561,
+      "rank": 58,
+      "installs": 103629,
       "license": "Unspecified",
       "plugin": {
         "name": "example-skills",
@@ -2299,11 +2732,28 @@
       }
     },
     {
+      "id": "stripe-best-practices",
+      "slug": "stripe-best-practices",
+      "sourcePath": "skills/stripe-best-practices",
+      "source": "stripe",
+      "rank": 59,
+      "installs": 103509,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/stripe-best-practices.zip",
+        "skillMd": "/downloads/stripe-best-practices/SKILL.md",
+        "bytes": 29185,
+        "files": 8
+      }
+    },
+    {
       "id": "community-marketing",
       "slug": "community-marketing",
+      "sourcePath": "skills/community-marketing",
       "source": "marketing",
-      "rank": 46,
-      "installs": 102157,
+      "rank": 60,
+      "installs": 102275,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2375,9 +2825,10 @@
     {
       "id": "social",
       "slug": "social",
+      "sourcePath": "skills/social",
       "source": "marketing",
-      "rank": 47,
-      "installs": 102038,
+      "rank": 61,
+      "installs": 102213,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2449,9 +2900,10 @@
     {
       "id": "image",
       "slug": "image",
+      "sourcePath": "skills/image",
       "source": "marketing",
-      "rank": 48,
-      "installs": 100346,
+      "rank": 62,
+      "installs": 100470,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2523,9 +2975,10 @@
     {
       "id": "video",
       "slug": "video",
+      "sourcePath": "skills/video",
       "source": "marketing",
-      "rank": 49,
-      "installs": 99746,
+      "rank": 63,
+      "installs": 99877,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2597,9 +3050,10 @@
     {
       "id": "product-marketing",
       "slug": "product-marketing",
+      "sourcePath": "skills/product-marketing",
       "source": "marketing",
-      "rank": 50,
-      "installs": 99636,
+      "rank": 64,
+      "installs": 99781,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2671,9 +3125,10 @@
     {
       "id": "analytics",
       "slug": "analytics",
+      "sourcePath": "skills/analytics",
       "source": "marketing",
-      "rank": 51,
-      "installs": 98285,
+      "rank": 65,
+      "installs": 98421,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2745,9 +3200,10 @@
     {
       "id": "directory-submissions",
       "slug": "directory-submissions",
+      "sourcePath": "skills/directory-submissions",
       "source": "marketing",
-      "rank": 52,
-      "installs": 97966,
+      "rank": 66,
+      "installs": 98081,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2819,9 +3275,10 @@
     {
       "id": "algorithmic-art",
       "slug": "algorithmic-art",
+      "sourcePath": "skills/algorithmic-art",
       "source": "anthropic",
-      "rank": 53,
-      "installs": 97292,
+      "rank": 67,
+      "installs": 97347,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -2852,9 +3309,10 @@
     {
       "id": "ads",
       "slug": "ads",
+      "sourcePath": "skills/ads",
       "source": "marketing",
-      "rank": 54,
-      "installs": 97033,
+      "rank": 68,
+      "installs": 97166,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2926,9 +3384,10 @@
     {
       "id": "pricing",
       "slug": "pricing",
+      "sourcePath": "skills/pricing",
       "source": "marketing",
-      "rank": 55,
-      "installs": 93748,
+      "rank": 69,
+      "installs": 93885,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3000,9 +3459,10 @@
     {
       "id": "schema",
       "slug": "schema",
+      "sourcePath": "skills/schema",
       "source": "marketing",
-      "rank": 56,
-      "installs": 92905,
+      "rank": 70,
+      "installs": 93052,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3074,9 +3534,10 @@
     {
       "id": "co-marketing",
       "slug": "co-marketing",
+      "sourcePath": "skills/co-marketing",
       "source": "marketing",
-      "rank": 57,
-      "installs": 92366,
+      "rank": 71,
+      "installs": 92483,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3148,9 +3609,10 @@
     {
       "id": "launch",
       "slug": "launch",
+      "sourcePath": "skills/launch",
       "source": "marketing",
-      "rank": 58,
-      "installs": 91696,
+      "rank": 72,
+      "installs": 91821,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3222,9 +3684,10 @@
     {
       "id": "emails",
       "slug": "emails",
+      "sourcePath": "skills/emails",
       "source": "marketing",
-      "rank": 59,
-      "installs": 91489,
+      "rank": 73,
+      "installs": 91614,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3296,9 +3759,10 @@
     {
       "id": "competitors",
       "slug": "competitors",
+      "sourcePath": "skills/competitors",
       "source": "marketing",
-      "rank": 60,
-      "installs": 91391,
+      "rank": 74,
+      "installs": 91516,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3370,9 +3834,10 @@
     {
       "id": "ab-testing",
       "slug": "ab-testing",
+      "sourcePath": "skills/ab-testing",
       "source": "marketing",
-      "rank": 61,
-      "installs": 90258,
+      "rank": 75,
+      "installs": 90379,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3444,9 +3909,10 @@
     {
       "id": "aso",
       "slug": "aso",
+      "sourcePath": "skills/aso",
       "source": "marketing",
-      "rank": 62,
-      "installs": 88036,
+      "rank": 76,
+      "installs": 88155,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3516,11 +3982,28 @@
       }
     },
     {
+      "id": "sandbox-stable",
+      "slug": "sandbox-stable",
+      "sourcePath": "skills/sandbox-stable",
+      "source": "cloudflare",
+      "rank": 77,
+      "installs": 87875,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/sandbox-stable.zip",
+        "skillMd": "/downloads/sandbox-stable/SKILL.md",
+        "bytes": 8932,
+        "files": 3
+      }
+    },
+    {
       "id": "internal-comms",
       "slug": "internal-comms",
+      "sourcePath": "skills/internal-comms",
       "source": "anthropic",
-      "rank": 63,
-      "installs": 87762,
+      "rank": 78,
+      "installs": 87805,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -3549,11 +4032,44 @@
       }
     },
     {
+      "id": "sandbox-next",
+      "slug": "sandbox-next",
+      "sourcePath": "skills/sandbox-next",
+      "source": "cloudflare",
+      "rank": 79,
+      "installs": 87047,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/sandbox-next.zip",
+        "skillMd": "/downloads/sandbox-next/SKILL.md",
+        "bytes": 9983,
+        "files": 5
+      }
+    },
+    {
+      "id": "sandbox-migrate-to-next",
+      "slug": "sandbox-migrate-to-next",
+      "sourcePath": "skills/sandbox-migrate-to-next",
+      "source": "cloudflare",
+      "rank": 80,
+      "installs": 86945,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/sandbox-migrate-to-next.zip",
+        "skillMd": "/downloads/sandbox-migrate-to-next/SKILL.md",
+        "bytes": 9213,
+        "files": 3
+      }
+    },
+    {
       "id": "onboarding",
       "slug": "onboarding",
+      "sourcePath": "skills/onboarding",
       "source": "marketing",
-      "rank": 64,
-      "installs": 86197,
+      "rank": 81,
+      "installs": 86316,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3625,9 +4141,10 @@
     {
       "id": "free-tools",
       "slug": "free-tools",
+      "sourcePath": "skills/free-tools",
       "source": "marketing",
-      "rank": 65,
-      "installs": 86039,
+      "rank": 82,
+      "installs": 86156,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3697,11 +4214,28 @@
       }
     },
     {
+      "id": "gws-gmail",
+      "slug": "gws-gmail",
+      "sourcePath": "skills/gws-gmail",
+      "source": "googleworkspace",
+      "rank": 83,
+      "installs": 85864,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-gmail.zip",
+        "skillMd": "/downloads/gws-gmail/SKILL.md",
+        "bytes": 5182,
+        "files": 2
+      }
+    },
+    {
       "id": "referrals",
       "slug": "referrals",
+      "sourcePath": "skills/referrals",
       "source": "marketing",
-      "rank": 66,
-      "installs": 84516,
+      "rank": 84,
+      "installs": 84635,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3773,9 +4307,10 @@
     {
       "id": "signup",
       "slug": "signup",
+      "sourcePath": "skills/signup",
       "source": "marketing",
-      "rank": 67,
-      "installs": 83965,
+      "rank": 85,
+      "installs": 84082,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3847,9 +4382,10 @@
     {
       "id": "paywalls",
       "slug": "paywalls",
+      "sourcePath": "skills/paywalls",
       "source": "marketing",
-      "rank": 68,
-      "installs": 82924,
+      "rank": 86,
+      "installs": 83038,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3921,9 +4457,10 @@
     {
       "id": "popups",
       "slug": "popups",
+      "sourcePath": "skills/popups",
       "source": "marketing",
-      "rank": 69,
-      "installs": 82632,
+      "rank": 87,
+      "installs": 82748,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3995,9 +4532,10 @@
     {
       "id": "slack-gif-creator",
       "slug": "slack-gif-creator",
+      "sourcePath": "skills/slack-gif-creator",
       "source": "anthropic",
-      "rank": 70,
-      "installs": 82232,
+      "rank": 88,
+      "installs": 82278,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -4028,9 +4566,10 @@
     {
       "id": "claude-api",
       "slug": "claude-api",
+      "sourcePath": "skills/claude-api",
       "source": "anthropic",
-      "rank": 71,
-      "installs": 81831,
+      "rank": 89,
+      "installs": 81875,
       "license": "Apache-2.0",
       "plugin": {
         "name": "claude-api",
@@ -4050,9 +4589,10 @@
     {
       "id": "marketing-plan",
       "slug": "marketing-plan",
+      "sourcePath": "skills/marketing-plan",
       "source": "marketing",
-      "rank": 72,
-      "installs": 81416,
+      "rank": 90,
+      "installs": 81549,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -4124,9 +4664,10 @@
     {
       "id": "prospecting",
       "slug": "prospecting",
+      "sourcePath": "skills/prospecting",
       "source": "marketing",
-      "rank": 73,
-      "installs": 78391,
+      "rank": 91,
+      "installs": 78527,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -4196,11 +4737,76 @@
       }
     },
     {
+      "id": "gws-drive",
+      "slug": "gws-drive",
+      "sourcePath": "skills/gws-drive",
+      "source": "googleworkspace",
+      "rank": 92,
+      "installs": 77894,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-drive.zip",
+        "skillMd": "/downloads/gws-drive/SKILL.md",
+        "bytes": 7093,
+        "files": 2
+      }
+    },
+    {
+      "id": "expo-dev-client",
+      "slug": "expo-dev-client",
+      "sourcePath": "plugins/expo/skills/expo-dev-client",
+      "source": "expo",
+      "rank": 93,
+      "installs": 77060,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-dev-client.zip",
+        "skillMd": "/downloads/expo-dev-client/SKILL.md",
+        "bytes": 3654,
+        "files": 3
+      }
+    },
+    {
+      "id": "gws-gmail-send",
+      "slug": "gws-gmail-send",
+      "sourcePath": "skills/gws-gmail-send",
+      "source": "googleworkspace",
+      "rank": 94,
+      "installs": 76902,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-gmail-send.zip",
+        "skillMd": "/downloads/gws-gmail-send/SKILL.md",
+        "bytes": 5415,
+        "files": 2
+      }
+    },
+    {
+      "id": "upgrade-stripe",
+      "slug": "upgrade-stripe",
+      "sourcePath": "skills/upgrade-stripe",
+      "source": "stripe",
+      "rank": 95,
+      "installs": 76474,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/upgrade-stripe.zip",
+        "skillMd": "/downloads/upgrade-stripe/SKILL.md",
+        "bytes": 4638,
+        "files": 2
+      }
+    },
+    {
       "id": "sms",
       "slug": "sms",
+      "sourcePath": "skills/sms",
       "source": "marketing",
-      "rank": 74,
-      "installs": 76240,
+      "rank": 96,
+      "installs": 76357,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -4272,8 +4878,9 @@
     {
       "id": "academy-guide",
       "slug": "academy-guide",
+      "sourcePath": "skills/academy-guide",
       "source": "anthropic",
-      "rank": 75,
+      "rank": 97,
       "installs": null,
       "license": "Apache-2.0",
       "plugin": {
@@ -4294,8 +4901,9 @@
     {
       "id": "attribution",
       "slug": "attribution",
+      "sourcePath": "skills/attribution",
       "source": "marketing",
-      "rank": 76,
+      "rank": 98,
       "installs": null,
       "license": "MIT",
       "plugin": {
@@ -4366,10 +4974,171 @@
       }
     },
     {
+      "id": "aws-ami-builder",
+      "slug": "aws-ami-builder",
+      "sourcePath": "plugins/packer/skills/aws-ami-builder",
+      "source": "hashicorp",
+      "rank": 99,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/aws-ami-builder.zip",
+        "skillMd": "/downloads/aws-ami-builder/SKILL.md",
+        "bytes": 7216,
+        "files": 2
+      }
+    },
+    {
+      "id": "azure-image-builder",
+      "slug": "azure-image-builder",
+      "sourcePath": "plugins/packer/skills/azure-image-builder",
+      "source": "hashicorp",
+      "rank": 100,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/azure-image-builder.zip",
+        "skillMd": "/downloads/azure-image-builder/SKILL.md",
+        "bytes": 7375,
+        "files": 2
+      }
+    },
+    {
+      "id": "azure-verified-modules",
+      "slug": "azure-verified-modules",
+      "sourcePath": "plugins/terraform/skills/azure-verified-modules",
+      "source": "hashicorp",
+      "rank": 101,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/azure-verified-modules.zip",
+        "skillMd": "/downloads/azure-verified-modules/SKILL.md",
+        "bytes": 11131,
+        "files": 2
+      }
+    },
+    {
+      "id": "basin",
+      "slug": "basin",
+      "sourcePath": "skills/basin",
+      "source": "cloudflare",
+      "rank": 102,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/basin.zip",
+        "skillMd": "/downloads/basin/SKILL.md",
+        "bytes": 32839,
+        "files": 18
+      }
+    },
+    {
+      "id": "blueprint",
+      "slug": "blueprint",
+      "sourcePath": "skills/blueprint",
+      "source": "wordpress",
+      "rank": 103,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/blueprint.zip",
+        "skillMd": "/downloads/blueprint/SKILL.md",
+        "bytes": 13113,
+        "files": 3
+      }
+    },
+    {
+      "id": "cf-cli",
+      "slug": "cf-cli",
+      "sourcePath": "skills/cf-cli",
+      "source": "cloudflare",
+      "rank": 104,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/cf-cli.zip",
+        "skillMd": "/downloads/cf-cli/SKILL.md",
+        "bytes": 8687,
+        "files": 3
+      }
+    },
+    {
+      "id": "cloudflare-app-bootstrap",
+      "slug": "cloudflare-app-bootstrap",
+      "sourcePath": "skills/cloudflare-app-bootstrap",
+      "source": "cloudflare",
+      "rank": 105,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/cloudflare-app-bootstrap.zip",
+        "skillMd": "/downloads/cloudflare-app-bootstrap/SKILL.md",
+        "bytes": 8292,
+        "files": 3
+      }
+    },
+    {
+      "id": "code-to-design",
+      "slug": "code-to-design",
+      "sourcePath": "plugins/stitch-design/skills/code-to-design",
+      "source": "stitch",
+      "rank": 106,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/code-to-design.zip",
+        "skillMd": "/downloads/code-to-design/SKILL.md",
+        "bytes": 5879,
+        "files": 2
+      }
+    },
+    {
+      "id": "connect-recommend",
+      "slug": "connect-recommend",
+      "sourcePath": "skills/connect-recommend",
+      "source": "stripe",
+      "rank": 107,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/connect-recommend.zip",
+        "skillMd": "/downloads/connect-recommend/SKILL.md",
+        "bytes": 56585,
+        "files": 10
+      }
+    },
+    {
+      "id": "connect-required-verification-information",
+      "slug": "connect-required-verification-information",
+      "sourcePath": "skills/connect-required-verification-information",
+      "source": "stripe",
+      "rank": 108,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/connect-required-verification-information.zip",
+        "skillMd": "/downloads/connect-required-verification-information/SKILL.md",
+        "bytes": 9967,
+        "files": 2
+      }
+    },
+    {
       "id": "conversion-tracking",
       "slug": "conversion-tracking",
+      "sourcePath": "skills/conversion-tracking",
       "source": "marketing",
-      "rank": 77,
+      "rank": 109,
       "installs": null,
       "license": "MIT",
       "plugin": {
@@ -4440,10 +5209,27 @@
       }
     },
     {
+      "id": "design-md",
+      "slug": "design-md",
+      "sourcePath": "plugins/stitch-utilities/skills/design-md",
+      "source": "stitch",
+      "rank": 110,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/design-md.zip",
+        "skillMd": "/downloads/design-md/SKILL.md",
+        "bytes": 13175,
+        "files": 4
+      }
+    },
+    {
       "id": "diagnosing-superpowers",
       "slug": "diagnosing-superpowers",
+      "sourcePath": "skills/diagnosing-superpowers",
       "source": "superpowers",
-      "rank": 78,
+      "rank": 111,
       "installs": null,
       "license": "MIT",
       "plugin": {
@@ -4478,8 +5264,9 @@
     {
       "id": "discernment-nudge",
       "slug": "discernment-nudge",
+      "sourcePath": "skills/discernment-nudge",
       "source": "anthropic",
-      "rank": 79,
+      "rank": 112,
       "installs": null,
       "license": "Apache-2.0",
       "plugin": {
@@ -4498,10 +5285,139 @@
       }
     },
     {
+      "id": "eas-app-stores",
+      "slug": "eas-app-stores",
+      "sourcePath": "plugins/expo/skills/eas-app-stores",
+      "source": "expo",
+      "rank": 113,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/eas-app-stores.zip",
+        "skillMd": "/downloads/eas-app-stores/SKILL.md",
+        "bytes": 25955,
+        "files": 9
+      }
+    },
+    {
+      "id": "eas-hosting",
+      "slug": "eas-hosting",
+      "sourcePath": "plugins/expo/skills/eas-hosting",
+      "source": "expo",
+      "rank": 114,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/eas-hosting.zip",
+        "skillMd": "/downloads/eas-hosting/SKILL.md",
+        "bytes": 5767,
+        "files": 3
+      }
+    },
+    {
+      "id": "eas-observe",
+      "slug": "eas-observe",
+      "sourcePath": "plugins/expo/skills/eas-observe",
+      "source": "expo",
+      "rank": 115,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/eas-observe.zip",
+        "skillMd": "/downloads/eas-observe/SKILL.md",
+        "bytes": 30573,
+        "files": 8
+      }
+    },
+    {
+      "id": "eas-simulator",
+      "slug": "eas-simulator",
+      "sourcePath": "plugins/expo/skills/eas-simulator",
+      "source": "expo",
+      "rank": 116,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/eas-simulator.zip",
+        "skillMd": "/downloads/eas-simulator/SKILL.md",
+        "bytes": 41150,
+        "files": 7
+      }
+    },
+    {
+      "id": "eas-update",
+      "slug": "eas-update",
+      "sourcePath": "plugins/expo/skills/eas-update",
+      "source": "expo",
+      "rank": 117,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/eas-update.zip",
+        "skillMd": "/downloads/eas-update/SKILL.md",
+        "bytes": 5317,
+        "files": 3
+      }
+    },
+    {
+      "id": "eas-update-insights",
+      "slug": "eas-update-insights",
+      "sourcePath": "plugins/expo/skills/eas-update-insights",
+      "source": "expo",
+      "rank": 118,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/eas-update-insights.zip",
+        "skillMd": "/downloads/eas-update-insights/SKILL.md",
+        "bytes": 8560,
+        "files": 5
+      }
+    },
+    {
+      "id": "eas-workflows",
+      "slug": "eas-workflows",
+      "sourcePath": "plugins/expo/skills/eas-workflows",
+      "source": "expo",
+      "rank": 119,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/eas-workflows.zip",
+        "skillMd": "/downloads/eas-workflows/SKILL.md",
+        "bytes": 5182,
+        "files": 5
+      }
+    },
+    {
+      "id": "enhance-prompt",
+      "slug": "enhance-prompt",
+      "sourcePath": "plugins/stitch-utilities/skills/enhance-prompt",
+      "source": "stitch",
+      "rank": 120,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/enhance-prompt.zip",
+        "skillMd": "/downloads/enhance-prompt/SKILL.md",
+        "bytes": 9546,
+        "files": 4
+      }
+    },
+    {
       "id": "events",
       "slug": "events",
+      "sourcePath": "skills/events",
       "source": "marketing",
-      "rank": 80,
+      "rank": 121,
       "installs": null,
       "license": "MIT",
       "plugin": {
@@ -4572,10 +5488,1339 @@
       }
     },
     {
+      "id": "expo-animation",
+      "slug": "expo-animation",
+      "sourcePath": "plugins/expo/skills/expo-animation",
+      "source": "expo",
+      "rank": 122,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-animation.zip",
+        "skillMd": "/downloads/expo-animation/SKILL.md",
+        "bytes": 16526,
+        "files": 4
+      }
+    },
+    {
+      "id": "expo-app-clip",
+      "slug": "expo-app-clip",
+      "sourcePath": "plugins/expo/skills/expo-app-clip",
+      "source": "expo",
+      "rank": 123,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-app-clip.zip",
+        "skillMd": "/downloads/expo-app-clip/SKILL.md",
+        "bytes": 6713,
+        "files": 4
+      }
+    },
+    {
+      "id": "expo-brownfield",
+      "slug": "expo-brownfield",
+      "sourcePath": "plugins/expo/skills/expo-brownfield",
+      "source": "expo",
+      "rank": 124,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-brownfield.zip",
+        "skillMd": "/downloads/expo-brownfield/SKILL.md",
+        "bytes": 33550,
+        "files": 9
+      }
+    },
+    {
+      "id": "expo-data-fetching",
+      "slug": "expo-data-fetching",
+      "sourcePath": "plugins/expo/skills/expo-data-fetching",
+      "source": "expo",
+      "rank": 125,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-data-fetching.zip",
+        "skillMd": "/downloads/expo-data-fetching/SKILL.md",
+        "bytes": 11023,
+        "files": 5
+      }
+    },
+    {
+      "id": "expo-design-system",
+      "slug": "expo-design-system",
+      "sourcePath": "plugins/expo/skills/expo-design-system",
+      "source": "expo",
+      "rank": 126,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-design-system.zip",
+        "skillMd": "/downloads/expo-design-system/SKILL.md",
+        "bytes": 17999,
+        "files": 5
+      }
+    },
+    {
+      "id": "expo-dom",
+      "slug": "expo-dom",
+      "sourcePath": "plugins/expo/skills/expo-dom",
+      "source": "expo",
+      "rank": 127,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-dom.zip",
+        "skillMd": "/downloads/expo-dom/SKILL.md",
+        "bytes": 5153,
+        "files": 3
+      }
+    },
+    {
+      "id": "expo-examples",
+      "slug": "expo-examples",
+      "sourcePath": "plugins/expo/skills/expo-examples",
+      "source": "expo",
+      "rank": 128,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-examples.zip",
+        "skillMd": "/downloads/expo-examples/SKILL.md",
+        "bytes": 6441,
+        "files": 4
+      }
+    },
+    {
+      "id": "expo-module",
+      "slug": "expo-module",
+      "sourcePath": "plugins/expo/skills/expo-module",
+      "source": "expo",
+      "rank": 129,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-module.zip",
+        "skillMd": "/downloads/expo-module/SKILL.md",
+        "bytes": 14907,
+        "files": 9
+      }
+    },
+    {
+      "id": "expo-native-ui",
+      "slug": "expo-native-ui",
+      "sourcePath": "plugins/expo/skills/expo-native-ui",
+      "source": "expo",
+      "rank": 130,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-native-ui.zip",
+        "skillMd": "/downloads/expo-native-ui/SKILL.md",
+        "bytes": 23457,
+        "files": 10
+      }
+    },
+    {
+      "id": "expo-overview",
+      "slug": "expo-overview",
+      "sourcePath": "plugins/expo/skills/expo-overview",
+      "source": "expo",
+      "rank": 131,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-overview.zip",
+        "skillMd": "/downloads/expo-overview/SKILL.md",
+        "bytes": 7494,
+        "files": 4
+      }
+    },
+    {
+      "id": "expo-project-structure",
+      "slug": "expo-project-structure",
+      "sourcePath": "plugins/expo/skills/expo-project-structure",
+      "source": "expo",
+      "rank": 132,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-project-structure.zip",
+        "skillMd": "/downloads/expo-project-structure/SKILL.md",
+        "bytes": 4163,
+        "files": 3
+      }
+    },
+    {
+      "id": "expo-router",
+      "slug": "expo-router",
+      "sourcePath": "plugins/expo/skills/expo-router",
+      "source": "expo",
+      "rank": 133,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-router.zip",
+        "skillMd": "/downloads/expo-router/SKILL.md",
+        "bytes": 18941,
+        "files": 9
+      }
+    },
+    {
+      "id": "expo-ui",
+      "slug": "expo-ui",
+      "sourcePath": "plugins/expo/skills/expo-ui",
+      "source": "expo",
+      "rank": 134,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-ui.zip",
+        "skillMd": "/downloads/expo-ui/SKILL.md",
+        "bytes": 15055,
+        "files": 8
+      }
+    },
+    {
+      "id": "expo-upgrade",
+      "slug": "expo-upgrade",
+      "sourcePath": "plugins/expo/skills/expo-upgrade",
+      "source": "expo",
+      "rank": 135,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-upgrade.zip",
+        "skillMd": "/downloads/expo-upgrade/SKILL.md",
+        "bytes": 13914,
+        "files": 10
+      }
+    },
+    {
+      "id": "expo-web-to-native",
+      "slug": "expo-web-to-native",
+      "sourcePath": "plugins/expo/skills/expo-web-to-native",
+      "source": "expo",
+      "rank": 136,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/expo-web-to-native.zip",
+        "skillMd": "/downloads/expo-web-to-native/SKILL.md",
+        "bytes": 17333,
+        "files": 7
+      }
+    },
+    {
+      "id": "extract-design-md",
+      "slug": "extract-design-md",
+      "sourcePath": "plugins/stitch-design/skills/extract-design-md",
+      "source": "stitch",
+      "rank": 137,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/extract-design-md.zip",
+        "skillMd": "/downloads/extract-design-md/SKILL.md",
+        "bytes": 23498,
+        "files": 8
+      }
+    },
+    {
+      "id": "extract-static-html",
+      "slug": "extract-static-html",
+      "sourcePath": "plugins/stitch-design/skills/extract-static-html",
+      "source": "stitch",
+      "rank": 138,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/extract-static-html.zip",
+        "skillMd": "/downloads/extract-static-html/SKILL.md",
+        "bytes": 37082,
+        "files": 5
+      }
+    },
+    {
+      "id": "frameworks-on-cloudflare",
+      "slug": "frameworks-on-cloudflare",
+      "sourcePath": "skills/frameworks-on-cloudflare",
+      "source": "cloudflare",
+      "rank": 139,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/frameworks-on-cloudflare.zip",
+        "skillMd": "/downloads/frameworks-on-cloudflare/SKILL.md",
+        "bytes": 8032,
+        "files": 3
+      }
+    },
+    {
+      "id": "gateway-workers",
+      "slug": "gateway-workers",
+      "sourcePath": "skills/gateway-workers",
+      "source": "cloudflare",
+      "rank": 140,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gateway-workers.zip",
+        "skillMd": "/downloads/gateway-workers/SKILL.md",
+        "bytes": 7761,
+        "files": 3
+      }
+    },
+    {
+      "id": "generate-design",
+      "slug": "generate-design",
+      "sourcePath": "plugins/stitch-design/skills/generate-design",
+      "source": "stitch",
+      "rank": 141,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/generate-design.zip",
+        "skillMd": "/downloads/generate-design/SKILL.md",
+        "bytes": 12284,
+        "files": 5
+      }
+    },
+    {
+      "id": "gws-admin-reports",
+      "slug": "gws-admin-reports",
+      "sourcePath": "skills/gws-admin-reports",
+      "source": "googleworkspace",
+      "rank": 142,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-admin-reports.zip",
+        "skillMd": "/downloads/gws-admin-reports/SKILL.md",
+        "bytes": 5186,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-calendar",
+      "slug": "gws-calendar",
+      "sourcePath": "skills/gws-calendar",
+      "source": "googleworkspace",
+      "rank": 143,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-calendar.zip",
+        "skillMd": "/downloads/gws-calendar/SKILL.md",
+        "bytes": 5913,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-calendar-agenda",
+      "slug": "gws-calendar-agenda",
+      "sourcePath": "skills/gws-calendar-agenda",
+      "source": "googleworkspace",
+      "rank": 144,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-calendar-agenda.zip",
+        "skillMd": "/downloads/gws-calendar-agenda/SKILL.md",
+        "bytes": 5015,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-calendar-insert",
+      "slug": "gws-calendar-insert",
+      "sourcePath": "skills/gws-calendar-insert",
+      "source": "googleworkspace",
+      "rank": 145,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-calendar-insert.zip",
+        "skillMd": "/downloads/gws-calendar-insert/SKILL.md",
+        "bytes": 5161,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-chat",
+      "slug": "gws-chat",
+      "sourcePath": "skills/gws-chat",
+      "source": "googleworkspace",
+      "rank": 146,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-chat.zip",
+        "skillMd": "/downloads/gws-chat/SKILL.md",
+        "bytes": 6196,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-chat-send",
+      "slug": "gws-chat-send",
+      "sourcePath": "skills/gws-chat-send",
+      "source": "googleworkspace",
+      "rank": 147,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-chat-send.zip",
+        "skillMd": "/downloads/gws-chat-send/SKILL.md",
+        "bytes": 4920,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-classroom",
+      "slug": "gws-classroom",
+      "sourcePath": "skills/gws-classroom",
+      "source": "googleworkspace",
+      "rank": 148,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-classroom.zip",
+        "skillMd": "/downloads/gws-classroom/SKILL.md",
+        "bytes": 6233,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-docs",
+      "slug": "gws-docs",
+      "sourcePath": "skills/gws-docs",
+      "source": "googleworkspace",
+      "rank": 149,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-docs.zip",
+        "skillMd": "/downloads/gws-docs/SKILL.md",
+        "bytes": 5105,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-docs-write",
+      "slug": "gws-docs-write",
+      "sourcePath": "skills/gws-docs-write",
+      "source": "googleworkspace",
+      "rank": 150,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-docs-write.zip",
+        "skillMd": "/downloads/gws-docs-write/SKILL.md",
+        "bytes": 4919,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-drive-upload",
+      "slug": "gws-drive-upload",
+      "sourcePath": "skills/gws-drive-upload",
+      "source": "googleworkspace",
+      "rank": 151,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-drive-upload.zip",
+        "skillMd": "/downloads/gws-drive-upload/SKILL.md",
+        "bytes": 4978,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-events",
+      "slug": "gws-events",
+      "sourcePath": "skills/gws-events",
+      "source": "googleworkspace",
+      "rank": 152,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-events.zip",
+        "skillMd": "/downloads/gws-events/SKILL.md",
+        "bytes": 5557,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-events-renew",
+      "slug": "gws-events-renew",
+      "sourcePath": "skills/gws-events-renew",
+      "source": "googleworkspace",
+      "rank": 153,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-events-renew.zip",
+        "skillMd": "/downloads/gws-events-renew/SKILL.md",
+        "bytes": 4909,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-events-subscribe",
+      "slug": "gws-events-subscribe",
+      "sourcePath": "skills/gws-events-subscribe",
+      "source": "googleworkspace",
+      "rank": 154,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-events-subscribe.zip",
+        "skillMd": "/downloads/gws-events-subscribe/SKILL.md",
+        "bytes": 5276,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-forms",
+      "slug": "gws-forms",
+      "sourcePath": "skills/gws-forms",
+      "source": "googleworkspace",
+      "rank": 155,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-forms.zip",
+        "skillMd": "/downloads/gws-forms/SKILL.md",
+        "bytes": 5092,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-gmail-forward",
+      "slug": "gws-gmail-forward",
+      "sourcePath": "skills/gws-gmail-forward",
+      "source": "googleworkspace",
+      "rank": 156,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-gmail-forward.zip",
+        "skillMd": "/downloads/gws-gmail-forward/SKILL.md",
+        "bytes": 5522,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-gmail-read",
+      "slug": "gws-gmail-read",
+      "sourcePath": "skills/gws-gmail-read",
+      "source": "googleworkspace",
+      "rank": 157,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-gmail-read.zip",
+        "skillMd": "/downloads/gws-gmail-read/SKILL.md",
+        "bytes": 5008,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-gmail-reply",
+      "slug": "gws-gmail-reply",
+      "sourcePath": "skills/gws-gmail-reply",
+      "source": "googleworkspace",
+      "rank": 158,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-gmail-reply.zip",
+        "skillMd": "/downloads/gws-gmail-reply/SKILL.md",
+        "bytes": 5457,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-gmail-reply-all",
+      "slug": "gws-gmail-reply-all",
+      "sourcePath": "skills/gws-gmail-reply-all",
+      "source": "googleworkspace",
+      "rank": 159,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-gmail-reply-all.zip",
+        "skillMd": "/downloads/gws-gmail-reply-all/SKILL.md",
+        "bytes": 5568,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-gmail-triage",
+      "slug": "gws-gmail-triage",
+      "sourcePath": "skills/gws-gmail-triage",
+      "source": "googleworkspace",
+      "rank": 160,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-gmail-triage.zip",
+        "skillMd": "/downloads/gws-gmail-triage/SKILL.md",
+        "bytes": 4920,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-gmail-watch",
+      "slug": "gws-gmail-watch",
+      "sourcePath": "skills/gws-gmail-watch",
+      "source": "googleworkspace",
+      "rank": 161,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-gmail-watch.zip",
+        "skillMd": "/downloads/gws-gmail-watch/SKILL.md",
+        "bytes": 5208,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-keep",
+      "slug": "gws-keep",
+      "sourcePath": "skills/gws-keep",
+      "source": "googleworkspace",
+      "rank": 162,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-keep.zip",
+        "skillMd": "/downloads/gws-keep/SKILL.md",
+        "bytes": 5218,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-meet",
+      "slug": "gws-meet",
+      "sourcePath": "skills/gws-meet",
+      "source": "googleworkspace",
+      "rank": 163,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-meet.zip",
+        "skillMd": "/downloads/gws-meet/SKILL.md",
+        "bytes": 5066,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-modelarmor",
+      "slug": "gws-modelarmor",
+      "sourcePath": "skills/gws-modelarmor",
+      "source": "googleworkspace",
+      "rank": 164,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-modelarmor.zip",
+        "skillMd": "/downloads/gws-modelarmor/SKILL.md",
+        "bytes": 4892,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-modelarmor-create-template",
+      "slug": "gws-modelarmor-create-template",
+      "sourcePath": "skills/gws-modelarmor-create-template",
+      "source": "googleworkspace",
+      "rank": 165,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-modelarmor-create-template.zip",
+        "skillMd": "/downloads/gws-modelarmor-create-template/SKILL.md",
+        "bytes": 5122,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-modelarmor-sanitize-prompt",
+      "slug": "gws-modelarmor-sanitize-prompt",
+      "sourcePath": "skills/gws-modelarmor-sanitize-prompt",
+      "source": "googleworkspace",
+      "rank": 166,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-modelarmor-sanitize-prompt.zip",
+        "skillMd": "/downloads/gws-modelarmor-sanitize-prompt/SKILL.md",
+        "bytes": 5046,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-modelarmor-sanitize-response",
+      "slug": "gws-modelarmor-sanitize-response",
+      "sourcePath": "skills/gws-modelarmor-sanitize-response",
+      "source": "googleworkspace",
+      "rank": 167,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-modelarmor-sanitize-response.zip",
+        "skillMd": "/downloads/gws-modelarmor-sanitize-response/SKILL.md",
+        "bytes": 5038,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-people",
+      "slug": "gws-people",
+      "sourcePath": "skills/gws-people",
+      "source": "googleworkspace",
+      "rank": 168,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-people.zip",
+        "skillMd": "/downloads/gws-people/SKILL.md",
+        "bytes": 6306,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-script",
+      "slug": "gws-script",
+      "sourcePath": "skills/gws-script",
+      "source": "googleworkspace",
+      "rank": 169,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-script.zip",
+        "skillMd": "/downloads/gws-script/SKILL.md",
+        "bytes": 5241,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-script-push",
+      "slug": "gws-script-push",
+      "sourcePath": "skills/gws-script-push",
+      "source": "googleworkspace",
+      "rank": 170,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-script-push.zip",
+        "skillMd": "/downloads/gws-script-push/SKILL.md",
+        "bytes": 4961,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-shared",
+      "slug": "gws-shared",
+      "sourcePath": "skills/gws-shared",
+      "source": "googleworkspace",
+      "rank": 171,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-shared.zip",
+        "skillMd": "/downloads/gws-shared/SKILL.md",
+        "bytes": 5665,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-sheets",
+      "slug": "gws-sheets",
+      "sourcePath": "skills/gws-sheets",
+      "source": "googleworkspace",
+      "rank": 172,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-sheets.zip",
+        "skillMd": "/downloads/gws-sheets/SKILL.md",
+        "bytes": 5487,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-sheets-append",
+      "slug": "gws-sheets-append",
+      "sourcePath": "skills/gws-sheets-append",
+      "source": "googleworkspace",
+      "rank": 173,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-sheets-append.zip",
+        "skillMd": "/downloads/gws-sheets-append/SKILL.md",
+        "bytes": 5066,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-sheets-read",
+      "slug": "gws-sheets-read",
+      "sourcePath": "skills/gws-sheets-read",
+      "source": "googleworkspace",
+      "rank": 174,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-sheets-read.zip",
+        "skillMd": "/downloads/gws-sheets-read/SKILL.md",
+        "bytes": 4868,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-slides",
+      "slug": "gws-slides",
+      "sourcePath": "skills/gws-slides",
+      "source": "googleworkspace",
+      "rank": 175,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-slides.zip",
+        "skillMd": "/downloads/gws-slides/SKILL.md",
+        "bytes": 5123,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-tasks",
+      "slug": "gws-tasks",
+      "sourcePath": "skills/gws-tasks",
+      "source": "googleworkspace",
+      "rank": 176,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-tasks.zip",
+        "skillMd": "/downloads/gws-tasks/SKILL.md",
+        "bytes": 5402,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-workflow",
+      "slug": "gws-workflow",
+      "sourcePath": "skills/gws-workflow",
+      "source": "googleworkspace",
+      "rank": 177,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-workflow.zip",
+        "skillMd": "/downloads/gws-workflow/SKILL.md",
+        "bytes": 5005,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-workflow-email-to-task",
+      "slug": "gws-workflow-email-to-task",
+      "sourcePath": "skills/gws-workflow-email-to-task",
+      "source": "googleworkspace",
+      "rank": 178,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-workflow-email-to-task.zip",
+        "skillMd": "/downloads/gws-workflow-email-to-task/SKILL.md",
+        "bytes": 4950,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-workflow-file-announce",
+      "slug": "gws-workflow-file-announce",
+      "sourcePath": "skills/gws-workflow-file-announce",
+      "source": "googleworkspace",
+      "rank": 179,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-workflow-file-announce.zip",
+        "skillMd": "/downloads/gws-workflow-file-announce/SKILL.md",
+        "bytes": 5046,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-workflow-meeting-prep",
+      "slug": "gws-workflow-meeting-prep",
+      "sourcePath": "skills/gws-workflow-meeting-prep",
+      "source": "googleworkspace",
+      "rank": 180,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-workflow-meeting-prep.zip",
+        "skillMd": "/downloads/gws-workflow-meeting-prep/SKILL.md",
+        "bytes": 4936,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-workflow-standup-report",
+      "slug": "gws-workflow-standup-report",
+      "sourcePath": "skills/gws-workflow-standup-report",
+      "source": "googleworkspace",
+      "rank": 181,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-workflow-standup-report.zip",
+        "skillMd": "/downloads/gws-workflow-standup-report/SKILL.md",
+        "bytes": 4910,
+        "files": 2
+      }
+    },
+    {
+      "id": "gws-workflow-weekly-digest",
+      "slug": "gws-workflow-weekly-digest",
+      "sourcePath": "skills/gws-workflow-weekly-digest",
+      "source": "googleworkspace",
+      "rank": 182,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-workflow-weekly-digest.zip",
+        "skillMd": "/downloads/gws-workflow-weekly-digest/SKILL.md",
+        "bytes": 4915,
+        "files": 2
+      }
+    },
+    {
+      "id": "hf-cli",
+      "slug": "hf-cli",
+      "sourcePath": "skills/hf-cli",
+      "source": "huggingface",
+      "rank": 183,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/hf-cli.zip",
+        "skillMd": "/downloads/hf-cli/SKILL.md",
+        "bytes": 11572,
+        "files": 2
+      }
+    },
+    {
+      "id": "hf-cloud-aws-context-discovery",
+      "slug": "hf-cloud-aws-context-discovery",
+      "sourcePath": "skills/hf-cloud-aws-context-discovery",
+      "source": "huggingface",
+      "rank": 184,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/hf-cloud-aws-context-discovery.zip",
+        "skillMd": "/downloads/hf-cloud-aws-context-discovery/SKILL.md",
+        "bytes": 6214,
+        "files": 2
+      }
+    },
+    {
+      "id": "hf-cloud-python-env-setup",
+      "slug": "hf-cloud-python-env-setup",
+      "sourcePath": "skills/hf-cloud-python-env-setup",
+      "source": "huggingface",
+      "rank": 185,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/hf-cloud-python-env-setup.zip",
+        "skillMd": "/downloads/hf-cloud-python-env-setup/SKILL.md",
+        "bytes": 10702,
+        "files": 5
+      }
+    },
+    {
+      "id": "hf-cloud-sagemaker-deployment-planner",
+      "slug": "hf-cloud-sagemaker-deployment-planner",
+      "sourcePath": "skills/hf-cloud-sagemaker-deployment-planner",
+      "source": "huggingface",
+      "rank": 186,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/hf-cloud-sagemaker-deployment-planner.zip",
+        "skillMd": "/downloads/hf-cloud-sagemaker-deployment-planner/SKILL.md",
+        "bytes": 8222,
+        "files": 2
+      }
+    },
+    {
+      "id": "hf-cloud-sagemaker-iam-preflight",
+      "slug": "hf-cloud-sagemaker-iam-preflight",
+      "sourcePath": "skills/hf-cloud-sagemaker-iam-preflight",
+      "source": "huggingface",
+      "rank": 187,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/hf-cloud-sagemaker-iam-preflight.zip",
+        "skillMd": "/downloads/hf-cloud-sagemaker-iam-preflight/SKILL.md",
+        "bytes": 13300,
+        "files": 6
+      }
+    },
+    {
+      "id": "hf-cloud-sagemaker-production-defaults",
+      "slug": "hf-cloud-sagemaker-production-defaults",
+      "sourcePath": "skills/hf-cloud-sagemaker-production-defaults",
+      "source": "huggingface",
+      "rank": 188,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/hf-cloud-sagemaker-production-defaults.zip",
+        "skillMd": "/downloads/hf-cloud-sagemaker-production-defaults/SKILL.md",
+        "bytes": 42441,
+        "files": 9
+      }
+    },
+    {
+      "id": "hf-cloud-serving-image-selection",
+      "slug": "hf-cloud-serving-image-selection",
+      "sourcePath": "skills/hf-cloud-serving-image-selection",
+      "source": "huggingface",
+      "rank": 189,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/hf-cloud-serving-image-selection.zip",
+        "skillMd": "/downloads/hf-cloud-serving-image-selection/SKILL.md",
+        "bytes": 19100,
+        "files": 4
+      }
+    },
+    {
+      "id": "hf-mem",
+      "slug": "hf-mem",
+      "sourcePath": "skills/hf-mem",
+      "source": "huggingface",
+      "rank": 190,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/hf-mem.zip",
+        "skillMd": "/downloads/hf-mem/SKILL.md",
+        "bytes": 6026,
+        "files": 3
+      }
+    },
+    {
+      "id": "huggingface-best",
+      "slug": "huggingface-best",
+      "sourcePath": "skills/huggingface-best",
+      "source": "huggingface",
+      "rank": 191,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-best.zip",
+        "skillMd": "/downloads/huggingface-best/SKILL.md",
+        "bytes": 7010,
+        "files": 2
+      }
+    },
+    {
+      "id": "huggingface-community-evals",
+      "slug": "huggingface-community-evals",
+      "sourcePath": "skills/huggingface-community-evals",
+      "source": "huggingface",
+      "rank": 192,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-community-evals.zip",
+        "skillMd": "/downloads/huggingface-community-evals/SKILL.md",
+        "bytes": 14608,
+        "files": 7
+      }
+    },
+    {
+      "id": "huggingface-datasets",
+      "slug": "huggingface-datasets",
+      "sourcePath": "skills/huggingface-datasets",
+      "source": "huggingface",
+      "rank": 193,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-datasets.zip",
+        "skillMd": "/downloads/huggingface-datasets/SKILL.md",
+        "bytes": 6188,
+        "files": 2
+      }
+    },
+    {
+      "id": "huggingface-gradio",
+      "slug": "huggingface-gradio",
+      "sourcePath": "skills/huggingface-gradio",
+      "source": "huggingface",
+      "rank": 194,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-gradio.zip",
+        "skillMd": "/downloads/huggingface-gradio/SKILL.md",
+        "bytes": 14658,
+        "files": 3
+      }
+    },
+    {
+      "id": "huggingface-llm-trainer",
+      "slug": "huggingface-llm-trainer",
+      "sourcePath": "skills/huggingface-llm-trainer",
+      "source": "huggingface",
+      "rank": 195,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-llm-trainer.zip",
+        "skillMd": "/downloads/huggingface-llm-trainer/SKILL.md",
+        "bytes": 74764,
+        "files": 20
+      }
+    },
+    {
+      "id": "huggingface-local-models",
+      "slug": "huggingface-local-models",
+      "sourcePath": "skills/huggingface-local-models",
+      "source": "huggingface",
+      "rank": 196,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-local-models.zip",
+        "skillMd": "/downloads/huggingface-local-models/SKILL.md",
+        "bytes": 11314,
+        "files": 5
+      }
+    },
+    {
+      "id": "huggingface-lora-space-builder",
+      "slug": "huggingface-lora-space-builder",
+      "sourcePath": "skills/huggingface-lora-space-builder",
+      "source": "huggingface",
+      "rank": 197,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-lora-space-builder.zip",
+        "skillMd": "/downloads/huggingface-lora-space-builder/SKILL.md",
+        "bytes": 55549,
+        "files": 9
+      }
+    },
+    {
+      "id": "huggingface-paper-publisher",
+      "slug": "huggingface-paper-publisher",
+      "sourcePath": "skills/huggingface-paper-publisher",
+      "source": "huggingface",
+      "rank": 198,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-paper-publisher.zip",
+        "skillMd": "/downloads/huggingface-paper-publisher/SKILL.md",
+        "bytes": 31940,
+        "files": 9
+      }
+    },
+    {
+      "id": "huggingface-papers",
+      "slug": "huggingface-papers",
+      "sourcePath": "skills/huggingface-papers",
+      "source": "huggingface",
+      "rank": 199,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-papers.zip",
+        "skillMd": "/downloads/huggingface-papers/SKILL.md",
+        "bytes": 7400,
+        "files": 2
+      }
+    },
+    {
+      "id": "huggingface-spaces",
+      "slug": "huggingface-spaces",
+      "sourcePath": "skills/huggingface-spaces",
+      "source": "huggingface",
+      "rank": 200,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-spaces.zip",
+        "skillMd": "/downloads/huggingface-spaces/SKILL.md",
+        "bytes": 76938,
+        "files": 16
+      }
+    },
+    {
+      "id": "huggingface-tool-builder",
+      "slug": "huggingface-tool-builder",
+      "sourcePath": "skills/huggingface-tool-builder",
+      "source": "huggingface",
+      "rank": 201,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-tool-builder.zip",
+        "skillMd": "/downloads/huggingface-tool-builder/SKILL.md",
+        "bytes": 16733,
+        "files": 9
+      }
+    },
+    {
+      "id": "huggingface-trackio",
+      "slug": "huggingface-trackio",
+      "sourcePath": "skills/huggingface-trackio",
+      "source": "huggingface",
+      "rank": 202,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-trackio.zip",
+        "skillMd": "/downloads/huggingface-trackio/SKILL.md",
+        "bytes": 13848,
+        "files": 5
+      }
+    },
+    {
+      "id": "huggingface-vision-trainer",
+      "slug": "huggingface-vision-trainer",
+      "sourcePath": "skills/huggingface-vision-trainer",
+      "source": "huggingface",
+      "rank": 203,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-vision-trainer.zip",
+        "skillMd": "/downloads/huggingface-vision-trainer/SKILL.md",
+        "bytes": 70204,
+        "files": 13
+      }
+    },
+    {
+      "id": "huggingface-zerogpu",
+      "slug": "huggingface-zerogpu",
+      "sourcePath": "skills/huggingface-zerogpu",
+      "source": "huggingface",
+      "rank": 204,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/huggingface-zerogpu.zip",
+        "skillMd": "/downloads/huggingface-zerogpu/SKILL.md",
+        "bytes": 20103,
+        "files": 6
+      }
+    },
+    {
       "id": "influencer-marketing",
       "slug": "influencer-marketing",
+      "sourcePath": "skills/influencer-marketing",
       "source": "marketing",
-      "rank": 81,
+      "rank": 205,
       "installs": null,
       "license": "MIT",
       "plugin": {
@@ -4646,10 +6891,27 @@
       }
     },
     {
+      "id": "k2",
+      "slug": "k2",
+      "sourcePath": "skills/k2",
+      "source": "cloudflare",
+      "rank": 206,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/k2.zip",
+        "skillMd": "/downloads/k2/SKILL.md",
+        "bytes": 6844,
+        "files": 3
+      }
+    },
+    {
       "id": "link-building",
       "slug": "link-building",
+      "sourcePath": "skills/link-building",
       "source": "marketing",
-      "rank": 82,
+      "rank": 207,
       "installs": null,
       "license": "MIT",
       "plugin": {
@@ -4720,10 +6982,27 @@
       }
     },
     {
+      "id": "manage-design-system",
+      "slug": "manage-design-system",
+      "sourcePath": "plugins/stitch-design/skills/manage-design-system",
+      "source": "stitch",
+      "rank": 208,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/manage-design-system.zip",
+        "skillMd": "/downloads/manage-design-system/SKILL.md",
+        "bytes": 10077,
+        "files": 4
+      }
+    },
+    {
       "id": "marketing-council",
       "slug": "marketing-council",
+      "sourcePath": "skills/marketing-council",
       "source": "marketing",
-      "rank": 83,
+      "rank": 209,
       "installs": null,
       "license": "MIT",
       "plugin": {
@@ -4796,8 +7075,9 @@
     {
       "id": "marketing-loops",
       "slug": "marketing-loops",
+      "sourcePath": "skills/marketing-loops",
       "source": "marketing",
-      "rank": 84,
+      "rank": 210,
       "installs": null,
       "license": "MIT",
       "plugin": {
@@ -4868,10 +7148,59 @@
       }
     },
     {
+      "id": "metronome",
+      "slug": "metronome",
+      "sourcePath": "skills/metronome",
+      "source": "stripe",
+      "rank": 211,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/metronome.zip",
+        "skillMd": "/downloads/metronome/SKILL.md",
+        "bytes": 5662,
+        "files": 2
+      }
+    },
+    {
+      "id": "new-terraform-provider",
+      "slug": "new-terraform-provider",
+      "sourcePath": "plugins/terraform/skills/new-terraform-provider",
+      "source": "hashicorp",
+      "rank": 212,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/new-terraform-provider.zip",
+        "skillMd": "/downloads/new-terraform-provider/SKILL.md",
+        "bytes": 9047,
+        "files": 4
+      }
+    },
+    {
+      "id": "nextjs-on-cloudflare",
+      "slug": "nextjs-on-cloudflare",
+      "sourcePath": "skills/nextjs-on-cloudflare",
+      "source": "cloudflare",
+      "rank": 213,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/nextjs-on-cloudflare.zip",
+        "skillMd": "/downloads/nextjs-on-cloudflare/SKILL.md",
+        "bytes": 7058,
+        "files": 3
+      }
+    },
+    {
       "id": "offers",
       "slug": "offers",
+      "sourcePath": "skills/offers",
       "source": "marketing",
-      "rank": 85,
+      "rank": 214,
       "installs": null,
       "license": "MIT",
       "plugin": {
@@ -4942,10 +7271,283 @@
       }
     },
     {
+      "id": "persona-content-creator",
+      "slug": "persona-content-creator",
+      "sourcePath": "skills/persona-content-creator",
+      "source": "googleworkspace",
+      "rank": 215,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/persona-content-creator.zip",
+        "skillMd": "/downloads/persona-content-creator/SKILL.md",
+        "bytes": 4949,
+        "files": 2
+      }
+    },
+    {
+      "id": "persona-customer-support",
+      "slug": "persona-customer-support",
+      "sourcePath": "skills/persona-customer-support",
+      "source": "googleworkspace",
+      "rank": 216,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/persona-customer-support.zip",
+        "skillMd": "/downloads/persona-customer-support/SKILL.md",
+        "bytes": 4923,
+        "files": 2
+      }
+    },
+    {
+      "id": "persona-event-coordinator",
+      "slug": "persona-event-coordinator",
+      "sourcePath": "skills/persona-event-coordinator",
+      "source": "googleworkspace",
+      "rank": 217,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/persona-event-coordinator.zip",
+        "skillMd": "/downloads/persona-event-coordinator/SKILL.md",
+        "bytes": 4962,
+        "files": 2
+      }
+    },
+    {
+      "id": "persona-exec-assistant",
+      "slug": "persona-exec-assistant",
+      "sourcePath": "skills/persona-exec-assistant",
+      "source": "googleworkspace",
+      "rank": 218,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/persona-exec-assistant.zip",
+        "skillMd": "/downloads/persona-exec-assistant/SKILL.md",
+        "bytes": 4999,
+        "files": 2
+      }
+    },
+    {
+      "id": "persona-hr-coordinator",
+      "slug": "persona-hr-coordinator",
+      "sourcePath": "skills/persona-hr-coordinator",
+      "source": "googleworkspace",
+      "rank": 219,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/persona-hr-coordinator.zip",
+        "skillMd": "/downloads/persona-hr-coordinator/SKILL.md",
+        "bytes": 4916,
+        "files": 2
+      }
+    },
+    {
+      "id": "persona-it-admin",
+      "slug": "persona-it-admin",
+      "sourcePath": "skills/persona-it-admin",
+      "source": "googleworkspace",
+      "rank": 220,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/persona-it-admin.zip",
+        "skillMd": "/downloads/persona-it-admin/SKILL.md",
+        "bytes": 4789,
+        "files": 2
+      }
+    },
+    {
+      "id": "persona-project-manager",
+      "slug": "persona-project-manager",
+      "sourcePath": "skills/persona-project-manager",
+      "source": "googleworkspace",
+      "rank": 221,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/persona-project-manager.zip",
+        "skillMd": "/downloads/persona-project-manager/SKILL.md",
+        "bytes": 5042,
+        "files": 2
+      }
+    },
+    {
+      "id": "persona-researcher",
+      "slug": "persona-researcher",
+      "sourcePath": "skills/persona-researcher",
+      "source": "googleworkspace",
+      "rank": 222,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/persona-researcher.zip",
+        "skillMd": "/downloads/persona-researcher/SKILL.md",
+        "bytes": 4863,
+        "files": 2
+      }
+    },
+    {
+      "id": "persona-sales-ops",
+      "slug": "persona-sales-ops",
+      "sourcePath": "skills/persona-sales-ops",
+      "source": "googleworkspace",
+      "rank": 223,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/persona-sales-ops.zip",
+        "skillMd": "/downloads/persona-sales-ops/SKILL.md",
+        "bytes": 4925,
+        "files": 2
+      }
+    },
+    {
+      "id": "persona-team-lead",
+      "slug": "persona-team-lead",
+      "sourcePath": "skills/persona-team-lead",
+      "source": "googleworkspace",
+      "rank": 224,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/persona-team-lead.zip",
+        "skillMd": "/downloads/persona-team-lead/SKILL.md",
+        "bytes": 4893,
+        "files": 2
+      }
+    },
+    {
+      "id": "provider-actions",
+      "slug": "provider-actions",
+      "sourcePath": "plugins/terraform/skills/provider-actions",
+      "source": "hashicorp",
+      "rank": 225,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/provider-actions.zip",
+        "skillMd": "/downloads/provider-actions/SKILL.md",
+        "bytes": 12186,
+        "files": 2
+      }
+    },
+    {
+      "id": "provider-configuration",
+      "slug": "provider-configuration",
+      "sourcePath": "plugins/terraform/skills/provider-configuration",
+      "source": "hashicorp",
+      "rank": 226,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/provider-configuration.zip",
+        "skillMd": "/downloads/provider-configuration/SKILL.md",
+        "bytes": 20410,
+        "files": 4
+      }
+    },
+    {
+      "id": "provider-docs",
+      "slug": "provider-docs",
+      "sourcePath": "plugins/terraform/skills/provider-docs",
+      "source": "hashicorp",
+      "rank": 227,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/provider-docs.zip",
+        "skillMd": "/downloads/provider-docs/SKILL.md",
+        "bytes": 10343,
+        "files": 4
+      }
+    },
+    {
+      "id": "provider-ephemeral-resources",
+      "slug": "provider-ephemeral-resources",
+      "sourcePath": "plugins/terraform/skills/provider-ephemeral-resources",
+      "source": "hashicorp",
+      "rank": 228,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/provider-ephemeral-resources.zip",
+        "skillMd": "/downloads/provider-ephemeral-resources/SKILL.md",
+        "bytes": 9181,
+        "files": 2
+      }
+    },
+    {
+      "id": "provider-framework-migration",
+      "slug": "provider-framework-migration",
+      "sourcePath": "plugins/terraform/skills/provider-framework-migration",
+      "source": "hashicorp",
+      "rank": 229,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/provider-framework-migration.zip",
+        "skillMd": "/downloads/provider-framework-migration/SKILL.md",
+        "bytes": 12472,
+        "files": 3
+      }
+    },
+    {
+      "id": "provider-resources",
+      "slug": "provider-resources",
+      "sourcePath": "plugins/terraform/skills/provider-resources",
+      "source": "hashicorp",
+      "rank": 230,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/provider-resources.zip",
+        "skillMd": "/downloads/provider-resources/SKILL.md",
+        "bytes": 17455,
+        "files": 4
+      }
+    },
+    {
+      "id": "provider-test-patterns",
+      "slug": "provider-test-patterns",
+      "sourcePath": "plugins/terraform/skills/provider-test-patterns",
+      "source": "hashicorp",
+      "rank": 231,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/provider-test-patterns.zip",
+        "skillMd": "/downloads/provider-test-patterns/SKILL.md",
+        "bytes": 15070,
+        "files": 5
+      }
+    },
+    {
       "id": "public-relations",
       "slug": "public-relations",
+      "sourcePath": "skills/public-relations",
       "source": "marketing",
-      "rank": 86,
+      "rank": 232,
       "installs": null,
       "license": "MIT",
       "plugin": {
@@ -5016,10 +7618,763 @@
       }
     },
     {
+      "id": "push-to-registry",
+      "slug": "push-to-registry",
+      "sourcePath": "plugins/packer/skills/push-to-registry",
+      "source": "hashicorp",
+      "rank": 233,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/push-to-registry.zip",
+        "skillMd": "/downloads/push-to-registry/SKILL.md",
+        "bytes": 7782,
+        "files": 2
+      }
+    },
+    {
+      "id": "react-components",
+      "slug": "react-components",
+      "sourcePath": "plugins/stitch-build/skills/react-components",
+      "source": "stitch",
+      "rank": 234,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/react-components.zip",
+        "skillMd": "/downloads/react-components/SKILL.md",
+        "bytes": 17105,
+        "files": 12
+      }
+    },
+    {
+      "id": "react-native",
+      "slug": "react-native",
+      "sourcePath": "plugins/stitch-build/skills/react-native",
+      "source": "stitch",
+      "rank": 235,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/react-native.zip",
+        "skillMd": "/downloads/react-native/SKILL.md",
+        "bytes": 18696,
+        "files": 10
+      }
+    },
+    {
+      "id": "react-vite-dashboard",
+      "slug": "react-vite-dashboard",
+      "sourcePath": "plugins/stitch-build/skills/react-vite-dashboard",
+      "source": "stitch",
+      "rank": 236,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/react-vite-dashboard.zip",
+        "skillMd": "/downloads/react-vite-dashboard/SKILL.md",
+        "bytes": 6734,
+        "files": 3
+      }
+    },
+    {
+      "id": "recipe-backup-sheet-as-csv",
+      "slug": "recipe-backup-sheet-as-csv",
+      "sourcePath": "skills/recipe-backup-sheet-as-csv",
+      "source": "googleworkspace",
+      "rank": 237,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-backup-sheet-as-csv.zip",
+        "skillMd": "/downloads/recipe-backup-sheet-as-csv/SKILL.md",
+        "bytes": 4772,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-batch-invite-to-event",
+      "slug": "recipe-batch-invite-to-event",
+      "sourcePath": "skills/recipe-batch-invite-to-event",
+      "source": "googleworkspace",
+      "rank": 238,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-batch-invite-to-event.zip",
+        "skillMd": "/downloads/recipe-batch-invite-to-event/SKILL.md",
+        "bytes": 4789,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-block-focus-time",
+      "slug": "recipe-block-focus-time",
+      "sourcePath": "skills/recipe-block-focus-time",
+      "source": "googleworkspace",
+      "rank": 239,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-block-focus-time.zip",
+        "skillMd": "/downloads/recipe-block-focus-time/SKILL.md",
+        "bytes": 4846,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-bulk-download-folder",
+      "slug": "recipe-bulk-download-folder",
+      "sourcePath": "skills/recipe-bulk-download-folder",
+      "source": "googleworkspace",
+      "rank": 240,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-bulk-download-folder.zip",
+        "skillMd": "/downloads/recipe-bulk-download-folder/SKILL.md",
+        "bytes": 4777,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-collect-form-responses",
+      "slug": "recipe-collect-form-responses",
+      "sourcePath": "skills/recipe-collect-form-responses",
+      "source": "googleworkspace",
+      "rank": 241,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-collect-form-responses.zip",
+        "skillMd": "/downloads/recipe-collect-form-responses/SKILL.md",
+        "bytes": 4720,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-compare-sheet-tabs",
+      "slug": "recipe-compare-sheet-tabs",
+      "sourcePath": "skills/recipe-compare-sheet-tabs",
+      "source": "googleworkspace",
+      "rank": 242,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-compare-sheet-tabs.zip",
+        "skillMd": "/downloads/recipe-compare-sheet-tabs/SKILL.md",
+        "bytes": 4694,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-copy-sheet-for-new-month",
+      "slug": "recipe-copy-sheet-for-new-month",
+      "sourcePath": "skills/recipe-copy-sheet-for-new-month",
+      "source": "googleworkspace",
+      "rank": 243,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-copy-sheet-for-new-month.zip",
+        "skillMd": "/downloads/recipe-copy-sheet-for-new-month/SKILL.md",
+        "bytes": 4833,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-create-classroom-course",
+      "slug": "recipe-create-classroom-course",
+      "sourcePath": "skills/recipe-create-classroom-course",
+      "source": "googleworkspace",
+      "rank": 244,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-create-classroom-course.zip",
+        "skillMd": "/downloads/recipe-create-classroom-course/SKILL.md",
+        "bytes": 4789,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-create-doc-from-template",
+      "slug": "recipe-create-doc-from-template",
+      "sourcePath": "skills/recipe-create-doc-from-template",
+      "source": "googleworkspace",
+      "rank": 245,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-create-doc-from-template.zip",
+        "skillMd": "/downloads/recipe-create-doc-from-template/SKILL.md",
+        "bytes": 4900,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-create-events-from-sheet",
+      "slug": "recipe-create-events-from-sheet",
+      "sourcePath": "skills/recipe-create-events-from-sheet",
+      "source": "googleworkspace",
+      "rank": 246,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-create-events-from-sheet.zip",
+        "skillMd": "/downloads/recipe-create-events-from-sheet/SKILL.md",
+        "bytes": 4797,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-create-expense-tracker",
+      "slug": "recipe-create-expense-tracker",
+      "sourcePath": "skills/recipe-create-expense-tracker",
+      "source": "googleworkspace",
+      "rank": 247,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-create-expense-tracker.zip",
+        "skillMd": "/downloads/recipe-create-expense-tracker/SKILL.md",
+        "bytes": 4925,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-create-feedback-form",
+      "slug": "recipe-create-feedback-form",
+      "sourcePath": "skills/recipe-create-feedback-form",
+      "source": "googleworkspace",
+      "rank": 248,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-create-feedback-form.zip",
+        "skillMd": "/downloads/recipe-create-feedback-form/SKILL.md",
+        "bytes": 4793,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-create-gmail-filter",
+      "slug": "recipe-create-gmail-filter",
+      "sourcePath": "skills/recipe-create-gmail-filter",
+      "source": "googleworkspace",
+      "rank": 249,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-create-gmail-filter.zip",
+        "skillMd": "/downloads/recipe-create-gmail-filter/SKILL.md",
+        "bytes": 4812,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-create-meet-space",
+      "slug": "recipe-create-meet-space",
+      "sourcePath": "skills/recipe-create-meet-space",
+      "source": "googleworkspace",
+      "rank": 250,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-create-meet-space.zip",
+        "skillMd": "/downloads/recipe-create-meet-space/SKILL.md",
+        "bytes": 4747,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-create-presentation",
+      "slug": "recipe-create-presentation",
+      "sourcePath": "skills/recipe-create-presentation",
+      "source": "googleworkspace",
+      "rank": 251,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-create-presentation.zip",
+        "skillMd": "/downloads/recipe-create-presentation/SKILL.md",
+        "bytes": 4768,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-create-shared-drive",
+      "slug": "recipe-create-shared-drive",
+      "sourcePath": "skills/recipe-create-shared-drive",
+      "source": "googleworkspace",
+      "rank": 252,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-create-shared-drive.zip",
+        "skillMd": "/downloads/recipe-create-shared-drive/SKILL.md",
+        "bytes": 4796,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-create-task-list",
+      "slug": "recipe-create-task-list",
+      "sourcePath": "skills/recipe-create-task-list",
+      "source": "googleworkspace",
+      "rank": 253,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-create-task-list.zip",
+        "skillMd": "/downloads/recipe-create-task-list/SKILL.md",
+        "bytes": 4788,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-create-vacation-responder",
+      "slug": "recipe-create-vacation-responder",
+      "sourcePath": "skills/recipe-create-vacation-responder",
+      "source": "googleworkspace",
+      "rank": 254,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-create-vacation-responder.zip",
+        "skillMd": "/downloads/recipe-create-vacation-responder/SKILL.md",
+        "bytes": 4870,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-draft-email-from-doc",
+      "slug": "recipe-draft-email-from-doc",
+      "sourcePath": "skills/recipe-draft-email-from-doc",
+      "source": "googleworkspace",
+      "rank": 255,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-draft-email-from-doc.zip",
+        "skillMd": "/downloads/recipe-draft-email-from-doc/SKILL.md",
+        "bytes": 4776,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-email-drive-link",
+      "slug": "recipe-email-drive-link",
+      "sourcePath": "skills/recipe-email-drive-link",
+      "source": "googleworkspace",
+      "rank": 256,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-email-drive-link.zip",
+        "skillMd": "/downloads/recipe-email-drive-link/SKILL.md",
+        "bytes": 4830,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-find-free-time",
+      "slug": "recipe-find-free-time",
+      "sourcePath": "skills/recipe-find-free-time",
+      "source": "googleworkspace",
+      "rank": 257,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-find-free-time.zip",
+        "skillMd": "/downloads/recipe-find-free-time/SKILL.md",
+        "bytes": 4805,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-find-large-files",
+      "slug": "recipe-find-large-files",
+      "sourcePath": "skills/recipe-find-large-files",
+      "source": "googleworkspace",
+      "rank": 258,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-find-large-files.zip",
+        "skillMd": "/downloads/recipe-find-large-files/SKILL.md",
+        "bytes": 4738,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-forward-labeled-emails",
+      "slug": "recipe-forward-labeled-emails",
+      "sourcePath": "skills/recipe-forward-labeled-emails",
+      "source": "googleworkspace",
+      "rank": 259,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-forward-labeled-emails.zip",
+        "skillMd": "/downloads/recipe-forward-labeled-emails/SKILL.md",
+        "bytes": 4822,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-generate-report-from-sheet",
+      "slug": "recipe-generate-report-from-sheet",
+      "sourcePath": "skills/recipe-generate-report-from-sheet",
+      "source": "googleworkspace",
+      "rank": 260,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-generate-report-from-sheet.zip",
+        "skillMd": "/downloads/recipe-generate-report-from-sheet/SKILL.md",
+        "bytes": 4974,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-label-and-archive-emails",
+      "slug": "recipe-label-and-archive-emails",
+      "sourcePath": "skills/recipe-label-and-archive-emails",
+      "source": "googleworkspace",
+      "rank": 261,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-label-and-archive-emails.zip",
+        "skillMd": "/downloads/recipe-label-and-archive-emails/SKILL.md",
+        "bytes": 4818,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-log-deal-update",
+      "slug": "recipe-log-deal-update",
+      "sourcePath": "skills/recipe-log-deal-update",
+      "source": "googleworkspace",
+      "rank": 262,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-log-deal-update.zip",
+        "skillMd": "/downloads/recipe-log-deal-update/SKILL.md",
+        "bytes": 4824,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-organize-drive-folder",
+      "slug": "recipe-organize-drive-folder",
+      "sourcePath": "skills/recipe-organize-drive-folder",
+      "source": "googleworkspace",
+      "rank": 263,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-organize-drive-folder.zip",
+        "skillMd": "/downloads/recipe-organize-drive-folder/SKILL.md",
+        "bytes": 4853,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-plan-weekly-schedule",
+      "slug": "recipe-plan-weekly-schedule",
+      "sourcePath": "skills/recipe-plan-weekly-schedule",
+      "source": "googleworkspace",
+      "rank": 264,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-plan-weekly-schedule.zip",
+        "skillMd": "/downloads/recipe-plan-weekly-schedule/SKILL.md",
+        "bytes": 4829,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-post-mortem-setup",
+      "slug": "recipe-post-mortem-setup",
+      "sourcePath": "skills/recipe-post-mortem-setup",
+      "source": "googleworkspace",
+      "rank": 265,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-post-mortem-setup.zip",
+        "skillMd": "/downloads/recipe-post-mortem-setup/SKILL.md",
+        "bytes": 4860,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-reschedule-meeting",
+      "slug": "recipe-reschedule-meeting",
+      "sourcePath": "skills/recipe-reschedule-meeting",
+      "source": "googleworkspace",
+      "rank": 266,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-reschedule-meeting.zip",
+        "skillMd": "/downloads/recipe-reschedule-meeting/SKILL.md",
+        "bytes": 4801,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-review-meet-participants",
+      "slug": "recipe-review-meet-participants",
+      "sourcePath": "skills/recipe-review-meet-participants",
+      "source": "googleworkspace",
+      "rank": 267,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-review-meet-participants.zip",
+        "skillMd": "/downloads/recipe-review-meet-participants/SKILL.md",
+        "bytes": 4761,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-review-overdue-tasks",
+      "slug": "recipe-review-overdue-tasks",
+      "sourcePath": "skills/recipe-review-overdue-tasks",
+      "source": "googleworkspace",
+      "rank": 268,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-review-overdue-tasks.zip",
+        "skillMd": "/downloads/recipe-review-overdue-tasks/SKILL.md",
+        "bytes": 4727,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-save-email-attachments",
+      "slug": "recipe-save-email-attachments",
+      "sourcePath": "skills/recipe-save-email-attachments",
+      "source": "googleworkspace",
+      "rank": 269,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-save-email-attachments.zip",
+        "skillMd": "/downloads/recipe-save-email-attachments/SKILL.md",
+        "bytes": 4842,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-save-email-to-doc",
+      "slug": "recipe-save-email-to-doc",
+      "sourcePath": "skills/recipe-save-email-to-doc",
+      "source": "googleworkspace",
+      "rank": 270,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-save-email-to-doc.zip",
+        "skillMd": "/downloads/recipe-save-email-to-doc/SKILL.md",
+        "bytes": 4858,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-schedule-recurring-event",
+      "slug": "recipe-schedule-recurring-event",
+      "sourcePath": "skills/recipe-schedule-recurring-event",
+      "source": "googleworkspace",
+      "rank": 271,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-schedule-recurring-event.zip",
+        "skillMd": "/downloads/recipe-schedule-recurring-event/SKILL.md",
+        "bytes": 4866,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-send-team-announcement",
+      "slug": "recipe-send-team-announcement",
+      "sourcePath": "skills/recipe-send-team-announcement",
+      "source": "googleworkspace",
+      "rank": 272,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-send-team-announcement.zip",
+        "skillMd": "/downloads/recipe-send-team-announcement/SKILL.md",
+        "bytes": 4782,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-share-doc-and-notify",
+      "slug": "recipe-share-doc-and-notify",
+      "sourcePath": "skills/recipe-share-doc-and-notify",
+      "source": "googleworkspace",
+      "rank": 273,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-share-doc-and-notify.zip",
+        "skillMd": "/downloads/recipe-share-doc-and-notify/SKILL.md",
+        "bytes": 4916,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-share-event-materials",
+      "slug": "recipe-share-event-materials",
+      "sourcePath": "skills/recipe-share-event-materials",
+      "source": "googleworkspace",
+      "rank": 274,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-share-event-materials.zip",
+        "skillMd": "/downloads/recipe-share-event-materials/SKILL.md",
+        "bytes": 4813,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-share-folder-with-team",
+      "slug": "recipe-share-folder-with-team",
+      "sourcePath": "skills/recipe-share-folder-with-team",
+      "source": "googleworkspace",
+      "rank": 275,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-share-folder-with-team.zip",
+        "skillMd": "/downloads/recipe-share-folder-with-team/SKILL.md",
+        "bytes": 4865,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-sync-contacts-to-sheet",
+      "slug": "recipe-sync-contacts-to-sheet",
+      "sourcePath": "skills/recipe-sync-contacts-to-sheet",
+      "source": "googleworkspace",
+      "rank": 276,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-sync-contacts-to-sheet.zip",
+        "skillMd": "/downloads/recipe-sync-contacts-to-sheet/SKILL.md",
+        "bytes": 4879,
+        "files": 2
+      }
+    },
+    {
+      "id": "recipe-watch-drive-changes",
+      "slug": "recipe-watch-drive-changes",
+      "sourcePath": "skills/recipe-watch-drive-changes",
+      "source": "googleworkspace",
+      "rank": 277,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/recipe-watch-drive-changes.zip",
+        "skillMd": "/downloads/recipe-watch-drive-changes/SKILL.md",
+        "bytes": 4849,
+        "files": 2
+      }
+    },
+    {
+      "id": "refactor-module",
+      "slug": "refactor-module",
+      "sourcePath": "plugins/terraform/skills/refactor-module",
+      "source": "hashicorp",
+      "rank": 278,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/refactor-module.zip",
+        "skillMd": "/downloads/refactor-module/SKILL.md",
+        "bytes": 10837,
+        "files": 2
+      }
+    },
+    {
+      "id": "remotion",
+      "slug": "remotion",
+      "sourcePath": "plugins/stitch-build/skills/remotion",
+      "source": "stitch",
+      "rank": 279,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/remotion.zip",
+        "skillMd": "/downloads/remotion/SKILL.md",
+        "bytes": 16099,
+        "files": 8
+      }
+    },
+    {
       "id": "reverse-engineer-marketing",
       "slug": "reverse-engineer-marketing",
+      "sourcePath": "skills/reverse-engineer-marketing",
       "source": "marketing",
-      "rank": 87,
+      "rank": 280,
       "installs": null,
       "license": "MIT",
       "plugin": {
@@ -5087,6 +8442,694 @@
         "skillMd": "/downloads/reverse-engineer-marketing/SKILL.md",
         "bytes": 195953,
         "files": 46
+      }
+    },
+    {
+      "id": "run-acceptance-tests",
+      "slug": "run-acceptance-tests",
+      "sourcePath": "plugins/terraform/skills/run-acceptance-tests",
+      "source": "hashicorp",
+      "rank": 281,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/run-acceptance-tests.zip",
+        "skillMd": "/downloads/run-acceptance-tests/SKILL.md",
+        "bytes": 7173,
+        "files": 2
+      }
+    },
+    {
+      "id": "shadcn-ui",
+      "slug": "shadcn-ui",
+      "sourcePath": "plugins/stitch-build/skills/shadcn-ui",
+      "source": "stitch",
+      "rank": 282,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/shadcn-ui.zip",
+        "skillMd": "/downloads/shadcn-ui/SKILL.md",
+        "bytes": 35163,
+        "files": 11
+      }
+    },
+    {
+      "id": "site-md",
+      "slug": "site-md",
+      "sourcePath": "plugins/stitch-utilities/skills/site-md",
+      "source": "stitch",
+      "rank": 283,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/site-md.zip",
+        "skillMd": "/downloads/site-md/SKILL.md",
+        "bytes": 5757,
+        "files": 2
+      }
+    },
+    {
+      "id": "stitch-loop",
+      "slug": "stitch-loop",
+      "sourcePath": "plugins/stitch-utilities/skills/stitch-loop",
+      "source": "stitch",
+      "rank": 284,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/stitch-loop.zip",
+        "skillMd": "/downloads/stitch-loop/SKILL.md",
+        "bytes": 14930,
+        "files": 7
+      }
+    },
+    {
+      "id": "stripe-apps",
+      "slug": "stripe-apps",
+      "sourcePath": "skills/stripe-apps",
+      "source": "stripe",
+      "rank": 285,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/stripe-apps.zip",
+        "skillMd": "/downloads/stripe-apps/SKILL.md",
+        "bytes": 37655,
+        "files": 14
+      }
+    },
+    {
+      "id": "stripe-bfcm-dashboard",
+      "slug": "stripe-bfcm-dashboard",
+      "sourcePath": "skills/stripe-bfcm-dashboard",
+      "source": "stripe",
+      "rank": 286,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/stripe-bfcm-dashboard.zip",
+        "skillMd": "/downloads/stripe-bfcm-dashboard/SKILL.md",
+        "bytes": 22594,
+        "files": 6
+      }
+    },
+    {
+      "id": "stripe-directory",
+      "slug": "stripe-directory",
+      "sourcePath": "skills/stripe-directory",
+      "source": "stripe",
+      "rank": 287,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/stripe-directory.zip",
+        "skillMd": "/downloads/stripe-directory/SKILL.md",
+        "bytes": 4371,
+        "files": 2
+      }
+    },
+    {
+      "id": "stripe-docs",
+      "slug": "stripe-docs",
+      "sourcePath": "skills/stripe-docs",
+      "source": "stripe",
+      "rank": 288,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/stripe-docs.zip",
+        "skillMd": "/downloads/stripe-docs/SKILL.md",
+        "bytes": 1539,
+        "files": 2
+      }
+    },
+    {
+      "id": "stripe-implementation-planner",
+      "slug": "stripe-implementation-planner",
+      "sourcePath": "skills/stripe-implementation-planner",
+      "source": "stripe",
+      "rank": 289,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/stripe-implementation-planner.zip",
+        "skillMd": "/downloads/stripe-implementation-planner/SKILL.md",
+        "bytes": 3521,
+        "files": 2
+      }
+    },
+    {
+      "id": "stripe-pay",
+      "slug": "stripe-pay",
+      "sourcePath": "skills/stripe-pay",
+      "source": "stripe",
+      "rank": 290,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/stripe-pay.zip",
+        "skillMd": "/downloads/stripe-pay/SKILL.md",
+        "bytes": 2740,
+        "files": 2
+      }
+    },
+    {
+      "id": "stripe-projects",
+      "slug": "stripe-projects",
+      "sourcePath": "skills/stripe-projects",
+      "source": "stripe",
+      "rank": 291,
+      "installs": null,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/stripe-projects.zip",
+        "skillMd": "/downloads/stripe-projects/SKILL.md",
+        "bytes": 3854,
+        "files": 2
+      }
+    },
+    {
+      "id": "taste-design",
+      "slug": "taste-design",
+      "sourcePath": "plugins/stitch-utilities/skills/taste-design",
+      "source": "stitch",
+      "rank": 292,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/taste-design.zip",
+        "skillMd": "/downloads/taste-design/SKILL.md",
+        "bytes": 16337,
+        "files": 3
+      }
+    },
+    {
+      "id": "terraform-policy",
+      "slug": "terraform-policy",
+      "sourcePath": "plugins/terraform/skills/terraform-policy",
+      "source": "hashicorp",
+      "rank": 293,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/terraform-policy.zip",
+        "skillMd": "/downloads/terraform-policy/SKILL.md",
+        "bytes": 128967,
+        "files": 56
+      }
+    },
+    {
+      "id": "terraform-search-import",
+      "slug": "terraform-search-import",
+      "sourcePath": "plugins/terraform/skills/terraform-search-import",
+      "source": "hashicorp",
+      "rank": 294,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/terraform-search-import.zip",
+        "skillMd": "/downloads/terraform-search-import/SKILL.md",
+        "bytes": 11147,
+        "files": 4
+      }
+    },
+    {
+      "id": "terraform-stacks",
+      "slug": "terraform-stacks",
+      "sourcePath": "plugins/terraform/skills/terraform-stacks",
+      "source": "hashicorp",
+      "rank": 295,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/terraform-stacks.zip",
+        "skillMd": "/downloads/terraform-stacks/SKILL.md",
+        "bytes": 35411,
+        "files": 8
+      }
+    },
+    {
+      "id": "terraform-style-guide",
+      "slug": "terraform-style-guide",
+      "sourcePath": "plugins/terraform/skills/terraform-style-guide",
+      "source": "hashicorp",
+      "rank": 296,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/terraform-style-guide.zip",
+        "skillMd": "/downloads/terraform-style-guide/SKILL.md",
+        "bytes": 10340,
+        "files": 3
+      }
+    },
+    {
+      "id": "terraform-test",
+      "slug": "terraform-test",
+      "sourcePath": "plugins/terraform/skills/terraform-test",
+      "source": "hashicorp",
+      "rank": 297,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/terraform-test.zip",
+        "skillMd": "/downloads/terraform-test/SKILL.md",
+        "bytes": 13519,
+        "files": 5
+      }
+    },
+    {
+      "id": "train-sentence-transformers",
+      "slug": "train-sentence-transformers",
+      "sourcePath": "skills/train-sentence-transformers",
+      "source": "huggingface",
+      "rank": 298,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/train-sentence-transformers.zip",
+        "skillMd": "/downloads/train-sentence-transformers/SKILL.md",
+        "bytes": 123157,
+        "files": 32
+      }
+    },
+    {
+      "id": "transformers-js",
+      "slug": "transformers-js",
+      "sourcePath": "skills/transformers-js",
+      "source": "huggingface",
+      "rank": 299,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/transformers-js.zip",
+        "skillMd": "/downloads/transformers-js/SKILL.md",
+        "bytes": 36287,
+        "files": 9
+      }
+    },
+    {
+      "id": "trl-training",
+      "slug": "trl-training",
+      "sourcePath": "skills/trl-training",
+      "source": "huggingface",
+      "rank": 300,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/trl-training.zip",
+        "skillMd": "/downloads/trl-training/SKILL.md",
+        "bytes": 6386,
+        "files": 2
+      }
+    },
+    {
+      "id": "upload-to-stitch",
+      "slug": "upload-to-stitch",
+      "sourcePath": "plugins/stitch-design/skills/upload-to-stitch",
+      "source": "stitch",
+      "rank": 301,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/upload-to-stitch.zip",
+        "skillMd": "/downloads/upload-to-stitch/SKILL.md",
+        "bytes": 9279,
+        "files": 3
+      }
+    },
+    {
+      "id": "windows-builder",
+      "slug": "windows-builder",
+      "sourcePath": "plugins/packer/skills/windows-builder",
+      "source": "hashicorp",
+      "rank": 302,
+      "installs": null,
+      "license": "MPL-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/windows-builder.zip",
+        "skillMd": "/downloads/windows-builder/SKILL.md",
+        "bytes": 7585,
+        "files": 2
+      }
+    },
+    {
+      "id": "wordpress-router",
+      "slug": "wordpress-router",
+      "sourcePath": "skills/wordpress-router",
+      "source": "wordpress",
+      "rank": 303,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wordpress-router.zip",
+        "skillMd": "/downloads/wordpress-router/SKILL.md",
+        "bytes": 10190,
+        "files": 4
+      }
+    },
+    {
+      "id": "workers-development",
+      "slug": "workers-development",
+      "sourcePath": "skills/workers-development",
+      "source": "cloudflare",
+      "rank": 304,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/workers-development.zip",
+        "skillMd": "/downloads/workers-development/SKILL.md",
+        "bytes": 7132,
+        "files": 3
+      }
+    },
+    {
+      "id": "workers-profiling",
+      "slug": "workers-profiling",
+      "sourcePath": "skills/workers-profiling",
+      "source": "cloudflare",
+      "rank": 305,
+      "installs": null,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/workers-profiling.zip",
+        "skillMd": "/downloads/workers-profiling/SKILL.md",
+        "bytes": 6902,
+        "files": 3
+      }
+    },
+    {
+      "id": "wp-abilities-api",
+      "slug": "wp-abilities-api",
+      "sourcePath": "skills/wp-abilities-api",
+      "source": "wordpress",
+      "rank": 306,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-abilities-api.zip",
+        "skillMd": "/downloads/wp-abilities-api/SKILL.md",
+        "bytes": 43917,
+        "files": 12
+      }
+    },
+    {
+      "id": "wp-abilities-audit",
+      "slug": "wp-abilities-audit",
+      "sourcePath": "skills/wp-abilities-audit",
+      "source": "wordpress",
+      "rank": 307,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-abilities-audit.zip",
+        "skillMd": "/downloads/wp-abilities-audit/SKILL.md",
+        "bytes": 24702,
+        "files": 6
+      }
+    },
+    {
+      "id": "wp-abilities-verify",
+      "slug": "wp-abilities-verify",
+      "sourcePath": "skills/wp-abilities-verify",
+      "source": "wordpress",
+      "rank": 308,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-abilities-verify.zip",
+        "skillMd": "/downloads/wp-abilities-verify/SKILL.md",
+        "bytes": 32516,
+        "files": 9
+      }
+    },
+    {
+      "id": "wp-ability-development",
+      "slug": "wp-ability-development",
+      "sourcePath": "skills/wp-ability-development",
+      "source": "wordpress",
+      "rank": 309,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-ability-development.zip",
+        "skillMd": "/downloads/wp-ability-development/SKILL.md",
+        "bytes": 11742,
+        "files": 3
+      }
+    },
+    {
+      "id": "wp-block-development",
+      "slug": "wp-block-development",
+      "sourcePath": "skills/wp-block-development",
+      "source": "wordpress",
+      "rank": 310,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-block-development.zip",
+        "skillMd": "/downloads/wp-block-development/SKILL.md",
+        "bytes": 18975,
+        "files": 14
+      }
+    },
+    {
+      "id": "wp-block-themes",
+      "slug": "wp-block-themes",
+      "sourcePath": "skills/wp-block-themes",
+      "source": "wordpress",
+      "rank": 311,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-block-themes.zip",
+        "skillMd": "/downloads/wp-block-themes/SKILL.md",
+        "bytes": 15159,
+        "files": 10
+      }
+    },
+    {
+      "id": "wp-env",
+      "slug": "wp-env",
+      "sourcePath": "skills/wp-env",
+      "source": "wordpress",
+      "rank": 312,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-env.zip",
+        "skillMd": "/downloads/wp-env/SKILL.md",
+        "bytes": 11018,
+        "files": 3
+      }
+    },
+    {
+      "id": "wp-interactivity-api",
+      "slug": "wp-interactivity-api",
+      "sourcePath": "skills/wp-interactivity-api",
+      "source": "wordpress",
+      "rank": 313,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-interactivity-api.zip",
+        "skillMd": "/downloads/wp-interactivity-api/SKILL.md",
+        "bytes": 14707,
+        "files": 6
+      }
+    },
+    {
+      "id": "wp-patterns",
+      "slug": "wp-patterns",
+      "sourcePath": "skills/wp-patterns",
+      "source": "wordpress",
+      "rank": 314,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-patterns.zip",
+        "skillMd": "/downloads/wp-patterns/SKILL.md",
+        "bytes": 26656,
+        "files": 10
+      }
+    },
+    {
+      "id": "wp-performance",
+      "slug": "wp-performance",
+      "sourcePath": "skills/wp-performance",
+      "source": "wordpress",
+      "rank": 315,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-performance.zip",
+        "skillMd": "/downloads/wp-performance/SKILL.md",
+        "bytes": 17891,
+        "files": 14
+      }
+    },
+    {
+      "id": "wp-phpstan",
+      "slug": "wp-phpstan",
+      "sourcePath": "skills/wp-phpstan",
+      "source": "wordpress",
+      "rank": 316,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-phpstan.zip",
+        "skillMd": "/downloads/wp-phpstan/SKILL.md",
+        "bytes": 15825,
+        "files": 7
+      }
+    },
+    {
+      "id": "wp-playground",
+      "slug": "wp-playground",
+      "sourcePath": "skills/wp-playground",
+      "source": "wordpress",
+      "rank": 317,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-playground.zip",
+        "skillMd": "/downloads/wp-playground/SKILL.md",
+        "bytes": 19128,
+        "files": 9
+      }
+    },
+    {
+      "id": "wp-plugin-development",
+      "slug": "wp-plugin-development",
+      "sourcePath": "skills/wp-plugin-development",
+      "source": "wordpress",
+      "rank": 318,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-plugin-development.zip",
+        "skillMd": "/downloads/wp-plugin-development/SKILL.md",
+        "bytes": 14326,
+        "files": 10
+      }
+    },
+    {
+      "id": "wp-plugin-directory-guidelines",
+      "slug": "wp-plugin-directory-guidelines",
+      "sourcePath": "skills/wp-plugin-directory-guidelines",
+      "source": "wordpress",
+      "rank": 319,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-plugin-directory-guidelines.zip",
+        "skillMd": "/downloads/wp-plugin-directory-guidelines/SKILL.md",
+        "bytes": 30605,
+        "files": 7
+      }
+    },
+    {
+      "id": "wp-project-triage",
+      "slug": "wp-project-triage",
+      "sourcePath": "skills/wp-project-triage",
+      "source": "wordpress",
+      "rank": 320,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-project-triage.zip",
+        "skillMd": "/downloads/wp-project-triage/SKILL.md",
+        "bytes": 14333,
+        "files": 5
+      }
+    },
+    {
+      "id": "wp-rest-api",
+      "slug": "wp-rest-api",
+      "sourcePath": "skills/wp-rest-api",
+      "source": "wordpress",
+      "rank": 321,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-rest-api.zip",
+        "skillMd": "/downloads/wp-rest-api/SKILL.md",
+        "bytes": 13616,
+        "files": 9
+      }
+    },
+    {
+      "id": "wp-wpcli-and-ops",
+      "slug": "wp-wpcli-and-ops",
+      "sourcePath": "skills/wp-wpcli-and-ops",
+      "source": "wordpress",
+      "rank": 322,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wp-wpcli-and-ops.zip",
+        "skillMd": "/downloads/wp-wpcli-and-ops/SKILL.md",
+        "bytes": 14268,
+        "files": 11
+      }
+    },
+    {
+      "id": "wpds",
+      "slug": "wpds",
+      "sourcePath": "skills/wpds",
+      "source": "wordpress",
+      "rank": 323,
+      "installs": null,
+      "license": "GPL-2.0-or-later",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/wpds.zip",
+        "skillMd": "/downloads/wpds/SKILL.md",
+        "bytes": 8623,
+        "files": 3
       }
     }
   ]

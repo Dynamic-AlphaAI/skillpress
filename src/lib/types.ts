@@ -40,6 +40,8 @@ export interface Book {
   id: string;
   /** The skill's folder name in its repo. */
   slug: string;
+  /** Canonical skill directory in the pinned repository. */
+  sourcePath: string;
   source: Source;
   rank: number;
   /** skills.sh installs; null when the leaderboard doesn't list the skill yet. */

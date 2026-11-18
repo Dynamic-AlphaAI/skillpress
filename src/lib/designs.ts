@@ -524,6 +524,58 @@ for (const [slug, title, subtitle, topic] of marketingBooks) {
   };
 }
 
+// Some upstream headings are API command names or simply “Overview”.
+const coverTitles: Record<string, string> = {
+  "gws-admin-reports": "Audit Google Workspace Activity",
+  "gws-calendar": "Google Calendar",
+  "gws-calendar-agenda": "Read Your Calendar Agenda",
+  "gws-calendar-insert": "Create a Calendar Event",
+  "gws-chat": "Google Chat",
+  "gws-chat-send": "Send a Chat Message",
+  "gws-classroom": "Google Classroom",
+  "gws-docs": "Google Docs",
+  "gws-docs-write": "Append Text to a Google Doc",
+  "gws-drive": "Google Drive",
+  "gws-drive-upload": "Upload a File to Drive",
+  "gws-events": "Google Workspace Events",
+  "gws-events-renew": "Renew an Event Subscription",
+  "gws-events-subscribe": "Subscribe to Workspace Events",
+  "gws-forms": "Google Forms",
+  "gws-gmail": "Gmail",
+  "gws-gmail-forward": "Forward a Gmail Message",
+  "gws-gmail-read": "Read a Gmail Message",
+  "gws-gmail-reply": "Reply to a Gmail Message",
+  "gws-gmail-reply-all": "Reply to Everyone in a Thread",
+  "gws-gmail-send": "Send a Gmail Message",
+  "gws-gmail-triage": "Triage Your Gmail Inbox",
+  "gws-gmail-watch": "Watch for New Gmail Messages",
+  "gws-keep": "Google Keep",
+  "gws-meet": "Google Meet",
+  "gws-modelarmor": "Google Model Armor",
+  "gws-modelarmor-create-template": "Create a Model Armor Template",
+  "gws-modelarmor-sanitize-prompt": "Screen Prompts with Model Armor",
+  "gws-modelarmor-sanitize-response": "Screen Responses with Model Armor",
+  "gws-people": "Google Contacts",
+  "gws-script": "Google Apps Script",
+  "gws-script-push": "Publish an Apps Script Project",
+  "gws-shared": "Workspace CLI Essentials",
+  "gws-sheets": "Google Sheets",
+  "gws-sheets-append": "Append Rows to Google Sheets",
+  "gws-sheets-read": "Read Values from Google Sheets",
+  "gws-slides": "Google Slides",
+  "gws-tasks": "Google Tasks",
+  "gws-workflow": "Google Workspace Workflows",
+  "gws-workflow-email-to-task": "Turn an Email into a Task",
+  "gws-workflow-file-announce": "Announce a Drive File in Chat",
+  "gws-workflow-meeting-prep": "Prepare for Your Next Meeting",
+  "gws-workflow-standup-report": "Prepare a Standup Report",
+  "gws-workflow-weekly-digest": "Build a Weekly Workspace Digest",
+  "hf-cli": "The Hugging Face CLI",
+  "hf-mem": "Estimate GPU Memory for a Model",
+  "huggingface-community-evals": "Community Model Evaluations",
+  "huggingface-paper-publisher": "Publish a Paper on Hugging Face",
+};
+
 const fallbackPalettes: Pick<BookDesign, "bg" | "ink" | "accent">[] = [
   { bg: "#3B4A6B", ink: "#EEE8DC", accent: "#E8A33D" },
   { bg: "#8C3B2F", ink: "#F4EADB", accent: "#F2C49B" },
@@ -554,7 +606,7 @@ export function designFor(slug: string, fallbackTitle?: string, fallbackSubtitle
   if (designs[slug]) return designs[slug];
   const h = hashString(slug);
   return {
-    title: fallbackTitle ?? titleCase(slug),
+    title: coverTitles[slug] ?? fallbackTitle ?? titleCase(slug),
     subtitle: fallbackSubtitle ?? "A skill from the library",
     ...fallbackPalettes[h % fallbackPalettes.length],
     motif: fallbackMotifs[(h >>> 8) % fallbackMotifs.length],

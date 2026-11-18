@@ -122,6 +122,8 @@ interface PageCtx {
 function licenseLine(license: string, holder: string) {
   if (license === "Apache-2.0") return `Text © ${holder}. Licensed under the Apache License, Version 2.0.`;
   if (license === "MIT") return `Text © ${holder}. Licensed under the MIT License.`;
+  if (license === "MPL-2.0") return `Text © ${holder}. Licensed under the Mozilla Public License 2.0.`;
+  if (license === "GPL-2.0-or-later") return `Text © ${holder}. Licensed under the GNU General Public License, version 2 or later.`;
   if (license === "Unspecified")
     return `Text © ${holder}. This skill ships without its own license file; see the source repository for terms.`;
   return `Text © ${holder}. See the license in the source repository for terms.`;
@@ -184,7 +186,7 @@ function SideView({ side, index, ctx }: { side: Side; index: number; ctx: PageCt
           <p>
             Reproduced from <em>{book.source.repo}</em>,{" "}
             <span className={s.mono}>
-              {book.source.path}/{book.slug}/SKILL.md
+              {book.sourcePath}/SKILL.md
             </span>
             , at commit <span className={s.mono}>{book.source.commit.slice(0, 7)}</span> ({fmtDate(book.source.commitDate)}).
           </p>
@@ -254,9 +256,9 @@ function SideView({ side, index, ctx }: { side: Side; index: number; ctx: PageCt
           <div className={s.colophonInstall}>
             <div className={s.epiLabel}>Install this skill</div>
             <code>
-              npx skills add {book.source.url}
+              npx skills add {book.sourceUrl}
               <br />
-              --skill {book.slug}
+              --skill {book.skillName}
             </code>
             <button type="button" onClick={ctx.onInstall}>
               More ways to install, and downloads →

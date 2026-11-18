@@ -1,5 +1,5 @@
 {
-  "$comment": "Skill libraries on the shelf. Add an entry, run `npm run import`, push. Fields: id (short, unique), repo (owner/name on GitHub), path (folder holding one directory per skill), author + copyright (credited on covers and the copyright page), plugin (how Claude Code installs it: \"marketplace.json\" to read the repo's own .claude-plugin/marketplace.json, or a fixed { name, marketplace, addMarketplace }), bundleNote (optional, shown with install steps).",
+  "$comment": "Each entry names a publisher and its canonical public skill directory. additionalPaths lists other public skill directories in the same repository. Source order determines which copy is kept when two sources publish the same skill. revision pins a reviewed collection to an exact Git commit.",
   "sources": [
     {
       "id": "anthropic",
@@ -23,7 +23,7 @@
         "marketplace": "claude-plugins-official",
         "addMarketplace": null
       },
-      "bundleNote": "Superpowers skills are written to work together — using-superpowers teaches the agent when to reach for the rest — so the full set gets the most out of any one of them."
+      "bundleNote": "Superpowers skills are written to work together \u2014 using-superpowers teaches the agent when to reach for the rest \u2014 so the full set gets the most out of any one of them."
     },
     {
       "id": "marketing",
@@ -35,6 +35,104 @@
       "series": "Marketing Skills",
       "plugin": "marketplace.json",
       "bundleNote": "These skills build on shared context: every one of them reads product-marketing first for your product, audience, and positioning, so install product-marketing alongside whichever you pick."
+    },
+    {
+      "id": "googleworkspace",
+      "repo": "googleworkspace/cli",
+      "path": "skills",
+      "author": "Google Workspace CLI",
+      "copyright": "Google Workspace CLI contributors",
+      "authorUrl": "https://github.com/googleworkspace",
+      "bundleNote": "Many Workspace recipes use the shared gws-shared skill and a service-specific skill. Install the Workspace collection to keep those prerequisites together.",
+      "revision": "cd3697e07eb520056dcf142d0c7439bbb9ba32e9"
+    },
+    {
+      "id": "playwright",
+      "repo": "microsoft/playwright-cli",
+      "path": "skills",
+      "author": "Microsoft Playwright",
+      "copyright": "Microsoft Corporation",
+      "authorUrl": "https://github.com/microsoft",
+      "revision": "c872a33cec77fa03c28fa7c6d1ad99d15d04ce42"
+    },
+    {
+      "id": "huggingface",
+      "repo": "huggingface/skills",
+      "path": "skills",
+      "author": "Hugging Face",
+      "copyright": "Hugging Face contributors",
+      "authorUrl": "https://github.com/huggingface",
+      "revision": "5291c2b9365e06b175dc04817610c778623f4836"
+    },
+    {
+      "id": "stitch",
+      "repo": "google-labs-code/stitch-skills",
+      "path": "plugins/stitch-build/skills",
+      "author": "Google Labs Stitch",
+      "copyright": "Stitch Skills contributors",
+      "authorUrl": "https://github.com/google-labs-code",
+      "additionalPaths": [
+        "plugins/stitch-design/skills",
+        "plugins/stitch-utilities/skills"
+      ],
+      "revision": "4cf4db8e4143b09e40f9bc887429d81f41ab3947"
+    },
+    {
+      "id": "expo",
+      "repo": "expo/skills",
+      "path": "plugins/expo/skills",
+      "author": "Expo",
+      "copyright": "650 Industries, Inc.",
+      "authorUrl": "https://github.com/expo",
+      "revision": "dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d"
+    },
+    {
+      "id": "cloudflare",
+      "repo": "cloudflare/skills",
+      "path": "skills",
+      "author": "Cloudflare",
+      "copyright": "Cloudflare contributors",
+      "authorUrl": "https://github.com/cloudflare",
+      "revision": "5108325ecceabc899c761e07aa617b09c02445ee"
+    },
+    {
+      "id": "supabase",
+      "repo": "supabase/agent-skills",
+      "path": "skills",
+      "author": "Supabase",
+      "copyright": "Supabase",
+      "authorUrl": "https://github.com/supabase",
+      "revision": "c9be0e931b7930f7d02126d04774d904c381e7d7"
+    },
+    {
+      "id": "stripe",
+      "repo": "stripe/ai",
+      "path": "skills",
+      "author": "Stripe",
+      "copyright": "Stripe",
+      "authorUrl": "https://github.com/stripe",
+      "revision": "72e7e79e08e245063e87d61f60340e55e54c68f4"
+    },
+    {
+      "id": "hashicorp",
+      "repo": "hashicorp/agent-skills",
+      "path": "plugins/packer/skills",
+      "author": "HashiCorp",
+      "copyright": "HashiCorp contributors",
+      "authorUrl": "https://github.com/hashicorp",
+      "additionalPaths": [
+        "plugins/terraform/skills"
+      ],
+      "revision": "5e30fa5c867ba6777c37e4206babfd08049c396f"
+    },
+    {
+      "id": "wordpress",
+      "repo": "WordPress/agent-skills",
+      "path": "skills",
+      "author": "WordPress",
+      "copyright": "WordPress Contributors",
+      "authorUrl": "https://github.com/WordPress",
+      "revision": "7374e6f1c913b3b02b25465d266d9c0e0a04fc96"
     }
   ]
 }

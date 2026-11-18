@@ -13,7 +13,7 @@ interface Catalog {
   sources: Source[];
   ranking: Library["ranking"];
   allDownload: Library["allDownload"];
-  books: (Pick<Book, "id" | "slug" | "rank" | "installs" | "license" | "plugin" | "download"> & { source: string })[];
+  books: (Pick<Book, "id" | "slug" | "rank" | "installs" | "license" | "plugin" | "download"> & { source: string; sourcePath?: string })[];
 }
 
 function slugify(text: string) {
@@ -68,10 +68,14 @@ export function readCatalog(): Catalog {
   return JSON.parse(fs.readFileSync(path.join(CONTENT, "catalog.json"), "utf8"));
 }
 
+function skillPath(entry: Catalog["books"][number], source: Source) {
+  return entry.sourcePath ?? `${source.path}/${entry.slug}`;
+}
+
 function parseEdition(entry: Catalog["books"][number], source: Source) {
   const file = fs.readFileSync(path.join(CONTENT, "skills", entry.id, "SKILL.md"), "utf8");
   const { data, content } = matter(file);
-  const blobBase = `${source.url}/blob/${source.commit}/${source.path}/${entry.slug}/`;
+  const blobBase = `${source.url}/blob/${source.commit}/${skillPath(entry, source)}/`;
   const md = createRenderer(blobBase);
   const tokens = md.parse(content, {});
 
@@ -129,6 +133,7 @@ export function loadLibrary(): Library {
     return {
       id: entry.id,
       slug: entry.slug,
+      sourcePath: skillPath(entry, source),
       source,
       rank: entry.rank,
       installs: entry.installs,
@@ -142,8 +147,12 @@ export function loadLibrary(): Library {
       headings,
       words,
       readingMinutes: Math.max(1, Math.round(words / 230)),
-      sourceUrl: `${source.url}/tree/${source.commit}/${source.path}/${entry.slug}`,
-      design: designFor(entry.id, originalTitle ?? undefined),
+      sourceUrl: `${source.url}/tree/${source.commit}/${skillPath(entry, source)}`,
+      design: designFor(
+        entry.id,
+        originalTitle && !/^(overview|introduction|instructions)$/i.test(originalTitle) ? originalTitle : undefined,
+        `A field guide from ${source.author}`,
+      ),
     };
   });
 

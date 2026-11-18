@@ -2,11 +2,25 @@
 
 Agent skills, typeset and bound as books you can page through and then install. The design takes its cues from [stripe.press](https://stripe.press).
 
-| Library | Author | Skills | License |
-|---|---|---|---|
-| [anthropics/skills](https://github.com/anthropics/skills) | Anthropic | 19 | Apache 2.0 (one skill has no license file) |
-| [obra/superpowers](https://github.com/obra/superpowers) | Jesse Vincent | 15 | MIT |
-| [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | Corey Haines | 53 | MIT |
+## Source libraries
+
+The catalogue contains 323 editions from 13 repositories. The ten additions were selected for project-maintainer provenance, published skill directories, identifiable licenses, and coverage of distinct tasks. Each edition links to the upstream files at the revision used for its download.
+
+| GitHub repository | Subject matter | Editions | License |
+|---|---|---:|---|
+| [anthropics/skills](https://github.com/anthropics/skills) | Documents, design and AI tools | 19 | Apache 2.0, one unspecified |
+| [obra/superpowers](https://github.com/obra/superpowers) | Software development practices | 15 | MIT |
+| [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | Marketing and growth | 53 | MIT |
+| [googleworkspace/cli](https://github.com/googleworkspace/cli) | Workspace documents, mail, calendars and team workflows | 95 | Apache 2.0 |
+| [microsoft/playwright-cli](https://github.com/microsoft/playwright-cli) | Browser automation and testing | 1 | Apache 2.0 |
+| [huggingface/skills](https://github.com/huggingface/skills) | Model training, evaluation and deployment | 25 | Apache 2.0, hf-mem declares MIT |
+| [google-labs-code/stitch-skills](https://github.com/google-labs-code/stitch-skills) | Interface design systems and implementation | 16 | Apache 2.0 |
+| [expo/skills](https://github.com/expo/skills) | React Native, mobile releases and testing | 23 | MIT |
+| [cloudflare/skills](https://github.com/cloudflare/skills) | Cloud applications, infrastructure and observability | 22 | Apache 2.0 |
+| [supabase/agent-skills](https://github.com/supabase/agent-skills) | Databases and PostgreSQL performance | 2 | MIT |
+| [stripe/ai](https://github.com/stripe/ai) | Payments, billing and revenue operations | 12 | MIT |
+| [hashicorp/agent-skills](https://github.com/hashicorp/agent-skills) | Terraform providers, infrastructure and Packer images | 20 | MPL 2.0 |
+| [WordPress/agent-skills](https://github.com/WordPress/agent-skills) | WordPress blocks, plugins, themes and operations | 20 | GPL 2.0 or later |
 
 - **Ranking:** install counts from the [skills.sh](https://skills.sh) leaderboard. Skills it doesn't list yet appear at the end of their topic.
 - Books sit together by primary task across the catalogue, shelf, and 3D room. For example, **Testing & Code Review** includes browser testing, debugging, and reviewing changes. The **Author** filter narrows any topic to a particular author. Within each topic, books follow their install rank.
@@ -21,7 +35,7 @@ npm run dev        # http://localhost:3000
 
 ## Add a library
 
-1. Add an entry to `sources.json`: the repo, the folder holding the skills, the author, and how Claude Code installs it.
+1. Add an entry to `sources.json`: the repository, canonical skill directory, author, and reviewed commit in `revision`. Use `additionalPaths` for separate published plugins. Only include each canonical directory once.
 2. Run `npm run import`.
 3. Push. The new books appear with generated covers.
 
@@ -31,7 +45,7 @@ To give books their own titles and covers, add entries in `src/lib/designs.ts`. 
 
 A GitHub Action (`.github/workflows/update-skills.yml`) runs `npm run import` every day at 06:17 UTC. If anything changed and the site still builds, it commits to `main`, and Vercel deploys that commit. You can also run it from the Actions tab.
 
-`npm run import` clones every library, ranks the skills with skills.sh, and rewrites two folders:
+`npm run import` reads the reviewed revisions of the ten new collections, follows the default branches of the original three, and refreshes install counts. Change a pinned revision after reviewing its upstream diff. The importer requires YAML skill metadata and instructions, and packages tracked files. Duplicate folder IDs, normalized skill names, or matching instruction bodies share one edition. Source order determines which edition supplies all downloads. A successful import replaces two folders:
 
 - `content/`: the text each book is typeset from, plus `catalog.json`.
 - `public/downloads/`: `<skill>.zip`, `<skill>/SKILL.md`, `<library>-skills.zip`, and `skillpress-all.zip`. Zips are byte-identical when nothing changed, so the daily job doesn't keep re-committing them.
@@ -43,13 +57,13 @@ A GitHub Action (`.github/workflows/update-skills.yml`) runs `npm run import` ev
 - **Download .zip**: the whole skill folder, ready for a skills directory or for Claude.ai's *Customize → Skills → Upload a skill*.
 - **SKILL.md only**: just the instructions.
 - **Agent prompt**: paste it into Claude Code, Codex, Cursor, or any agent that runs commands, and it installs the skill and reports back what it does.
-- **skills CLI**: `npx skills add https://github.com/anthropics/skills --skill <name>`.
+- **skills CLI** installs from the edition’s pinned GitHub directory using the name declared in its frontmatter.
 - **Claude Code**: the plugin command published by each library.
 - **Claude.ai**: the toggle-or-upload steps.
 
 ## Using it
 
-The Reading Room opens at `/`. Select **Enter the library** to walk the 3D stacks. Drag to look, use WASD to move, or use the on-screen arrows. Selecting a shelf takes you directly to its bookcase. Click a book or use the volume picker to read it. The catalogue beneath the entrance also works on devices without WebGL.
+The Reading Room opens at `/`. Select **Enter the library** to walk the 3D stacks. Drag to look, use WASD to move, or use the on-screen arrows. Selecting a shelf takes you to its labelled row. Up to twelve catalogue books share a row, and up to four rows share a bookcase. The room displays each matching edition once, including when you filter down to a single book. Click a book or use the volume picker to read it. The catalogue beneath the entrance also works on devices without WebGL.
 
 The sound control in the masthead and reader remembers your preference on this device. In a book’s details, drag the cover or press **Turn book** to inspect its boards, spine, and printed back.
 
@@ -88,18 +102,14 @@ Direct links include `/?walk` for the walkthrough and `/?view=shelf` for the ori
 <details>
 <summary>Reading Room artwork and generation prompts</summary>
 
-The built-in ImageGen tool produced three original illustrations. They are served as local WebP assets.
+The built-in ImageGen tool produced two architectural backgrounds. All book covers and spines in the room are drawn separately from the catalogue.
 
-**Entrance — `public/reading-room.webp`**
+**Entrance, `public/entrance-hall.webp`**
 
-Ultra-wide 2.7:1 editorial architectural photograph for the opening screen of an independent digital library. The camera stands at eye level inside a beautiful, intimate, historic publisher’s reading room: book-filled tall dark walnut shelves at left and across far right, polished wood mullions, warm brass wall sconces and a single green glass banker's lamp, atmospheric afternoon sunlight streaming from tall arched multi-pane windows on the right, an inviting open aisle, a long wooden reading table and worn dark green leather chairs mainly right of center. Sunlight shafts, specular warm amber flecks, authentic old hardcover spines, worn oak floor. Calm, human-scale, quiet, photoreal, richly textured, understated analog film still, nuanced shadows, no HDR, no artificial orange cast. Wide horizontal landscape with beautiful deep architectural perspective; place the principal bright arch, lamp, and impressive woodwork in the middle and right of frame; leftmost third is shadowed shelves with some visible texture, suitable for overlaying cream typography. No text, no type, no interface, no watermark, no logo, no people.
+An ultra-wide, photoreal English Arts and Crafts vestibule at eye level, with hand-carved walnut panels, an amber doorway, a green leather settee, a brass lamp and afternoon light on a herringbone oak floor. Keep the left third shadowed for the title. Every visible room is book-free.
 
-**Archive bindings — `public/archive-bindings.webp`**
+**Window wall, `public/paneled-window.webp`**
 
-A seamless-ready architectural material photograph, square aspect, for the wall of a 3D library. Precisely front-on tightly cropped orthographic elevation of ONE bay of a real 19th-century dark walnut library bookcase, with FOUR evenly spaced horizontal rows packed with varied old leatherbound and linen hardback book spines. Finely detailed gold tooling, burgundy, green, tan, russet, black, little embossed titles. Straight horizontal dark oak shelves and a narrow carved vertical frame at left and right exactly along the edge. Flat neutral warm exposure, daylight, clearly visible fine wood grain, realistic patina, photoreal not painting. Pack books in a natural irregular rhythm. The entire flat image is only books and shelves from straight in front, all lines parallel, filling frame edge-to-edge, no floor, no furniture, no perspective, no wall, no room, no lamps, no people, no legible text, no watermark.
-
-**Window wall — `public/window-wall.webp`**
-
-Wide 2:1 horizontal photorealistic architectural material plate for a 3D library wall. A square-on, perfectly centered FRONT ELEVATION photograph of the end wall of an elegant tiny English publisher's library. An enormous luminous arched leaded-glass window in the middle looking out on softly defocused leafy green trees in afternoon sun, bookcases filled with beautifully varied vintage leather and linen books to either side, dark walnut wall panels beneath the window, carved walnut mouldings, two warm brass sconces. Refined nineteenth-century craftsmanship with real aged patina. Edge-to-edge wall from skirting board at bottom to cornice at top. Lens shift keeps every vertical line parallel and every horizontal line level. ONLY the face of the flat wall. No foreground tables or furniture, floor, ceiling or perpendicular side walls, absolutely no perspective vista, no people, no text. Fine grain, filmic architectural photography, warm but believable amber-green hues, soft indirect daylight. Must look like a physically plausible material plate, not a painting.
+A square-on 2:1 elevation with a central arched window overlooking green trees, two brass sconces, and solid walnut wainscoting. Frame only the face of the wall, without shelves, books, furniture or lettering.
 
 </details>

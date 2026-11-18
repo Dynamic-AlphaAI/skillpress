@@ -18,10 +18,10 @@ export interface InstallMethod {
  * the agent prompt is written so any coding agent can follow it.
  */
 export function installMethods(book: Book): InstallMethod[] {
-  const { url, repo, path, bundleNote } = book.source;
+  const { url, repo, bundleNote } = book.source;
   const name = book.skillName;
-  const dir = `${path}/${book.slug}`;
-  const clone = `/tmp/${repo.split("/")[1]}`;
+  const dir = book.sourcePath;
+  const clone = '"$skill_checkout"';
   const methods: InstallMethod[] = [];
 
   methods.push({
@@ -33,13 +33,15 @@ export function installMethods(book: Book): InstallMethod[] {
       `Install the "${name}" Agent Skill by ${book.source.author}, from ${url}.`,
       ``,
       `1. Fetch the whole folder ${dir} — SKILL.md plus every script, reference, and asset beside it, not just SKILL.md. For example:`,
-      `   git clone --depth 1 ${url}.git ${clone}`,
-      `2. Copy it into your skills directory as a folder named "${name}":`,
-      `   - Claude Code: ~/.claude/skills/${name}/ (all projects) or .claude/skills/${name}/ (this project only)`,
+      '   skill_checkout=$(mktemp -d)',
+      `   git init ${clone}`,
+      `   git -C ${clone} fetch --depth 1 ${url}.git ${book.source.commit}`,
+      `   git -C ${clone} checkout --detach FETCH_HEAD`,
+      `2. Copy it into your skills directory as a folder named "${book.slug}":`,
+      `   - Claude Code: ~/.claude/skills/${book.slug}/ (all projects) or .claude/skills/${book.slug}/ (this project only)`,
       `   - Another agent: the directory you load Agent Skills from (folders containing a SKILL.md)`,
-      `3. Check that ${name}/SKILL.md exists and its frontmatter says name: ${name}.`,
+      `3. Check that ${book.slug}/SKILL.md exists and its frontmatter says name: ${name}.`,
       `4. Read SKILL.md, then tell me in two or three sentences what the skill does and when it will trigger, and list any dependencies it mentions (Python packages, npm packages, CLIs) that aren't installed yet. Don't install them without asking.`,
-      `5. Remove ${clone} when you're done.`,
       ...(bundleNote ? [``, `Note: ${bundleNote}`] : []),
     ].join("\n"),
   });
@@ -49,7 +51,7 @@ export function installMethods(book: Book): InstallMethod[] {
     label: "skills CLI",
     kind: "Terminal",
     note: "One command; the skills.sh installer detects your agents (Claude Code, Cursor, Codex, and more).",
-    copy: `npx skills add ${url} --skill ${book.slug}`,
+    copy: `npx skills add ${book.sourceUrl} --skill ${book.skillName}`,
     link: book.installs !== null ? { href: `https://skills.sh/${repo}/${book.slug}`, label: "This skill on skills.sh" } : undefined,
   });
 
