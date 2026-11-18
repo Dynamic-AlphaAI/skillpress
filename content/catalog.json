@@ -61,7 +61,7 @@
   "ranking": {
     "source": "https://skills.sh",
     "metric": "installs",
-    "fetchedAt": "2026-11-18T18:06:24.873Z"
+    "fetchedAt": "2026-11-18T18:33:18.498Z"
   },
   "allDownload": {
     "zip": "/downloads/skillpress-all.zip",
