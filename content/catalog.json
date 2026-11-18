@@ -9,7 +9,7 @@
   "ranking": {
     "source": "https://skills.sh",
     "metric": "installs",
-    "fetchedAt": "2026-11-18T17:39:40.399Z"
+    "fetchedAt": "2026-11-18T17:46:47.546Z"
   },
   "allDownload": {
     "zip": "/downloads/anthropic-skills.zip",
