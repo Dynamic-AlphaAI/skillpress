@@ -4,7 +4,7 @@ Agent skills, typeset and bound as books you can page through and then install. 
 
 ## Source libraries
 
-The catalogue contains 334 editions from 16 repositories. The selected Android, Posit, and Resend folders contain Markdown guides and references. Their commit pins and folder lists are recorded in `sources.json`. The importer skips editions without an identified redistribution license, including `doc-coauthoring`. Each edition links to the upstream files at the revision used for its download.
+The catalogue contains 416 editions from 19 repositories. The selected GitHub Awesome Copilot, Seth Hobson, Alireza Rezvani, Android, Posit, and Resend folders contain Markdown guides and references. Their commit pins and folder lists are recorded in `sources.json`. The importer skips editions without an identified redistribution license, including `doc-coauthoring`. Each edition links to the upstream files at the revision used for its download.
 
 | GitHub repository | Subject matter | Editions | License |
 |---|---|---:|---|
@@ -24,6 +24,9 @@ The catalogue contains 334 editions from 16 repositories. The selected Android, 
 | [posit-dev/skills](https://github.com/posit-dev/skills) | Accessible charts, data publishing and R design | 6 | MIT |
 | [android/skills](https://github.com/android/skills) | Adaptive layouts, digital ink, navigation and watch widgets | 5 | Apache 2.0 |
 | [resend/resend-skills](https://github.com/resend/resend-skills) | Email delivery and accessibility | 1 | MIT |
+| [github/awesome-copilot](https://github.com/github/awesome-copilot) | Technical writing, testing, design and planning | 38 | MIT |
+| [wshobson/agents](https://github.com/wshobson/agents) | Accessible interfaces, data and software engineering | 36 | MIT |
+| [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) | Communication, organizational change and marketing | 8 | MIT |
 
 - **Ranking:** install counts from the [skills.sh](https://skills.sh) leaderboard. Skills it doesn't list yet appear at the end of their topic.
 - Books sit together by primary task across the catalogue, shelf, and 3D room. For example, **Testing & Code Review** includes browser testing, debugging, and reviewing changes. The **Author** filter narrows any topic to a particular author. Within each topic, books follow their install rank.
@@ -48,7 +51,7 @@ To give books their own titles and covers, add entries in `src/lib/designs.ts`. 
 
 A GitHub Action (`.github/workflows/update-skills.yml`) runs `npm run import` every day at 06:17 UTC. If anything changed and the site still builds, it commits to `main`, and Vercel deploys that commit. You can also run it from the Actions tab.
 
-`npm run import` reads the reviewed revisions of the ten new collections, follows the default branches of the original three, and refreshes install counts. Change a pinned revision after reviewing its upstream diff. The importer requires YAML skill metadata and instructions, and packages tracked files. Duplicate folder IDs, normalized skill names, or matching instruction bodies share one edition. Source order determines which edition supplies all downloads. A successful import replaces two folders:
+`npm run import` reads the reviewed revisions of the pinned collections, follows the default branches of the original three, and refreshes install counts. Change a pinned revision after reviewing its upstream diff. The importer requires YAML skill metadata and instructions, and packages tracked files. Duplicate folder IDs, normalized skill names, or matching instruction bodies share one edition. Source order determines which edition supplies all downloads. A successful import replaces two folders:
 
 - `content/`: the text each book is typeset from, plus `catalog.json`.
 - `public/downloads/`: `<skill>.zip`, `<skill>/SKILL.md`, `<library>-skills.zip`, and `skillpress-all.zip`. Zips are byte-identical when nothing changed, so the daily job doesn't keep re-committing them.
@@ -68,7 +71,7 @@ A GitHub Action (`.github/workflows/update-skills.yml`) runs `npm run import` ev
 
 Choose **Search** in the header to look up skills by keyword, title, publisher, topic, or words in the instructions. Results update as you type. Use **Topic** and **Author** to narrow them, then select a result to read the book. A link such as [a search for PDF extraction](https://skillpress.xyz/?q=pdf+extraction) restores the query. The full-text index is built from the same checked-in editions as the reader and loads when Search opens.
 
-The Reading Room opens at `/`. Select **Enter the library** to walk through Arts & Letters, Engineering Workshop, Research & Data, Operations Room, and Business & Commerce. Door signs name the adjoining room, and a directory near each entrance lists its topics. Drag to look, scroll up to walk forward or down to back up, or use WASD and the on-screen arrows. The room, shelf, and volume pickers also work by keyboard and without WebGL. Each matching edition occupies one shelf. Filtering the catalogue removes empty rooms.
+Enter the Main Reading Hall to browse a selection from every matching topic. Signed doorways on the left and right open into Arts & Letters, Engineering Workshop, Research & Data, Operations Room, and Business & Commerce. Drag to look, scroll to walk, or step sideways with A/D and the on-screen arrows. Each matching edition has one physical place. The room, shelf, and volume pickers also work by keyboard and without WebGL. Small filtered collections fit entirely in the hall.
 
 The sound control in the masthead and reader remembers your preference on this device. In a book’s details, drag the cover or press **Turn book** to inspect its boards, spine, and printed back.
 

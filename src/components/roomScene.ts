@@ -1,6 +1,7 @@
 import * as T from "three";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
-import { baySpacing, type LibraryRoom } from "@/lib/roomShelves";
+import type { LibraryRoom } from "@/lib/roomShelves";
+import { canWalk, doorHalfWidth, hallHalfWidth, layOutFloor, roomAt, walk, type Position } from "@/lib/roomFloor";
 import type { Book } from "@/lib/types";
 import { playSound } from "./sound";
 
@@ -141,20 +142,16 @@ export function createRoom(
   scene.fog = new T.FogExp2("#a48d70", 0.026);
   const camera = new T.PerspectiveCamera(61, 1, 0.055, 65);
   camera.rotation.order = "YXZ";
-  const front = rooms[0].front;
-  const rear = rooms[rooms.length - 1].rear;
-  const dividers = rooms.slice(1).map((room) => room.front);
-  const doorHalfWidth = 1.18;
+  const floors = layOutFloor(rooms.map((room) => room.cases));
+  const hall = floors[0];
+  const front = hall.maxZ;
+  const rear = hall.minZ;
   let currentRoom = 0;
-  const bays = rooms.flatMap((room, roomIndex) => Array.from({ length: room.cases }, (_, i) => ({
-    roomIndex,
-    side: i % 2 ? 1 : -1,
-    z: room.front - (Math.floor(i / 2) + 1) * baySpacing,
+  const bays = rooms.flatMap((room, roomIndex) => floors[roomIndex].bays.map((position, i) => ({
+    ...position, roomIndex,
     stack: room.shelves.slice(Math.floor(i * room.shelves.length / room.cases), Math.floor((i + 1) * room.shelves.length / room.cases)),
   })));
-  const depth = front - rear;
-  const middle = (front + rear) / 2;
-  const entry = new T.Vector3(0, 1.63, front - 1.2);
+  const entry = new T.Vector3(hall.entry.x, 1.63, hall.entry.z);
   camera.position.copy(entry);
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   const textures = new Set<T.Texture>();
@@ -238,12 +235,7 @@ export function createRoom(
     }
   });
   floorTex.wrapS = floorTex.wrapT = T.RepeatWrapping;
-  floorTex.repeat.set(3, depth / 3);
   textures.add(floorTex);
-  block(0, -0.09, middle, 8, 0.16, depth, surface("#f0d5ac", floorTex));
-  block(0, 4.15, middle, 8, 0.15, depth, plaster);
-  block(0, 2.05, rear, 8, 4.1, 0.2, green);
-  block(0, 2.05, front, 8, 4.1, 0.2, green);
   const rugTexture = paintTexture(256, 256, (ctx) => {
     ctx.fillStyle = "#414a3d";
     ctx.fillRect(0, 0, 256, 256);
@@ -298,43 +290,100 @@ export function createRoom(
     plaque.rotation.y = angle;
     scene.add(plaque);
   }
+  // Draw the hall perimeter in segments so every opening leads onto the floor of its wing.
+  const hallPaint = surface(rooms[0].paint);
+  function hallWall(side: number, start: number, end: number) {
+    const length = end - start;
+    const z = (start + end) / 2;
+    const x = side * hallHalfWidth;
+    block(x, 2.05, z, 0.18, 4.1, length, hallPaint);
+    block(x, 0.48, z, 0.24, 0.96, length, walnut);
+    block(x, 0.98, z, 0.31, 0.07, length, panel);
+    block(x, 3.82, z, 0.26, 0.07, length, brass);
+  }
+  for (const side of [-1, 1]) {
+    let cursor = rear;
+    for (const wing of floors.filter((r) => r.side === side).sort((a, b) => a.doorZ - b.doorZ)) {
+      hallWall(side, cursor, wing.doorZ - doorHalfWidth);
+      cursor = wing.doorZ + doorHalfWidth;
+    }
+    hallWall(side, cursor, front);
+  }
+  for (const z of [rear, front]) block(0, 2.05, z, hallHalfWidth * 2, 4.1, 0.2, hallPaint);
+  const lamps: { x: number; z: number; drop: number }[] = [];
   rooms.forEach((room, i) => {
-    const length = room.front - room.rear;
-    const center = (room.front + room.rear) / 2;
-    const wallPaint = surface(room.paint);
-    for (const side of [-1, 1]) {
-      block(side * 3.93, 2.05, center, 0.17, 4.1, length, wallPaint);
-      block(side * 3.81, 0.16, center, 0.12, 0.32, length, walnut);
-      block(side * 3.8, 3.86, center, 0.14, 0.09, length, brass);
-    }
+    const r = floors[i];
+    const width = r.maxX - r.minX, depth = r.maxZ - r.minZ;
+    const x = (r.minX + r.maxX) / 2, z = (r.minZ + r.maxZ) / 2;
+    const floor = floorTex.clone();
+    floor.repeat.set(width / 3, depth / 3);
+    textures.add(floor);
+    block(x, -0.09, z, width, 0.16, depth, surface("#ecd0a6", floor));
+    block(x, r.side ? 4.15 : 5.15, z, width, 0.15, depth, plaster);
     const rug = rugTexture.clone();
-    rug.repeat.y = length / 1.83;
+    rug.repeat.y = (r.side ? width + hallHalfWidth : depth) / 1.83;
     textures.add(rug);
-    block(0, 0.008, center, 1.83, 0.018, length - 0.32, surface(room.runner, rug));
-    sign(room.label, room.topics, -3.82, 2.1, room.front - 1.14, Math.PI / 2, 1.74, 0.89);
-    if (i === 0) return;
-    const z = room.front;
-    const wing = 4 - doorHalfWidth;
-    for (const side of [-1, 1]) {
-      block(side * (doorHalfWidth + wing / 2), 2.05, z, wing, 4.1, 0.24, wallPaint);
-      block(side * (doorHalfWidth + 0.07), 1.37, z, 0.16, 2.74, 0.36, walnut);
-      block(side * (doorHalfWidth + 0.18), 1.37, z, 0.045, 2.74, 0.39, brass);
-      const centerX = side * (doorHalfWidth + wing / 2);
-      block(centerX, 0.48, z, wing, 0.96, 0.28, walnut);
-      block(centerX, 0.96, z, wing, 0.07, 0.35, panel);
-      for (const inset of [-0.65, 0.65]) {
-        block(centerX + inset, 0.5, z, 1.04, 0.65, 0.32, dark);
-        block(centerX + inset, 0.5, z, 0.93, 0.54, 0.34, walnut);
+    const runner = surface(room.runner, rug);
+    if (!r.side) {
+      block(x, 0.009, z, 2.45, 0.018, depth - 0.32, runner);
+      for (const side of [-1, 1]) {
+        const sideX = side * hallHalfWidth;
+        block(sideX, 4.58, z, 0.18, 1.02, depth, hallPaint);
+        block(sideX, 4.1, z, 0.42, 0.15, depth, walnut);
+        for (let panelZ = front - 1.05; panelZ > rear + 0.88; panelZ -= 2.15) {
+          block(sideX, 4.55, panelZ, 0.23, 0.67, 1.84, dark);
+          block(sideX, 4.55, panelZ, 0.26, 0.54, 1.71, plaster);
+        }
       }
+      for (const wallZ of [rear, front]) {
+        block(0, 4.58, wallZ, width, 1.02, 0.2, hallPaint);
+        block(0, 4.1, wallZ, width, 0.15, 0.42, walnut);
+      }
+      sign(room.label, [], 0, 4.57, rear + 0.13, 0, 3.55, 0.52);
+      for (let beamZ = front - 1.45; beamZ > rear; beamZ -= 4.3) {
+        block(0, 4.97, beamZ, width, 0.21, 0.19, dark);
+        lamps.push({ x: 0, z: beamZ, drop: 1 });
+      }
+      for (const beamX of [-4.7, -2.2, 2.2, 4.7]) block(beamX, 5.03, z, 0.12, 0.12, depth, panel);
+      return;
     }
-    block(0, 3.42, z, doorHalfWidth * 2, 1.4, 0.24, wallPaint);
-    block(0, 2.74, z, 2.86, 0.18, 0.4, walnut);
-    block(0, 0.022, z, doorHalfWidth * 2, 0.03, 0.23, brass);
-    sign(room.label, [], 0, 3.16, z + 0.14, 0, 2.52, 0.37);
-    sign(rooms[i - 1].label, [], 0, 3.16, z - 0.14, Math.PI, 2.52, 0.37);
-    sign(room.label, room.topics, 2.56, 1.84, z + 0.14, 0, 1.95, 0.98);
-    const previous = rooms[i - 1];
-    sign(previous.label, previous.topics, -2.56, 1.84, z - 0.14, Math.PI, 1.95, 0.98);
+    const edge = r.side * hallHalfWidth;
+    const outer = r.side < 0 ? r.minX : r.maxX;
+    const faceHall = -r.side * Math.PI / 2;
+    const wallPaint = surface(room.paint);
+    for (const wallZ of [r.minZ, r.maxZ]) {
+      block(x, 2.05, wallZ, width, 4.1, 0.18, wallPaint);
+      block(x, 0.44, wallZ, width, 0.88, 0.25, walnut);
+      block(x, 0.91, wallZ, width, 0.06, 0.32, panel);
+      block(x, 3.83, wallZ, width, 0.06, 0.27, brass);
+    }
+    block(outer, 2.05, z, 0.2, 4.1, depth, wallPaint);
+    // A runner turns off the central carpet and continues through the open doorway.
+    const length = Math.abs(outer) - 1.24 - 0.32;
+    const rugBase = new T.Matrix4().makeRotationY(Math.PI / 2).setPosition(r.side * (1.24 + length / 2), 0, z);
+    block(0, 0.009, 0, 1.83, 0.018, length, runner, rugBase);
+    for (const offset of [-doorHalfWidth, doorHalfWidth]) {
+      block(edge, 1.45, z + offset, 0.38, 2.9, 0.17, walnut);
+      block(edge, 1.45, z + offset, 0.4, 2.9, 0.045, brass);
+    }
+    block(edge, 3.48, z, 0.18, 1.24, doorHalfWidth * 2, hallPaint);
+    block(edge, 2.88, z, 0.42, 0.18, doorHalfWidth * 2 + 0.38, walnut);
+    block(edge, 0.021, z, 0.19, 0.025, doorHalfWidth * 2, brass);
+    sign(room.label, [], edge - r.side * 0.13, 3.21, z, faceHall, 2.83, 0.41);
+    sign(rooms[0].label, [], edge + r.side * 0.13, 3.21, z, -faceHall, 2.83, 0.41);
+    sign(room.label, room.topics, edge + r.side * 1.1, 1.88, r.minZ + 0.14, 0, 1.66, 0.84);
+    // Suspended aisle signs can be read face-on while approaching from the entrance.
+    const signX = r.side * 2.06;
+    const title = r.side < 0 ? "←  " + room.label : room.label + "  →";
+    block(signX, 3.49, z, 2.76, 0.43, 0.07, dark);
+    for (const offset of [-1.02, 1.02]) block(signX + offset, 4.39, z, 0.02, 1.4, 0.02, brass);
+    sign(title, [], signX, 3.49, z + 0.044, 0, 2.71, 0.39);
+    sign(r.side < 0 ? room.label + "  →" : "←  " + room.label, [], signX, 3.49, z - 0.044, Math.PI, 2.71, 0.39);
+    for (let distance = 2.2; distance < width; distance += 3.95) {
+      const beamX = edge + r.side * distance;
+      block(beamX, 3.97, z, 0.2, 0.21, depth, dark);
+      lamps.push({ x: beamX, z, drop: 0 });
+    }
   });
   const endWall = new T.TextureLoader().load("/paneled-window.webp", redraw);
   endWall.colorSpace = T.SRGBColorSpace;
@@ -348,6 +397,12 @@ export function createRoom(
     wall.position.set(0, 2.03, end + (end === rear ? 0.12 : -0.12));
     scene.add(wall);
   }
+  for (const wing of floors.slice(1)) {
+    const wall = new T.Mesh(endGeometry, endMaterial);
+    wall.rotation.y = -wing.side * Math.PI / 2;
+    wall.position.set((wing.side < 0 ? wing.minX : wing.maxX) - wing.side * 0.12, 2.03, wing.doorZ);
+    scene.add(wall);
+  }
   const lightGlass = register(new T.MeshBasicMaterial({ color: "#ffe4a8" }));
   const lampGlobe = new T.SphereGeometry(0.115, 16, 12);
   geometries.add(lampGlobe);
@@ -356,13 +411,13 @@ export function createRoom(
   const shadeMaterial = register(
     new T.MeshStandardMaterial({ color: "#576954", metalness: 0.25, roughness: 0.35, side: T.DoubleSide }),
   );
-  for (const { z } of bays.filter((bay) => bay.side === -1)) {
-    block(0, 3.78, z, 0.022, 0.49, 0.022, brass);
+  for (const { x, z, drop } of lamps) {
+    block(x, 3.78 + drop, z, 0.022, 0.49, 0.022, brass);
     const bulb = new T.Mesh(lampGlobe, lightGlass);
-    bulb.position.set(0, 3.43, z);
+    bulb.position.set(x, 3.43 + drop, z);
     scene.add(bulb);
     const shade = new T.Mesh(lampShade, shadeMaterial);
-    shade.position.set(0, 3.52, z);
+    shade.position.set(x, 3.52 + drop, z);
     scene.add(shade);
   }
   // Bake the angled pool of window light and its mullions onto the floor.
@@ -397,18 +452,13 @@ export function createRoom(
   block(0.48, 0.86, rear + 0.9, 0.29, 0.055, 0.18, brass);
   block(0.48, 1.07, rear + 0.9, 0.035, 0.42, 0.035, brass);
   block(0.48, 1.27, rear + 0.9, 0.46, 0.12, 0.2, green);
-  for (let z = front - baySpacing / 2; z > rear; z -= baySpacing) {
-    block(0, 3.96, z, 7.9, 0.23, 0.22, dark);
-    for (const x of [-2.1, 0, 2.1]) block(x, 4.03, z, 0.1, 0.1, baySpacing, panel);
-  }
-
   const pickable: T.Mesh[] = [];
-  const shelfPositions: { side: number; z: number; height: number }[][] = rooms.map(() => []);
+  const shelfPositions: (Position & { height: number })[][] = rooms.map(() => []);
   const paper = surface("#e4d6b8");
   const boards = new Map<string, T.Material>();
   const hitMaterial = register(new T.MeshBasicMaterial());
-  for (const { roomIndex, stack, side, z } of bays) {
-    const base = new T.Matrix4().makeRotationY((-side * Math.PI) / 2).setPosition(side * 3.78, 0, z);
+  for (const { roomIndex, stack, x, z, yaw: angle } of bays) {
+    const base = new T.Matrix4().makeRotationY(angle).setPosition(x, 0, z);
     const timber = (x: number, y: number, distance: number, w: number, h: number, d: number, m: T.Material) =>
       block(x, y, distance, w, h, d, m, base);
     const bottom = stack.length === 1 ? 1.14 : 0.61;
@@ -427,7 +477,7 @@ export function createRoom(
     timber(0, top, 0.31, 3.8, 0.12, 0.54, panel);
     stack.forEach((shelf, row) => {
       const deck = bottom + step * row;
-      shelfPositions[roomIndex].push({ side, z, height: deck + 0.35 });
+      shelfPositions[roomIndex].push({ x, z, yaw: angle, height: deck + 0.35 });
       timber(0, deck, 0.29, 3.68, 0.095, 0.48, walnut);
       timber(0, deck - 0.004, 0.54, 1.43, 0.104, 0.035, brass);
       const plaqueTexture = paintTexture(512, 48, (ctx) => {
@@ -540,19 +590,8 @@ export function createRoom(
       .addScaledVector(forward, scrollStep);
     const prevX = camera.position.x,
       prevZ = camera.position.z;
-    camera.position.add(move);
-    camera.position.x = T.MathUtils.clamp(camera.position.x, -2.93, 2.93);
-    camera.position.z = T.MathUtils.clamp(camera.position.z, rear + 1.6, front - 0.45);
-    // The opening admits the camera in either direction; the solid wings stop diagonal steps too.
-    const clearance = 0.27;
-    for (const z of dividers) {
-      if (Math.min(prevZ, camera.position.z) > z + clearance || Math.max(prevZ, camera.position.z) < z - clearance) continue;
-      if (Math.abs(camera.position.x) <= doorHalfWidth - clearance) continue;
-      if (prevZ >= z + clearance) camera.position.z = Math.max(camera.position.z, z + clearance);
-      else if (prevZ <= z - clearance) camera.position.z = Math.min(camera.position.z, z - clearance);
-      else camera.position.x = T.MathUtils.clamp(camera.position.x, clearance - doorHalfWidth, doorHalfWidth - clearance);
-    }
-    const nextRoom = rooms.findIndex((room) => camera.position.z >= room.rear);
+    walk(floors, camera.position, move.x, move.z);
+    const nextRoom = roomAt(floors, camera.position.x, camera.position.z);
     if (nextRoom !== currentRoom) {
       currentRoom = nextRoom;
       events.hover("");
@@ -596,17 +635,32 @@ export function createRoom(
     stop();
     flight = null;
     currentRoom = index;
-    camera.position.set(0, 1.63, rooms[index].front - 1.2);
-    yaw = 0;
+    const entrance = floors[index].entry;
+    camera.position.set(entrance.x, 1.63, entrance.z);
+    yaw = entrance.yaw;
     pitch = -0.03;
     events.enterRoom(index);
     redraw();
   }
   function visit(index: number) {
     const bay = shelfPositions[currentRoom][index];
-    const to = bay ? new T.Vector3(bay.side * 1.03, 1.64, bay.z) : new T.Vector3(0, 1.63, rooms[currentRoom].front - 1.2);
-    // Facing left is positive yaw, facing right is negative yaw.
-    const targetYaw = bay ? (-bay.side * Math.PI) / 2 : 0;
+    const entrance = floors[currentRoom].entry;
+    const to = bay
+      ? new T.Vector3(bay.x + Math.sin(bay.yaw) * 2.75, 1.64, bay.z + Math.cos(bay.yaw) * 2.75)
+      : new T.Vector3(entrance.x, 1.63, entrance.z);
+    const targetYaw = bay?.yaw ?? entrance.yaw;
+    // A shelf shortcut can start on the opposite side of a freestanding bookcase.
+    // Cut directly to the shelf when a camera glide would pass through furniture.
+    const steps = Math.ceil(camera.position.distanceTo(to) / 0.14);
+    for (let i = 1; i <= steps; i++) {
+      const x = T.MathUtils.lerp(camera.position.x, to.x, i / steps);
+      const z = T.MathUtils.lerp(camera.position.z, to.z, i / steps);
+      if (!canWalk(floors, x, z)) {
+        camera.position.copy(to);
+        yaw = targetYaw;
+        break;
+      }
+    }
     flight = {
       from: camera.position.clone(),
       to,

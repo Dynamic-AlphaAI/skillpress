@@ -526,6 +526,18 @@ for (const [slug, title, subtitle, topic] of marketingBooks) {
 
 // Some upstream headings are API command names or simply “Overview”.
 const coverTitles: Record<string, string> = {
+  "comment-code-generate-a-tutorial": "Turn Code into a Tutorial",
+  "create-readme": "Writing a Project README",
+  "breakdown-feature-prd": "Writing a Feature Requirements Document",
+  "architecture-blueprint-generator": "Mapping a Software Architecture",
+  "javascript-typescript-jest": "Testing JavaScript and TypeScript with Jest",
+  "unit-test-vue-pinia": "Testing Vue and Pinia",
+  "editorconfig": "A Shared EditorConfig",
+  "next-intl-add-language": "Adding a Language with next-intl",
+  "meeting-minutes": "Taking Meeting Minutes",
+  "mentoring-juniors": "Mentoring Junior Developers",
+  "csharp-xunit": "Testing C# with xUnit",
+  "breakdown-test": "Planning a Test Strategy",
   "gws-admin-reports": "Audit Google Workspace Activity",
   "gws-calendar": "Google Calendar",
   "gws-calendar-agenda": "Read Your Calendar Agenda",

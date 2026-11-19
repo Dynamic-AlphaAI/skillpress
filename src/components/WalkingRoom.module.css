@@ -253,7 +253,7 @@
   .read { align-self: end; }
   .choice { min-height: 44px; }
   .instructions {
-    bottom: 58px;
+    bottom: 66px;
     left: 10px;
     font-size: 9px;
   }
@@ -263,6 +263,10 @@
   .pad {
     left: 10px;
     right: auto;
+  }
+  .pad button {
+    width: 44px;
+    height: 44px;
   }
   .top {
     left: 10px;

@@ -109,7 +109,7 @@ export default function WalkingRoom({
         <canvas
           ref={canvas}
           tabIndex={0}
-          aria-label="Walkable library. Scroll up to walk forward or down to walk back. Use W A S D to move and left or right arrow to turn. Walk through signed doorways to explore other rooms, or choose a room, shelf and volume below."
+          aria-label="Walkable library. Scroll up to walk forward or down to walk back. Use W A S D to move and left or right arrow to turn. Follow the signs on the left and right of the main reading hall to enter subject rooms, or choose a room, shelf and volume below."
         />
         <div className={s.top}>
           <button onClick={onExit} className={s.exit}>
@@ -134,8 +134,8 @@ export default function WalkingRoom({
               ) : (
                 <>
                   <span>Drag to look around</span>
-                  <span>Scroll ↑ forward, ↓ back · WASD to walk</span>
-                  <span>Click a spine to read</span>
+                  <span>Scroll to walk · A/D to step sideways</span>
+                  <span>{room?.id === "hall" && rooms.length > 1 ? "Follow the signs left or right" : "Select a spine to read"}</span>
                 </>
               )}
             </div>
@@ -143,8 +143,10 @@ export default function WalkingRoom({
               {(
                 [
                   ["arrowleft", "↶", "Turn left"],
+                  ["a", "←", "Step left"],
                   ["w", "↑", "Walk forward"],
                   ["s", "↓", "Walk backward"],
+                  ["d", "→", "Step right"],
                   ["arrowright", "↷", "Turn right"],
                 ] as const
               ).map(([key, label, title]) => (
