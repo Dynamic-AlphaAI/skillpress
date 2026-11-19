@@ -455,6 +455,7 @@ export function createRoom(
   let pointerStart: { id: number; x: number; y: number; yaw: number; pitch: number; drag: boolean } | null =
     null;
   let walked = 0;
+  let scrollRemaining = 0; // Metres of wheel travel waiting to be drawn.
   function hit(e: PointerEvent) {
     const r = canvas.getBoundingClientRect();
     pointer.set(((e.clientX - r.left) / r.width) * 2 - 1, (-(e.clientY - r.top) / r.height) * 2 + 1);
@@ -467,7 +468,7 @@ export function createRoom(
       frame = requestAnimationFrame(render);
     }
   }
-  function moveCamera(dt: number) {
+  function moveCamera(dt: number, scrollStep = 0) {
     const f = Number(keys.has("w") || keys.has("arrowup")) - Number(keys.has("s") || keys.has("arrowdown"));
     const strafe = Number(keys.has("d")) - Number(keys.has("a"));
     yaw += (Number(keys.has("arrowleft")) - Number(keys.has("arrowright"))) * dt * 1.6;
@@ -478,7 +479,8 @@ export function createRoom(
       .multiplyScalar(f)
       .addScaledVector(right, strafe)
       .clampLength(0, 1)
-      .multiplyScalar(dt * 2.8);
+      .multiplyScalar(dt * 2.8)
+      .addScaledVector(forward, scrollStep);
     const prevX = camera.position.x,
       prevZ = camera.position.z;
     camera.position.add(move);
@@ -503,15 +505,18 @@ export function createRoom(
       yaw = flight.yaw + flight.turn * ease;
       pitch = flight.pitch * (1 - ease) + flight.targetPitch * ease;
       if (t === 1) flight = null;
-    } else if (keys.size) {
-      moveCamera(dt);
+    } else if (keys.size || scrollRemaining) {
+      const scrollStep = reduce.matches ? scrollRemaining : T.MathUtils.clamp(scrollRemaining, -4 * dt, 4 * dt);
+      scrollRemaining -= scrollStep;
+      moveCamera(dt, scrollStep);
     }
     camera.rotation.set(pitch, yaw, 0, "YXZ");
     renderer.render(scene, camera);
-    if (flight || keys.size) frame = requestAnimationFrame(render);
+    if (flight || keys.size || scrollRemaining) frame = requestAnimationFrame(render);
   }
   function stop() {
     keys.clear();
+    scrollRemaining = 0;
     pointerStart = null;
   }
   function visit(index: number) {
@@ -558,6 +563,22 @@ export function createRoom(
   }
   function keyUp(e: KeyboardEvent) {
     setKey(e.key.toLowerCase(), false);
+  }
+  function wheel(e: WheelEvent) {
+    if (paused || e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
+    const mode = e.deltaMode;
+    if (!e.deltaY || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    e.preventDefault();
+    let pixels = e.deltaY;
+    if (mode === WheelEvent.DOM_DELTA_LINE) pixels *= 16;
+    if (mode === WheelEvent.DOM_DELTA_PAGE) pixels *= canvas.clientHeight;
+    const distance = -pixels * 0.006;
+    if (distance * scrollRemaining < 0) scrollRemaining = 0;
+    scrollRemaining = T.MathUtils.clamp(scrollRemaining + distance, -1.2, 1.2);
+    flight = null;
+    events.hover("");
+    if (!pointerStart) canvas.style.cursor = "grab";
+    redraw();
   }
   function press(e: PointerEvent) {
     if (e.button !== 0 || paused) return;
@@ -615,6 +636,7 @@ export function createRoom(
   canvas.addEventListener("pointercancel", stop, opts);
   canvas.addEventListener("pointerleave", leave, opts);
   canvas.addEventListener("keydown", keyDown, opts);
+  canvas.addEventListener("wheel", wheel, { ...opts, passive: false });
   window.addEventListener("keyup", keyUp, opts);
   canvas.addEventListener("blur", stop, opts);
   window.addEventListener("blur", stop, opts);

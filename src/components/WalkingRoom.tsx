@@ -99,7 +99,7 @@ export default function WalkingRoom({
         <canvas
           ref={canvas}
           tabIndex={0}
-          aria-label="Walkable library. Use W A S D to move and left or right arrow to turn. Choose a shelf and volume below to browse by keyboard."
+          aria-label="Walkable library. Scroll up to walk forward or down to walk back. Use W A S D to move and left or right arrow to turn. Choose a shelf and volume below to browse by keyboard."
         />
         <div className={s.top}>
           <button onClick={onExit} className={s.exit}>
@@ -124,7 +124,7 @@ export default function WalkingRoom({
               ) : (
                 <>
                   <span>Drag to look around</span>
-                  <span>WASD to walk</span>
+                  <span>Scroll ↑ forward, ↓ back · WASD to walk</span>
                   <span>Click a spine to read</span>
                 </>
               )}
