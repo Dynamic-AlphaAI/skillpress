@@ -24,11 +24,41 @@ export function installMethods(book: Book): InstallMethod[] {
   const clone = '"$skill_checkout"';
   const methods: InstallMethod[] = [];
 
+  if (book.source.id === "grok-build") {
+    return [{
+      id: "upstream", label: "Grok Build bridge", note: bundleNote!,
+      link: { href: `${url}/tree/${book.source.commit}`, label: "Open xAI’s plugin and setup guide" },
+    }];
+  }
+  if (book.platforms.includes("deepseek")) {
+    methods.push({
+      id: "deepseek", label: "DeepSeek Harness",
+      note: book.sourcePath.startsWith(".agents/") ?
+        "This contributor skill is already included in a checkout of DeepSeek Harness." :
+        "DeepSeek ships this edition in its Office skill package.",
+      steps: [
+        "To use the downloaded edition in another Harness project, extract the ZIP into .agents/skills/ at the project root.",
+        `Check for .agents/skills/${book.slug}/SKILL.md and start a Harness session in that project.`,
+      ],
+      link: { href: `${url}/blob/${book.source.commit}/docs/subsystems/skills.md`, label: "DeepSeek skill discovery" },
+    });
+  }
+  if (book.platforms.includes("chatgpt")) {
+    const listing = book.source.id === "stripe" ? "https://chatgpt.com/plugins/stripe" :
+      book.source.id === "obsidian" ? "https://chatgpt.com/plugins/plugins_6aee4fde227881919d61b034b1c31096" : undefined;
+    methods.push({
+      id: "chatgpt", label: "ChatGPT",
+      note: listing ? "Open the publisher’s plugin in ChatGPT and install it in your workspace." :
+        "A workspace administrator can import the publisher’s plugin into a managed ChatGPT workspace.",
+      link: { href: listing ?? `${url}/tree/${book.source.commit}#installation`,
+        label: listing ? "Open in ChatGPT" : "Publisher’s workspace installation guide" },
+    });
+  }
   methods.push({
     id: "agent",
     label: "Agent prompt",
     kind: "Prompt",
-    note: "Paste this into Claude Code, Codex, Cursor, or any agent that can run commands.",
+    note: "Paste into a coding agent with terminal access. Check the upstream requirements for the skill you’re installing.",
     copy: [
       `Install the "${name}" Agent Skill by ${book.source.author}, from ${url}.`,
       ``,
@@ -74,7 +104,7 @@ export function installMethods(book: Book): InstallMethod[] {
     });
   }
 
-  methods.push({
+  if (book.source.repo === "anthropics/skills" || !book.source.bundleNote && book.platforms.includes("claude")) methods.push({
     id: "claude-ai",
     label: "Claude.ai",
     note:

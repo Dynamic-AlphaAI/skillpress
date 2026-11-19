@@ -1,3 +1,4 @@
+import type { Platform } from "./platforms";
 import type { Topic } from "./categories";
 import type { BookDesign } from "./designs";
 
@@ -11,6 +12,7 @@ export interface Heading {
 export interface Source {
   id: string;
   repo: string;
+  platforms: Platform[];
   url: string;
   /** Folder in the repo that holds one directory per skill. */
   path: string;
@@ -48,6 +50,8 @@ export interface Book {
   installs: number | null;
   license: string;
   category: Topic;
+  platforms: Platform[];
+  covers: Platform[];
   /** The Claude Code plugin that ships this skill. */
   plugin: Plugin | null;
   download: { zip: string; skillMd: string; bytes: number; files: number };

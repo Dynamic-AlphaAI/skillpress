@@ -19,10 +19,10 @@
 import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { dirname, join, relative, sep } from "node:path";
+import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { assignEditionIds, skillIdentity, uniqueSkills } from "./unique-skills.mjs";
-import { safeSourceFile, trackedSourceFile } from "./source-files.mjs";
+import { safeSourceFile, trackedSourceFile, reviewedFileAllowed, validSkillPath } from "./source-files.mjs";
 import { zipSync } from "fflate";
 
 const LEADERBOARD_URL = "https://skills.sh";
@@ -55,10 +55,11 @@ async function fetchInstalls() {
       const key = `${repo}/${skillId}`;
       installs.set(key, Math.max(installs.get(key) ?? 0, Number(n)));
     }
+    if (!installs.size) throw new Error("empty leaderboard");
     return installs;
   } catch (err) {
-    console.warn(`  Could not read install counts (${err.message}); shelving alphabetically.`);
-    return new Map();
+    console.warn(`  Could not read install counts (${err.message}); keeping the previous ranking snapshot.`);
+    return null;
   }
 }
 
@@ -72,8 +73,10 @@ function trackedFiles(skillDir, repoDir) {
 }
 
 function detectLicense(text) {
+  text = text.replace(/\s+/g, " ");
   if (/Apache License/.test(text)) return "Apache-2.0";
-  if (/MIT License|Permission is hereby granted, free of charge/.test(text)) return "MIT";
+  if (/Permission is hereby granted, free of charge/i.test(text) && /deal in the Software without restriction/i.test(text)) return "MIT";
+  if (/Redistribution and use in source and binary forms/i.test(text) && /Neither the name/i.test(text) && /THIS SOFTWARE IS PROVIDED/i.test(text)) return "BSD-3-Clause";
   if (/Mozilla Public License Version 2.0/i.test(text)) return "MPL-2.0";
   if (/GNU General Public License/.test(text) && /either version 2 of the License/.test(text)) return "GPL-2.0-or-later";
   return "See LICENSE";
@@ -81,10 +84,11 @@ function detectLicense(text) {
 
 /** The skill's own license file, else the repository's. */
 function licenseFor(skillDir, repoDir, declared) {
-  for (const name of ["LICENSE.txt", "LICENSE", "LICENSE.md"]) {
-    if (existsSync(join(skillDir, name))) {
-      const file = trackedSourceFile(repoDir, join(skillDir, name));
-      return { file, bundled: true, id: detectLicense(readFileSync(file, "utf8")) };
+  for (let parent = skillDir; parent !== repoDir; parent = dirname(parent)) {
+    for (const name of ["LICENSE.txt", "LICENSE", "LICENSE.md"]) {
+      if (!existsSync(join(parent, name))) continue;
+      const file = trackedSourceFile(repoDir, join(parent, name));
+      return { file, bundled: parent === skillDir, id: detectLicense(readFileSync(file, "utf8")) };
     }
   }
   for (const name of ["LICENSE", "LICENSE.txt", "LICENSE.md"]) {
@@ -108,6 +112,12 @@ function skillEntries(skillDir, repoDir, prefix, license) {
     entries[`${prefix}/${relative(skillDir, file).split(sep).join("/")}`] = [readFileSync(file), { mtime: MTIME }];
   }
   if (license.file && !license.bundled) entries[`${prefix}/LICENSE`] = [readFileSync(license.file), { mtime: MTIME }];
+  for (const name of ["NOTICE", "NOTICE.txt", "THIRD_PARTY_NOTICES.md"]) {
+    const notice = join(repoDir, name);
+    if (existsSync(notice) && !entries[`${prefix}/${name}`]) {
+      entries[`${prefix}/${name}`] = [readFileSync(trackedSourceFile(repoDir, notice)), { mtime: MTIME }];
+    }
+  }
   if (license.repositoryLicense) entries[`${prefix}/REPOSITORY-LICENSE`] = [readFileSync(license.repositoryLicense), { mtime: MTIME }];
   if (license.id === "GPL-2.0-or-later") entries[`${prefix}/COPYING`] ??= [readFileSync(join(root, "scripts/licenses/GPL-2.0.txt")), { mtime: MTIME }];
   return { entries, files: Object.keys(entries).length };
@@ -133,14 +143,22 @@ function pluginsFor(source, repoDir, slugs) {
 }
 
 function cloneSource(source, cleanup) {
-  if (localSrc[source.id]) return localSrc[source.id];
+  if (localSrc[source.id]) return resolve(localSrc[source.id]);
   const dir = mkdtempSync(join(tmpdir(), `skillpress-${source.id}-`));
   cleanup.push(dir);
   console.log(`Cloning ${source.repo} …`);
   const remote = `https://github.com/${source.repo}.git`;
   if (source.revision) {
     execFileSync("git", ["-C", dir, "init", "-q"]);
-    execFileSync("git", ["-C", dir, "fetch", "--depth", "1", "-q", remote, source.revision]);
+    const git = (...args) => execFileSync("git", ["-C", dir, ...args]);
+    git("remote", "add", "origin", remote);
+    if (source.skillPaths) {
+      if (!source.skillPaths.every(validSkillPath)) throw new Error(`Invalid skill folder in ${source.repo}`);
+      git("config", "remote.origin.promisor", "true");
+      git("config", "remote.origin.partialclonefilter", "blob:none");
+      git("sparse-checkout", "set", "--cone", "--", ...source.skillPaths);
+    }
+    git("fetch", "--depth", "1", "-q", ...(source.skillPaths ? ["--filter=blob:none"] : []), "origin", source.revision);
     execFileSync("git", ["-C", dir, "checkout", "-q", "--detach", "FETCH_HEAD"]);
   } else {
     execFileSync("git", ["clone", "--depth", "1", "-q", remote, dir], { stdio: "inherit" });
@@ -152,11 +170,11 @@ function publishedFolders(source, repoDir) {
   if (source.skillPaths) {
     if (!/^[a-f0-9]{40}$/.test(source.revision ?? "")) throw new Error(`Pin reviewed folders in ${source.repo}`);
     return source.skillPaths.map((sourcePath) => {
-      if (!/^[a-z0-9-]+(?:\/[a-z0-9-]+)*$/.test(sourcePath)) throw new Error(`Invalid skill path: ${sourcePath}`);
+      if (!validSkillPath(sourcePath)) throw new Error(`Invalid skill path: ${sourcePath}`);
       const records = execFileSync("git", ["-C", repoDir, "ls-tree", "-rz", "HEAD", "--", sourcePath])
         .toString().split("\0").filter(Boolean);
-      if (!records.length || records.some((file) => !/^100644 blob [a-f0-9]+\t[^\t\n]+\.md$/i.test(file))) {
-        throw new Error(`Expected regular Markdown files in ${source.repo}/${sourcePath}`);
+      if (!records.length || records.some((file) => !reviewedFileAllowed(file, sourcePath, source.reviewedAssets))) {
+        throw new Error(`Unexpected file in reviewed folder in ${source.repo}/${sourcePath}`);
       }
       return { slug: sourcePath.split("/").at(-1), sourcePath };
     });
@@ -171,7 +189,11 @@ function publishedFolders(source, repoDir) {
 
 async function importLibrary(cleanup) {
   console.log(`Reading install counts from ${LEADERBOARD_URL} …`);
+  const catalogPath = join(contentDir, "catalog.json");
+  const oldCatalog = existsSync(catalogPath) ? JSON.parse(readFileSync(catalogPath, "utf8")) : null;
+  const previous = oldCatalog?.books ?? [];
   const installs = await fetchInstalls();
+  const previousCounts = new Map(previous.map(book => [`${book.source}/${book.slug}`, book.installs]));
 
   const sourceInfo = [];
   const skills = [];
@@ -195,6 +217,7 @@ async function importLibrary(cleanup) {
       authorId: slugify(source.author),
       authorUrl: source.authorUrl ?? null,
       copyright: source.copyright ?? source.author,
+      platforms: source.platforms ?? [],
       series: source.series ?? null,
       bundleNote: source.bundleNote ?? null,
     });
@@ -204,16 +227,15 @@ async function importLibrary(cleanup) {
       const identity = skillIdentity(readFileSync(safeSourceFile(repoDir, join(dir, "SKILL.md")), "utf8"), `${source.repo}/${sourcePath}`);
       const license = licenseFor(dir, repoDir, identity.license);
       if (!license.file || license.id === "See LICENSE") {
+        if (source.skillPaths) throw new Error(`Review the redistribution license for ${source.repo}/${sourcePath}`);
         console.warn(`  Skipping ${source.repo}/${sourcePath}: redistribution license needs review.`);
         continue;
       }
-      skills.push({ slug, sourcePath, identity, license, author: source.author, source: source.id, repoDir, dir, installs: installs.get(`${source.repo}/${slug}`) ?? null, plugin: plugins.get(slug) ?? null });
+      skills.push({ platforms: source.editionPlatforms?.[slug], topic: source.topics?.[sourcePath], covers: source.covers?.[slug], slug, sourcePath, identity, license, author: source.author, source: source.id, repoDir, dir, installs: (installs ? installs.get(`${source.repo}/${slug}`) : previousCounts.get(`${source.id}/${slug}`)) ?? null, plugin: plugins.get(slug) ?? null });
     }
   }
 
   // Ranked first by installs, then the unlisted ones alphabetically.
-  const catalogPath = join(contentDir, "catalog.json");
-  const previous = existsSync(catalogPath) ? JSON.parse(readFileSync(catalogPath, "utf8")).books : [];
   const unique = assignEditionIds(uniqueSkills(skills), previous);
   console.log(`Kept ${unique.length} distinct skills from ${skills.length} source folders.`);
   unique.sort((a, b) => (b.installs ?? -1) - (a.installs ?? -1) || a.slug.localeCompare(b.slug));
@@ -256,6 +278,9 @@ async function importLibrary(cleanup) {
       slug: skill.slug,
       sourcePath: skill.sourcePath,
       source: skill.source,
+      ...(skill.platforms && { platforms: skill.platforms }),
+      ...(skill.topic && { topic: skill.topic }),
+      ...(skill.covers && { covers: skill.covers }),
       rank: i + 1,
       installs: skill.installs,
       license: license.id,
@@ -275,7 +300,7 @@ async function importLibrary(cleanup) {
 
   const catalog = {
     sources: sourceInfo,
-    ranking: { source: LEADERBOARD_URL, metric: "installs", fetchedAt: new Date().toISOString() },
+    ranking: { source: LEADERBOARD_URL, metric: "installs", fetchedAt: (!installs && oldCatalog?.ranking.fetchedAt) || new Date().toISOString() },
     allDownload: { zip: `/downloads/${ALL_ZIP}`, bytes: all.length },
     books,
   };

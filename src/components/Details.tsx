@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { platformLabel } from "@/lib/platforms";
 import { categoryById } from "@/lib/categories";
 import { formatBytes, installMethods } from "@/lib/install";
 import type { Book, Library } from "@/lib/types";
@@ -199,6 +200,8 @@ export function Details({
   const stats: [string, string][] = [
     ["Rank", `No. ${book.rank} of ${library.books.length}`],
     ["Installs", book.installs !== null ? book.installs.toLocaleString("en-US") : "Not listed yet"],
+    ...(book.platforms.length ? [["Runs in", book.platforms.map(platformLabel).join(", ")] as [string, string]] : []),
+    ...(book.covers.length ? [["Covers", book.covers.map(platformLabel).join(", ")] as [string, string]] : []),
     ["Length", `${book.words.toLocaleString("en-US")} words`],
     ["Reading time", `${book.readingMinutes} min`],
     ["Files", String(book.download.files)],
@@ -279,7 +282,7 @@ export function Details({
           <span className={s.mono}>{book.source.commit.slice(0, 7)}</span>. Install counts from{" "}
           <a href={library.ranking.source} target="_blank" rel="noopener noreferrer">skills.sh</a>. Download{" "}
           <a href={book.source.download.zip} download>
-            every skill by {book.source.author} ({formatBytes(book.source.download.bytes)})
+            all editions from {book.source.repo} ({formatBytes(book.source.download.bytes)})
           </a>{" "}
           or{" "}
           <a href={library.allDownload.zip} download>

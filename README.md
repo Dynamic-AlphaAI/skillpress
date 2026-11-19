@@ -4,7 +4,7 @@ Agent skills, typeset and bound as books you can page through and then install. 
 
 ## Source libraries
 
-The catalogue contains 491 editions from 25 repositories. For curated Markdown-only collections, the exact commit pins and folder lists are recorded in `sources.json`. The importer skips editions without an identified redistribution license, including `doc-coauthoring`. Each edition links to the upstream files at the revision used for its download.
+The catalogue contains **625 editions from 45 GitHub repositories**. The 3D library has **11 rooms and 126 occupied shelves**. Browse by topic, author, or platform. The eight platform collections include both skills for a host and editions about that platform. Each book identifies its publisher and links to its exact upstream revision. [Collection guide and source review](docs/collections.md)
 
 | GitHub repository | Subject matter | Editions | License |
 |---|---|---:|---|
@@ -33,6 +33,26 @@ The catalogue contains 491 editions from 25 repositories. For curated Markdown-o
 | [vuejs-ai/skills](https://github.com/vuejs-ai/skills) | Vue components, routing, state management and testing | 6 | MIT |
 | [antfu/skills](https://github.com/antfu/skills) | Vite, Vitest, VitePress, Pinia and UnoCSS | 5 | MIT |
 | [Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) | Software design, data analysis, mobile development and code review | 13 | MIT |
+| [openai/skills](https://github.com/openai/skills) | Codex goals, CLI design and ASP.NET Core | 3 | Apache-2.0 |
+| [openai/plugins](https://github.com/openai/plugins) | ChatGPT app submission | 1 | Apache-2.0 |
+| [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) | Design, customer support, analytics and engineering | 23 | Apache-2.0 |
+| [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | Claude plugin authoring and team enablement | 5 | Apache-2.0 |
+| [cursor/plugins](https://github.com/cursor/plugins) | Code review, team workflows and Grok Voice | 11 | MIT |
+| [xai-org/grok-build-plugin-cc](https://github.com/xai-org/grok-build-plugin-cc) | Presenting Grok Build results in Claude Code | 1 | Apache-2.0 |
+| [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) | Harness contributor guides and Office documents | 14 | MIT |
+| [google-gemini/gemini-skills](https://github.com/google-gemini/gemini-skills) | Gemini API and Live API development | 2 | Apache-2.0 |
+| [microsoft/skills](https://github.com/microsoft/skills) | Azure costs, storage and analytics | 7 | MIT |
+| [getsentry/skills](https://github.com/getsentry/skills) | API writing, branding and code review | 6 | Apache-2.0 |
+| [firebase/agent-skills](https://github.com/firebase/agent-skills) | Firebase hosting, analytics and data services | 8 | Apache-2.0 |
+| [neondatabase/agent-skills](https://github.com/neondatabase/agent-skills) | Postgres, realtime data and object storage | 3 | Apache-2.0 |
+| [prisma/skills](https://github.com/prisma/skills) | Prisma Client, setup and driver adapters | 3 | MIT |
+| [sanity-io/agent-toolkit](https://github.com/sanity-io/agent-toolkit) | Structured content, Portable Text and SEO | 7 | MIT |
+| [elastic/agent-skills](https://github.com/elastic/agent-skills) | Elasticsearch indexing, relevance and queries | 5 | Apache-2.0 |
+| [flutter/agent-plugins](https://github.com/flutter/agent-plugins) | Dart tests, Flutter layouts and localization | 14 | BSD-3-Clause |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | Software design, testing, handoffs and teaching | 10 | MIT |
+| [langchain-ai/langchain-skills](https://github.com/langchain-ai/langchain-skills) | Building, tracing and monitoring LangChain agents | 3 | MIT |
+| [anthropics/financial-services](https://github.com/anthropics/financial-services) | Spreadsheet audits, earnings and variance analysis | 4 | Apache-2.0 |
+| [mongodb/agent-skills](https://github.com/mongodb/agent-skills) | MongoDB schemas, query tuning and streams | 4 | Apache-2.0 |
 
 - **Ranking:** install counts from the [skills.sh](https://skills.sh) leaderboard. Skills it doesn't list yet appear at the end of their topic.
 - Books sit together by primary task across the catalogue, shelf, and 3D room. For example, **Testing & Code Review** includes browser testing, debugging, and reviewing changes. The **Author** filter narrows any topic to a particular author. Within each topic, books follow their install rank.
@@ -47,11 +67,11 @@ npm run dev        # http://localhost:3000
 
 ## Add a library
 
-1. Add an entry to `sources.json`: the repository, canonical skill directory, author, and reviewed commit in `revision`. Use `additionalPaths` for separate published plugins. Use `skillPaths` for individual reviewed Markdown-only folders at a pinned commit. Only include each canonical directory once.
+1. Add an entry to `sources.json`: the repository, canonical skill directory, author, and reviewed commit in `revision`. Use `additionalPaths` for separate published plugins. Use `skillPaths` for individual reviewed skill folders at a pinned commit. Only include each canonical directory once.
 2. Run `npm run import`.
-3. Push. The new books appear with generated covers.
+3. Run `npm test`, `npm run lint`, and `npm run build`. Run the browser checks against a production preview as described in the [collection guide](docs/collections.md).
 
-To give books their own titles and covers, add entries in `src/lib/designs.ts`. Series entries supply their titles and subtitles there. The edition ID and subject select a stable jacket in `src/lib/jacketDesign.ts`. Topic names and shelf order live in `src/lib/categories.ts`. File a skill by its primary task in `src/lib/classifyTopic.ts`, using the upstream repo and folder to identify the edition. An unreviewed import with a single clear topic match uses its own name and description. Ambiguous imports appear under **Awaiting Classification**.
+To give books their own titles and covers, add entries in `src/lib/designs.ts`. Series entries supply their titles and subtitles there. The edition ID and subject select a stable jacket in `src/lib/jacketDesign.ts`. Topic names and shelf order live in `src/lib/categories.ts`. File a skill by its primary task in `src/lib/classifyTopic.ts`, using the upstream repo and folder to identify the edition. For curated folders, an explicit entry in the source’s `topics` map takes priority. An unreviewed import with a single clear topic match uses its own name and description. Ambiguous imports appear under **Awaiting Classification**.
 
 ## Keeping it up to date
 
@@ -71,13 +91,13 @@ A GitHub Action (`.github/workflows/update-skills.yml`) runs `npm run import` ev
 - **Agent prompt**: paste it into Claude Code, Codex, Cursor, or any agent that runs commands, and it installs the skill and reports back what it does.
 - **skills CLI** installs from the edition’s pinned GitHub directory using the name declared in its frontmatter.
 - **Claude Code**: the plugin command published by each library.
-- **Claude.ai**: the toggle-or-upload steps.
+- **Claude.ai** offers toggle or upload steps for Claude editions. Supported ChatGPT editions link to their plugin or workspace setup. DeepSeek editions include Harness discovery instructions, and xAI’s internal bridge guide links to its upstream plugin.
 
 ## Using it
 
 Choose **Search** in the header to look up skills by keyword, title, publisher, topic, or words in the instructions. Results update as you type. Use **Topic** and **Author** to narrow them, then select a result to read the book. A link such as [a search for PDF extraction](https://skillpress.xyz/?q=pdf+extraction) restores the query. The full-text index is built from the same checked-in editions as the reader and loads when Search opens.
 
-Enter the Main Reading Hall to browse just over half the collection, arranged by topic in cases along the outside walls. Signed doorways on the left and right open into Arts & Letters, Engineering Workshop, Research & Data, Operations Room, and Business & Commerce. Drag to look, scroll to walk, or step sideways with A/D and the on-screen arrows. Each matching edition has one physical place. The room, shelf, and volume pickers also work by keyboard and without WebGL. Small filtered collections fit entirely in the hall.
+Enter the Main Reading Hall to browse just over half the collection, arranged by topic in cases along the outside walls. Signed doorways on both sides open into Arts & Letters, Engineering Workshop, Research & Planning, Operations Room, Business & Commerce, Design Gallery, AI & Model Lab, Data Archive, Mobile Studio, and Infrastructure Room. Drag to look, scroll to walk, or step sideways with A/D and the on-screen arrows. Each matching edition has one physical place. The room, shelf, and volume pickers also work by keyboard and without WebGL. Small filtered collections fit entirely in the hall.
 
 Select any wall ladder or press **E** to board the nearest one in the current room. Neighboring cases on an uninterrupted wall share a rail. Scroll or use **W/S** to climb, use **A/D** to roll along the bookcase, and select a book to read. Press **E** or choose **Step off ladder** to return to the floor. Choosing an **Upper shelf** in the shelf picker takes you straight to that row.
 

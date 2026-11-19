@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import MiniSearch from "minisearch";
+import { collectionCredit, type Collection } from "@/lib/platforms";
 import { categoryById } from "@/lib/categories";
 import { createIndex, findBooks, searchOptions } from "@/lib/search";
 import type { Book, Library } from "@/lib/types";
@@ -27,7 +28,7 @@ function loadFullIndex() {
 
 type BookLink = { hrefFor: (id: string) => string; onOpen: (id: string) => void };
 
-function Results({ books, hrefFor, onOpen }: BookLink & { books: Book[] }) {
+function Results({ books, platform, hrefFor, onOpen }: BookLink & { books: Book[]; platform: Collection }) {
   const [limit, setLimit] = useState(16);
   return (
     <>
@@ -42,7 +43,7 @@ function Results({ books, hrefFor, onOpen }: BookLink & { books: Book[] }) {
               <div className={s.cover} aria-hidden="true"><Cover book={book} /></div>
               <div className={s.entry}>
                 <h2>{book.design.title}</h2>
-                <div className={s.credit}>{book.source.author} · {categoryById(book.category)?.label}</div>
+                <div className={s.credit}>{collectionCredit(book, platform)} · {categoryById(book.category)?.label}</div>
                 <p>{book.description}</p>
               </div>
               <LibraryIcon name="arrow" size={18} />
@@ -55,8 +56,9 @@ function Results({ books, hrefFor, onOpen }: BookLink & { books: Book[] }) {
   );
 }
 
-export default function CatalogueSearch({ library, query, author, category, onQuery, onFilter, onOpen, hrefFor }: BookLink & {
+export default function CatalogueSearch({ library, platform, query, author, category, onQuery, onFilter, onOpen, hrefFor }: BookLink & {
   library: Library;
+  platform: Collection;
   query: string;
   author: string;
   category: string;
@@ -114,7 +116,7 @@ export default function CatalogueSearch({ library, query, author, category, onQu
           <button className={s.reset} type="button" onClick={() => { setFailed(false); setAttempt(attempt + 1); }}>Try again</button>
         </p>}
         {results.length ? (
-          <Results key={JSON.stringify([query, category, author])} books={results} hrefFor={hrefFor} onOpen={onOpen} />
+          <Results platform={platform} key={JSON.stringify([query, category, author])} books={results} hrefFor={hrefFor} onOpen={onOpen} />
         ) : (index || failed) && (
           <div className={s.empty}><h2>No matching skills</h2><p>{filtered ? "Try another keyword or clear your filters." : "Try another keyword, author, or topic."}</p></div>
         )}

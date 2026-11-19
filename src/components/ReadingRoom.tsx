@@ -4,6 +4,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Fragment, useRef, useState } from "react";
 import type { CSSProperties } from "react";
+import { collectionCredit, platformLabel, type Collection } from "@/lib/platforms";
 import { categoryById } from "@/lib/categories";
 import { TopicFilters } from "./TopicFilters";
 import type { Book, Library } from "@/lib/types";
@@ -25,6 +26,7 @@ const WalkingRoom = dynamic(() => import("./WalkingRoom"), {
 const perPage = 8;
 
 interface RoomProps {
+  platform: Collection;
   library: Library;
   books: Book[];
   category: string;
@@ -38,6 +40,7 @@ interface RoomProps {
 }
 
 export function ReadingRoom({
+  platform,
   library,
   books,
   category,
@@ -89,7 +92,7 @@ export function ReadingRoom({
           <div className={s.shade} />
           <div className={s.intro}>
             <div className={s.eyebrow}>
-              <span className={s.rule} /> A library of agent skills
+              <span className={s.rule} /> {platform === "all" ? "A library of agent skills" : `${platformLabel(platform)} collection`}
             </div>
             <h1 id="room-title">
               The Reading <em>Room</em>
@@ -121,7 +124,7 @@ export function ReadingRoom({
               <span className={s.rule} /> {books.length} volumes · {topicCount}{" "}
               {topicCount === 1 ? "topic" : "topics"}
             </div>
-            <h2 id="collection-title">On the shelves</h2>
+            <h2 id="collection-title">{platform === "all" ? "On the shelves" : `${platformLabel(platform)} shelves`}</h2>
           </div>
           <TopicFilters
             library={library}
@@ -169,7 +172,7 @@ export function ReadingRoom({
                   >
                     <span>
                       <strong>{book.design.title}</strong>
-                      <small>{book.source.author}</small>
+                      <small>{collectionCredit(book, platform)}</small>
                     </span>
                     <LibraryIcon name="arrow" size={17} />
                   </button>

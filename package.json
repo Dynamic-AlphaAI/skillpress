@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "node --test scripts/*.test.mjs",
-    "import": "node scripts/import-skills.mjs"
+    "import": "node scripts/import-skills.mjs",
+    "test:browser": "node scripts/check-browsing.mjs"
   },
   "dependencies": {
     "@radix-ui/react-select": "2.4.1",
@@ -30,6 +31,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
     "fflate": "^0.8.3",
+    "playwright": "1.65.1",
     "typescript": "^5"
   },
   "engines": {

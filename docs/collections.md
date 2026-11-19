@@ -1,0 +1,62 @@
+# Browsing the Skill Press collections
+
+Use the Collections bar above the catalogue to choose a platform. The number next to its name counts distinct editions. A book can belong to several collections. Within a collection, the author and topic filters apply to the reading room, shelf, featured view and keyword search. An edition occupies exactly one physical shelf in the current walkthrough.
+
+| Open a collection | What you will find |
+|---|---|
+| [ChatGPT](https://skillpress.xyz/?platform=chatgpt) | Workspace plugins, published ChatGPT skills and books about ChatGPT, including OpenAI’s app-submission guide |
+| [Codex](https://skillpress.xyz/?platform=codex) | OpenAI’s own Codex examples and other publishers’ documented Codex skills |
+| [Claude](https://skillpress.xyz/?platform=claude) | Claude Code, Cowork and other Claude skills, from Anthropic and independent authors |
+| [Grok](https://skillpress.xyz/?platform=grok) | Grok Build and Grok Bot plugins, xAI’s Claude bridge instructions and Cursor guides for the Grok Voice API |
+| [DeepSeek](https://skillpress.xyz/?platform=deepseek&walk) | DeepSeek Harness project instructions and three Office skills packaged by DeepSeek |
+| [Cursor](https://skillpress.xyz/?platform=cursor) | Cursor’s team kit and plugins from publishers that document Cursor support |
+| [Gemini](https://skillpress.xyz/?platform=gemini) | Gemini CLI extensions, Gemini development tools and Gemini API guides |
+| [GitHub Copilot](https://skillpress.xyz/?platform=copilot) | Copilot workflow skills, Microsoft’s Azure skills and compatible publisher collections |
+
+**Runs in** identifies host support described by the upstream publisher or represented by a platform-specific plugin manifest. **Covers** identifies a platform explicitly taught by the edition. For example, the xAI guide runs inside the Claude Code bridge and covers Grok output. Its install panel links to the bridge because the guide is an internal plugin helper. A generic Agent Skills folder without host evidence remains discoverable through All, its author, its topic and keyword search.
+
+Links preserve collection, search, compatible filters and the selected edition. Try [ChatGPT app submission](https://skillpress.xyz/?platform=chatgpt&q=submission) or [the DeepSeek reading room](https://skillpress.xyz/?platform=deepseek&walk). The masthead count and full-library download cover the entire catalogue. The ZIP named for a repository includes every published edition from that repository.
+
+## Evidence for platform assignments
+
+The catalogue stores publisher-wide hosts in `sources.json` under `platforms`, additions for individual editions under `editionPlatforms`, and subjects under `covers`. Use an edition-level entry when a marketplace lists only particular skills. Every edition links to the publisher’s exact skill directory. The release catalogue records the source revision used to interpret its README and manifests.
+
+- OpenAI documents which ChatGPT surfaces support standalone skills and workspace plugins. The Obsidian publisher lists its ChatGPT plugin, LangChain documents managed-workspace import, and Stripe’s ChatGPT listing names individual bundled skills. The older OpenAI skills repository directs readers to its current plugin examples. [OpenAI skills guide](https://learn.chatgpt.com/docs/build-skills) · [Obsidian](https://github.com/obsidianmd/obsidian-skills) · [LangChain](https://github.com/langchain-ai/langchain-skills) · [Stripe listing](https://chatgpt.com/plugins/stripe) · [OpenAI examples](https://github.com/openai/skills)
+- MongoDB documents its Claude, Cursor, Codex, Copilot and Grok plugin installations. xAI publishes the source of its Grok-to-Claude bridge. Cursor separately publishes a Grok Voice plugin for building audio features. [MongoDB](https://github.com/mongodb/agent-skills) · [xAI](https://github.com/xai-org/grok-build-plugin-cc) · [Cursor Grok Voice](https://github.com/cursor/plugins/tree/main/grok-voice)
+- DeepSeek Harness discovers project skills in `.agents/skills` and also loads packaged skills. Its contributor guides assume a DeepSeek Harness checkout. [DeepSeek skill registry](https://github.com/deepseek-ai/deepseek-harness/blob/2e39e70496aa02986ca6a820c5d497e816b69d7e/docs/subsystems/skills.md)
+- Claude’s knowledge-work plugins list Cowork and Claude Code as supported hosts. Google’s Gemini skills list several host-specific installations. Flutter publishes separate manifests for Claude, Cursor and Codex. [Anthropic](https://github.com/anthropics/knowledge-work-plugins) · [Google Gemini](https://github.com/google-gemini/gemini-skills) · [Flutter](https://github.com/flutter/agent-plugins)
+
+## The November 19, 2026 accession
+
+These 20 repositories contributed 134 editions. The stars below are a GitHub snapshot from the date of review. Smaller first-party projects qualified on publisher provenance, substantive instructions and redistribution terms. Select a repository to inspect its pinned revision.
+
+| Pinned source | GitHub stars | Editions | Licenses | Subjects |
+|---|---:|---:|---|---|
+| [openai/skills](https://github.com/openai/skills/tree/49f948faa9258a0c61caceaf225e179651397431) | 28,843 | 3 | Apache-2.0 | Codex goals, CLI design and ASP.NET Core |
+| [openai/plugins](https://github.com/openai/plugins/tree/981b02c0c44058b595f3b4180002c3ae3c806d40) | 8,021 | 1 | Apache-2.0 | ChatGPT app submission |
+| [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins/tree/b4c9a4e1de4b42868b74a6fe30ac766f64e43a3e) | 36,568 | 23 | Apache-2.0 | Design, customer support, analytics and engineering |
+| [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official/tree/df9699a55c56707e9948a32951ea356638ea8519) | 47,724 | 5 | Apache-2.0 | Claude plugin authoring and team enablement |
+| [cursor/plugins](https://github.com/cursor/plugins/tree/50b3a3234bf2e0293849a48784d72030948e44ee) | 17,502 | 11 | MIT | Code review, team workflows and Grok Voice |
+| [xai-org/grok-build-plugin-cc](https://github.com/xai-org/grok-build-plugin-cc/tree/8070d2fc349a9e196f0db94c1f67b19a00b53907) | 281 | 1 | Apache-2.0 | Presenting Grok Build results in Claude Code |
+| [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness/tree/2e39e70496aa02986ca6a820c5d497e816b69d7e) | 284,169 | 14 | MIT | Harness contributor guides and Office documents |
+| [google-gemini/gemini-skills](https://github.com/google-gemini/gemini-skills/tree/c4d0c62c1240e08a90546186bf320600ab6a039a) | 4,526 | 2 | Apache-2.0 | Gemini API and Live API development |
+| [microsoft/skills](https://github.com/microsoft/skills/tree/b35d2c60fac796bfd2cfd14ad3f550c73e92d9bb) | 3,226 | 7 | MIT | Azure costs, storage and analytics |
+| [getsentry/skills](https://github.com/getsentry/skills/tree/a582c51ee29d0f35e6ac321340796f77d43da733) | 1,186 | 6 | Apache-2.0 | API writing, branding and code review |
+| [firebase/agent-skills](https://github.com/firebase/agent-skills/tree/99954a30898bb5ddc8152ee10e124dc3b4106bf7) | 520 | 8 | Apache-2.0 | Firebase hosting, analytics and data services |
+| [neondatabase/agent-skills](https://github.com/neondatabase/agent-skills/tree/d3601d9e1f9398b96a1ee25047bafba5f04199eb) | 117 | 3 | Apache-2.0 | Postgres, realtime data and object storage |
+| [prisma/skills](https://github.com/prisma/skills/tree/a6f192959cf43b08aa330fe1ffca090267215812) | 80 | 3 | MIT | Prisma Client, setup and driver adapters |
+| [sanity-io/agent-toolkit](https://github.com/sanity-io/agent-toolkit/tree/1d9223c08237739ac862e6ec1c86540e58706222) | 201 | 7 | MIT | Structured content, Portable Text and SEO |
+| [elastic/agent-skills](https://github.com/elastic/agent-skills/tree/09d879dfe23436684e11391a5e5a74a2aedd6b04) | 610 | 5 | Apache-2.0 | Elasticsearch indexing, relevance and queries |
+| [flutter/agent-plugins](https://github.com/flutter/agent-plugins/tree/ff6d472ee66dbed566c4500edee460c94fde0a02) | 3,198 | 14 | BSD-3-Clause | Dart tests, Flutter layouts and localization |
+| [mattpocock/skills](https://github.com/mattpocock/skills/tree/abeeaf95660ba9e8b7c753eb38f441ca707a8823) | 328,046 | 10 | MIT | Software design, testing, handoffs and teaching |
+| [langchain-ai/langchain-skills](https://github.com/langchain-ai/langchain-skills/tree/0d4bed5b80fcdc658a6297cbc1093aaf49c06e39) | 1,349 | 3 | MIT | Building, tracing and monitoring LangChain agents |
+| [anthropics/financial-services](https://github.com/anthropics/financial-services/tree/3e32c2287dcb637c184c01cc0ad82d6af7e9bb0f) | 41,403 | 4 | Apache-2.0 | Spreadsheet audits, earnings and variance analysis |
+| [mongodb/agent-skills](https://github.com/mongodb/agent-skills/tree/ff9a88211c5a9fa74012bfa8b797132d510f9b44) | 206 | 4 | Apache-2.0 | MongoDB schemas, query tuning and streams |
+
+## Reviewing and reproducing an import
+
+1. Verify the canonical repository, publisher and immutable commit. Inspect each candidate’s instructions, references, metadata and nearest license. Keep distinct authors’ editions. Skip reprints, redirect stubs, unlicensed material and folders with unreviewed executable files.
+2. Record the reviewed folders under `skillPaths`, their subjects under `topics`, and the verified platform mappings. A pinned reviewed folder accepts regular Markdown and license notices. A passive PNG or editor metadata file requires an individually reviewed Git blob ID in `reviewedAssets`. The importer rejects scripts, executable modes and symbolic links in those folders.
+3. Run `npm run import`. To reproduce an earlier release for a source without a manifest pin, use its commit from that release’s `content/catalog.json` and supply the local checkout with `--src id=/path/to/checkout`. The importer stages its output, verifies Git provenance, and retains existing edition IDs. If the popularity service is unavailable, it retains the last saved install counts.
+4. Run `npm test`, `npm run lint`, and `npm run build`. The tests compare individual, repository and full-library ZIP contents, cover the metadata and path restrictions, round-trip shared links, and walk every room in every platform collection.
+5. Run `npx playwright install chromium`, start the production build with `npm start`, then run `npm run test:browser -- http://localhost:3000`. Pass the public origin to the same check after deployment. It exercises a real WebGL camera, room and volume pickers, a ladder, mobile browsing without WebGL, scoped search, reader history and a ZIP download.

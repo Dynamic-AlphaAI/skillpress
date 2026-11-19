@@ -8,7 +8,10 @@
       "author": "Anthropic",
       "copyright": "Anthropic, PBC",
       "authorUrl": "https://www.anthropic.com",
-      "plugin": "marketplace.json"
+      "plugin": "marketplace.json",
+      "platforms": [
+        "claude"
+      ]
     },
     {
       "id": "superpowers",
@@ -23,7 +26,11 @@
         "marketplace": "claude-plugins-official",
         "addMarketplace": null
       },
-      "bundleNote": "Superpowers skills are written to work together \u2014 using-superpowers teaches the agent when to reach for the rest \u2014 so the full set gets the most out of any one of them."
+      "bundleNote": "Superpowers skills are written to work together \u2014 using-superpowers teaches the agent when to reach for the rest \u2014 so the full set gets the most out of any one of them.",
+      "platforms": [
+        "claude",
+        "codex"
+      ]
     },
     {
       "id": "marketing",
@@ -34,7 +41,17 @@
       "authorUrl": "https://corey.co",
       "series": "Marketing Skills",
       "plugin": "marketplace.json",
-      "bundleNote": "These skills build on shared context: every one of them reads product-marketing first for your product, audience, and positioning, so install product-marketing alongside whichever you pick."
+      "bundleNote": "These skills build on shared context: every one of them reads product-marketing first for your product, audience, and positioning, so install product-marketing alongside whichever you pick.",
+      "platforms": [
+        "claude",
+        "codex",
+        "cursor"
+      ],
+      "covers": {
+        "ai-seo": [
+          "chatgpt"
+        ]
+      }
     },
     {
       "id": "googleworkspace",
@@ -44,7 +61,10 @@
       "copyright": "Google Workspace CLI contributors",
       "authorUrl": "https://github.com/googleworkspace",
       "bundleNote": "Many Workspace recipes use the shared gws-shared skill and a service-specific skill. Install the Workspace collection to keep those prerequisites together.",
-      "revision": "cd3697e07eb520056dcf142d0c7439bbb9ba32e9"
+      "revision": "cd3697e07eb520056dcf142d0c7439bbb9ba32e9",
+      "platforms": [
+        "gemini"
+      ]
     },
     {
       "id": "playwright",
@@ -53,7 +73,11 @@
       "author": "Microsoft Playwright",
       "copyright": "Microsoft Corporation",
       "authorUrl": "https://github.com/microsoft",
-      "revision": "c872a33cec77fa03c28fa7c6d1ad99d15d04ce42"
+      "revision": "c872a33cec77fa03c28fa7c6d1ad99d15d04ce42",
+      "platforms": [
+        "claude",
+        "copilot"
+      ]
     },
     {
       "id": "huggingface",
@@ -62,7 +86,13 @@
       "author": "Hugging Face",
       "copyright": "Hugging Face contributors",
       "authorUrl": "https://github.com/huggingface",
-      "revision": "5291c2b9365e06b175dc04817610c778623f4836"
+      "revision": "5291c2b9365e06b175dc04817610c778623f4836",
+      "platforms": [
+        "claude",
+        "codex",
+        "gemini",
+        "cursor"
+      ]
     },
     {
       "id": "stitch",
@@ -75,7 +105,11 @@
         "plugins/stitch-design/skills",
         "plugins/stitch-utilities/skills"
       ],
-      "revision": "4cf4db8e4143b09e40f9bc887429d81f41ab3947"
+      "revision": "4cf4db8e4143b09e40f9bc887429d81f41ab3947",
+      "platforms": [
+        "claude",
+        "codex"
+      ]
     },
     {
       "id": "expo",
@@ -84,7 +118,14 @@
       "author": "Expo",
       "copyright": "650 Industries, Inc.",
       "authorUrl": "https://github.com/expo",
-      "revision": "dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d"
+      "revision": "dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d",
+      "platforms": [
+        "claude",
+        "codex",
+        "cursor",
+        "copilot",
+        "gemini"
+      ]
     },
     {
       "id": "cloudflare",
@@ -93,7 +134,13 @@
       "author": "Cloudflare",
       "copyright": "Cloudflare contributors",
       "authorUrl": "https://github.com/cloudflare",
-      "revision": "5108325ecceabc899c761e07aa617b09c02445ee"
+      "revision": "5108325ecceabc899c761e07aa617b09c02445ee",
+      "platforms": [
+        "claude",
+        "codex",
+        "cursor",
+        "copilot"
+      ]
     },
     {
       "id": "supabase",
@@ -102,7 +149,10 @@
       "author": "Supabase",
       "copyright": "Supabase",
       "authorUrl": "https://github.com/supabase",
-      "revision": "c9be0e931b7930f7d02126d04774d904c381e7d7"
+      "revision": "c9be0e931b7930f7d02126d04774d904c381e7d7",
+      "platforms": [
+        "claude"
+      ]
     },
     {
       "id": "stripe",
@@ -111,7 +161,36 @@
       "author": "Stripe",
       "copyright": "Stripe",
       "authorUrl": "https://github.com/stripe",
-      "revision": "72e7e79e08e245063e87d61f60340e55e54c68f4"
+      "revision": "72e7e79e08e245063e87d61f60340e55e54c68f4",
+      "platforms": [
+        "claude",
+        "codex",
+        "cursor",
+        "grok"
+      ],
+      "editionPlatforms": {
+        "connect-recommend": [
+          "chatgpt"
+        ],
+        "stripe-apps": [
+          "chatgpt"
+        ],
+        "stripe-best-practices": [
+          "chatgpt"
+        ],
+        "stripe-directory": [
+          "chatgpt"
+        ],
+        "stripe-docs": [
+          "chatgpt"
+        ],
+        "stripe-projects": [
+          "chatgpt"
+        ],
+        "upgrade-stripe": [
+          "chatgpt"
+        ]
+      }
     },
     {
       "id": "hashicorp",
@@ -123,7 +202,13 @@
       "additionalPaths": [
         "plugins/terraform/skills"
       ],
-      "revision": "5e30fa5c867ba6777c37e4206babfd08049c396f"
+      "revision": "5e30fa5c867ba6777c37e4206babfd08049c396f",
+      "platforms": [
+        "claude",
+        "cursor",
+        "copilot",
+        "codex"
+      ]
     },
     {
       "id": "wordpress",
@@ -132,7 +217,13 @@
       "author": "WordPress",
       "copyright": "WordPress Contributors",
       "authorUrl": "https://github.com/WordPress",
-      "revision": "7374e6f1c913b3b02b25465d266d9c0e0a04fc96"
+      "revision": "7374e6f1c913b3b02b25465d266d9c0e0a04fc96",
+      "platforms": [
+        "claude",
+        "copilot",
+        "codex",
+        "cursor"
+      ]
     },
     {
       "id": "posit",
@@ -151,6 +242,11 @@
         "r-lib/r-testthat",
         "r-lib/r-tidyverse-style",
         "shiny/shiny-bslib-theming"
+      ],
+      "platforms": [
+        "claude",
+        "codex",
+        "cursor"
       ]
     },
     {
@@ -169,6 +265,11 @@
         "system/edge-to-edge",
         "wear/wear-compose-m3",
         "wear/wear-widgets"
+      ],
+      "platforms": [
+        "claude",
+        "codex",
+        "gemini"
       ]
     },
     {
@@ -181,6 +282,11 @@
       "revision": "0b003d3c4c7dcd675d0bd30949aa7c95c2b91d1f",
       "skillPaths": [
         "skills/email-best-practices"
+      ],
+      "platforms": [
+        "claude",
+        "cursor",
+        "grok"
       ]
     },
     {
@@ -230,6 +336,9 @@
         "skills/react-container-presentation-component",
         "skills/unit-test-vue-pinia",
         "skills/web-design-reviewer"
+      ],
+      "platforms": [
+        "copilot"
       ]
     },
     {
@@ -277,6 +386,12 @@
         "plugins/ui-design/skills/responsive-design",
         "plugins/ui-design/skills/visual-design-foundations",
         "plugins/ui-design/skills/web-component-design"
+      ],
+      "platforms": [
+        "claude",
+        "codex",
+        "cursor",
+        "copilot"
       ]
     },
     {
@@ -299,6 +414,12 @@
         "marketing-skill/skills/marketing-psychology",
         "marketing-skill/skills/marketing-strategy-pmm",
         "project-management/skills/meeting-analyzer"
+      ],
+      "platforms": [
+        "claude",
+        "codex",
+        "gemini",
+        "cursor"
       ]
     },
     {
@@ -341,6 +462,10 @@
         "pm-product-strategy/skills/lean-canvas",
         "pm-product-strategy/skills/product-vision",
         "pm-toolkit/skills/review-resume"
+      ],
+      "platforms": [
+        "claude",
+        "codex"
       ]
     },
     {
@@ -362,6 +487,11 @@
         "skills/source-driven-development",
         "skills/spec-driven-development",
         "skills/test-driven-development"
+      ],
+      "platforms": [
+        "claude",
+        "codex",
+        "cursor"
       ]
     },
     {
@@ -376,6 +506,14 @@
         "plugins/obsidian/skills/json-canvas",
         "plugins/obsidian/skills/obsidian-bases",
         "plugins/obsidian/skills/obsidian-markdown"
+      ],
+      "platforms": [
+        "claude",
+        "codex",
+        "cursor",
+        "gemini",
+        "chatgpt",
+        "grok"
       ]
     },
     {
@@ -393,6 +531,9 @@
         "skills/vue-pinia-best-practices",
         "skills/vue-router-best-practices",
         "skills/vue-testing-best-practices"
+      ],
+      "platforms": [
+        "claude"
       ]
     },
     {
@@ -433,6 +574,635 @@
         "skills/spark-engineer",
         "skills/spec-miner",
         "skills/the-fool"
+      ],
+      "platforms": [
+        "claude"
+      ]
+    },
+    {
+      "id": "openai-skills",
+      "repo": "openai/skills",
+      "path": ".",
+      "author": "OpenAI",
+      "authorUrl": "https://github.com/openai",
+      "revision": "49f948faa9258a0c61caceaf225e179651397431",
+      "skillPaths": [
+        "skills/.curated/aspnet-core",
+        "skills/.curated/cli-creator",
+        "skills/.curated/define-goal"
+      ],
+      "topics": {
+        "skills/.curated/cli-creator": "software-development",
+        "skills/.curated/aspnet-core": "software-development",
+        "skills/.curated/define-goal": "research-planning"
+      },
+      "reviewedAssets": {
+        "skills/.curated/cli-creator/agents/openai.yaml": "74da6bf568e409b6dff8d47d85de2b6f1341c61c",
+        "skills/.curated/aspnet-core/agents/openai.yaml": "03d861eadefd055ec1d4a212bd5fcddef2894789",
+        "skills/.curated/aspnet-core/assets/dotnet-logo.png": "7a7ee241de8c86cc8319b061a8b4e61efe6d6f88",
+        "skills/.curated/define-goal/agents/openai.yaml": "28c7e7a644d7ae3f5616c7ddd408c573139999f0"
+      },
+      "bundleNote": "OpenAI retired this example repository in favor of openai/plugins. This edition preserves the cited revision.",
+      "platforms": [
+        "codex"
+      ]
+    },
+    {
+      "id": "openai-plugins",
+      "repo": "openai/plugins",
+      "path": ".",
+      "author": "OpenAI",
+      "authorUrl": "https://github.com/openai",
+      "revision": "981b02c0c44058b595f3b4180002c3ae3c806d40",
+      "skillPaths": [
+        "plugins/openai-developers/skills/chatgpt-app-submission"
+      ],
+      "topics": {
+        "plugins/openai-developers/skills/chatgpt-app-submission": "software-development"
+      },
+      "platforms": [
+        "codex"
+      ],
+      "covers": {
+        "chatgpt-app-submission": [
+          "chatgpt"
+        ]
+      }
+    },
+    {
+      "id": "anthropic-work",
+      "repo": "anthropics/knowledge-work-plugins",
+      "path": ".",
+      "author": "Anthropic",
+      "authorUrl": "https://github.com/anthropics",
+      "revision": "b4c9a4e1de4b42868b74a6fe30ac766f64e43a3e",
+      "skillPaths": [
+        "customer-support/skills/customer-escalation",
+        "customer-support/skills/draft-response",
+        "customer-support/skills/kb-article",
+        "customer-support/skills/ticket-triage",
+        "data/skills/build-dashboard",
+        "data/skills/create-viz",
+        "data/skills/data-visualization",
+        "data/skills/explore-data",
+        "data/skills/sql-queries",
+        "data/skills/statistical-analysis",
+        "data/skills/validate-data",
+        "design/skills/accessibility-review",
+        "design/skills/design-critique",
+        "design/skills/design-handoff",
+        "design/skills/design-system",
+        "design/skills/research-synthesis",
+        "design/skills/user-research",
+        "design/skills/ux-copy",
+        "engineering/skills/architecture",
+        "engineering/skills/code-review",
+        "engineering/skills/system-design",
+        "engineering/skills/tech-debt",
+        "engineering/skills/testing-strategy"
+      ],
+      "topics": {
+        "design/skills/accessibility-review": "design-media",
+        "design/skills/design-critique": "design-media",
+        "design/skills/design-handoff": "design-media",
+        "design/skills/design-system": "design-media",
+        "design/skills/ux-copy": "design-media",
+        "design/skills/research-synthesis": "research-planning",
+        "design/skills/user-research": "research-planning",
+        "data/skills/build-dashboard": "data-analytics",
+        "data/skills/create-viz": "data-analytics",
+        "data/skills/data-visualization": "data-analytics",
+        "data/skills/explore-data": "data-analytics",
+        "data/skills/sql-queries": "data-analytics",
+        "data/skills/statistical-analysis": "data-analytics",
+        "data/skills/validate-data": "data-analytics",
+        "customer-support/skills/kb-article": "writing-documents",
+        "customer-support/skills/draft-response": "team-communication",
+        "customer-support/skills/ticket-triage": "team-communication",
+        "customer-support/skills/customer-escalation": "team-communication",
+        "engineering/skills/architecture": "software-development",
+        "engineering/skills/tech-debt": "software-development",
+        "engineering/skills/system-design": "software-development",
+        "engineering/skills/testing-strategy": "testing-review",
+        "engineering/skills/code-review": "testing-review"
+      },
+      "platforms": [
+        "claude"
+      ]
+    },
+    {
+      "id": "anthropic-plugins",
+      "repo": "anthropics/claude-plugins-official",
+      "path": ".",
+      "author": "Anthropic",
+      "authorUrl": "https://github.com/anthropics",
+      "revision": "df9699a55c56707e9948a32951ea356638ea8519",
+      "skillPaths": [
+        "plugins/champion-kit/skills/hackathon",
+        "plugins/champion-kit/skills/office-hours",
+        "plugins/claude-md-management/skills/claude-md-improver",
+        "plugins/playground/skills/playground",
+        "plugins/plugin-dev/skills/skill-development"
+      ],
+      "topics": {
+        "plugins/champion-kit/skills/hackathon": "team-communication",
+        "plugins/champion-kit/skills/office-hours": "team-communication",
+        "plugins/plugin-dev/skills/skill-development": "ai-automation",
+        "plugins/claude-md-management/skills/claude-md-improver": "writing-documents",
+        "plugins/playground/skills/playground": "design-media"
+      },
+      "platforms": [
+        "claude"
+      ]
+    },
+    {
+      "id": "cursor-plugins",
+      "repo": "cursor/plugins",
+      "path": ".",
+      "author": "Cursor",
+      "authorUrl": "https://github.com/cursor",
+      "revision": "50b3a3234bf2e0293849a48784d72030948e44ee",
+      "skillPaths": [
+        "create-plugin/skills/create-plugin-scaffold",
+        "create-plugin/skills/review-plugin-submission",
+        "cursor-team-kit/skills/check-compiler-errors",
+        "cursor-team-kit/skills/deslop",
+        "cursor-team-kit/skills/make-pr-easy-to-review",
+        "cursor-team-kit/skills/run-smoke-tests",
+        "cursor-team-kit/skills/verify-this",
+        "cursor-team-kit/skills/weekly-review",
+        "cursor-team-kit/skills/what-did-i-get-done",
+        "grok-voice/skills/add-dictation",
+        "grok-voice/skills/add-read-aloud"
+      ],
+      "topics": {
+        "cursor-team-kit/skills/make-pr-easy-to-review": "testing-review",
+        "cursor-team-kit/skills/check-compiler-errors": "testing-review",
+        "cursor-team-kit/skills/run-smoke-tests": "testing-review",
+        "cursor-team-kit/skills/verify-this": "testing-review",
+        "cursor-team-kit/skills/deslop": "software-development",
+        "cursor-team-kit/skills/weekly-review": "team-communication",
+        "cursor-team-kit/skills/what-did-i-get-done": "team-communication",
+        "create-plugin/skills/create-plugin-scaffold": "ai-automation",
+        "create-plugin/skills/review-plugin-submission": "ai-automation",
+        "grok-voice/skills/add-read-aloud": "design-media",
+        "grok-voice/skills/add-dictation": "design-media"
+      },
+      "platforms": [
+        "cursor"
+      ],
+      "covers": {
+        "add-read-aloud": [
+          "grok"
+        ],
+        "add-dictation": [
+          "grok"
+        ]
+      }
+    },
+    {
+      "id": "grok-build",
+      "repo": "xai-org/grok-build-plugin-cc",
+      "path": ".",
+      "author": "xAI",
+      "authorUrl": "https://github.com/xai-org",
+      "revision": "8070d2fc349a9e196f0db94c1f67b19a00b53907",
+      "skillPaths": [
+        "plugins/grok-build/skills/grok-run-output"
+      ],
+      "topics": {
+        "plugins/grok-build/skills/grok-run-output": "ai-automation"
+      },
+      "bundleNote": "Internal instructions used by the Grok Build bridge for Claude Code. Install the upstream plugin to use its commands.",
+      "platforms": [
+        "claude"
+      ],
+      "covers": {
+        "grok-run-output": [
+          "grok"
+        ]
+      }
+    },
+    {
+      "id": "deepseek-harness",
+      "repo": "deepseek-ai/deepseek-harness",
+      "path": ".",
+      "author": "DeepSeek",
+      "authorUrl": "https://github.com/deepseek-ai",
+      "revision": "2e39e70496aa02986ca6a820c5d497e816b69d7e",
+      "skillPaths": [
+        ".agents/skills/dsh-ci-test-reliability",
+        ".agents/skills/dsh-client-ui-ux",
+        ".agents/skills/dsh-code-review",
+        ".agents/skills/dsh-create-upgrade-guide",
+        ".agents/skills/dsh-doc-writing",
+        ".agents/skills/dsh-error-handling",
+        ".agents/skills/dsh-find-simplifications",
+        ".agents/skills/dsh-pr-description",
+        ".agents/skills/dsh-prose-standard",
+        ".agents/skills/dsh-responsive-ui",
+        ".agents/skills/dsh-translate-docs",
+        "packages/skill/skill-office/assets/office-docx",
+        "packages/skill/skill-office/assets/office-pptx",
+        "packages/skill/skill-office/assets/office-xlsx"
+      ],
+      "topics": {
+        ".agents/skills/dsh-doc-writing": "writing-documents",
+        ".agents/skills/dsh-create-upgrade-guide": "writing-documents",
+        ".agents/skills/dsh-prose-standard": "writing-documents",
+        ".agents/skills/dsh-translate-docs": "writing-documents",
+        ".agents/skills/dsh-pr-description": "writing-documents",
+        ".agents/skills/dsh-client-ui-ux": "design-media",
+        ".agents/skills/dsh-responsive-ui": "design-media",
+        ".agents/skills/dsh-ci-test-reliability": "testing-review",
+        ".agents/skills/dsh-code-review": "testing-review",
+        ".agents/skills/dsh-error-handling": "software-development",
+        ".agents/skills/dsh-find-simplifications": "software-development",
+        "packages/skill/skill-office/assets/office-docx": "office-productivity",
+        "packages/skill/skill-office/assets/office-pptx": "office-productivity",
+        "packages/skill/skill-office/assets/office-xlsx": "office-productivity"
+      },
+      "platforms": [
+        "deepseek"
+      ]
+    },
+    {
+      "id": "gemini-skills",
+      "repo": "google-gemini/gemini-skills",
+      "path": ".",
+      "author": "Google Gemini",
+      "authorUrl": "https://github.com/google-gemini",
+      "revision": "c4d0c62c1240e08a90546186bf320600ab6a039a",
+      "skillPaths": [
+        "skills/gemini-api-dev",
+        "skills/gemini-live-api-dev"
+      ],
+      "topics": {
+        "skills/gemini-api-dev": "ai-automation",
+        "skills/gemini-live-api-dev": "ai-automation"
+      },
+      "platforms": [
+        "gemini",
+        "codex",
+        "claude",
+        "cursor"
+      ]
+    },
+    {
+      "id": "microsoft-skills",
+      "repo": "microsoft/skills",
+      "path": ".",
+      "author": "Microsoft",
+      "authorUrl": "https://github.com/microsoft",
+      "revision": "b35d2c60fac796bfd2cfd14ad3f550c73e92d9bb",
+      "skillPaths": [
+        ".github/plugins/azure-cost/skills/cost-analysis",
+        ".github/plugins/azure-cost/skills/cost-estimation",
+        ".github/plugins/azure-cost/skills/cost-governance",
+        ".github/plugins/azure-kusto-graph-skills/skills/azure-kusto-graph",
+        ".github/plugins/azure-sdk-python/skills/azure-storage-blob-py",
+        ".github/plugins/azure-sdk-python/skills/azure-storage-queue-py",
+        ".github/plugins/azure-sdk-typescript/skills/azure-ai-document-intelligence-ts"
+      ],
+      "topics": {
+        ".github/plugins/azure-cost/skills/cost-analysis": "cloud-infrastructure",
+        ".github/plugins/azure-cost/skills/cost-estimation": "cloud-infrastructure",
+        ".github/plugins/azure-cost/skills/cost-governance": "cloud-infrastructure",
+        ".github/plugins/azure-kusto-graph-skills/skills/azure-kusto-graph": "data-analytics",
+        ".github/plugins/azure-sdk-typescript/skills/azure-ai-document-intelligence-ts": "writing-documents",
+        ".github/plugins/azure-sdk-python/skills/azure-storage-queue-py": "cloud-infrastructure",
+        ".github/plugins/azure-sdk-python/skills/azure-storage-blob-py": "cloud-infrastructure"
+      },
+      "platforms": [
+        "copilot"
+      ]
+    },
+    {
+      "id": "sentry-skills",
+      "repo": "getsentry/skills",
+      "path": ".",
+      "author": "Sentry",
+      "authorUrl": "https://github.com/getsentry",
+      "revision": "a582c51ee29d0f35e6ac321340796f77d43da733",
+      "skillPaths": [
+        "skills/agents-md",
+        "skills/blog-writing-guide",
+        "skills/brand-guidelines",
+        "skills/code-review",
+        "skills/code-simplifier",
+        "skills/document-api-endpoint"
+      ],
+      "topics": {
+        "skills/blog-writing-guide": "writing-documents",
+        "skills/document-api-endpoint": "writing-documents",
+        "skills/agents-md": "writing-documents",
+        "skills/brand-guidelines": "design-media",
+        "skills/code-review": "testing-review",
+        "skills/code-simplifier": "software-development"
+      },
+      "platforms": [
+        "claude",
+        "cursor",
+        "copilot"
+      ]
+    },
+    {
+      "id": "firebase-skills",
+      "repo": "firebase/agent-skills",
+      "path": ".",
+      "author": "Firebase",
+      "authorUrl": "https://github.com/firebase",
+      "revision": "99954a30898bb5ddc8152ee10e124dc3b4106bf7",
+      "skillPaths": [
+        "skills/firebase-analytics",
+        "skills/firebase-app-hosting-basics",
+        "skills/firebase-basics",
+        "skills/firebase-crashlytics",
+        "skills/firebase-data-connect-basics",
+        "skills/firebase-firestore",
+        "skills/firebase-hosting-basics",
+        "skills/firebase-remote-config-basics"
+      ],
+      "topics": {
+        "skills/firebase-analytics": "data-analytics",
+        "skills/firebase-basics": "cloud-infrastructure",
+        "skills/firebase-app-hosting-basics": "cloud-infrastructure",
+        "skills/firebase-hosting-basics": "cloud-infrastructure",
+        "skills/firebase-remote-config-basics": "cloud-infrastructure",
+        "skills/firebase-data-connect-basics": "databases",
+        "skills/firebase-firestore": "databases",
+        "skills/firebase-crashlytics": "testing-review"
+      },
+      "platforms": [
+        "gemini",
+        "codex"
+      ]
+    },
+    {
+      "id": "neon-skills",
+      "repo": "neondatabase/agent-skills",
+      "path": ".",
+      "author": "Neon",
+      "authorUrl": "https://github.com/neondatabase",
+      "revision": "d3601d9e1f9398b96a1ee25047bafba5f04199eb",
+      "skillPaths": [
+        "skills/neon-object-storage",
+        "skills/neon-postgres",
+        "skills/neon-realtime"
+      ],
+      "topics": {
+        "skills/neon-postgres": "databases",
+        "skills/neon-realtime": "databases",
+        "skills/neon-object-storage": "databases"
+      },
+      "platforms": [
+        "claude",
+        "cursor"
+      ]
+    },
+    {
+      "id": "prisma-skills",
+      "repo": "prisma/skills",
+      "path": ".",
+      "author": "Prisma",
+      "authorUrl": "https://github.com/prisma",
+      "revision": "a6f192959cf43b08aa330fe1ffca090267215812",
+      "skillPaths": [
+        "prisma-client-api",
+        "prisma-driver-adapter-implementation",
+        "prisma-orm-setup"
+      ],
+      "topics": {
+        "prisma-client-api": "databases",
+        "prisma-orm-setup": "databases",
+        "prisma-driver-adapter-implementation": "databases"
+      }
+    },
+    {
+      "id": "sanity-skills",
+      "repo": "sanity-io/agent-toolkit",
+      "path": ".",
+      "author": "Sanity",
+      "authorUrl": "https://github.com/sanity-io",
+      "revision": "1d9223c08237739ac862e6ec1c86540e58706222",
+      "skillPaths": [
+        "skills/content-experimentation-best-practices",
+        "skills/content-modeling-best-practices",
+        "skills/portable-text-conversion",
+        "skills/portable-text-serialization",
+        "skills/sanity-form-component-suspense",
+        "skills/sanity-singletons",
+        "skills/seo-aeo-best-practices"
+      ],
+      "topics": {
+        "skills/content-modeling-best-practices": "writing-documents",
+        "skills/portable-text-conversion": "writing-documents",
+        "skills/portable-text-serialization": "writing-documents",
+        "skills/content-experimentation-best-practices": "conversion-retention",
+        "skills/seo-aeo-best-practices": "search-discovery",
+        "skills/sanity-form-component-suspense": "software-development",
+        "skills/sanity-singletons": "software-development"
+      },
+      "platforms": [
+        "claude",
+        "codex",
+        "cursor"
+      ]
+    },
+    {
+      "id": "elastic-skills",
+      "repo": "elastic/agent-skills",
+      "path": ".",
+      "author": "Elastic",
+      "authorUrl": "https://github.com/elastic",
+      "revision": "09d879dfe23436684e11391a5e5a74a2aedd6b04",
+      "skillPaths": [
+        "plugins/elasticsearch/skills/elasticsearch-anomaly-detection-explainer",
+        "plugins/elasticsearch/skills/elasticsearch-esql",
+        "plugins/elasticsearch/skills/elasticsearch-index-design",
+        "plugins/elasticsearch/skills/elasticsearch-query-optimization",
+        "plugins/elasticsearch/skills/elasticsearch-search-relevance"
+      ],
+      "topics": {
+        "plugins/elasticsearch/skills/elasticsearch-index-design": "databases",
+        "plugins/elasticsearch/skills/elasticsearch-query-optimization": "databases",
+        "plugins/elasticsearch/skills/elasticsearch-search-relevance": "databases",
+        "plugins/elasticsearch/skills/elasticsearch-esql": "data-analytics",
+        "plugins/elasticsearch/skills/elasticsearch-anomaly-detection-explainer": "data-analytics"
+      },
+      "platforms": [
+        "claude"
+      ]
+    },
+    {
+      "id": "flutter-skills",
+      "repo": "flutter/agent-plugins",
+      "path": ".",
+      "author": "Flutter",
+      "authorUrl": "https://github.com/flutter",
+      "revision": "ff6d472ee66dbed566c4500edee460c94fde0a02",
+      "skillPaths": [
+        "skills/dart-add-unit-test",
+        "skills/dart-collect-coverage",
+        "skills/dart-generate-test-mocks",
+        "skills/dart-run-static-analysis",
+        "skills/dart-use-doc-examples",
+        "skills/dart-write-documentation",
+        "skills/flutter-add-integration-test",
+        "skills/flutter-add-widget-preview",
+        "skills/flutter-add-widget-test",
+        "skills/flutter-build-responsive-layout",
+        "skills/flutter-fix-layout-issues",
+        "skills/flutter-implement-json-serialization",
+        "skills/flutter-setup-declarative-routing",
+        "skills/flutter-setup-localization"
+      ],
+      "topics": {
+        "skills/dart-add-unit-test": "testing-review",
+        "skills/dart-collect-coverage": "testing-review",
+        "skills/dart-generate-test-mocks": "testing-review",
+        "skills/dart-run-static-analysis": "testing-review",
+        "skills/flutter-add-integration-test": "testing-review",
+        "skills/flutter-add-widget-test": "testing-review",
+        "skills/dart-write-documentation": "writing-documents",
+        "skills/dart-use-doc-examples": "writing-documents",
+        "skills/flutter-add-widget-preview": "mobile-development",
+        "skills/flutter-build-responsive-layout": "mobile-development",
+        "skills/flutter-fix-layout-issues": "mobile-development",
+        "skills/flutter-setup-localization": "mobile-development",
+        "skills/flutter-setup-declarative-routing": "mobile-development",
+        "skills/flutter-implement-json-serialization": "mobile-development"
+      },
+      "platforms": [
+        "claude",
+        "codex",
+        "cursor"
+      ]
+    },
+    {
+      "id": "pocock-skills",
+      "repo": "mattpocock/skills",
+      "path": ".",
+      "author": "Matt Pocock",
+      "authorUrl": "https://github.com/mattpocock",
+      "revision": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
+      "skillPaths": [
+        "skills/engineering/codebase-design",
+        "skills/engineering/domain-modeling",
+        "skills/engineering/improve-codebase-architecture",
+        "skills/engineering/prototype",
+        "skills/engineering/tdd",
+        "skills/engineering/to-spec",
+        "skills/productivity/handoff",
+        "skills/productivity/teach",
+        "skills/productivity/to-questionnaire",
+        "skills/productivity/writing-for-agents"
+      ],
+      "topics": {
+        "skills/engineering/domain-modeling": "research-planning",
+        "skills/engineering/to-spec": "research-planning",
+        "skills/engineering/prototype": "research-planning",
+        "skills/engineering/codebase-design": "software-development",
+        "skills/engineering/improve-codebase-architecture": "software-development",
+        "skills/engineering/tdd": "testing-review",
+        "skills/productivity/writing-for-agents": "writing-documents",
+        "skills/productivity/to-questionnaire": "writing-documents",
+        "skills/productivity/teach": "team-communication",
+        "skills/productivity/handoff": "team-communication"
+      },
+      "reviewedAssets": {
+        "skills/engineering/domain-modeling/agents/openai.yaml": "7f1522d2f11506ee205275ab7c282aa52366ecf6",
+        "skills/engineering/to-spec/agents/openai.yaml": "549e6f76f020a1b9ba65f52ccda336566ee6222a",
+        "skills/engineering/prototype/agents/openai.yaml": "1618b147965bc729b7bf3e8da5f130132067aadc",
+        "skills/engineering/codebase-design/agents/openai.yaml": "3180715edb37f6e96bec42f92f00169faa8886ef",
+        "skills/engineering/improve-codebase-architecture/agents/openai.yaml": "706fdca096da5937fe57875a9154017d50668c42",
+        "skills/engineering/tdd/agents/openai.yaml": "651b838a7663e027b1b8884491e867f26bb9a021",
+        "skills/productivity/writing-for-agents/agents/openai.yaml": "079c933b75743dec18b5d0c01006def20b6aad26",
+        "skills/productivity/to-questionnaire/agents/openai.yaml": "a58d14765beb4acb4c9708b516310558e1308a22",
+        "skills/productivity/teach/agents/openai.yaml": "3452a850e3b0c1f0a3d41b2bfd45164d2d38d7f6",
+        "skills/productivity/handoff/agents/openai.yaml": "6e1d8da121beceddc2f9ec7fa8714c1d914dd11a"
+      },
+      "platforms": [
+        "claude",
+        "codex",
+        "cursor",
+        "gemini",
+        "copilot"
+      ]
+    },
+    {
+      "id": "langchain-skills",
+      "repo": "langchain-ai/langchain-skills",
+      "path": ".",
+      "author": "LangChain",
+      "authorUrl": "https://github.com/langchain-ai",
+      "revision": "0d4bed5b80fcdc658a6297cbc1093aaf49c06e39",
+      "skillPaths": [
+        "skills/langchain-agent-monitoring",
+        "skills/langchain-agent-tracing",
+        "skills/langchain-build-agent"
+      ],
+      "topics": {
+        "skills/langchain-agent-monitoring": "ai-automation",
+        "skills/langchain-agent-tracing": "ai-automation",
+        "skills/langchain-build-agent": "ai-automation"
+      },
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex",
+        "copilot",
+        "chatgpt"
+      ]
+    },
+    {
+      "id": "anthropic-finance",
+      "repo": "anthropics/financial-services",
+      "path": ".",
+      "author": "Anthropic",
+      "authorUrl": "https://github.com/anthropics",
+      "revision": "3e32c2287dcb637c184c01cc0ad82d6af7e9bb0f",
+      "skillPaths": [
+        "plugins/agent-plugins/earnings-reviewer/skills/audit-xls",
+        "plugins/agent-plugins/earnings-reviewer/skills/earnings-analysis",
+        "plugins/agent-plugins/earnings-reviewer/skills/xlsx-author",
+        "plugins/agent-plugins/month-end-closer/skills/variance-commentary"
+      ],
+      "topics": {
+        "plugins/agent-plugins/earnings-reviewer/skills/audit-xls": "data-analytics",
+        "plugins/agent-plugins/earnings-reviewer/skills/earnings-analysis": "data-analytics",
+        "plugins/agent-plugins/earnings-reviewer/skills/xlsx-author": "office-productivity",
+        "plugins/agent-plugins/month-end-closer/skills/variance-commentary": "data-analytics"
+      },
+      "platforms": [
+        "claude"
+      ]
+    },
+    {
+      "id": "mongodb-skills",
+      "repo": "mongodb/agent-skills",
+      "path": ".",
+      "author": "MongoDB",
+      "authorUrl": "https://github.com/mongodb",
+      "revision": "ff9a88211c5a9fa74012bfa8b797132d510f9b44",
+      "skillPaths": [
+        "skills/mongodb-atlas-stream-processing",
+        "skills/mongodb-natural-language-querying",
+        "skills/mongodb-query-optimizer",
+        "skills/mongodb-schema-design"
+      ],
+      "topics": {
+        "skills/mongodb-schema-design": "databases",
+        "skills/mongodb-query-optimizer": "databases",
+        "skills/mongodb-natural-language-querying": "databases",
+        "skills/mongodb-atlas-stream-processing": "data-analytics"
+      },
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex",
+        "copilot",
+        "grok"
       ]
     }
   ]

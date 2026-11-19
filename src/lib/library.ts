@@ -13,7 +13,7 @@ interface Catalog {
   sources: Source[];
   ranking: Library["ranking"];
   allDownload: Library["allDownload"];
-  books: (Pick<Book, "id" | "slug" | "rank" | "installs" | "license" | "plugin" | "download"> & { source: string; sourcePath?: string })[];
+  books: (Pick<Book, "id" | "slug" | "rank" | "installs" | "license" | "plugin" | "download"> & { source: string; sourcePath?: string; topic?: Book["category"]; platforms?: Book["platforms"]; covers?: Book["covers"] })[];
 }
 
 function slugify(text: string) {
@@ -133,7 +133,7 @@ export function loadLibrary(): Library {
     const { data, content, originalTitle, headings } = parseEdition(entry, source);
     const words = content.split(/\s+/).filter(Boolean).length;
     const description = String(data.description ?? "").trim();
-    const category = categoryFor(source.repo, entry.slug, description);
+    const category = entry.topic ?? categoryFor(source.repo, entry.slug, description);
 
     return {
       id: entry.id,
@@ -144,6 +144,8 @@ export function loadLibrary(): Library {
       installs: entry.installs,
       license: entry.license,
       category,
+      platforms: [...new Set([...(source.platforms ?? []), ...(entry.platforms ?? [])])],
+      covers: entry.covers ?? [],
       plugin: entry.plugin,
       download: entry.download,
       skillName: String(data.name ?? entry.slug),

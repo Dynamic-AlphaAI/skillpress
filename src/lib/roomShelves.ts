@@ -1,5 +1,5 @@
-import { groundRows, stackShelves } from "./roomLadder";
-import { categories } from "./categories";
+import { groundRows, stackShelves } from "./roomLadder.ts";
+import { categories } from "./categories.ts";
 import type { Book } from "./types";
 
 export interface RoomShelf {
@@ -12,9 +12,14 @@ export interface RoomShelf {
 const sections = [
   { id: "studio", label: "Arts & Letters", paint: "#566449", runner: "#e3d8be" },
   { id: "workshop", label: "Engineering Workshop", paint: "#455e69", runner: "#9ec4d6" },
-  { id: "research", label: "Research & Data", paint: "#705552", runner: "#dfa5a0" },
+  { id: "research", label: "Research & Planning", paint: "#705552", runner: "#dfa5a0" },
   { id: "operations", label: "Operations Room", paint: "#4d6760", runner: "#9ecdbb" },
   { id: "commerce", label: "Business & Commerce", paint: "#806443", runner: "#f0bf86" },
+  { id: "gallery", label: "Design Gallery", paint: "#774f63", runner: "#e0afc1" },
+  { id: "models", label: "AI & Model Lab", paint: "#3d6267", runner: "#91cbc4" },
+  { id: "archive", label: "Data Archive", paint: "#605674", runner: "#b8a7d4" },
+  { id: "mobile", label: "Mobile Studio", paint: "#6d5b42", runner: "#e5cc92" },
+  { id: "infrastructure", label: "Infrastructure Room", paint: "#44526d", runner: "#a5b9d9" },
 ] as const satisfies readonly { id: (typeof categories)[number]["room"]; label: string; paint: string; runner: string }[];
 
 export interface LibraryRoom {

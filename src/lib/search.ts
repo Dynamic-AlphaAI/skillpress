@@ -1,4 +1,5 @@
 import MiniSearch, { type Options } from "minisearch";
+import { platformLabel } from "./platforms";
 import { categoryById } from "./categories";
 import type { Book } from "./types";
 
@@ -21,7 +22,7 @@ export function createIndex(books: Book[], readText?: (id: string) => string) {
   index.addAll(books.map((book) => ({
     id: book.id,
     title: book.design.title,
-    names: [book.skillName, book.slug, book.originalTitle].join(" "),
+    names: [...book.platforms.map(platformLabel), ...book.covers.map(platformLabel), book.skillName, book.slug, book.originalTitle].join(" "),
     topic: categoryById(book.category)?.label ?? "",
     publisher: [book.source.author, book.source.repo, book.source.series].join(" "),
     description: [book.design.subtitle, book.description].join(" "),
@@ -34,9 +35,10 @@ export function createIndex(books: Book[], readText?: (id: string) => string) {
 export function findBooks(index: MiniSearch, byId: Map<string, Book>, query: string) {
   const terms = words(query).join(" ");
   if (!terms) return query.trim() ? [] : [...byId.values()].sort((a, b) => a.rank - b.rank);
-  let hits = index.search(terms);
+  const filter = (hit: { id: string }) => byId.has(hit.id);
+  let hits = index.search(terms, { filter });
   if (!hits.length) {
-    hits = index.search(terms, { fuzzy: (term) => term.length >= 5 ? 1 : false });
+    hits = index.search(terms, { filter, fuzzy: (term) => term.length >= 5 ? 1 : false });
   }
   const matches = hits.flatMap(({ id, score }) => {
     const book = byId.get(id);
