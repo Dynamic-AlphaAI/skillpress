@@ -176,10 +176,16 @@ export function Press({ library }: { library: Library }) {
     <div className={`${s.page} ${view === "library" || view === "search" ? s.libraryPage : ""}`}>
       <div className={s.surface} inert={!!(reading || details)} onFocusCapture={(e) => { lastControl.current = e.target; }}>
       <header className={s.masthead}>
-        <Link className={s.brand} href="/" onClick={(e) => {
-          e.preventDefault();
-          update({ view: "library", walking: false, category: "all", author: "all", book: null, reading: false, details: false, page: undefined });
-        }}><LibraryIcon name="books" size={29} /> Skill Press</Link>
+        <div className={s.imprint}>
+          <span className={s.skillCount} title="Total skills in the library">
+            <strong>{books.length.toLocaleString("en-US")}</strong>{" "}
+            {books.length === 1 ? "skill" : "skills"}
+          </span>
+          <Link className={s.brand} href="/" onClick={(e) => {
+            e.preventDefault();
+            update({ view: "library", walking: false, category: "all", author: "all", book: null, reading: false, details: false, page: undefined });
+          }}><LibraryIcon name="books" size={29} /> Skill Press</Link>
+        </div>
         <nav className={s.viewNav} aria-label="Browse views">
           {(["library", "catalogue", "featured", "search"] as const).map((mode) =>
             <button key={mode} aria-current={view === mode ? "page" : undefined}
