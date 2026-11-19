@@ -51,9 +51,10 @@ export function roomAt(floors: RoomFloor[], x: number, z: number) {
 }
 
 /** A camera-radius inset keeps the reader clear of the walls, shelves and window table. */
-export function canWalk(floors: RoomFloor[], x: number, z: number) {
+export function canWalk(floors: RoomFloor[], x: number, z: number, obstacle?: Rectangle) {
   const hall = floors[0];
   if (!hall) return false;
+  if (obstacle && x > obstacle.minX && x < obstacle.maxX && z > obstacle.minZ && z < obstacle.maxZ) return false;
   if (Math.abs(x) <= hallHalfWidth - 0.96 && z >= hall.minZ + 0.52 && z <= hall.maxZ - 0.52) {
     if (z < hall.minZ + 1.68 && Math.abs(x) < 1.55) return false;
     return !hall.bays.some((bay, i) => i < 2 && Math.abs(x - bay.x) < 2.18 && z > bay.z - 0.33 && z < bay.z + 0.88);
@@ -68,10 +69,10 @@ export function canWalk(floors: RoomFloor[], x: number, z: number) {
 }
 
 /** Small independent axis steps slide along walls and cannot jump across a door jamb. */
-export function walk(floors: RoomFloor[], position: { x: number; z: number }, dx: number, dz: number) {
+export function walk(floors: RoomFloor[], position: { x: number; z: number }, dx: number, dz: number, obstacle?: Rectangle) {
   const steps = Math.max(1, Math.ceil(Math.hypot(dx, dz) / 0.14));
   for (let i = 0; i < steps; i++) {
-    if (dx && canWalk(floors, position.x + dx / steps, position.z)) position.x += dx / steps;
-    if (dz && canWalk(floors, position.x, position.z + dz / steps)) position.z += dz / steps;
+    if (dx && canWalk(floors, position.x + dx / steps, position.z, obstacle)) position.x += dx / steps;
+    if (dz && canWalk(floors, position.x, position.z + dz / steps, obstacle)) position.z += dz / steps;
   }
 }

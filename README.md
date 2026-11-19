@@ -73,6 +73,8 @@ Choose **Search** in the header to look up skills by keyword, title, publisher, 
 
 Enter the Main Reading Hall to browse a selection from every matching topic. Signed doorways on the left and right open into Arts & Letters, Engineering Workshop, Research & Data, Operations Room, and Business & Commerce. Drag to look, scroll to walk, or step sideways with A/D and the on-screen arrows. Each matching edition has one physical place. The room, shelf, and volume pickers also work by keyboard and without WebGL. Small filtered collections fit entirely in the hall.
 
+Select the hall’s rolling ladder or press **E** to get on. Scroll or use **W/S** to climb, use **A/D** to roll along the bookcase, and select a book to read. Press **E** or choose **Step off ladder** to return to the floor. Choosing an **Upper shelf** in the shelf picker takes you straight to that row.
+
 The sound control in the masthead and reader remembers your preference on this device. In a book’s details, drag the cover or press **Turn book** to inspect its boards, spine, and printed back.
 
 **Shelf and Featured controls**

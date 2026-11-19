@@ -4,8 +4,16 @@ import type { LibraryRoom } from "@/lib/roomShelves";
 import { canWalk, doorHalfWidth, hallHalfWidth, layOutFloor, roomAt, walk, type Position } from "@/lib/roomFloor";
 import type { Book } from "@/lib/types";
 import { playSound } from "./sound";
+import { eyeHeight, hallHeight, ladderFor, ladderSlope, railLimit, rowAtRise, rowEyeHeight, shelfSpacing } from "@/lib/roomLadder";
+import { buildLadder } from "./libraryLadder";
 
-type SceneEvents = { enterRoom: (index: number) => void; open: (id: string) => void; hover: (title: string) => void; lost: () => void };
+type SceneEvents = {
+  ladder: (shelf: number | null) => void;
+  enterRoom: (index: number) => void;
+  open: (id: string) => void;
+  hover: (title: string) => void;
+  lost: () => void;
+};
 type Flight = { from: T.Vector3; to: T.Vector3; yaw: number; turn: number; pitch: number; targetPitch: number; elapsed: number };
 
 function paintTexture(w: number, h: number, paint: (ctx: CanvasRenderingContext2D) => void) {
@@ -142,14 +150,14 @@ export function createRoom(
   scene.fog = new T.FogExp2("#a48d70", 0.026);
   const camera = new T.PerspectiveCamera(61, 1, 0.055, 65);
   camera.rotation.order = "YXZ";
-  const floors = layOutFloor(rooms.map((room) => room.cases));
+  const floors = layOutFloor(rooms.map((room) => room.stacks.length));
   const hall = floors[0];
   const front = hall.maxZ;
   const rear = hall.minZ;
   let currentRoom = 0;
   const bays = rooms.flatMap((room, roomIndex) => floors[roomIndex].bays.map((position, i) => ({
     ...position, roomIndex,
-    stack: room.shelves.slice(Math.floor(i * room.shelves.length / room.cases), Math.floor((i + 1) * room.shelves.length / room.cases)),
+    stack: room.stacks[i],
   })));
   const entry = new T.Vector3(hall.entry.x, 1.63, hall.entry.z);
   camera.position.copy(entry);
@@ -172,12 +180,12 @@ export function createRoom(
     to: entry,
     yaw: -0.045,
     turn: 0.045,
-    pitch: -0.03,
-    targetPitch: -0.03,
+    pitch: 0.08,
+    targetPitch: 0.08,
     elapsed: 0,
   };
   let yaw = 0;
-  let pitch = -0.03;
+  let pitch = 0.08;
   const keys = new Set<string>();
   const register = <M extends T.Material>(material: M) => {
     materials.add(material);
@@ -310,6 +318,8 @@ export function createRoom(
     hallWall(side, cursor, front);
   }
   for (const z of [rear, front]) block(0, 2.05, z, hallHalfWidth * 2, 4.1, 0.2, hallPaint);
+  const clerestory = register(new T.MeshBasicMaterial({ color: "#ead6ac" }));
+  const upperWall = hallHeight - 4.1;
   const lamps: { x: number; z: number; drop: number }[] = [];
   rooms.forEach((room, i) => {
     const r = floors[i];
@@ -319,7 +329,7 @@ export function createRoom(
     floor.repeat.set(width / 3, depth / 3);
     textures.add(floor);
     block(x, -0.09, z, width, 0.16, depth, surface("#ecd0a6", floor));
-    block(x, r.side ? 4.15 : 5.15, z, width, 0.15, depth, plaster);
+    block(x, r.side ? 4.15 : hallHeight + 0.05, z, width, 0.15, depth, plaster);
     const rug = rugTexture.clone();
     rug.repeat.y = (r.side ? width + hallHalfWidth : depth) / 1.83;
     textures.add(rug);
@@ -328,23 +338,33 @@ export function createRoom(
       block(x, 0.009, z, 2.45, 0.018, depth - 0.32, runner);
       for (const side of [-1, 1]) {
         const sideX = side * hallHalfWidth;
-        block(sideX, 4.58, z, 0.18, 1.02, depth, hallPaint);
+        block(sideX, 4.1 + upperWall / 2, z, 0.18, upperWall, depth, hallPaint);
         block(sideX, 4.1, z, 0.42, 0.15, depth, walnut);
         for (let panelZ = front - 1.05; panelZ > rear + 0.88; panelZ -= 2.15) {
-          block(sideX, 4.55, panelZ, 0.23, 0.67, 1.84, dark);
-          block(sideX, 4.55, panelZ, 0.26, 0.54, 1.71, plaster);
+          block(sideX, 5.0, panelZ, 0.24, 1.45, 1.82, walnut);
+          block(sideX, 5.0, panelZ, 0.27, 1.29, 1.64, panel);
+          block(sideX, 6.94, panelZ, 0.25, 1.83, 1.78, dark);
+          block(sideX, 6.94, panelZ, 0.28, 1.66, 1.61, clerestory);
+          block(sideX, 6.94, panelZ, 0.30, 1.66, 0.045, walnut);
+          block(sideX, 7.31, panelZ, 0.30, 0.047, 1.61, walnut);
         }
       }
       for (const wallZ of [rear, front]) {
-        block(0, 4.58, wallZ, width, 1.02, 0.2, hallPaint);
+        block(0, 4.1 + upperWall / 2, wallZ, width, upperWall, 0.2, hallPaint);
+        for (const offset of [-4.5, -2.25, 0, 2.25, 4.5]) {
+          block(offset, 6.8, wallZ, 1.89, 2.06, 0.24, walnut);
+          block(offset, 6.8, wallZ, 1.7, 1.87, 0.28, clerestory);
+          block(offset, 6.8, wallZ, 0.05, 1.87, 0.30, walnut);
+          block(offset, 7.12, wallZ, 1.7, 0.05, 0.30, walnut);
+        }
         block(0, 4.1, wallZ, width, 0.15, 0.42, walnut);
       }
       sign(room.label, [], 0, 4.57, rear + 0.13, 0, 3.55, 0.52);
       for (let beamZ = front - 1.45; beamZ > rear; beamZ -= 4.3) {
-        block(0, 4.97, beamZ, width, 0.21, 0.19, dark);
-        lamps.push({ x: 0, z: beamZ, drop: 1 });
+        block(0, hallHeight - 0.18, beamZ, width, 0.21, 0.19, dark);
+        lamps.push({ x: 0, z: beamZ, drop: hallHeight - 4.15 });
       }
-      for (const beamX of [-4.7, -2.2, 2.2, 4.7]) block(beamX, 5.03, z, 0.12, 0.12, depth, panel);
+      for (const beamX of [-4.7, -2.2, 2.2, 4.7]) block(beamX, hallHeight - 0.12, z, 0.12, 0.12, depth, panel);
       return;
     }
     const edge = r.side * hallHalfWidth;
@@ -376,7 +396,7 @@ export function createRoom(
     const signX = r.side * 2.06;
     const title = r.side < 0 ? "←  " + room.label : room.label + "  →";
     block(signX, 3.49, z, 2.76, 0.43, 0.07, dark);
-    for (const offset of [-1.02, 1.02]) block(signX + offset, 4.39, z, 0.02, 1.4, 0.02, brass);
+    for (const offset of [-1.02, 1.02]) block(signX + offset, (3.7 + hallHeight) / 2, z, 0.02, hallHeight - 3.7, 0.02, brass);
     sign(title, [], signX, 3.49, z + 0.044, 0, 2.71, 0.39);
     sign(r.side < 0 ? room.label + "  →" : "←  " + room.label, [], signX, 3.49, z - 0.044, Math.PI, 2.71, 0.39);
     for (let distance = 2.2; distance < width; distance += 3.95) {
@@ -452,6 +472,21 @@ export function createRoom(
   block(0.48, 0.86, rear + 0.9, 0.29, 0.055, 0.18, brass);
   block(0.48, 1.07, rear + 0.9, 0.035, 0.42, 0.035, brass);
   block(0.48, 1.27, rear + 0.9, 0.46, 0.12, 0.2, green);
+  const tower = bays[0];
+  const rows = tower.stack.length;
+  const ladder = ladderFor(rows);
+  const rig = ladder && buildLadder(ladder.top, ladder.foot, walnut, brass, unit, geometries);
+  let slide = railLimit;
+  let rise = 0;
+  let mounted = false;
+  let descending = false;
+  let lastRow = -1;
+  if (rig && ladder) {
+    rig.carriage.position.set(tower.x + slide, 0, tower.z);
+    scene.add(rig.carriage);
+    block(tower.x, ladder.top - 0.16, tower.z + 0.68, 3.66, 0.065, 0.065, brass);
+    for (const x of [-1.65, 0, 1.65]) block(tower.x + x, ladder.top - 0.16, tower.z + 0.39, 0.08, 0.10, 0.56, walnut);
+  }
   const pickable: T.Mesh[] = [];
   const shelfPositions: (Position & { height: number })[][] = rooms.map(() => []);
   const paper = surface("#e4d6b8");
@@ -462,7 +497,7 @@ export function createRoom(
     const timber = (x: number, y: number, distance: number, w: number, h: number, d: number, m: T.Material) =>
       block(x, y, distance, w, h, d, m, base);
     const bottom = stack.length === 1 ? 1.14 : 0.61;
-    const step = 0.76;
+    const step = shelfSpacing;
     const top = bottom + stack.length * step;
     timber(0, top / 2, 0.07, 3.69, top, 0.18, dark);
     for (const x of [-1.78, 1.78]) {
@@ -477,6 +512,7 @@ export function createRoom(
     timber(0, top, 0.31, 3.8, 0.12, 0.54, panel);
     stack.forEach((shelf, row) => {
       const deck = bottom + step * row;
+      const shelfIndex = shelfPositions[roomIndex].length;
       shelfPositions[roomIndex].push({ x, z, yaw: angle, height: deck + 0.35 });
       timber(0, deck, 0.29, 3.68, 0.095, 0.48, walnut);
       timber(0, deck - 0.004, 0.54, 1.43, 0.104, 0.035, brass);
@@ -541,6 +577,8 @@ export function createRoom(
         hitBox.applyMatrix4(base);
         hitBox.updateMatrixWorld();
         hitBox.userData.book = book;
+        hitBox.userData.room = roomIndex;
+        if (shelf.upper) hitBox.userData.upper = shelfIndex;
         pickable.push(hitBox);
       });
     });
@@ -563,11 +601,75 @@ export function createRoom(
     null;
   let walked = 0;
   let scrollRemaining = 0; // Metres of wheel travel waiting to be drawn.
+  function ladderObstacle() {
+    if (!ladder) return;
+    const x = tower.x + slide;
+    return { minX: x - 0.53, maxX: x + 0.53, minZ: tower.z + 0.55, maxZ: tower.z + ladder.foot + 0.28 };
+  }
+  function placeClimber() {
+    if (!rig || !ladder) return;
+    rig.carriage.position.x = tower.x + slide;
+    // Lean beside the stile so the rungs stay in view without covering the book titles.
+    camera.position.set(rig.carriage.position.x - 0.50, eyeHeight + rise, tower.z + ladder.foot + 0.56 - rise * ladderSlope);
+    const row = rowAtRise(rise, rows);
+    if (row !== lastRow) {
+      lastRow = row;
+      events.ladder(row);
+    }
+  }
+  function mountLadder(height = 0) {
+    if (paused || currentRoom !== 0 || !ladder) return;
+    stop();
+    flight = null;
+    mounted = true;
+    descending = false;
+    rise = T.MathUtils.clamp(height, 0, ladder.maxRise);
+    if (height) slide = 0.50;
+    yaw = height ? 0 : 0.25;
+    pitch = height ? 0 : 0.19;
+    placeClimber();
+    events.hover("");
+    playSound("step");
+    redraw();
+  }
+  function stepOff() {
+    if (!mounted || !ladder) return;
+    mounted = descending = false;
+    rise = 0;
+    lastRow = -1;
+    camera.position.set(tower.x + slide, eyeHeight, tower.z + ladder.foot + 0.65);
+    pitch = 0;
+    stop();
+    events.hover("");
+    events.ladder(null);
+  }
+  function toggleLadder() {
+    if (paused || !ladder || currentRoom !== 0) return;
+    if (!mounted) {
+      mountLadder();
+      return;
+    }
+    stop();
+    if (reduce.matches || rise === 0) stepOff();
+    else descending = true;
+    redraw();
+  }
   function hit(e: PointerEvent) {
     const r = canvas.getBoundingClientRect();
     pointer.set(((e.clientX - r.left) / r.width) * 2 - 1, (-(e.clientY - r.top) / r.height) * 2 + 1);
     ray.setFromCamera(pointer, camera);
-    return ray.intersectObjects(pickable, false)[0]?.object.userData.book as Book | undefined;
+    const book = ray.intersectObjects(pickable, false).find(({ object }) => object.userData.room === currentRoom);
+    if (rig && currentRoom === 0 && !mounted) {
+      const rung = ray.intersectObject(rig.hit, false)[0];
+      if (rung && (!book || rung.distance < book.distance)) return { label: "Use ladder", activate: toggleLadder };
+    }
+    if (!book) return;
+    const volume = book.object.userData.book as Book;
+    const upper = book.object.userData.upper as number | undefined;
+    if (upper !== undefined && (!mounted || Math.abs(rowEyeHeight(upper) - camera.position.y) > 1)) {
+      return { label: `Climb to ${volume.design.title}`, activate: () => mountLadder(rowEyeHeight(upper) - eyeHeight) };
+    }
+    return { label: `${volume.design.title} · Open book`, activate: () => events.open(volume.id) };
   }
   function redraw() {
     if (!frame && !dead && !paused) {
@@ -579,6 +681,14 @@ export function createRoom(
     const f = Number(keys.has("w") || keys.has("arrowup")) - Number(keys.has("s") || keys.has("arrowdown"));
     const strafe = Number(keys.has("d")) - Number(keys.has("a"));
     yaw += (Number(keys.has("arrowleft")) - Number(keys.has("arrowright"))) * dt * 1.6;
+    if (mounted && ladder) {
+      const previousRise = rise;
+      rise = T.MathUtils.clamp(rise + f * dt * 1.65 + scrollStep, 0, ladder.maxRise);
+      slide = T.MathUtils.clamp(slide + strafe * dt * 1.4, -railLimit, railLimit);
+      placeClimber();
+      if (Math.floor(previousRise / 0.31) !== Math.floor(rise / 0.31)) playSound("step");
+      return;
+    }
     forward.set(-Math.sin(yaw), 0, -Math.cos(yaw));
     right.set(Math.cos(yaw), 0, -Math.sin(yaw));
     move
@@ -590,7 +700,7 @@ export function createRoom(
       .addScaledVector(forward, scrollStep);
     const prevX = camera.position.x,
       prevZ = camera.position.z;
-    walk(floors, camera.position, move.x, move.z);
+    walk(floors, camera.position, move.x, move.z, ladderObstacle());
     const nextRoom = roomAt(floors, camera.position.x, camera.position.z);
     if (nextRoom !== currentRoom) {
       currentRoom = nextRoom;
@@ -608,7 +718,11 @@ export function createRoom(
     if (dead || paused) return;
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
-    if (flight) {
+    if (descending) {
+      rise = Math.max(0, rise - dt * 3.3);
+      if (rise === 0) stepOff();
+      else placeClimber();
+    } else if (flight) {
       flight.elapsed += dt;
       const t = reduce.matches ? 1 : Math.min(flight.elapsed / 1.05, 1);
       const ease = t * t * (3 - 2 * t);
@@ -623,7 +737,7 @@ export function createRoom(
     }
     camera.rotation.set(pitch, yaw, 0, "YXZ");
     renderer.render(scene, camera);
-    if (flight || keys.size || scrollRemaining) frame = requestAnimationFrame(render);
+    if (flight || descending || keys.size || scrollRemaining) frame = requestAnimationFrame(render);
   }
   function stop() {
     keys.clear();
@@ -634,15 +748,22 @@ export function createRoom(
     if (paused || !rooms[index]) return;
     stop();
     flight = null;
+    stepOff();
     currentRoom = index;
     const entrance = floors[index].entry;
     camera.position.set(entrance.x, 1.63, entrance.z);
     yaw = entrance.yaw;
-    pitch = -0.03;
+    pitch = index === 0 ? 0.08 : -0.03;
     events.enterRoom(index);
     redraw();
   }
   function visit(index: number) {
+    if (paused) return;
+    if (rooms[currentRoom].shelves[index]?.upper) {
+      mountLadder(rowEyeHeight(index) - eyeHeight);
+      return;
+    }
+    stepOff();
     const bay = shelfPositions[currentRoom][index];
     const entrance = floors[currentRoom].entry;
     const to = bay
@@ -652,10 +773,11 @@ export function createRoom(
     // A shelf shortcut can start on the opposite side of a freestanding bookcase.
     // Cut directly to the shelf when a camera glide would pass through furniture.
     const steps = Math.ceil(camera.position.distanceTo(to) / 0.14);
+    const obstacle = ladderObstacle();
     for (let i = 1; i <= steps; i++) {
       const x = T.MathUtils.lerp(camera.position.x, to.x, i / steps);
       const z = T.MathUtils.lerp(camera.position.z, to.z, i / steps);
-      if (!canWalk(floors, x, z)) {
+      if (!canWalk(floors, x, z, obstacle)) {
         camera.position.copy(to);
         yaw = targetYaw;
         break;
@@ -693,6 +815,11 @@ export function createRoom(
   const controls = new Set(["w", "a", "s", "d", "arrowup", "arrowdown", "arrowleft", "arrowright"]);
   function keyDown(e: KeyboardEvent) {
     const k = e.key.toLowerCase();
+    if (k === "e" && !e.ctrlKey && !e.metaKey && !e.altKey && currentRoom === 0 && rig) {
+      e.preventDefault();
+      if (!e.repeat) toggleLadder();
+      return;
+    }
     if (!e.ctrlKey && !e.metaKey && controls.has(k)) {
       e.preventDefault();
       setKey(k, true);
@@ -726,9 +853,9 @@ export function createRoom(
   function point(e: PointerEvent) {
     if (paused) return;
     if (!pointerStart) {
-      const book = hit(e);
-      events.hover(book?.design.title ?? "");
-      canvas.style.cursor = book ? "pointer" : "grab";
+      const target = hit(e);
+      events.hover(target?.label ?? "");
+      canvas.style.cursor = target ? "pointer" : "grab";
       return;
     }
     if (e.pointerId !== pointerStart.id) return;
@@ -749,10 +876,7 @@ export function createRoom(
     const click = !pointerStart.drag;
     pointerStart = null;
     canvas.style.cursor = "grab";
-    if (click && !paused) {
-      const b = hit(e);
-      if (b) events.open(b.id);
-    }
+    if (click && !paused && !descending) hit(e)?.activate();
   }
   function leave() {
     events.hover("");
@@ -782,9 +906,10 @@ export function createRoom(
   return {
     visit,
     visitRoom,
+    toggleLadder,
     setKey,
     tap(key: string) {
-      if (paused) return;
+      if (paused || descending) return;
       keys.add(key);
       moveCamera(0.14);
       keys.delete(key);

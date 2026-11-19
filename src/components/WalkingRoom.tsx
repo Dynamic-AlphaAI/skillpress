@@ -27,6 +27,7 @@ export default function WalkingRoom({
   const [destination, setDestination] = useState(-1);
   const [selection, setSelection] = useState("");
   const [pointed, setPointed] = useState("");
+  const [onLadder, setOnLadder] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
   const rooms = useMemo(() => planRooms(books), [books]);
   const room = rooms[roomIndex] ?? rooms[0];
@@ -36,7 +37,7 @@ export default function WalkingRoom({
   const roomOptions = useMemo(() => rooms.map((section, i) => ({ value: String(i), label: section.label })), [rooms]);
   const shelfOptions = useMemo(() => [
     { value: "-1", label: "All shelves in this room" },
-    ...(room?.shelves.map((row, i) => ({ value: String(i), label: row.label })) ?? []),
+    ...(room?.shelves.map((row, i) => ({ value: String(i), label: row.upper ? `${row.label} · Upper shelf` : row.label })) ?? []),
   ], [room]);
   const enterRoom = useCallback((index: number) => {
     setRoomIndex(index);
@@ -58,9 +59,18 @@ export default function WalkingRoom({
     try {
       const world = createRoom(canvas.current, rooms, jackets.current!, {
         enterRoom,
+        ladder: (row) => {
+          setOnLadder(row !== null);
+          setDestination(row ?? -1);
+          setSelection("");
+          setPointed("");
+        },
         open: openBook,
         hover: setPointed,
-        lost: () => setUnavailable(true),
+        lost: () => {
+          setUnavailable(true);
+          setOnLadder(false);
+        },
       });
       scene.current = world;
       if (focusOnEntry.current) {
@@ -82,17 +92,23 @@ export default function WalkingRoom({
   }, [paused, rooms]);
   const go = useCallback((shelf: string) => {
     const value = Number(shelf);
+    scene.current?.visit(value);
     setDestination(value);
     setSelection("");
     setPointed("");
-    scene.current?.visit(value);
   }, []);
   return (
     <section
       className={s.room}
       aria-label="Walk the library"
       onKeyDown={(e) => {
-        if (e.key === "Escape" && !paused && !e.defaultPrevented && e.currentTarget.contains(e.target as Node)) onExit();
+        if (e.key === "Escape" && !paused && !e.defaultPrevented && e.currentTarget.contains(e.target as Node)) {
+          if (onLadder) {
+            e.preventDefault();
+            scene.current?.toggleLadder();
+            canvas.current?.focus({ preventScroll: true });
+          } else onExit();
+        }
       }}
     >
       <div hidden ref={jackets} aria-hidden="true">
@@ -109,7 +125,7 @@ export default function WalkingRoom({
         <canvas
           ref={canvas}
           tabIndex={0}
-          aria-label="Walkable library. Scroll up to walk forward or down to walk back. Use W A S D to move and left or right arrow to turn. Follow the signs on the left and right of the main reading hall to enter subject rooms, or choose a room, shelf and volume below."
+          aria-label="Walkable library. Scroll up to walk forward or down to walk back. Use W A S D to move and left or right arrow to turn. In the hall, use E or select the ladder to mount or step off. On the ladder, scroll or use W and S to climb, and A and D to roll along the shelves. Follow the signs on the left and right of the main reading hall to enter subject rooms, or choose a room, shelf and volume below."
         />
         <div className={s.top}>
           <button onClick={onExit} className={s.exit}>
@@ -119,6 +135,14 @@ export default function WalkingRoom({
             <LibraryIcon name="compass" size={16} /> {room?.label ?? "Library"}{shelf && ` · ${shelf.label}`}
           </span>
         </div>
+        {!unavailable && room?.id === "hall" && room.shelves.some((row) => row.upper) && (
+          <button type="button" className={s.ladderAction} onClick={() => {
+            scene.current?.toggleLadder();
+            canvas.current?.focus({ preventScroll: true });
+          }}>
+            <LibraryIcon name="ladder" size={16} /> {onLadder ? "Step off ladder" : "Use ladder"}
+          </button>
+        )}
         {unavailable ? (
           <div className={s.fallback}>
             <div>
@@ -130,7 +154,9 @@ export default function WalkingRoom({
           <>
             <div className={s.instructions}>
               {pointed ? (
-                <strong>{pointed} · Open book</strong>
+                <strong>{pointed}</strong>
+              ) : onLadder ? (
+                <><span>↑ ↓ to climb</span><span>A/D to roll the ladder</span><span>Select a book to read</span></>
               ) : (
                 <>
                   <span>Drag to look around</span>
@@ -143,10 +169,10 @@ export default function WalkingRoom({
               {(
                 [
                   ["arrowleft", "↶", "Turn left"],
-                  ["a", "←", "Step left"],
-                  ["w", "↑", "Walk forward"],
-                  ["s", "↓", "Walk backward"],
-                  ["d", "→", "Step right"],
+                  ["a", "←", onLadder ? "Roll ladder left" : "Step left"],
+                  ["w", "↑", onLadder ? "Climb up" : "Walk forward"],
+                  ["s", "↓", onLadder ? "Climb down" : "Walk backward"],
+                  ["d", "→", onLadder ? "Roll ladder right" : "Step right"],
                   ["arrowright", "↷", "Turn right"],
                 ] as const
               ).map(([key, label, title]) => (

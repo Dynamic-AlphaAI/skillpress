@@ -65,6 +65,23 @@
   cursor: pointer;
   pointer-events: auto;
 }
+.ladderAction {
+  position: absolute;
+  top: 57px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 6px 11px;
+  border: 1px solid #ab9469;
+  border-radius: 3px;
+  background: #30352a;
+  color: #f6e7c8;
+  font: 11px var(--font-mono), monospace;
+  cursor: pointer;
+}
+.ladderAction:focus-visible { outline: 2px solid #f4e3b9; }
 .instructions {
   bottom: 15px;
   left: 16px;
@@ -252,6 +269,7 @@
   .trigger { font-size: 16px; }
   .read { align-self: end; }
   .choice { min-height: 44px; }
+  .ladderAction { left: 10px; min-height: 44px; }
   .instructions {
     bottom: 66px;
     left: 10px;

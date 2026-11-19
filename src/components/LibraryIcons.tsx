@@ -6,7 +6,7 @@ export function LibraryIcon({
   style,
 }: {
   name:
-    "books" | "enter" | "arrow" | "left" | "right" | "sound" | "mute" | "down" | "walk" | "close" | "compass" | "check" | "search";
+    "books" | "enter" | "arrow" | "left" | "right" | "sound" | "mute" | "down" | "walk" | "close" | "compass" | "ladder" | "check" | "search";
   size?: number;
   style?: CSSProperties;
 }) {
@@ -45,6 +45,7 @@ export function LibraryIcon({
       </>
     ),
     close: <path d="m5 5 14 14M19 5 5 19" />,
+    ladder: <path d="m4 21 5-18m5 18 5-18M8 7h10m-11.3 5h10m-11.4 5h10" />,
     compass: (
       <>
         <circle cx="12" cy="12" r="9" />
