@@ -10,6 +10,7 @@
     "import": "node scripts/import-skills.mjs"
   },
   "dependencies": {
+    "@radix-ui/react-select": "2.4.1",
     "gray-matter": "^4.0.3",
     "markdown-it": "^15.0.3",
     "next": "16.4.6",

@@ -89,48 +89,138 @@
   user-select: none;
 }
 .desk {
+  display: grid;
+  grid-template-columns: minmax(0, 19rem) minmax(0, 28rem) max-content;
+  justify-content: center;
+  align-items: end;
+  gap: clamp(10px, 1.5vw, 22px);
+  padding: 12px clamp(14px, 3vw, 42px) 14px;
+  border-top: 1px solid #977d51;
+  background: #252b22;
+  color: #faf2dc;
+}
+.field {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+.field label {
+  color: #d5c49f;
+  font: 500 10px/1.2 var(--font-mono), monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.trigger,
+.read {
+  appearance: none;
+  min-height: 44px;
+  border: 1px solid #7e795e;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.trigger {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 40px;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  background: #353c2f;
+  color: #fff6df;
+  text-align: start;
+  font: 17px/1.2 var(--font-book), Georgia, serif;
+}
+.value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-inline: 13px 7px;
+}
+.chevron {
+  display: grid;
+  place-items: center;
+  height: 20px;
+  border-inline-start: 1px solid #74785e;
+  color: #e2cc95;
+}
+.trigger[data-state="open"] {
+  background: #414735;
+  border-color: #d2b77f;
+}
+.trigger[data-state="open"] .chevron svg,
+.scrollUp svg {
+  transform: rotate(180deg);
+}
+.read {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  padding: 12px 16px;
-  background: #292d23;
-  color: #f8f2df;
+  gap: 16px;
+  padding-inline: 17px;
+  border-color: #e4cea0;
+  background: #ead9b4;
+  color: #272b21;
+  font: 500 12px/1.3 var(--font-mono), monospace;
 }
-.desk label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-  font:
-    10px var(--font-mono),
-    monospace;
+.trigger:focus-visible,
+.read:focus-visible {
+  outline: 2px solid #f6d694;
+  outline-offset: 3px;
 }
-.desk select {
-  max-width: 28vw;
-  padding: 7px 4px;
-  border: 1px solid #777968;
-  background: #31362a;
-  color: #faf3df;
-  border-radius: 2px;
-  font:
-    12px var(--font-mono),
-    monospace;
+.read:active {
+  background: #d8bf8d;
 }
-.desk button {
-  flex: none;
+.trigger:disabled,
+.read:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+@media (hover: hover) {
+  .trigger:hover { border-color: #c9b381; }
+  .read:hover { background: #f5e7ca; }
+}
+.menu {
+  z-index: 12;
+  width: max(var(--radix-select-trigger-width), 15rem);
+  max-width: var(--radix-select-content-available-width);
+  max-height: min(21rem, var(--radix-select-content-available-height));
+  overflow: hidden;
+  border: 1px solid #a28d65;
+  border-radius: 4px;
+  background: #f6f1e4;
+  color: #2e3328;
+  box-shadow: 0 8px 25px #15180e40;
+}
+.choices { padding: 4px; }
+.choice {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: #25291f;
-  background: #eee7d4;
-  border: 0;
+  min-height: 36px;
+  padding: 7px 35px 7px 12px;
   border-radius: 2px;
-  padding: 9px 13px;
-  font:
-    11px var(--font-mono),
-    monospace;
+  font: 16px/1.25 var(--font-book), Georgia, serif;
+  overflow-wrap: anywhere;
   cursor: pointer;
+  user-select: none;
+}
+.choice[data-state="checked"] { background: #e7dfca; }
+.choice[data-highlighted] {
+  outline: none;
+  background: #354031;
+  color: #fff6df;
+}
+.check {
+  position: absolute;
+  inset-inline-end: 11px;
+  display: flex;
+}
+.scrollUp,
+.scrollDown {
+  display: grid;
+  place-items: center;
+  height: 23px;
+  color: #686044;
+  background: #eee8d8;
 }
 .fallback {
   position: absolute;
@@ -155,21 +245,13 @@
 }
 @media (max-width: 680px) {
   .desk {
-    gap: 6px;
-    padding: 10px 8px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: 9px;
+    padding: 10px 12px 12px;
   }
-  .desk label {
-    display: grid;
-    gap: 3px;
-  }
-  .desk select {
-    font-size: 10px;
-    max-width: 30vw;
-  }
-  .desk button {
-    align-self: end;
-    padding: 9px 8px;
-  }
+  .trigger { font-size: 16px; }
+  .read { grid-column: 1 / -1; }
+  .choice { min-height: 44px; }
   .instructions {
     bottom: 58px;
     left: 10px;

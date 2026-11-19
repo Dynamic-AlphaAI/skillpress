@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import { planShelves } from "@/lib/roomShelves";
 import type { Book } from "@/lib/types";
 import { createRoom } from "./roomScene";
 import { CoverArt } from "./CoverArt";
+import { RoomPicker } from "./RoomPicker";
 import { LibraryIcon } from "./LibraryIcons";
 import s from "./WalkingRoom.module.css";
 
@@ -30,6 +31,13 @@ export default function WalkingRoom({
   const at = destination < shelves.length ? destination : -1;
   const volumes = shelves[at]?.books ?? books;
   const chosen = volumes.find((b) => b.id === selection) ?? volumes[0];
+  const shelfOptions = useMemo(() => [
+    { value: "-1", label: "Entrance hall" },
+    ...shelves.map((shelf, i) => ({ value: String(i), label: shelf.label })),
+  ], [shelves]);
+  const volumeOptions = useMemo(() => volumes.map((book) => ({
+    value: book.id, label: book.design.title,
+  })), [volumes]);
   const openBook = useEffectEvent((id: string) => {
     const index = books.findIndex((b) => b.id === id);
     if (index >= 0) onOpen(index);
@@ -62,19 +70,19 @@ export default function WalkingRoom({
   useEffect(() => {
     scene.current?.pause(paused);
   }, [paused, shelves]);
-  function go(value: number) {
+  const go = useCallback((shelf: string) => {
+    const value = Number(shelf);
     setDestination(value);
     setSelection("");
     setPointed("");
     scene.current?.visit(value);
-    canvas.current?.focus({ preventScroll: true });
-  }
+  }, []);
   return (
     <section
       className={s.room}
       aria-label="Walk the library"
       onKeyDown={(e) => {
-        if (e.key === "Escape" && !paused) onExit();
+        if (e.key === "Escape" && !paused && !e.defaultPrevented && e.currentTarget.contains(e.target as Node)) onExit();
       }}
     >
       <div hidden ref={jackets} aria-hidden="true">
@@ -161,32 +169,14 @@ export default function WalkingRoom({
         )}
       </div>
       <div className={s.desk}>
-        <label>
-          Shelf
-          <select aria-label="Visit a shelf" value={at} onChange={(e) => go(Number(e.target.value))}>
-            <option value={-1}>Entrance hall</option>
-            {shelves.map((b, i) => (
-              <option key={b.label} value={i}>
-                {b.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Volume
-          <select
-            aria-label="Choose a volume"
-            value={chosen?.id ?? ""}
-            onChange={(e) => setSelection(e.target.value)}
-          >
-            {volumes.map((b) => (
-              <option key={b.id} value={b.id}>
-                {b.design.title}
-              </option>
-            ))}
-          </select>
-        </label>
+        <RoomPicker label="Shelf" accessibleLabel="Visit a shelf" options={shelfOptions}
+          value={String(at)} onChange={go} walkCanvas={canvas} />
+        <RoomPicker label="Volume" accessibleLabel="Choose a volume" options={volumeOptions}
+          value={chosen?.id ?? ""} onChange={setSelection} />
         <button
+          type="button"
+          className={s.read}
+          disabled={!chosen}
           onClick={() => {
             if (chosen) onOpen(books.indexOf(chosen));
           }}
