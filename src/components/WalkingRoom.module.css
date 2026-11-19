@@ -90,7 +90,7 @@
 }
 .desk {
   display: grid;
-  grid-template-columns: minmax(0, 19rem) minmax(0, 28rem) max-content;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 18rem) minmax(0, 25rem) max-content;
   justify-content: center;
   align-items: end;
   gap: clamp(10px, 1.5vw, 22px);
@@ -250,7 +250,7 @@
     padding: 10px 12px 12px;
   }
   .trigger { font-size: 16px; }
-  .read { grid-column: 1 / -1; }
+  .read { align-self: end; }
   .choice { min-height: 44px; }
   .instructions {
     bottom: 58px;

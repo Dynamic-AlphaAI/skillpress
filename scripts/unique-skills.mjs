@@ -1,9 +1,8 @@
 import { createHash } from "node:crypto";
-import matter from "gray-matter";
+import { parseSkill } from "./parse-skill.mjs";
 
 export function skillIdentity(file, location) {
-  if (!/^---\r?\n/.test(file)) throw new Error(`Expected YAML frontmatter in ${location}`);
-  const { data, content } = matter(file);
+  const { data, content } = parseSkill(file, location);
   const instructions = content.trim().replace(/^# [^\n]*(?:\n|$)/, "").trim().replace(/\r\n/g, "\n").replace(/[^\S\n]+/g, " ");
   if (typeof data.name !== "string" || !/^[a-z0-9][a-z0-9:_-]*$/i.test(data.name) ||
       typeof data.description !== "string" || !data.description.trim() || !instructions) {

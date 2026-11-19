@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import matter from "gray-matter";
+import { parseSkill } from "../../scripts/parse-skill.mjs";
 import MarkdownIt, { type Token } from "markdown-it";
 import { categories } from "./categories";
 import { categoryFor } from "./classifyTopic";
@@ -73,7 +73,8 @@ function skillPath(entry: Catalog["books"][number], source: Source) {
 }
 
 export function readSkillFile(id: string) {
-  return matter(fs.readFileSync(path.join(CONTENT, "skills", id, "SKILL.md"), "utf8"));
+  if (!/^[a-z0-9][a-z0-9_-]*$/i.test(id)) throw new Error("Invalid skill id");
+  return parseSkill(fs.readFileSync(path.join(CONTENT, "skills", id, "SKILL.md"), "utf8"), id);
 }
 
 function parseEdition(entry: Catalog["books"][number], source: Source) {

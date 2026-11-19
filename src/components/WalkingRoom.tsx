@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
-import { planShelves } from "@/lib/roomShelves";
+import { planRooms } from "@/lib/roomShelves";
 import type { Book } from "@/lib/types";
 import { createRoom } from "./roomScene";
 import { CoverArt } from "./CoverArt";
@@ -23,18 +23,27 @@ export default function WalkingRoom({
   const canvas = useRef<HTMLCanvasElement>(null);
   const jackets = useRef<HTMLDivElement>(null);
   const scene = useRef<ReturnType<typeof createRoom> | null>(null);
+  const [roomIndex, setRoomIndex] = useState(0);
   const [destination, setDestination] = useState(-1);
   const [selection, setSelection] = useState("");
   const [pointed, setPointed] = useState("");
   const [unavailable, setUnavailable] = useState(false);
-  const shelves = useMemo(() => planShelves(books), [books]);
-  const at = destination < shelves.length ? destination : -1;
-  const volumes = shelves[at]?.books ?? books;
+  const rooms = useMemo(() => planRooms(books), [books]);
+  const room = rooms[roomIndex] ?? rooms[0];
+  const shelf = room?.shelves[destination];
+  const volumes = useMemo(() => shelf?.books ?? room?.shelves.flatMap((row) => row.books) ?? [], [shelf, room]);
   const chosen = volumes.find((b) => b.id === selection) ?? volumes[0];
+  const roomOptions = useMemo(() => rooms.map((section, i) => ({ value: String(i), label: section.label })), [rooms]);
   const shelfOptions = useMemo(() => [
-    { value: "-1", label: "Entrance hall" },
-    ...shelves.map((shelf, i) => ({ value: String(i), label: shelf.label })),
-  ], [shelves]);
+    { value: "-1", label: "All shelves in this room" },
+    ...(room?.shelves.map((row, i) => ({ value: String(i), label: row.label })) ?? []),
+  ], [room]);
+  const enterRoom = useCallback((index: number) => {
+    setRoomIndex(index);
+    setDestination(-1);
+    setSelection("");
+    setPointed("");
+  }, []);
   const volumeOptions = useMemo(() => volumes.map((book) => ({
     value: book.id, label: book.design.title,
   })), [volumes]);
@@ -45,9 +54,10 @@ export default function WalkingRoom({
   const holdStarted = useRef(0);
   const focusOnEntry = useRef(true);
   useEffect(() => {
-    if (!canvas.current) return;
+    if (!canvas.current || !rooms.length) return;
     try {
-      const world = createRoom(canvas.current, shelves, jackets.current!, {
+      const world = createRoom(canvas.current, rooms, jackets.current!, {
+        enterRoom,
         open: openBook,
         hover: setPointed,
         lost: () => setUnavailable(true),
@@ -66,10 +76,10 @@ export default function WalkingRoom({
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setUnavailable(true);
     }
-  }, [shelves]);
+  }, [rooms, enterRoom]);
   useEffect(() => {
     scene.current?.pause(paused);
-  }, [paused, shelves]);
+  }, [paused, rooms]);
   const go = useCallback((shelf: string) => {
     const value = Number(shelf);
     setDestination(value);
@@ -86,34 +96,34 @@ export default function WalkingRoom({
       }}
     >
       <div hidden ref={jackets} aria-hidden="true">
-        {shelves.flatMap((bay) =>
+        {rooms.flatMap((section) => section.shelves.flatMap((bay) =>
           bay.books.slice(0, bay.faceOutCount)
             .map((b) => (
               <span key={b.id} data-jacket={b.id}>
                 <CoverArt slug={b.id} design={b.design} />
               </span>
             )),
-        )}
+        ))}
       </div>
       <div className={s.viewport}>
         <canvas
           ref={canvas}
           tabIndex={0}
-          aria-label="Walkable library. Scroll up to walk forward or down to walk back. Use W A S D to move and left or right arrow to turn. Choose a shelf and volume below to browse by keyboard."
+          aria-label="Walkable library. Scroll up to walk forward or down to walk back. Use W A S D to move and left or right arrow to turn. Walk through signed doorways to explore other rooms, or choose a room, shelf and volume below."
         />
         <div className={s.top}>
           <button onClick={onExit} className={s.exit}>
             ← Leave room
           </button>
           <span>
-            <LibraryIcon name="compass" size={16} /> {shelves[at]?.label ?? "Entrance hall"}
+            <LibraryIcon name="compass" size={16} /> {room?.label ?? "Library"}{shelf && ` · ${shelf.label}`}
           </span>
         </div>
         {unavailable ? (
           <div className={s.fallback}>
             <div>
               <strong>The library catalogue</strong>
-              <p>3D rendering is unavailable on this device. Choose a shelf and a volume below to read.</p>
+              <p>3D rendering is unavailable on this device. Choose a room, shelf and volume below to read.</p>
             </div>
           </div>
         ) : (
@@ -169,8 +179,14 @@ export default function WalkingRoom({
         )}
       </div>
       <div className={s.desk}>
+        <RoomPicker label="Room" accessibleLabel="Visit a room" options={roomOptions}
+          value={String(Math.max(0, rooms.indexOf(room)))} onChange={(value) => {
+            const index = Number(value);
+            if (scene.current && !unavailable) scene.current.visitRoom(index);
+            else enterRoom(index);
+          }} walkCanvas={canvas} />
         <RoomPicker label="Shelf" accessibleLabel="Visit a shelf" options={shelfOptions}
-          value={String(at)} onChange={go} walkCanvas={canvas} />
+          value={String(shelf ? destination : -1)} onChange={go} walkCanvas={canvas} />
         <RoomPicker label="Volume" accessibleLabel="Choose a volume" options={volumeOptions}
           value={chosen?.id ?? ""} onChange={setSelection} />
         <button

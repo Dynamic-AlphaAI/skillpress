@@ -14,6 +14,7 @@ const subjects: Record<FiledTopic, string[]> = {
     "supabase/agent-skills/supabase-postgres-best-practices",
   ],
   "mobile-development": [
+    "android/skills/edge-to-edge", "android/skills/adaptive", "android/skills/navigation-event", "android/skills/wear-widgets",
     "google-labs-code/stitch-skills/react-native", "expo/skills/eas-app-stores", "expo/skills/eas-update",
     "expo/skills/expo-app-clip", "expo/skills/expo-brownfield", "expo/skills/expo-data-fetching",
     "expo/skills/expo-dev-client", "expo/skills/expo-dom", "expo/skills/expo-examples", "expo/skills/expo-module",
@@ -71,6 +72,7 @@ const subjects: Record<FiledTopic, string[]> = {
     "googleworkspace/cli/recipe-share-folder-with-team",
   ],
   "team-communication": [
+    "resend/resend-skills/email-best-practices",
     "googleworkspace/cli/gws-chat", "googleworkspace/cli/gws-chat-send", "googleworkspace/cli/gws-gmail",
     "googleworkspace/cli/gws-gmail-forward", "googleworkspace/cli/gws-gmail-read",
     "googleworkspace/cli/gws-gmail-reply", "googleworkspace/cli/gws-gmail-reply-all",
@@ -87,6 +89,7 @@ const subjects: Record<FiledTopic, string[]> = {
     "googleworkspace/cli/recipe-share-event-materials", "cloudflare/skills/cloudflare-email-service",
   ],
   "writing-documents": [
+    "posit-dev/skills/alt-text", "posit-dev/skills/quarto-authoring",
     "anthropics/skills/doc-coauthoring", "anthropics/skills/docx", "anthropics/skills/pdf",
     "anthropics/skills/pptx", "anthropics/skills/internal-comms", "coreyhaines31/marketingskills/copywriting",
     "coreyhaines31/marketingskills/copy-editing", "coreyhaines31/marketingskills/content-strategy",
@@ -96,6 +99,7 @@ const subjects: Record<FiledTopic, string[]> = {
     "huggingface/skills/huggingface-paper-publisher", "hashicorp/agent-skills/provider-docs",
   ],
   "design-media": [
+    "posit-dev/skills/brand-yml", "posit-dev/skills/shiny-bslib-theming", "android/skills/ink-custom-brush-builder",
     "anthropics/skills/algorithmic-art", "anthropics/skills/brand-guidelines", "anthropics/skills/canvas-design",
     "anthropics/skills/frontend-design", "anthropics/skills/slack-gif-creator", "anthropics/skills/theme-factory",
     "coreyhaines31/marketingskills/image", "coreyhaines31/marketingskills/video",
@@ -108,6 +112,7 @@ const subjects: Record<FiledTopic, string[]> = {
     "WordPress/agent-skills/wp-block-themes", "WordPress/agent-skills/wp-patterns", "WordPress/agent-skills/wpds",
   ],
   "software-development": [
+    "posit-dev/skills/r-tidyverse-style",
     "anthropics/skills/claude-api", "anthropics/skills/mcp-builder", "anthropics/skills/web-artifacts-builder",
     "obra/superpowers/using-git-worktrees", "obra/superpowers/finishing-a-development-branch",
     "coreyhaines31/marketingskills/free-tools", "coreyhaines31/marketingskills/site-architecture",
@@ -160,6 +165,7 @@ const subjects: Record<FiledTopic, string[]> = {
     "googleworkspace/cli/recipe-post-mortem-setup", "huggingface/skills/huggingface-papers",
   ],
   "data-analytics": [
+    "posit-dev/skills/ggsql",
     "anthropics/skills/xlsx", "coreyhaines31/marketingskills/analytics", "coreyhaines31/marketingskills/attribution",
     "coreyhaines31/marketingskills/conversion-tracking", "coreyhaines31/marketingskills/ab-testing",
     "googleworkspace/cli/gws-sheets", "googleworkspace/cli/gws-sheets-read",

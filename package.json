@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test": "node --test scripts/*.test.mjs",
     "import": "node scripts/import-skills.mjs"
   },
   "dependencies": {

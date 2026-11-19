@@ -4,11 +4,11 @@ Agent skills, typeset and bound as books you can page through and then install. 
 
 ## Source libraries
 
-The catalogue contains 323 editions from 13 repositories. The ten additions were selected for project-maintainer provenance, published skill directories, identifiable licenses, and coverage of distinct tasks. Each edition links to the upstream files at the revision used for its download.
+The catalogue contains 334 editions from 16 repositories. The selected Android, Posit, and Resend folders contain Markdown guides and references. Their commit pins and folder lists are recorded in `sources.json`. The importer skips editions without an identified redistribution license, including `doc-coauthoring`. Each edition links to the upstream files at the revision used for its download.
 
 | GitHub repository | Subject matter | Editions | License |
 |---|---|---:|---|
-| [anthropics/skills](https://github.com/anthropics/skills) | Documents, design and AI tools | 19 | Apache 2.0, one unspecified |
+| [anthropics/skills](https://github.com/anthropics/skills) | Documents, design and AI tools | 18 | Apache 2.0 |
 | [obra/superpowers](https://github.com/obra/superpowers) | Software development practices | 15 | MIT |
 | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | Marketing and growth | 53 | MIT |
 | [googleworkspace/cli](https://github.com/googleworkspace/cli) | Workspace documents, mail, calendars and team workflows | 95 | Apache 2.0 |
@@ -21,6 +21,9 @@ The catalogue contains 323 editions from 13 repositories. The ten additions were
 | [stripe/ai](https://github.com/stripe/ai) | Payments, billing and revenue operations | 12 | MIT |
 | [hashicorp/agent-skills](https://github.com/hashicorp/agent-skills) | Terraform providers, infrastructure and Packer images | 20 | MPL 2.0 |
 | [WordPress/agent-skills](https://github.com/WordPress/agent-skills) | WordPress blocks, plugins, themes and operations | 20 | GPL 2.0 or later |
+| [posit-dev/skills](https://github.com/posit-dev/skills) | Accessible charts, data publishing and R design | 6 | MIT |
+| [android/skills](https://github.com/android/skills) | Adaptive layouts, digital ink, navigation and watch widgets | 5 | Apache 2.0 |
+| [resend/resend-skills](https://github.com/resend/resend-skills) | Email delivery and accessibility | 1 | MIT |
 
 - **Ranking:** install counts from the [skills.sh](https://skills.sh) leaderboard. Skills it doesn't list yet appear at the end of their topic.
 - Books sit together by primary task across the catalogue, shelf, and 3D room. For example, **Testing & Code Review** includes browser testing, debugging, and reviewing changes. The **Author** filter narrows any topic to a particular author. Within each topic, books follow their install rank.
@@ -35,7 +38,7 @@ npm run dev        # http://localhost:3000
 
 ## Add a library
 
-1. Add an entry to `sources.json`: the repository, canonical skill directory, author, and reviewed commit in `revision`. Use `additionalPaths` for separate published plugins. Only include each canonical directory once.
+1. Add an entry to `sources.json`: the repository, canonical skill directory, author, and reviewed commit in `revision`. Use `additionalPaths` for separate published plugins. Use `skillPaths` for individual reviewed Markdown-only folders at a pinned commit. Only include each canonical directory once.
 2. Run `npm run import`.
 3. Push. The new books appear with generated covers.
 
@@ -65,7 +68,7 @@ A GitHub Action (`.github/workflows/update-skills.yml`) runs `npm run import` ev
 
 Choose **Search** in the header to look up skills by keyword, title, publisher, topic, or words in the instructions. Results update as you type. Use **Topic** and **Author** to narrow them, then select a result to read the book. A link such as [a search for PDF extraction](https://skillpress.xyz/?q=pdf+extraction) restores the query. The full-text index is built from the same checked-in editions as the reader and loads when Search opens.
 
-The Reading Room opens at `/`. Select **Enter the library** to walk the 3D stacks. Drag to look, use WASD to move, or use the on-screen arrows. Selecting a shelf takes you to its labelled row. Up to twelve catalogue books share a row, and up to four rows share a bookcase. The room displays each matching edition once, including when you filter down to a single book. Click a book or use the volume picker to read it. The catalogue beneath the entrance also works on devices without WebGL.
+The Reading Room opens at `/`. Select **Enter the library** to walk through Arts & Letters, Engineering Workshop, Research & Data, Operations Room, and Business & Commerce. Door signs name the adjoining room, and a directory near each entrance lists its topics. Drag to look, scroll up to walk forward or down to back up, or use WASD and the on-screen arrows. The room, shelf, and volume pickers also work by keyboard and without WebGL. Each matching edition occupies one shelf. Filtering the catalogue removes empty rooms.
 
 The sound control in the masthead and reader remembers your preference on this device. In a book’s details, drag the cover or press **Turn book** to inspect its boards, spine, and printed back.
 

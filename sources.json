@@ -1,5 +1,5 @@
 {
-  "$comment": "Each entry names a publisher and its canonical public skill directory. additionalPaths lists other public skill directories in the same repository. Source order determines which copy is kept when two sources publish the same skill. revision pins a reviewed collection to an exact Git commit.",
+  "$comment": "Each entry names a publisher and its canonical public skill directory. additionalPaths lists other public skill directories in the same repository. Source order determines which copy is kept when two sources publish the same skill. revision pins a reviewed collection to an exact Git commit. skillPaths imports only the listed Markdown-only skill folders.",
   "sources": [
     {
       "id": "anthropic",
@@ -133,6 +133,51 @@
       "copyright": "WordPress Contributors",
       "authorUrl": "https://github.com/WordPress",
       "revision": "7374e6f1c913b3b02b25465d266d9c0e0a04fc96"
+    },
+    {
+      "id": "posit",
+      "repo": "posit-dev/skills",
+      "path": ".",
+      "author": "Posit",
+      "copyright": "Posit PBC",
+      "authorUrl": "https://github.com/posit-dev",
+      "revision": "951959403f4ecc9d0274adf35538fc67153b6f31",
+      "skillPaths": [
+        "alt-text",
+        "brand-yml",
+        "ggsql/ggsql",
+        "quarto/quarto-authoring",
+        "r-lib/r-tidyverse-style",
+        "shiny/shiny-bslib-theming"
+      ]
+    },
+    {
+      "id": "android",
+      "repo": "android/skills",
+      "path": ".",
+      "author": "Android Developers",
+      "copyright": "Google LLC",
+      "authorUrl": "https://developer.android.com",
+      "revision": "c72942584fff970dac86ced78b367fce0c441e52",
+      "skillPaths": [
+        "system/edge-to-edge",
+        "jetpack-compose/adaptive",
+        "jetpack-compose/ink/ink-custom-brush-builder",
+        "navigation/navigation-event",
+        "wear/wear-widgets"
+      ]
+    },
+    {
+      "id": "resend",
+      "repo": "resend/resend-skills",
+      "path": "skills",
+      "author": "Resend",
+      "copyright": "Resend",
+      "authorUrl": "https://resend.com",
+      "revision": "0b003d3c4c7dcd675d0bd30949aa7c95c2b91d1f",
+      "skillPaths": [
+        "skills/email-best-practices"
+      ]
     }
   ]
 }

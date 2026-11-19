@@ -1,10 +1,10 @@
 import * as T from "three";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
-import type { RoomShelf } from "@/lib/roomShelves";
+import { baySpacing, type LibraryRoom } from "@/lib/roomShelves";
 import type { Book } from "@/lib/types";
 import { playSound } from "./sound";
 
-type SceneEvents = { open: (id: string) => void; hover: (title: string) => void; lost: () => void };
+type SceneEvents = { enterRoom: (index: number) => void; open: (id: string) => void; hover: (title: string) => void; lost: () => void };
 type Flight = { from: T.Vector3; to: T.Vector3; yaw: number; turn: number; pitch: number; targetPitch: number; elapsed: number };
 
 function paintTexture(w: number, h: number, paint: (ctx: CanvasRenderingContext2D) => void) {
@@ -129,7 +129,7 @@ function jacketTexture(book: Book, art: SVGSVGElement, ready: () => void) {
 /** Local-space bookcases face the centre aisle. Camera coordinates are in metres. */
 export function createRoom(
   canvas: HTMLCanvasElement,
-  shelves: RoomShelf[],
+  rooms: LibraryRoom[],
   jackets: HTMLDivElement,
   events: SceneEvents,
 ) {
@@ -141,11 +141,17 @@ export function createRoom(
   scene.fog = new T.FogExp2("#a48d70", 0.026);
   const camera = new T.PerspectiveCamera(61, 1, 0.055, 65);
   camera.rotation.order = "YXZ";
-  const stride = 3.8;
-  const cases = Math.ceil(shelves.length / 4);
-  const rows = Math.ceil(cases / 2);
-  const rear = -rows * stride + 1;
-  const front = 5.4;
+  const front = rooms[0].front;
+  const rear = rooms[rooms.length - 1].rear;
+  const dividers = rooms.slice(1).map((room) => room.front);
+  const doorHalfWidth = 1.18;
+  let currentRoom = 0;
+  const bays = rooms.flatMap((room, roomIndex) => Array.from({ length: room.cases }, (_, i) => ({
+    roomIndex,
+    side: i % 2 ? 1 : -1,
+    z: room.front - (Math.floor(i / 2) + 1) * baySpacing,
+    stack: room.shelves.slice(Math.floor(i * room.shelves.length / room.cases), Math.floor((i + 1) * room.shelves.length / room.cases)),
+  })));
   const depth = front - rear;
   const middle = (front + rear) / 2;
   const entry = new T.Vector3(0, 1.63, front - 1.2);
@@ -238,8 +244,6 @@ export function createRoom(
   block(0, 4.15, middle, 8, 0.15, depth, plaster);
   block(0, 2.05, rear, 8, 4.1, 0.2, green);
   block(0, 2.05, front, 8, 4.1, 0.2, green);
-  block(-3.93, 2.05, middle, 0.17, 4.1, depth, green);
-  block(3.93, 2.05, middle, 0.17, 4.1, depth, green);
   const rugTexture = paintTexture(256, 256, (ctx) => {
     ctx.fillStyle = "#414a3d";
     ctx.fillRect(0, 0, 256, 256);
@@ -270,9 +274,68 @@ export function createRoom(
       }
   });
   rugTexture.wrapT = T.RepeatWrapping;
-  rugTexture.repeat.y = depth / 1.83;
   textures.add(rugTexture);
-  block(0, 0.008, middle, 1.83, 0.018, depth - 0.75, surface("#e3d8be", rugTexture));
+  function sign(title: string, lines: string[], x: number, y: number, z: number, angle: number, width: number, height: number) {
+    const h = lines.length ? 384 : 112;
+    const texture = paintTexture(768, h, (ctx) => {
+      ctx.fillStyle = "#29352f";
+      ctx.fillRect(0, 0, 768, h);
+      ctx.strokeStyle = "#bfa371";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(7, 7, 754, h - 14);
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#f8eaca";
+      ctx.font = "54px Georgia";
+      ctx.fillText(title, 384, lines.length ? 85 : 73, 714);
+      ctx.font = "33px Georgia";
+      lines.forEach((line, i) => ctx.fillText(line, 384, 147 + i * 44, 714));
+    });
+    textures.add(texture);
+    const geometry = new T.PlaneGeometry(width, height);
+    geometries.add(geometry);
+    const plaque = new T.Mesh(geometry, register(new T.MeshBasicMaterial({ map: texture })));
+    plaque.position.set(x, y, z);
+    plaque.rotation.y = angle;
+    scene.add(plaque);
+  }
+  rooms.forEach((room, i) => {
+    const length = room.front - room.rear;
+    const center = (room.front + room.rear) / 2;
+    const wallPaint = surface(room.paint);
+    for (const side of [-1, 1]) {
+      block(side * 3.93, 2.05, center, 0.17, 4.1, length, wallPaint);
+      block(side * 3.81, 0.16, center, 0.12, 0.32, length, walnut);
+      block(side * 3.8, 3.86, center, 0.14, 0.09, length, brass);
+    }
+    const rug = rugTexture.clone();
+    rug.repeat.y = length / 1.83;
+    textures.add(rug);
+    block(0, 0.008, center, 1.83, 0.018, length - 0.32, surface(room.runner, rug));
+    sign(room.label, room.topics, -3.82, 2.1, room.front - 1.14, Math.PI / 2, 1.74, 0.89);
+    if (i === 0) return;
+    const z = room.front;
+    const wing = 4 - doorHalfWidth;
+    for (const side of [-1, 1]) {
+      block(side * (doorHalfWidth + wing / 2), 2.05, z, wing, 4.1, 0.24, wallPaint);
+      block(side * (doorHalfWidth + 0.07), 1.37, z, 0.16, 2.74, 0.36, walnut);
+      block(side * (doorHalfWidth + 0.18), 1.37, z, 0.045, 2.74, 0.39, brass);
+      const centerX = side * (doorHalfWidth + wing / 2);
+      block(centerX, 0.48, z, wing, 0.96, 0.28, walnut);
+      block(centerX, 0.96, z, wing, 0.07, 0.35, panel);
+      for (const inset of [-0.65, 0.65]) {
+        block(centerX + inset, 0.5, z, 1.04, 0.65, 0.32, dark);
+        block(centerX + inset, 0.5, z, 0.93, 0.54, 0.34, walnut);
+      }
+    }
+    block(0, 3.42, z, doorHalfWidth * 2, 1.4, 0.24, wallPaint);
+    block(0, 2.74, z, 2.86, 0.18, 0.4, walnut);
+    block(0, 0.022, z, doorHalfWidth * 2, 0.03, 0.23, brass);
+    sign(room.label, [], 0, 3.16, z + 0.14, 0, 2.52, 0.37);
+    sign(rooms[i - 1].label, [], 0, 3.16, z - 0.14, Math.PI, 2.52, 0.37);
+    sign(room.label, room.topics, 2.56, 1.84, z + 0.14, 0, 1.95, 0.98);
+    const previous = rooms[i - 1];
+    sign(previous.label, previous.topics, -2.56, 1.84, z - 0.14, Math.PI, 1.95, 0.98);
+  });
   const endWall = new T.TextureLoader().load("/paneled-window.webp", redraw);
   endWall.colorSpace = T.SRGBColorSpace;
   textures.add(endWall);
@@ -293,8 +356,7 @@ export function createRoom(
   const shadeMaterial = register(
     new T.MeshStandardMaterial({ color: "#576954", metalness: 0.25, roughness: 0.35, side: T.DoubleSide }),
   );
-  for (let row = 0; row < rows; row++) {
-    const z = -stride * row;
+  for (const { z } of bays.filter((bay) => bay.side === -1)) {
     block(0, 3.78, z, 0.022, 0.49, 0.022, brass);
     const bulb = new T.Mesh(lampGlobe, lightGlass);
     bulb.position.set(0, 3.43, z);
@@ -335,22 +397,17 @@ export function createRoom(
   block(0.48, 0.86, rear + 0.9, 0.29, 0.055, 0.18, brass);
   block(0.48, 1.07, rear + 0.9, 0.035, 0.42, 0.035, brass);
   block(0.48, 1.27, rear + 0.9, 0.46, 0.12, 0.2, green);
-  for (let r = 0; r <= rows; r++) {
-    const z = 2.05 - r * stride;
+  for (let z = front - baySpacing / 2; z > rear; z -= baySpacing) {
     block(0, 3.96, z, 7.9, 0.23, 0.22, dark);
-    for (const x of [-2.1, 0, 2.1]) block(x, 4.03, z - stride / 2, 0.1, 0.1, stride, panel);
+    for (const x of [-2.1, 0, 2.1]) block(x, 4.03, z, 0.1, 0.1, baySpacing, panel);
   }
 
   const pickable: T.Mesh[] = [];
-  const shelfPositions: { side: number; z: number; height: number }[] = [];
+  const shelfPositions: { side: number; z: number; height: number }[][] = rooms.map(() => []);
   const paper = surface("#e4d6b8");
   const boards = new Map<string, T.Material>();
   const hitMaterial = register(new T.MeshBasicMaterial());
-  for (let i = 0; i < cases; i++) {
-    const start = Math.floor((i * shelves.length) / cases);
-    const stack = shelves.slice(start, Math.floor(((i + 1) * shelves.length) / cases));
-    const side = i % 2 ? 1 : -1;
-    const z = -Math.floor(i / 2) * stride;
+  for (const { roomIndex, stack, side, z } of bays) {
     const base = new T.Matrix4().makeRotationY((-side * Math.PI) / 2).setPosition(side * 3.78, 0, z);
     const timber = (x: number, y: number, distance: number, w: number, h: number, d: number, m: T.Material) =>
       block(x, y, distance, w, h, d, m, base);
@@ -370,7 +427,7 @@ export function createRoom(
     timber(0, top, 0.31, 3.8, 0.12, 0.54, panel);
     stack.forEach((shelf, row) => {
       const deck = bottom + step * row;
-      shelfPositions.push({ side, z, height: deck + 0.35 });
+      shelfPositions[roomIndex].push({ side, z, height: deck + 0.35 });
       timber(0, deck, 0.29, 3.68, 0.095, 0.48, walnut);
       timber(0, deck - 0.004, 0.54, 1.43, 0.104, 0.035, brass);
       const plaqueTexture = paintTexture(512, 48, (ctx) => {
@@ -486,6 +543,21 @@ export function createRoom(
     camera.position.add(move);
     camera.position.x = T.MathUtils.clamp(camera.position.x, -2.93, 2.93);
     camera.position.z = T.MathUtils.clamp(camera.position.z, rear + 1.6, front - 0.45);
+    // The opening admits the camera in either direction; the solid wings stop diagonal steps too.
+    const clearance = 0.27;
+    for (const z of dividers) {
+      if (Math.min(prevZ, camera.position.z) > z + clearance || Math.max(prevZ, camera.position.z) < z - clearance) continue;
+      if (Math.abs(camera.position.x) <= doorHalfWidth - clearance) continue;
+      if (prevZ >= z + clearance) camera.position.z = Math.max(camera.position.z, z + clearance);
+      else if (prevZ <= z - clearance) camera.position.z = Math.min(camera.position.z, z - clearance);
+      else camera.position.x = T.MathUtils.clamp(camera.position.x, clearance - doorHalfWidth, doorHalfWidth - clearance);
+    }
+    const nextRoom = rooms.findIndex((room) => camera.position.z >= room.rear);
+    if (nextRoom !== currentRoom) {
+      currentRoom = nextRoom;
+      events.hover("");
+      events.enterRoom(currentRoom);
+    }
     walked += Math.hypot(camera.position.x - prevX, camera.position.z - prevZ);
     if (walked > 0.78) {
       playSound("step");
@@ -519,9 +591,20 @@ export function createRoom(
     scrollRemaining = 0;
     pointerStart = null;
   }
+  function visitRoom(index: number) {
+    if (paused || !rooms[index]) return;
+    stop();
+    flight = null;
+    currentRoom = index;
+    camera.position.set(0, 1.63, rooms[index].front - 1.2);
+    yaw = 0;
+    pitch = -0.03;
+    events.enterRoom(index);
+    redraw();
+  }
   function visit(index: number) {
-    const bay = shelfPositions[index];
-    const to = bay ? new T.Vector3(bay.side * 1.03, 1.64, bay.z) : entry;
+    const bay = shelfPositions[currentRoom][index];
+    const to = bay ? new T.Vector3(bay.side * 1.03, 1.64, bay.z) : new T.Vector3(0, 1.63, rooms[currentRoom].front - 1.2);
     // Facing left is positive yaw, facing right is negative yaw.
     const targetYaw = bay ? (-bay.side * Math.PI) / 2 : 0;
     flight = {
@@ -644,6 +727,7 @@ export function createRoom(
   resize();
   return {
     visit,
+    visitRoom,
     setKey,
     tap(key: string) {
       if (paused) return;

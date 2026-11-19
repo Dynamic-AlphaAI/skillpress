@@ -17,11 +17,12 @@
  * public/downloads/skillpress-all.zip   everything on the shelf
  */
 import { execFileSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, renameSync, rmSync, lstatSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { skillIdentity, uniqueSkills } from "./unique-skills.mjs";
+import { safeSourceFile, trackedSourceFile } from "./source-files.mjs";
 import { zipSync } from "fflate";
 
 const LEADERBOARD_URL = "https://skills.sh";
@@ -66,8 +67,7 @@ function trackedFiles(skillDir, repoDir) {
   const list = execFileSync("git", ["-C", repoDir, "ls-files", "-z", "--", relative(repoDir, skillDir)]);
   return list.toString().split("\0").filter(Boolean).map((path) => {
     const file = join(repoDir, path);
-    if (!lstatSync(file).isFile()) throw new Error(`Unsupported non-regular skill file: ${path}`);
-    return file;
+    return safeSourceFile(repoDir, file);
   });
 }
 
@@ -82,11 +82,15 @@ function detectLicense(text) {
 /** The skill's own license file, else the repository's. */
 function licenseFor(skillDir, repoDir, declared) {
   for (const name of ["LICENSE.txt", "LICENSE", "LICENSE.md"]) {
-    if (existsSync(join(skillDir, name))) return { file: join(skillDir, name), bundled: true, id: detectLicense(readFileSync(join(skillDir, name), "utf8")) };
+    if (existsSync(join(skillDir, name))) {
+      const file = trackedSourceFile(repoDir, join(skillDir, name));
+      return { file, bundled: true, id: detectLicense(readFileSync(file, "utf8")) };
+    }
   }
   for (const name of ["LICENSE", "LICENSE.txt", "LICENSE.md"]) {
     const file = join(repoDir, name);
     if (!existsSync(file)) continue;
+    trackedSourceFile(repoDir, file);
     const id = detectLicense(readFileSync(file, "utf8"));
     if (declared === "mit" && id !== "MIT") {
       return { file: join(root, "scripts/licenses/MIT.txt"), bundled: false, id: "MIT", repositoryLicense: file };
@@ -115,6 +119,7 @@ function pluginsFor(source, repoDir, slugs) {
   if (source.plugin === "marketplace.json") {
     const file = join(repoDir, ".claude-plugin", "marketplace.json");
     if (!existsSync(file)) return map;
+    trackedSourceFile(repoDir, file);
     const json = JSON.parse(readFileSync(file, "utf8"));
     for (const plugin of json.plugins ?? []) {
       // A plugin without a skills list ships everything in the repo's skills folder.
@@ -143,6 +148,27 @@ function cloneSource(source, cleanup) {
   return dir;
 }
 
+function publishedFolders(source, repoDir) {
+  if (source.skillPaths) {
+    if (!/^[a-f0-9]{40}$/.test(source.revision ?? "")) throw new Error(`Pin reviewed folders in ${source.repo}`);
+    return source.skillPaths.map((sourcePath) => {
+      if (!/^[a-z0-9-]+(?:\/[a-z0-9-]+)*$/.test(sourcePath)) throw new Error(`Invalid skill path: ${sourcePath}`);
+      const records = execFileSync("git", ["-C", repoDir, "ls-tree", "-rz", "HEAD", "--", sourcePath])
+        .toString().split("\0").filter(Boolean);
+      if (!records.length || records.some((file) => !/^100644 blob [a-f0-9]+\t[^\t\n]+\.md$/i.test(file))) {
+        throw new Error(`Expected regular Markdown files in ${source.repo}/${sourcePath}`);
+      }
+      return { slug: sourcePath.split("/").at(-1), sourcePath };
+    });
+  }
+  return [source.path, ...(source.additionalPaths ?? [])].flatMap((path) =>
+      readdirSync(join(repoDir, path), { withFileTypes: true })
+        .filter((entry) => entry.isDirectory() && existsSync(join(repoDir, path, entry.name, "SKILL.md")))
+        .map(({ name: slug }) => ({ slug, sourcePath: `${path}/${slug}` }))
+        .sort((a, b) => a.slug.localeCompare(b.slug)),
+    );
+}
+
 async function importLibrary(cleanup) {
   console.log(`Reading install counts from ${LEADERBOARD_URL} …`);
   const installs = await fetchInstalls();
@@ -155,12 +181,7 @@ async function importLibrary(cleanup) {
     if (source.revision && commit !== source.revision) throw new Error(`Revision mismatch for ${source.repo}`);
     execFileSync("git", ["-C", repoDir, "diff", "--quiet", "HEAD", "--"]);
     const commitDate = execFileSync("git", ["-C", repoDir, "log", "-1", "--format=%cs"]).toString().trim();
-    const folders = [source.path, ...(source.additionalPaths ?? [])].flatMap((path) =>
-      readdirSync(join(repoDir, path), { withFileTypes: true })
-        .filter((entry) => entry.isDirectory() && existsSync(join(repoDir, path, entry.name, "SKILL.md")))
-        .map(({ name: slug }) => ({ slug, sourcePath: `${path}/${slug}` }))
-        .sort((a, b) => a.slug.localeCompare(b.slug)),
-    );
+    const folders = publishedFolders(source, repoDir);
     if (!folders.length) throw new Error(`No published skills found in ${source.repo}`);
     const plugins = pluginsFor(source, repoDir, folders.map((f) => f.slug));
     sourceInfo.push({
@@ -180,8 +201,13 @@ async function importLibrary(cleanup) {
     for (const { slug, sourcePath } of folders) {
       const dir = join(repoDir, sourcePath);
       execFileSync("git", ["-C", repoDir, "ls-files", "--error-unmatch", "--", `${sourcePath}/SKILL.md`]);
-      const identity = skillIdentity(readFileSync(join(dir, "SKILL.md"), "utf8"), `${source.repo}/${sourcePath}`);
-      skills.push({ slug, sourcePath, identity, source: source.id, repoDir, dir, installs: installs.get(`${source.repo}/${slug}`) ?? null, plugin: plugins.get(slug) ?? null });
+      const identity = skillIdentity(readFileSync(safeSourceFile(repoDir, join(dir, "SKILL.md")), "utf8"), `${source.repo}/${sourcePath}`);
+      const license = licenseFor(dir, repoDir, identity.license);
+      if (!license.file || license.id === "See LICENSE") {
+        console.warn(`  Skipping ${source.repo}/${sourcePath}: redistribution license needs review.`);
+        continue;
+      }
+      skills.push({ slug, sourcePath, identity, license, source: source.id, repoDir, dir, installs: installs.get(`${source.repo}/${slug}`) ?? null, plugin: plugins.get(slug) ?? null });
     }
   }
 
@@ -202,7 +228,7 @@ async function importLibrary(cleanup) {
   const everything = {};
   const books = picked.map((skill, i) => {
     const id = skill.slug;
-    const license = licenseFor(skill.dir, skill.repoDir, skill.identity.license);
+    const license = skill.license;
 
     const to = join(stagedSkills, id);
     mkdirSync(to, { recursive: true });
