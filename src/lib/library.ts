@@ -72,9 +72,12 @@ function skillPath(entry: Catalog["books"][number], source: Source) {
   return entry.sourcePath ?? `${source.path}/${entry.slug}`;
 }
 
+export function readSkillFile(id: string) {
+  return matter(fs.readFileSync(path.join(CONTENT, "skills", id, "SKILL.md"), "utf8"));
+}
+
 function parseEdition(entry: Catalog["books"][number], source: Source) {
-  const file = fs.readFileSync(path.join(CONTENT, "skills", entry.id, "SKILL.md"), "utf8");
-  const { data, content } = matter(file);
+  const { data, content } = readSkillFile(entry.id);
   const blobBase = `${source.url}/blob/${source.commit}/${skillPath(entry, source)}/`;
   const md = createRenderer(blobBase);
   const tokens = md.parse(content, {});

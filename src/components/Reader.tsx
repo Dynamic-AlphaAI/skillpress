@@ -6,7 +6,7 @@ import type { Book, Heading, Library } from "@/lib/types";
 import { BackCover, Cover, PressMark } from "./BookParts";
 import { LibraryIcon } from "./LibraryIcons";
 import { playSound, toggleSound, useSound } from "./sound";
-import { replaceSearch } from "./useUrlState";
+import { writeSearch } from "./useUrlState";
 import s from "./Reader.module.css";
 
 /* Logical page geometry (px). The whole book is scaled to fit, so pagination never changes with the window. */
@@ -531,7 +531,7 @@ function TypesetReader({ book, library, onClose, onInstall, startPage, body }: R
     const q = new URLSearchParams(window.location.search);
     if (current?.kind === "body") q.set("page", String(current.page + 1));
     else q.delete("page");
-    replaceSearch(q, false);
+    writeSearch(q, { notify: false });
   }, [side, flip, layout, sides]);
 
   /* --- keyboard --- */

@@ -163,3 +163,23 @@
 .sound { border: 0; padding: 7px 0; }
 .download { border-left: 1px solid #cac4b5; padding-left: 18px; }
 @media(max-width:640px) { .masthead { height: 57px; padding: 0 14px; } .brand { font-size: 26px; gap: 6px; } .brand svg { width: 22px; } .viewNav { gap: 13px; } .viewNav button { font-size: 10px; } .viewNav button[aria-current]::after { bottom: 9px; } .tools { gap: 8px; } .sound span, .download span:last-child { display: none; } .download { padding: 7px 2px 7px 8px; font-size: 16px; } .sound { padding: 9px 2px; } }
+
+.viewNav button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+@media (max-width: 740px) {
+  .masthead { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .viewNav { justify-content: center; gap: 12px; }
+  .sound span, .download span:last-child { display: none; }
+}
+@media (max-width: 435px) {
+  .masthead { padding-inline: 10px; gap: 8px; }
+  .viewNav { gap: 9px; }
+  .viewNav svg { display: none; }
+  .tools { gap: 4px; }
+}
+@media (max-width: 365px) {
+  .brand svg { display: none; }
+}

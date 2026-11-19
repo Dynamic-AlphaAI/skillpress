@@ -25,12 +25,15 @@ export function useSearch() {
   );
 }
 
-/** Replace the query string (no history entry) and re-render subscribers. Flags like `read` are written bare. */
-export function replaceSearch(q: URLSearchParams, notify = true) {
+/** Keep typing in the current history entry and let navigation create a new one. */
+export function writeSearch(q: URLSearchParams, { notify = true, push = false, fromResults = false } = {}) {
   const qs = q.toString().replace(/=(&|$)/g, "$1");
   const next = qs ? `?${qs}` : window.location.pathname;
   if (next !== window.location.search && !(qs === "" && window.location.search === "")) {
-    window.history.replaceState(null, "", next);
+    const returnToResults = push ? fromResults : window.history.state?.skillPressFromResults;
+    const state = returnToResults ? { skillPressFromResults: true } : null;
+    if (push) window.history.pushState(state, "", next);
+    else window.history.replaceState(state, "", next);
   }
   if (notify) listeners.forEach((l) => l());
 }

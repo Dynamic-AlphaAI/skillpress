@@ -63,6 +63,8 @@ A GitHub Action (`.github/workflows/update-skills.yml`) runs `npm run import` ev
 
 ## Using it
 
+Choose **Search** in the header to look up skills by keyword, title, publisher, topic, or words in the instructions. Results update as you type. Use **Topic** and **Author** to narrow them, then select a result to read the book. A link such as [a search for PDF extraction](https://skillpress.xyz/?q=pdf+extraction) restores the query. The full-text index is built from the same checked-in editions as the reader and loads when Search opens.
+
 The Reading Room opens at `/`. Select **Enter the library** to walk the 3D stacks. Drag to look, use WASD to move, or use the on-screen arrows. Selecting a shelf takes you to its labelled row. Up to twelve catalogue books share a row, and up to four rows share a bookcase. The room displays each matching edition once, including when you filter down to a single book. Click a book or use the volume picker to read it. The catalogue beneath the entrance also works on devices without WebGL.
 
 The sound control in the masthead and reader remembers your preference on this device. In a book’s details, drag the cover or press **Turn book** to inspect its boards, spine, and printed back.

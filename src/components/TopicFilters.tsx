@@ -1,15 +1,17 @@
 import { categories } from "@/lib/categories";
-import type { Library } from "@/lib/types";
+import type { Book, Library } from "@/lib/types";
 import { LibraryIcon } from "./LibraryIcons";
 import s from "./TopicFilters.module.css";
 
 export function TopicFilters({
   library,
+  matches = library.books,
   category,
   author,
   onFilter,
 }: {
   library: Library;
+  matches?: Book[];
   category: string;
   author: string;
   onFilter: (patch: { category?: string; author?: string }) => void;
@@ -17,7 +19,7 @@ export function TopicFilters({
   const topics = new Map<string, number>();
   const authors = new Map<string, number>();
   const onShelf = new Set(library.books.map((book) => book.category));
-  for (const book of library.books) {
+  for (const book of matches) {
     if (author === "all" || author === book.source.authorId) {
       topics.set(book.category, (topics.get(book.category) ?? 0) + 1);
     }

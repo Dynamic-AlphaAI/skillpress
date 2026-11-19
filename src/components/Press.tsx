@@ -14,18 +14,20 @@ import { Featured } from "./Featured";
 
 import { Shelf } from "./Shelf";
 import { TitleMarquee } from "./TitleMarquee";
-import { replaceSearch, useSearch } from "./useUrlState";
+import { writeSearch, useSearch } from "./useUrlState";
 import s from "./Press.module.css";
 
+const CatalogueSearch = dynamic(() => import("./CatalogueSearch"));
 const Reader = dynamic(() => import("./Reader").then((mod) => mod.Reader));
 
-type View = "library" | "catalogue" | "featured";
+type View = "library" | "catalogue" | "featured" | "search";
 type Panel = false | "info" | "install";
 
 /** Everything on screen, as it is spelled in the URL. */
 interface PressState {
   category: string;
   author: string;
+  query: string;
   /** Id of the book on the shelf; null means the middle of the shelf. */
   book: string | null;
   view: View;
@@ -55,8 +57,10 @@ function parseState(search: string, library: Library): PressState {
   return {
     category,
     author,
+    query: (q.get("q") ?? "").slice(0, 200),
     book: shelfFor(library, category, author).some((b) => b.id === id) ? id : null,
-    view: q.get("view") === "featured" ? "featured"
+    view: q.get("view") === "search" || (!q.has("view") && q.has("q")) ? "search"
+      : q.get("view") === "featured" ? "featured"
       : q.get("view") === "shelf" || q.get("view") === "catalogue" ? "catalogue"
       : q.get("view") === "library" || q.has("walk") || !legacyShelfLink ? "library" : "catalogue",
     walking: q.has("walk"),
@@ -70,9 +74,11 @@ function serializeState(st: PressState, library: Library) {
   const q = new URLSearchParams();
   if (st.category !== "all") q.set("category", st.category);
   if (st.author !== "all") q.set("author", st.author);
-  const fallback = middleOf(shelfFor(library, st.category, st.author))?.id;
-  if (st.book && (st.book !== fallback || st.reading || st.details)) q.set("book", st.book);
-  if (st.view === "featured") q.set("view", "featured");
+  if (st.book && (st.reading || st.details || st.book !== middleOf(shelfFor(library, st.category, st.author))?.id)) q.set("book", st.book);
+  if (st.view === "search") {
+    if (st.query) q.set("q", st.query);
+    else q.set("view", "search");
+  } else if (st.view === "featured") q.set("view", "featured");
   else if (st.view === "catalogue") q.set("view", "shelf");
   else if (q.size || st.reading || st.details) q.set("view", "library");
   if (st.view === "library" && st.walking) q.set("walk", "");
@@ -93,9 +99,11 @@ export function Press({ library }: { library: Library }) {
 
   // Every change goes through the URL, so reloads and shared links land in place.
   const update = useCallback(
-    (patch: Partial<PressState>) => {
+    (patch: Partial<PressState>, push = false) => {
       const current = parseState(window.location.search, library);
-      replaceSearch(serializeState({ ...current, ...patch }, library));
+      writeSearch(serializeState({ ...current, ...patch }, library), {
+        push, fromResults: current.view === "search" && patch.reading === true,
+      });
     },
     [library],
   );
@@ -135,14 +143,16 @@ export function Press({ library }: { library: Library }) {
     },
     [visible, update],
   );
-  const closeReader = useCallback(() => update({ reading: false, page: undefined }), [update]);
+  const closeOverlay = useCallback(() => {
+    if (window.history.state?.skillPressFromResults) window.history.back();
+    else update({ reading: false, details: false, page: undefined });
+  }, [update]);
   const installFromReader = useCallback(() => update({ reading: false, page: undefined, details: "install" }), [update]);
-  const closeDetails = useCallback(() => update({ details: false }), [update]);
 
   useEffect(() => {
     if (reading || details) return;
     const onKey = (e: KeyboardEvent) => {
-      if (view === "library" || e.target instanceof HTMLInputElement || e.target instanceof HTMLSelectElement || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (view === "library" || view === "search" || e.target instanceof HTMLInputElement || e.target instanceof HTMLSelectElement || e.metaKey || e.ctrlKey || e.altKey) return;
       const key = e.key.toLowerCase();
       if (e.key === "ArrowRight") select(active + 1);
       else if (e.key === "ArrowLeft") select(active - 1);
@@ -163,7 +173,7 @@ export function Press({ library }: { library: Library }) {
       : { href: library.allDownload.zip, bytes: library.allDownload.bytes, label: `all ${books.length} skills` };
 
   return (
-    <div className={`${s.page} ${view === "library" ? s.libraryPage : ""}`}>
+    <div className={`${s.page} ${view === "library" || view === "search" ? s.libraryPage : ""}`}>
       <div className={s.surface} inert={!!(reading || details)} onFocusCapture={(e) => { lastControl.current = e.target; }}>
       <header className={s.masthead}>
         <Link className={s.brand} href="/" onClick={(e) => {
@@ -171,9 +181,15 @@ export function Press({ library }: { library: Library }) {
           update({ view: "library", walking: false, category: "all", author: "all", book: null, reading: false, details: false, page: undefined });
         }}><LibraryIcon name="books" size={29} /> Skill Press</Link>
         <nav className={s.viewNav} aria-label="Browse views">
-          {(["library", "catalogue", "featured"] as const).map((mode) =>
+          {(["library", "catalogue", "featured", "search"] as const).map((mode) =>
             <button key={mode} aria-current={view === mode ? "page" : undefined}
-              onClick={() => update({ view: mode, walking: false })}>{mode === "library" ? "Library" : mode === "catalogue" ? "Shelf" : "Featured"}</button>)}
+              onClick={() => {
+                if (mode === "search" && view === "search") document.getElementById("skill-search")?.focus();
+                else update({ view: mode, walking: false, query: "" }, mode === "search" || view === "search");
+              }}>
+              {mode === "search" && <LibraryIcon name="search" size={15} />}
+              {mode === "library" ? "Library" : mode === "catalogue" ? "Shelf" : mode === "featured" ? "Featured" : "Search"}
+            </button>)}
         </nav>
         <div className={s.tools}>
           <button className={s.sound} onClick={toggleSound} aria-pressed={soundOn} aria-label={soundOn ? "Mute sound" : "Enable sound"}>
@@ -184,7 +200,16 @@ export function Press({ library }: { library: Library }) {
           </a>
         </div>
       </header>
-      {view === "library" ? <ReadingRoom library={library} books={visible} author={author} category={category}
+      {view === "search" ? (
+        <CatalogueSearch library={library} query={state.query} author={author} category={category} onFilter={filter}
+          onQuery={(query) => update({ query, book: null })}
+          hrefFor={(id) => `/?${serializeState({ ...state, book: id, reading: true, page: undefined }, library)}`}
+          onOpen={(id) => {
+            playSound("book");
+            update({ book: id, reading: true, details: false, page: undefined }, true);
+          }}
+        />
+      ) : view === "library" ? <ReadingRoom library={library} books={visible} author={author} category={category}
         walking={walking} paused={!!(reading || details)}
         onWalk={(value) => update({ walking: value })} onFilter={filter} onOpen={open}
         onDetails={(i) => update({ book: visible[i].id, details: "info" })} /> : <>
@@ -230,14 +255,14 @@ export function Press({ library }: { library: Library }) {
       </div>
 
       {details && (
-        <Details book={book} library={library} focus={details} onClose={closeDetails} onOpen={() => open(active)} />
+        <Details book={book} library={library} focus={details} onClose={closeOverlay} onOpen={() => open(active)} />
       )}
       {reading && (
         <Reader
           key={book.id}
           book={book}
           library={library}
-          onClose={closeReader}
+          onClose={closeOverlay}
           onInstall={installFromReader}
           startPage={state.page}
         />
