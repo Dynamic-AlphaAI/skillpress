@@ -15,7 +15,7 @@ export function skillIdentity(file, location) {
   };
 }
 
-/** Editions connected by a folder id, declared name, or instruction text share the first source's edition. */
+/** Collapse reprints within one author's catalogue, including aliases across their repositories. */
 export function uniqueSkills(skills) {
   const parent = skills.map((_, i) => i);
   function root(i) {
@@ -27,12 +27,35 @@ export function uniqueSkills(skills) {
   }
   const seen = new Map();
   skills.forEach((s, i) => {
+    const author = s.author.trim().normalize("NFKC").toLowerCase();
+    if (!seen.has(author)) seen.set(author, new Map());
+    const editions = seen.get(author);
     for (const key of [`folder:${s.slug}`, `name:${s.identity.name}`, `text:${s.identity.body}`]) {
-      if (seen.has(key)) {
-        const a = root(i), b = root(seen.get(key));
+      if (editions.has(key)) {
+        const a = root(i), b = root(editions.get(key));
         parent[Math.max(a, b)] = Math.min(a, b);
-      } else seen.set(key, i);
+      } else editions.set(key, i);
     }
   });
   return skills.filter((_, i) => root(i) === i);
+}
+
+/** Existing edition URLs take priority. The installable folder inside each zip keeps its upstream name. */
+export function assignEditionIds(skills, previousBooks) {
+  const previous = new Map(previousBooks.map(b => [`${b.source}/${b.slug}`, b.id]));
+  const reserved = new Set(previous.values());
+  const slugs = new Set(skills.map(s => s.slug));
+  return skills.map(s => {
+    let id = previous.get(`${s.source}/${s.slug}`);
+    if (!id) {
+      id = s.slug;
+      if (reserved.has(id)) {
+        const qualified = `${s.slug}--${s.source}`;
+        id = qualified;
+        for (let n = 2; reserved.has(id) || slugs.has(id); n++) id = `${qualified}-${n}`;
+      }
+    }
+    reserved.add(id);
+    return { ...s, id };
+  });
 }

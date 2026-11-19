@@ -1,10 +1,11 @@
 import * as T from "three";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import type { LibraryRoom } from "@/lib/roomShelves";
-import { canWalk, doorHalfWidth, hallHalfWidth, layOutFloor, roomAt, walk, type Position } from "@/lib/roomFloor";
+import { canWalk, doorHalfWidth, hallHalfWidth, ladderFootprint, layOutFloor, roomAt, walk, wallPoint, wallRuns, type Position } from "@/lib/roomFloor";
+import { bindingBands } from "@/lib/jacketDesign";
 import type { Book } from "@/lib/types";
 import { playSound } from "./sound";
-import { eyeHeight, hallHeight, ladderFor, ladderSlope, railLimit, rowAtRise, rowEyeHeight, shelfSpacing } from "@/lib/roomLadder";
+import { eyeHeight, hallHeight, ladderFor, ladderSlope, railLimit, rowAtRise, shelfBase, shelfSpacing } from "@/lib/roomLadder";
 import { buildLadder } from "./libraryLadder";
 
 type SceneEvents = {
@@ -60,7 +61,11 @@ function spineTexture(book: Book) {
     ctx.fillStyle = light;
     ctx.fillRect(0, 0, 128, 512);
     ctx.fillStyle = d.accent;
-    for (const y of [38, 43, 467, 471]) ctx.fillRect(7, y, 114, 2);
+    if (d.jacket) {
+      for (const [top, height] of bindingBands(d.jacket.layout)) ctx.fillRect(0, top * 512, 128, height * 512);
+    } else {
+      for (const y of [38, 43, 467, 471]) ctx.fillRect(7, y, 114, 2);
+    }
     ctx.fillStyle = d.ink;
     ctx.textAlign = "center";
     ctx.font = "22px Georgia";
@@ -68,13 +73,36 @@ function spineTexture(book: Book) {
     ctx.save();
     ctx.translate(64, 254);
     ctx.rotate(Math.PI / 2);
-    ctx.font = "bold 34px Georgia";
+    ctx.font = d.jacket?.layout === "poster" || d.jacket?.layout === "banner" ? "bold 33px Arial" : "bold 34px Georgia";
     ctx.textBaseline = "middle";
     ctx.fillText(d.title, 0, 0, 390);
     ctx.restore();
     ctx.font = "25px Georgia";
     ctx.fillText("§", 64, 501);
   });
+}
+
+// Browsers disallow external subresources when an SVG is rasterized as an image.
+// Embed just the local illustration used by this face before sending it to WebGL.
+async function jacketImageUrl(svg: SVGElement, plate?: string) {
+  const image = svg.querySelector("image");
+  if (image && plate) {
+    try {
+      const response = await fetch(plate);
+      if (!response.ok) throw new Error("Illustration unavailable");
+      const blob = await response.blob();
+      const data = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(blob);
+      });
+      image.setAttribute("href", data);
+    } catch {
+      image.remove(); // The printed vector artwork underneath still fills the panel.
+    }
+  }
+  return URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(svg)], { type: "image/svg+xml" }));
 }
 
 function jacketTexture(book: Book, art: SVGSVGElement, ready: () => void) {
@@ -89,37 +117,36 @@ function jacketTexture(book: Book, art: SVGSVGElement, ready: () => void) {
   const copy = art.cloneNode(true) as SVGElement;
   copy.setAttribute("width", "384");
   copy.setAttribute("height", "576");
-  const url = URL.createObjectURL(
-    new Blob([new XMLSerializer().serializeToString(copy)], { type: "image/svg+xml" }),
-  );
   const img = new Image();
   img.onload = () => {
     ctx.drawImage(img, 0, 0, 384, 576);
-    URL.revokeObjectURL(url);
-    const top = d.titleAt === "top" ? 44 : 393;
-    if (d.motif === "marble") {
-      ctx.fillStyle = "#eee3d0";
-      ctx.fillRect(20, top - 19, 344, 166);
+    URL.revokeObjectURL(img.src);
+    if (!d.jacket) {
+      const top = d.titleAt === "top" ? 44 : 393;
+      if (d.motif === "marble") {
+        ctx.fillStyle = "#eee3d0";
+        ctx.fillRect(20, top - 19, 344, 166);
+      }
+      ctx.fillStyle = d.ink;
+      ctx.font = "20px Georgia";
+      ctx.fillText(book.source.author, 32, top + 9, 290);
+      ctx.fillRect(32, top + 24, 48, 2);
+      ctx.font = "42px Georgia";
+      ctx.textBaseline = "top";
+      let y = top + 37,
+        line = "";
+      for (const word of d.title.split(" ")) {
+        const next = line ? line + " " + word : word;
+        if (line && ctx.measureText(next).width > 306) {
+          ctx.fillText(line, 32, y, 310);
+          line = word;
+          y += 40;
+        } else line = next;
+      }
+      ctx.fillText(line, 32, y, 310);
+      ctx.font = "22px Georgia";
+      ctx.fillText("§", 340, 20);
     }
-    ctx.fillStyle = d.ink;
-    ctx.font = "20px Georgia";
-    ctx.fillText(book.source.author, 32, top + 9, 290);
-    ctx.fillRect(32, top + 24, 48, 2);
-    ctx.font = "42px Georgia";
-    ctx.textBaseline = "top";
-    let y = top + 37,
-      line = "";
-    for (const word of d.title.split(" ")) {
-      const next = line ? line + " " + word : word;
-      if (line && ctx.measureText(next).width > 306) {
-        ctx.fillText(line, 32, y, 310);
-        line = word;
-        y += 40;
-      } else line = next;
-    }
-    ctx.fillText(line, 32, y, 310);
-    ctx.font = "22px Georgia";
-    ctx.fillText("§", 340, 20);
     const hinge = ctx.createLinearGradient(0, 0, 23, 0);
     hinge.addColorStop(0, "#0005");
     hinge.addColorStop(0.3, "#fff2");
@@ -130,8 +157,8 @@ function jacketTexture(book: Book, art: SVGSVGElement, ready: () => void) {
     texture.needsUpdate = true;
     ready();
   };
-  img.onerror = () => URL.revokeObjectURL(url);
-  img.src = url;
+  img.onerror = () => URL.revokeObjectURL(img.src);
+  void jacketImageUrl(copy, d.jacket?.plate).then((url) => { img.src = url; });
   return texture;
 }
 
@@ -472,31 +499,45 @@ export function createRoom(
   block(0.48, 0.86, rear + 0.9, 0.29, 0.055, 0.18, brass);
   block(0.48, 1.07, rear + 0.9, 0.035, 0.42, 0.035, brass);
   block(0.48, 1.27, rear + 0.9, 0.46, 0.12, 0.2, green);
-  const tower = bays[0];
-  const rows = tower.stack.length;
-  const ladder = ladderFor(rows);
-  const rig = ladder && buildLadder(ladder.top, ladder.foot, walnut, brass, unit, geometries);
-  let slide = railLimit;
+  const rails = rooms.flatMap((room, roomIndex) => wallRuns(bays.filter(bay => bay.roomIndex === roomIndex)).map(run => {
+    const origin = run[0];
+    const cases = run.map(bay => ({
+      bay, offset: Math.hypot(bay.x - origin.x, bay.z - origin.z), firstShelf: room.shelves.indexOf(bay.stack[0]),
+    }));
+    const span = cases[cases.length - 1].offset;
+    const size = ladderFor(Math.max(...run.map(bay => bay.stack.length)));
+    const rig = buildLadder(size.top, size.foot, walnut, brass, unit, geometries);
+    const slide = span / 2 + railLimit * 0.6;
+    const parked = wallPoint(origin, slide, 0);
+    rig.carriage.rotation.y = origin.yaw;
+    rig.carriage.position.set(parked.x, 0, parked.z);
+    scene.add(rig.carriage);
+    const base = new T.Matrix4().makeRotationY(origin.yaw).setPosition(origin.x, 0, origin.z);
+    block(span / 2, size.top - 0.16, 0.68, span + 3.66, 0.065, 0.065, brass, base);
+    for (const { offset } of cases) {
+      for (const x of [-1.65, 1.65]) block(offset + x, size.top - 0.16, 0.39, 0.08, 0.10, 0.6, walnut, base);
+    }
+    return { roomIndex, origin, cases, span, size, rig, slide, obstacle: ladderFootprint(origin, slide, size.foot) };
+  }));
+  type Rail = typeof rails[number];
+  const railByBay = new Map(rails.flatMap(rail => rail.cases.map(c => [c.bay, { rail, offset: c.offset }] as const)));
+  const obstacles = rails.map(rail => rail.obstacle);
+  let mounted: Rail | null = null;
   let rise = 0;
-  let mounted = false;
   let descending = false;
   let lastRow = -1;
-  if (rig && ladder) {
-    rig.carriage.position.set(tower.x + slide, 0, tower.z);
-    scene.add(rig.carriage);
-    block(tower.x, ladder.top - 0.16, tower.z + 0.68, 3.66, 0.065, 0.065, brass);
-    for (const x of [-1.65, 0, 1.65]) block(tower.x + x, ladder.top - 0.16, tower.z + 0.39, 0.08, 0.10, 0.56, walnut);
-  }
   const pickable: T.Mesh[] = [];
-  const shelfPositions: (Position & { height: number })[][] = rooms.map(() => []);
+  const shelfPositions: (Position & { height: number; rail: Rail; offset: number })[][] = rooms.map(() => []);
   const paper = surface("#e4d6b8");
   const boards = new Map<string, T.Material>();
   const hitMaterial = register(new T.MeshBasicMaterial());
-  for (const { roomIndex, stack, x, z, yaw: angle } of bays) {
+  for (const bay of bays) {
+    const { roomIndex, stack, x, z, yaw: angle } = bay;
+    const position = railByBay.get(bay)!;
     const base = new T.Matrix4().makeRotationY(angle).setPosition(x, 0, z);
     const timber = (x: number, y: number, distance: number, w: number, h: number, d: number, m: T.Material) =>
       block(x, y, distance, w, h, d, m, base);
-    const bottom = stack.length === 1 ? 1.14 : 0.61;
+    const bottom = shelfBase(stack.length);
     const step = shelfSpacing;
     const top = bottom + stack.length * step;
     timber(0, top / 2, 0.07, 3.69, top, 0.18, dark);
@@ -513,7 +554,7 @@ export function createRoom(
     stack.forEach((shelf, row) => {
       const deck = bottom + step * row;
       const shelfIndex = shelfPositions[roomIndex].length;
-      shelfPositions[roomIndex].push({ x, z, yaw: angle, height: deck + 0.35 });
+      shelfPositions[roomIndex].push({ x, z, yaw: angle, height: deck + 0.35, ...position });
       timber(0, deck, 0.29, 3.68, 0.095, 0.48, walnut);
       timber(0, deck - 0.004, 0.54, 1.43, 0.104, 0.035, brass);
       const plaqueTexture = paintTexture(512, 48, (ctx) => {
@@ -601,31 +642,33 @@ export function createRoom(
     null;
   let walked = 0;
   let scrollRemaining = 0; // Metres of wheel travel waiting to be drawn.
-  function ladderObstacle() {
-    if (!ladder) return;
-    const x = tower.x + slide;
-    return { minX: x - 0.53, maxX: x + 0.53, minZ: tower.z + 0.55, maxZ: tower.z + ladder.foot + 0.28 };
-  }
   function placeClimber() {
-    if (!rig || !ladder) return;
-    rig.carriage.position.x = tower.x + slide;
-    // Lean beside the stile so the rungs stay in view without covering the book titles.
-    camera.position.set(rig.carriage.position.x - 0.50, eyeHeight + rise, tower.z + ladder.foot + 0.56 - rise * ladderSlope);
-    const row = rowAtRise(rise, rows);
+    if (!mounted) return;
+    const { origin, rig, size, slide, cases } = mounted;
+    const parked = wallPoint(origin, slide, 0);
+    rig.carriage.position.set(parked.x, 0, parked.z);
+    Object.assign(mounted.obstacle, ladderFootprint(origin, slide, size.foot));
+    const nearest = cases.reduce((a, b) => Math.abs(slide - a.offset) < Math.abs(slide - b.offset) ? a : b);
+    const rows = nearest.bay.stack.length;
+    // Lean beside the stile to keep its rungs and the book titles in view.
+    const eye = wallPoint(origin, slide - 0.45, size.foot + 0.62 - rise * ladderSlope);
+    camera.position.set(eye.x, eyeHeight + rise, eye.z);
+    const row = nearest.firstShelf + rowAtRise(rise, rows);
     if (row !== lastRow) {
       lastRow = row;
       events.ladder(row);
     }
   }
-  function mountLadder(height = 0) {
-    if (paused || currentRoom !== 0 || !ladder) return;
+  function mountLadder(rail: Rail, height = 0, along = rail.slide) {
+    if (paused || rail.roomIndex !== currentRoom) return;
     stop();
     flight = null;
-    mounted = true;
+    mounted = rail;
     descending = false;
-    rise = T.MathUtils.clamp(height, 0, ladder.maxRise);
-    if (height) slide = 0.50;
-    yaw = height ? 0 : 0.25;
+    lastRow = -1;
+    rise = T.MathUtils.clamp(height, 0, rail.size.maxRise);
+    rail.slide = T.MathUtils.clamp(along, -railLimit, rail.span + railLimit);
+    yaw = rail.origin.yaw + (height ? 0 : 0.18);
     pitch = height ? 0 : 0.19;
     placeClimber();
     events.hover("");
@@ -633,20 +676,27 @@ export function createRoom(
     redraw();
   }
   function stepOff() {
-    if (!mounted || !ladder) return;
-    mounted = descending = false;
+    if (!mounted) return;
+    const landing = wallPoint(mounted.origin, mounted.slide, mounted.size.foot + 0.65);
+    camera.position.set(landing.x, eyeHeight, landing.z);
+    mounted = null;
+    descending = false;
     rise = 0;
     lastRow = -1;
-    camera.position.set(tower.x + slide, eyeHeight, tower.z + ladder.foot + 0.65);
     pitch = 0;
     stop();
     events.hover("");
     events.ladder(null);
   }
   function toggleLadder() {
-    if (paused || !ladder || currentRoom !== 0) return;
+    if (paused) return;
     if (!mounted) {
-      mountLadder();
+      const inRoom = rails.filter(rail => rail.roomIndex === currentRoom);
+      const distance = (rail: Rail) => {
+        const foot = wallPoint(rail.origin, rail.slide, rail.size.foot);
+        return Math.hypot(camera.position.x - foot.x, camera.position.z - foot.z);
+      };
+      if (inRoom.length) mountLadder(inRoom.reduce((a, b) => distance(a) <= distance(b) ? a : b));
       return;
     }
     stop();
@@ -659,17 +709,22 @@ export function createRoom(
     pointer.set(((e.clientX - r.left) / r.width) * 2 - 1, (-(e.clientY - r.top) / r.height) * 2 + 1);
     ray.setFromCamera(pointer, camera);
     const book = ray.intersectObjects(pickable, false).find(({ object }) => object.userData.room === currentRoom);
-    if (rig && currentRoom === 0 && !mounted) {
-      const rung = ray.intersectObject(rig.hit, false)[0];
-      if (rung && (!book || rung.distance < book.distance)) return { label: "Use ladder", activate: toggleLadder };
+    if (!mounted) {
+      const inRoom = rails.filter(rail => rail.roomIndex === currentRoom);
+      const rung = ray.intersectObjects(inRoom.map(rail => rail.rig.hit), false)[0];
+      if (rung && (!book || rung.distance < book.distance)) {
+        const target = inRoom.find(rail => rail.rig.hit === rung.object)!;
+        return { label: "Use ladder", activate: () => mountLadder(target) };
+      }
     }
     if (!book) return;
     const volume = book.object.userData.book as Book;
     const upper = book.object.userData.upper as number | undefined;
-    if (upper !== undefined && (!mounted || Math.abs(rowEyeHeight(upper) - camera.position.y) > 1)) {
-      return { label: `Climb to ${volume.design.title}`, activate: () => mountLadder(rowEyeHeight(upper) - eyeHeight) };
+    const target = upper === undefined ? undefined : shelfPositions[currentRoom][upper];
+    if (target && (mounted !== target.rail || Math.abs(target.height - camera.position.y) > 1)) {
+      return { label: `Climb to ${volume.design.title}`, activate: () => mountLadder(target.rail, target.height - eyeHeight, target.offset + 0.45) };
     }
-    return { label: `${volume.design.title} · Open book`, activate: () => events.open(volume.id) };
+    return { label: `${volume.design.title} · ${volume.source.author} · Open book`, activate: () => events.open(volume.id) };
   }
   function redraw() {
     if (!frame && !dead && !paused) {
@@ -681,10 +736,10 @@ export function createRoom(
     const f = Number(keys.has("w") || keys.has("arrowup")) - Number(keys.has("s") || keys.has("arrowdown"));
     const strafe = Number(keys.has("d")) - Number(keys.has("a"));
     yaw += (Number(keys.has("arrowleft")) - Number(keys.has("arrowright"))) * dt * 1.6;
-    if (mounted && ladder) {
+    if (mounted) {
       const previousRise = rise;
-      rise = T.MathUtils.clamp(rise + f * dt * 1.65 + scrollStep, 0, ladder.maxRise);
-      slide = T.MathUtils.clamp(slide + strafe * dt * 1.4, -railLimit, railLimit);
+      rise = T.MathUtils.clamp(rise + f * dt * 1.65 + scrollStep, 0, mounted.size.maxRise);
+      mounted.slide = T.MathUtils.clamp(mounted.slide + strafe * dt * 2.2, -railLimit, mounted.span + railLimit);
       placeClimber();
       if (Math.floor(previousRise / 0.31) !== Math.floor(rise / 0.31)) playSound("step");
       return;
@@ -700,7 +755,7 @@ export function createRoom(
       .addScaledVector(forward, scrollStep);
     const prevX = camera.position.x,
       prevZ = camera.position.z;
-    walk(floors, camera.position, move.x, move.z, ladderObstacle());
+    walk(floors, camera.position, move.x, move.z, obstacles);
     const nextRoom = roomAt(floors, camera.position.x, camera.position.z);
     if (nextRoom !== currentRoom) {
       currentRoom = nextRoom;
@@ -759,25 +814,23 @@ export function createRoom(
   }
   function visit(index: number) {
     if (paused) return;
-    if (rooms[currentRoom].shelves[index]?.upper) {
-      mountLadder(rowEyeHeight(index) - eyeHeight);
+    const bay = shelfPositions[currentRoom][index];
+    if (bay && rooms[currentRoom].shelves[index].upper) {
+      mountLadder(bay.rail, bay.height - eyeHeight, bay.offset + 0.45);
       return;
     }
     stepOff();
-    const bay = shelfPositions[currentRoom][index];
     const entrance = floors[currentRoom].entry;
     const to = bay
       ? new T.Vector3(bay.x + Math.sin(bay.yaw) * 2.75, 1.64, bay.z + Math.cos(bay.yaw) * 2.75)
       : new T.Vector3(entrance.x, 1.63, entrance.z);
     const targetYaw = bay?.yaw ?? entrance.yaw;
-    // A shelf shortcut can start on the opposite side of a freestanding bookcase.
     // Cut directly to the shelf when a camera glide would pass through furniture.
     const steps = Math.ceil(camera.position.distanceTo(to) / 0.14);
-    const obstacle = ladderObstacle();
     for (let i = 1; i <= steps; i++) {
       const x = T.MathUtils.lerp(camera.position.x, to.x, i / steps);
       const z = T.MathUtils.lerp(camera.position.z, to.z, i / steps);
-      if (!canWalk(floors, x, z, obstacle)) {
+      if (!canWalk(floors, x, z, obstacles)) {
         camera.position.copy(to);
         yaw = targetYaw;
         break;
@@ -815,7 +868,7 @@ export function createRoom(
   const controls = new Set(["w", "a", "s", "d", "arrowup", "arrowdown", "arrowleft", "arrowright"]);
   function keyDown(e: KeyboardEvent) {
     const k = e.key.toLowerCase();
-    if (k === "e" && !e.ctrlKey && !e.metaKey && !e.altKey && currentRoom === 0 && rig) {
+    if (k === "e" && !e.ctrlKey && !e.metaKey && !e.altKey) {
       e.preventDefault();
       if (!e.repeat) toggleLadder();
       return;

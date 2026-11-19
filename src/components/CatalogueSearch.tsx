@@ -34,7 +34,7 @@ function Results({ books, hrefFor, onOpen }: BookLink & { books: Book[] }) {
       <ul className={s.results} aria-label="Matching skills">
         {books.slice(0, limit).map((book) => (
           <li key={book.id}>
-            <a href={hrefFor(book.id)} aria-label={`Read ${book.design.title}`} onClick={(event) => {
+            <a href={hrefFor(book.id)} aria-label={`Read ${book.design.title} by ${book.source.author}`} onClick={(event) => {
               if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
               event.preventDefault();
               onOpen(book.id);

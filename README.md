@@ -4,7 +4,7 @@ Agent skills, typeset and bound as books you can page through and then install. 
 
 ## Source libraries
 
-The catalogue contains 416 editions from 19 repositories. The selected GitHub Awesome Copilot, Seth Hobson, Alireza Rezvani, Android, Posit, and Resend folders contain Markdown guides and references. Their commit pins and folder lists are recorded in `sources.json`. The importer skips editions without an identified redistribution license, including `doc-coauthoring`. Each edition links to the upstream files at the revision used for its download.
+The catalogue contains 491 editions from 25 repositories. For curated Markdown-only collections, the exact commit pins and folder lists are recorded in `sources.json`. The importer skips editions without an identified redistribution license, including `doc-coauthoring`. Each edition links to the upstream files at the revision used for its download.
 
 | GitHub repository | Subject matter | Editions | License |
 |---|---|---:|---|
@@ -21,12 +21,18 @@ The catalogue contains 416 editions from 19 repositories. The selected GitHub Aw
 | [stripe/ai](https://github.com/stripe/ai) | Payments, billing and revenue operations | 12 | MIT |
 | [hashicorp/agent-skills](https://github.com/hashicorp/agent-skills) | Terraform providers, infrastructure and Packer images | 20 | MPL 2.0 |
 | [WordPress/agent-skills](https://github.com/WordPress/agent-skills) | WordPress blocks, plugins, themes and operations | 20 | GPL 2.0 or later |
-| [posit-dev/skills](https://github.com/posit-dev/skills) | Accessible charts, data publishing and R design | 6 | MIT |
-| [android/skills](https://github.com/android/skills) | Adaptive layouts, digital ink, navigation and watch widgets | 5 | Apache 2.0 |
+| [posit-dev/skills](https://github.com/posit-dev/skills) | Accessible charts, data publishing and R design | 8 | MIT |
+| [android/skills](https://github.com/android/skills) | Adaptive layouts, digital ink, navigation and watch widgets | 7 | Apache 2.0 |
 | [resend/resend-skills](https://github.com/resend/resend-skills) | Email delivery and accessibility | 1 | MIT |
 | [github/awesome-copilot](https://github.com/github/awesome-copilot) | Technical writing, testing, design and planning | 38 | MIT |
 | [wshobson/agents](https://github.com/wshobson/agents) | Accessible interfaces, data and software engineering | 36 | MIT |
-| [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) | Communication, organizational change and marketing | 8 | MIT |
+| [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) | Communication, organizational change and marketing | 11 | MIT |
+| [phuryn/pm-skills](https://github.com/phuryn/pm-skills) | Product discovery, analytics and roadmaps | 31 | MIT |
+| [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | Software design, implementation and documentation | 10 | MIT |
+| [obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills) | Linked notes, visual canvases and note databases | 3 | MIT |
+| [vuejs-ai/skills](https://github.com/vuejs-ai/skills) | Vue components, routing, state management and testing | 6 | MIT |
+| [antfu/skills](https://github.com/antfu/skills) | Vite, Vitest, VitePress, Pinia and UnoCSS | 5 | MIT |
+| [Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) | Software design, data analysis, mobile development and code review | 13 | MIT |
 
 - **Ranking:** install counts from the [skills.sh](https://skills.sh) leaderboard. Skills it doesn't list yet appear at the end of their topic.
 - Books sit together by primary task across the catalogue, shelf, and 3D room. For example, **Testing & Code Review** includes browser testing, debugging, and reviewing changes. The **Author** filter narrows any topic to a particular author. Within each topic, books follow their install rank.
@@ -45,13 +51,13 @@ npm run dev        # http://localhost:3000
 2. Run `npm run import`.
 3. Push. The new books appear with generated covers.
 
-To give books their own titles and covers, add entries in `src/lib/designs.ts`. Superpowers and Marketing Skills each use one series template there, so a whole library takes one table. Topic names and shelf order live in `src/lib/categories.ts`. File a skill by its primary task in `src/lib/classifyTopic.ts`, using the upstream repo and folder to identify the edition. An unreviewed import with a single clear topic match uses its own name and description. Ambiguous imports appear under **Awaiting Classification**.
+To give books their own titles and covers, add entries in `src/lib/designs.ts`. Series entries supply their titles and subtitles there. The edition ID and subject select a stable jacket in `src/lib/jacketDesign.ts`. Topic names and shelf order live in `src/lib/categories.ts`. File a skill by its primary task in `src/lib/classifyTopic.ts`, using the upstream repo and folder to identify the edition. An unreviewed import with a single clear topic match uses its own name and description. Ambiguous imports appear under **Awaiting Classification**.
 
 ## Keeping it up to date
 
 A GitHub Action (`.github/workflows/update-skills.yml`) runs `npm run import` every day at 06:17 UTC. If anything changed and the site still builds, it commits to `main`, and Vercel deploys that commit. You can also run it from the Actions tab.
 
-`npm run import` reads the reviewed revisions of the pinned collections, follows the default branches of the original three, and refreshes install counts. Change a pinned revision after reviewing its upstream diff. The importer requires YAML skill metadata and instructions, and packages tracked files. Duplicate folder IDs, normalized skill names, or matching instruction bodies share one edition. Source order determines which edition supplies all downloads. A successful import replaces two folders:
+`npm run import` reads the reviewed revisions of the pinned collections, follows the default branches of the original three, and refreshes install counts. Change a pinned revision after reviewing its upstream diff. The importer requires YAML skill metadata and instructions, rejects symlinks, and packages tracked files with an identified license. Within one credited author’s catalog, matching folders, skill names, or instruction bodies share one edition. Different authors can publish the same skill. Each author’s edition has a permanent reader link and download, and its ZIP retains the upstream install folder name. A successful import replaces two folders:
 
 - `content/`: the text each book is typeset from, plus `catalog.json`.
 - `public/downloads/`: `<skill>.zip`, `<skill>/SKILL.md`, `<library>-skills.zip`, and `skillpress-all.zip`. Zips are byte-identical when nothing changed, so the daily job doesn't keep re-committing them.
@@ -71,9 +77,9 @@ A GitHub Action (`.github/workflows/update-skills.yml`) runs `npm run import` ev
 
 Choose **Search** in the header to look up skills by keyword, title, publisher, topic, or words in the instructions. Results update as you type. Use **Topic** and **Author** to narrow them, then select a result to read the book. A link such as [a search for PDF extraction](https://skillpress.xyz/?q=pdf+extraction) restores the query. The full-text index is built from the same checked-in editions as the reader and loads when Search opens.
 
-Enter the Main Reading Hall to browse a selection from every matching topic. Signed doorways on the left and right open into Arts & Letters, Engineering Workshop, Research & Data, Operations Room, and Business & Commerce. Drag to look, scroll to walk, or step sideways with A/D and the on-screen arrows. Each matching edition has one physical place. The room, shelf, and volume pickers also work by keyboard and without WebGL. Small filtered collections fit entirely in the hall.
+Enter the Main Reading Hall to browse just over half the collection, arranged by topic in cases along the outside walls. Signed doorways on the left and right open into Arts & Letters, Engineering Workshop, Research & Data, Operations Room, and Business & Commerce. Drag to look, scroll to walk, or step sideways with A/D and the on-screen arrows. Each matching edition has one physical place. The room, shelf, and volume pickers also work by keyboard and without WebGL. Small filtered collections fit entirely in the hall.
 
-Select the hall’s rolling ladder or press **E** to get on. Scroll or use **W/S** to climb, use **A/D** to roll along the bookcase, and select a book to read. Press **E** or choose **Step off ladder** to return to the floor. Choosing an **Upper shelf** in the shelf picker takes you straight to that row.
+Select any wall ladder or press **E** to board the nearest one in the current room. Neighboring cases on an uninterrupted wall share a rail. Scroll or use **W/S** to climb, use **A/D** to roll along the bookcase, and select a book to read. Press **E** or choose **Step off ladder** to return to the floor. Choosing an **Upper shelf** in the shelf picker takes you straight to that row.
 
 The sound control in the masthead and reader remembers your preference on this device. In a book’s details, drag the cover or press **Turn book** to inspect its boards, spine, and printed back.
 
@@ -100,7 +106,7 @@ Direct links include `/?walk` for the walkthrough and `/?view=shelf` for the ori
 - `src/lib/library.ts`: parses frontmatter and renders the markdown on the server. Raw HTML is escaped, relative links point at GitHub, and heading ids feed the contents pages.
 - `src/lib/install.ts`: the install methods. The commands match each library's README and skills.sh.
 - `src/components/Shelf.tsx` and `Book3D.tsx`: the shelf. Each book is a CSS 3D box, and its thickness follows the word count.
-- `src/components/CoverArt.tsx`: generated SVG covers, one motif per skill.
+- `src/components/EditionJacket.tsx` prints the same jacket in the catalog, reader, and walking room. `JacketIllustration.tsx` draws the subject illustrations. `CoverArt.tsx` holds the individually art-directed original covers.
 - `src/components/useUrlState.ts`: the URL is the single source of truth for what's on screen, and the page itself is fully static.
 - `src/components/ReadingRoom.tsx` and `WalkingRoom.tsx` present the gallery and its keyboard- and touch-accessible shelf controls. The Three.js scene in `roomScene.ts` loads on entry, renders on demand, and generates bookcases from the filtered catalogue.
 - `src/components/sound.ts` synthesizes footsteps, book handling, and paper sounds locally with Web Audio.
@@ -110,7 +116,7 @@ Direct links include `/?walk` for the walkthrough and `/?view=shelf` for the ori
 
 
 <details>
-<summary>Reading Room artwork and generation prompts</summary>
+<summary>Reading Room and jacket artwork prompts</summary>
 
 The built-in ImageGen tool produced two architectural backgrounds. All book covers and spines in the room are drawn separately from the catalogue.
 
@@ -121,5 +127,11 @@ An ultra-wide, photoreal English Arts and Crafts vestibule at eye level, with ha
 **Window wall, `public/paneled-window.webp`**
 
 A square-on 2:1 elevation with a central arched window overlooking green trees, two brass sconces, and solid walnut wainscoting. Frame only the face of the wall, without shelves, books, furniture or lettering.
+
+**Illustrated jackets, `public/jackets/*.webp`**
+
+The built-in ImageGen tool generated the plate below. Each square is stored as a separate WebP so the browser only loads the artwork it displays.
+
+An original sheet of six editorial illustrations for six different nonfiction book jackets. Landscape canvas divided into a precise edge-to-edge 3-column by 2-row grid of equal square cells. Each cell is a complete standalone full-bleed print. Keep the important subject central with breathing room, no gutters, no borders, no shared elements. Top left: a burgundy and vermilion relief print of a vintage metal fountain-pen nib laying down a broad curling stroke on ivory paper. Top middle: a rich cyanotype of an open wooden card-index drawer, its layered index cards prominent in isometric perspective, bone white on deep ultramarine. Top right: a jagged faceted obsidian stone resting against folded lilac paper, a luminous brush-and-ink geological study, violet and charcoal. Bottom left: a full tree viewed together with its branching roots as a mid-century botanical woodcut, fern green and warm cream, finely incised marks. Bottom middle: an orange, ultramarine and charcoal ink screenprint of a single twisted rope that untangles into a straight clean line, dramatically simple silhouette, cream stock. Bottom right: a dark indigo and ochre editorial linocut of a tall lighthouse sending its beam across layered rolling waves at dusk. Strong silhouettes, controlled ink variation, tactile paper tooth, accomplished printmaking, compositions clear at postage-stamp size. Artwork only. No text, letters, numerals, labels, watermarks, mockup, or photograph of a book.
 
 </details>

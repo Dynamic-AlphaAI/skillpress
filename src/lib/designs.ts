@@ -1,3 +1,6 @@
+import { jacketFor, type Jacket } from "./jacketDesign";
+import type { Topic } from "./categories";
+
 /**
  * Editorial + visual design for each book. Skills imported beyond these get a
  * generated design from `designFor()` so the shelf keeps working as it grows.
@@ -29,6 +32,7 @@ export type Motif =
 export interface BookDesign {
   title: string;
   subtitle: string;
+  jacket?: Jacket;
   /** Cover board colour. */
   bg: string;
   /** Type colour on the cover and spine. */
@@ -526,6 +530,13 @@ for (const [slug, title, subtitle, topic] of marketingBooks) {
 
 // Some upstream headings are API command names or simply “Overview”.
 const coverTitles: Record<string, string> = {
+  "obsidian-markdown": "Obsidian Flavored Markdown",
+  "obsidian-bases": "Building Obsidian Bases",
+  "json-canvas": "Drawing with JSON Canvas",
+  "interview-me": "Clarifying Software Requirements",
+  "outcome-roadmap": "Outcome-Based Roadmaps",
+  "review-resume": "Reviewing a Product Manager’s Résumé",
+  "opportunity-solution-tree": "The Opportunity Solution Tree",
   "comment-code-generate-a-tutorial": "Turn Code into a Tutorial",
   "create-readme": "Writing a Project README",
   "breakdown-feature-prd": "Writing a Feature Requirements Document",
@@ -600,16 +611,6 @@ const coverTitles: Record<string, string> = {
   "huggingface-paper-publisher": "Publish a Paper on Hugging Face",
 };
 
-const fallbackPalettes: Pick<BookDesign, "bg" | "ink" | "accent">[] = [
-  { bg: "#3B4A6B", ink: "#EEE8DC", accent: "#E8A33D" },
-  { bg: "#8C3B2F", ink: "#F4EADB", accent: "#F2C49B" },
-  { bg: "#D8CFBC", ink: "#26231F", accent: "#3F6E5A" },
-  { bg: "#4E3B5C", ink: "#EFE6F0", accent: "#E5A0B8" },
-  { bg: "#B8892D", ink: "#211C14", accent: "#F6EEDC" },
-  { bg: "#22363A", ink: "#E4EDE8", accent: "#7FC2B0" },
-];
-const fallbackMotifs: Motif[] = ["grid", "branches", "lines", "network", "cells", "folds", "targets", "slides", "blocks", "steps", "bubbles", "lens", "drafts"];
-
 export function hashString(s: string): number {
   let h = 2166136261;
   for (let i = 0; i < s.length; i++) {
@@ -626,14 +627,16 @@ function titleCase(slug: string) {
     .join(" ");
 }
 
-export function designFor(slug: string, fallbackTitle?: string, fallbackSubtitle?: string): BookDesign {
-  if (designs[slug]) return designs[slug];
-  const h = hashString(slug);
+export function designFor(slug: string, topic: Topic, fallbackTitle?: string, fallbackSubtitle?: string, upstreamSlug = slug): BookDesign {
+  const original = designs[slug];
+  if (original && original.motif !== "marketing" && original.motif !== "series") return original;
+  const print = jacketFor(slug, topic, hashString(slug));
+  if (original) return { ...original, ...print };
   return {
-    title: coverTitles[slug] ?? fallbackTitle ?? titleCase(slug),
+    title: coverTitles[slug] ?? fallbackTitle ?? titleCase(upstreamSlug),
     subtitle: fallbackSubtitle ?? "A skill from the library",
-    ...fallbackPalettes[h % fallbackPalettes.length],
-    motif: fallbackMotifs[(h >>> 8) % fallbackMotifs.length],
-    titleAt: h & 1 ? "top" : "bottom",
+    motif: "grid",
+    titleAt: "top",
+    ...print,
   };
 }

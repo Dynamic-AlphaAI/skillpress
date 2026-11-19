@@ -36,7 +36,7 @@ function makeRoom(section: Section): LibraryRoom {
 function shelve(room: LibraryRoom, label: string, books: Book[]) {
   if (!books.length) return;
   room.topics.push(label);
-  const count = Math.ceil(books.length / 12);
+  const count = Math.ceil(books.length / (room.id === "hall" ? 4 : 12));
   for (let i = 0; i < count; i++) {
     const row = books.slice(Math.floor(i * books.length / count), Math.floor((i + 1) * books.length / count));
     room.shelves.push({
@@ -54,13 +54,17 @@ export function planRooms(books: Book[]): LibraryRoom[] {
   for (const category of categories) {
     const volumes = books.filter((book) => book.category === category.id);
     if (!volumes.length) continue;
-    const featured = books.length <= 12 ? volumes.length : Math.min(6, Math.ceil(volumes.length / 4));
+    const featured = books.length <= 12 ? volumes.length : Math.ceil(volumes.length * 0.55);
     shelve(hall, category.label, volumes.slice(0, featured));
     const wing = wings.find((room) => room.id === category.room)!;
     shelve(wing, category.label, volumes.slice(featured));
   }
   const rooms = [hall, ...wings.filter((room) => room.shelves.length)];
-  for (const room of rooms) room.stacks = stackShelves(room.shelves, room === hall);
-  for (const shelf of hall.stacks[0]?.slice(groundRows) ?? []) shelf.upper = true;
+  for (const room of rooms) {
+    room.stacks = stackShelves(room.shelves, room === hall);
+    for (const stack of room.stacks) {
+      for (const shelf of stack.slice(groundRows)) shelf.upper = true;
+    }
+  }
   return rooms;
 }

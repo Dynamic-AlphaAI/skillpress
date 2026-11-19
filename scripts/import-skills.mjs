@@ -21,7 +21,7 @@ import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, 
 import { tmpdir } from "node:os";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
-import { skillIdentity, uniqueSkills } from "./unique-skills.mjs";
+import { assignEditionIds, skillIdentity, uniqueSkills } from "./unique-skills.mjs";
 import { safeSourceFile, trackedSourceFile } from "./source-files.mjs";
 import { zipSync } from "fflate";
 
@@ -207,12 +207,14 @@ async function importLibrary(cleanup) {
         console.warn(`  Skipping ${source.repo}/${sourcePath}: redistribution license needs review.`);
         continue;
       }
-      skills.push({ slug, sourcePath, identity, license, source: source.id, repoDir, dir, installs: installs.get(`${source.repo}/${slug}`) ?? null, plugin: plugins.get(slug) ?? null });
+      skills.push({ slug, sourcePath, identity, license, author: source.author, source: source.id, repoDir, dir, installs: installs.get(`${source.repo}/${slug}`) ?? null, plugin: plugins.get(slug) ?? null });
     }
   }
 
   // Ranked first by installs, then the unlisted ones alphabetically.
-  const unique = uniqueSkills(skills);
+  const catalogPath = join(contentDir, "catalog.json");
+  const previous = existsSync(catalogPath) ? JSON.parse(readFileSync(catalogPath, "utf8")).books : [];
+  const unique = assignEditionIds(uniqueSkills(skills), previous);
   console.log(`Kept ${unique.length} distinct skills from ${skills.length} source folders.`);
   unique.sort((a, b) => (b.installs ?? -1) - (a.installs ?? -1) || a.slug.localeCompare(b.slug));
   const picked = unique.slice(0, count);
@@ -227,7 +229,7 @@ async function importLibrary(cleanup) {
   const perSource = Object.fromEntries(sources.map((s) => [s.id, {}]));
   const everything = {};
   const books = picked.map((skill, i) => {
-    const id = skill.slug;
+    const id = skill.id;
     const license = skill.license;
 
     const to = join(stagedSkills, id);

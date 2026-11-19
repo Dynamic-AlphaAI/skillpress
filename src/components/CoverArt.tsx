@@ -1018,6 +1018,11 @@ const motifs = {
   lens,
 };
 
+export function SeriesEmblem({ design, seed }: { design: BookDesign; seed: number }) {
+  const draw = design.motif === "marketing" ? marketing : series;
+  return draw({ a: { x: 6, y: 5, w: 168, h: 150 }, d: design, rng: mulberry32(seed) });
+}
+
 export function CoverArt({ slug, design, width = 240, height = 360 }: { slug: string; design: BookDesign; width?: number; height?: number }) {
   const rng = mulberry32(hashString(slug));
   const full = design.motif === "marble";

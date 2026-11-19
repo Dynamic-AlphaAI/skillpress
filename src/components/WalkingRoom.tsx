@@ -4,6 +4,7 @@ import { useCallback, useEffect, useEffectEvent, useMemo, useRef, useState } fro
 import { planRooms } from "@/lib/roomShelves";
 import type { Book } from "@/lib/types";
 import { createRoom } from "./roomScene";
+import { EditionJacket } from "./EditionJacket";
 import { CoverArt } from "./CoverArt";
 import { RoomPicker } from "./RoomPicker";
 import { LibraryIcon } from "./LibraryIcons";
@@ -46,7 +47,7 @@ export default function WalkingRoom({
     setPointed("");
   }, []);
   const volumeOptions = useMemo(() => volumes.map((book) => ({
-    value: book.id, label: book.design.title,
+    value: book.id, label: `${book.design.title} · ${book.source.author}`,
   })), [volumes]);
   const openBook = useEffectEvent((id: string) => {
     const index = books.findIndex((b) => b.id === id);
@@ -116,7 +117,7 @@ export default function WalkingRoom({
           bay.books.slice(0, bay.faceOutCount)
             .map((b) => (
               <span key={b.id} data-jacket={b.id}>
-                <CoverArt slug={b.id} design={b.design} />
+                {b.design.jacket ? <EditionJacket book={b} /> : <CoverArt slug={b.id} design={b.design} />}
               </span>
             )),
         ))}
@@ -125,7 +126,7 @@ export default function WalkingRoom({
         <canvas
           ref={canvas}
           tabIndex={0}
-          aria-label="Walkable library. Scroll up to walk forward or down to walk back. Use W A S D to move and left or right arrow to turn. In the hall, use E or select the ladder to mount or step off. On the ladder, scroll or use W and S to climb, and A and D to roll along the shelves. Follow the signs on the left and right of the main reading hall to enter subject rooms, or choose a room, shelf and volume below."
+          aria-label="Walkable library. Scroll up to walk forward or down to walk back. Use W A S D to move and left or right arrow to turn. Select a wall ladder, or press E for the nearest ladder. Scroll or use W and S to climb. Use A and D to roll along the wall and E to step off. Follow the signs to the subject rooms, or choose a room, shelf and volume below."
         />
         <div className={s.top}>
           <button onClick={onExit} className={s.exit}>
@@ -135,7 +136,7 @@ export default function WalkingRoom({
             <LibraryIcon name="compass" size={16} /> {room?.label ?? "Library"}{shelf && ` · ${shelf.label}`}
           </span>
         </div>
-        {!unavailable && room?.id === "hall" && room.shelves.some((row) => row.upper) && (
+        {!unavailable && room && (
           <button type="button" className={s.ladderAction} onClick={() => {
             scene.current?.toggleLadder();
             canvas.current?.focus({ preventScroll: true });

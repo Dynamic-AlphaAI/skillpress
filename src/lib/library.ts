@@ -133,6 +133,7 @@ export function loadLibrary(): Library {
     const { data, content, originalTitle, headings } = parseEdition(entry, source);
     const words = content.split(/\s+/).filter(Boolean).length;
     const description = String(data.description ?? "").trim();
+    const category = categoryFor(source.repo, entry.slug, description);
 
     return {
       id: entry.id,
@@ -142,7 +143,7 @@ export function loadLibrary(): Library {
       rank: entry.rank,
       installs: entry.installs,
       license: entry.license,
-      category: categoryFor(source.repo, entry.slug, description),
+      category,
       plugin: entry.plugin,
       download: entry.download,
       skillName: String(data.name ?? entry.slug),
@@ -154,8 +155,10 @@ export function loadLibrary(): Library {
       sourceUrl: `${source.url}/tree/${source.commit}/${skillPath(entry, source)}`,
       design: designFor(
         entry.id,
+        category,
         originalTitle && !/^(overview|introduction|instructions)$/i.test(originalTitle) ? originalTitle : undefined,
         `A field guide from ${source.author}`,
+        entry.slug,
       ),
     };
   });

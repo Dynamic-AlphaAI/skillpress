@@ -121,7 +121,7 @@ function GetSkill({ book }: { book: Book }) {
             {formatBytes(book.download.bytes)} · {book.download.files} {book.download.files === 1 ? "file" : "files"}
           </small>
         </a>
-        <a className={s.secondary} href={book.download.skillMd} download={`${book.slug}-SKILL.md`}>
+        <a className={s.secondary} href={book.download.skillMd} download={`${book.id}-SKILL.md`}>
           <span>SKILL.md only</span>
           <small>the instructions</small>
         </a>

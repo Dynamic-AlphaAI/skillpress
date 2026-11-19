@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react";
 import type { Book } from "@/lib/types";
+import { bindingBands } from "@/lib/jacketDesign";
+import { EditionJacket } from "./EditionJacket";
 import { CoverArt, SpineArt } from "./CoverArt";
 import s from "./BookParts.module.css";
 
@@ -16,6 +18,11 @@ const vars = (b: Book) =>
 
 export function Cover({ book, className }: { book: Book; className?: string }) {
   const d = book.design;
+  if (d.jacket) return (
+    <div className={`${s.cover} ${className ?? ""}`} style={vars(book)} role="img" aria-label={`${d.title} by ${book.source.author}`}>
+      <EditionJacket book={book} />
+    </div>
+  );
   const labelled = d.motif === "marble";
   return (
     <div className={`${s.cover} ${className ?? ""}`} style={vars(book)}>
@@ -37,9 +44,14 @@ export function Cover({ book, className }: { book: Book; className?: string }) {
 export function Spine({ book }: { book: Book }) {
   const d = book.design;
   return (
-    <div className={s.spine} style={vars(book)}>
+    <div className={s.spine} style={vars(book)} data-binding={d.jacket?.layout}>
       {d.patternedSpine && <SpineArt slug={book.id} design={d} />}
-      {d.series && <span className={s.spineBand} aria-hidden="true" />}
+      {d.jacket ? (
+        <svg viewBox="0 0 1 100" preserveAspectRatio="none" aria-hidden="true">
+          {bindingBands(d.jacket.layout).map(([top, height]) =>
+            <rect key={top} y={top * 100} width="1" height={height * 100} fill={d.accent} />)}
+        </svg>
+      ) : d.series && <span className={s.spineBand} aria-hidden="true" />}
       <div className={`${s.spineInner} ${d.patternedSpine ? s.spineLabelled : ""}`}>
         <span className={s.spineNo}>{String(book.rank).padStart(2, "0")}</span>
         {/* Long titles step down in size so they fit the spine instead of being cut off. */}

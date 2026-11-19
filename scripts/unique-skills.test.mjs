@@ -1,10 +1,23 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { skillIdentity, uniqueSkills } from "./unique-skills.mjs";
+import { assignEditionIds, skillIdentity, uniqueSkills } from "./unique-skills.mjs";
 
 const make = (slug, name, text) => ({
+  author: "First author",
   slug,
   identity: skillIdentity(`---\nname: ${name}\ndescription: Example\n---\n# ${slug}\n\n${text}\n`, slug),
+});
+
+test("independent authors keep editions with identical names and instructions, including their original URLs", () => {
+  const first = { ...make("compose", "compose", "First workflow."), source: "publisher-one" };
+  const second = { ...first, author: "Second author", source: "publisher-two" };
+  const third = { ...first, author: "FIRST AUTHOR", source: "other-repo" };
+  assert.deepEqual(uniqueSkills([second, first, third]), [second, first]);
+  const natural = { ...first, slug: "compose--publisher-two" };
+  const previous = [{ ...first, id: "compose" }];
+  const result = assignEditionIds([second, first, natural], previous);
+  assert.deepEqual(result.map(s => s.id), ["compose--publisher-two-2", "compose", natural.slug]);
+  assert.deepEqual(assignEditionIds([second], result), [result[0]]);
 });
 
 test("mirrors, renamed reprints and overlapping identities keep one canonical edition", () => {

@@ -1,5 +1,5 @@
 {
-  "$comment": "Each entry names a publisher and its canonical public skill directory. additionalPaths lists other public skill directories in the same repository. Source order determines which copy is kept when two sources publish the same skill. revision pins a reviewed collection to an exact Git commit. skillPaths imports only the listed Markdown-only skill folders.",
+  "$comment": "Each entry names a publisher and its canonical public skill directory. additionalPaths lists other public skill directories in the same repository. Catalog editions are distinct by credited author. Reprints by the same author use the first canonical source. revision pins a reviewed collection to an exact Git commit. skillPaths imports only the listed Markdown-only skill folders.",
   "sources": [
     {
       "id": "anthropic",
@@ -147,6 +147,8 @@
         "brand-yml",
         "ggsql/ggsql",
         "quarto/quarto-authoring",
+        "r-lib/r-lifecycle",
+        "r-lib/r-testthat",
         "r-lib/r-tidyverse-style",
         "shiny/shiny-bslib-theming"
       ]
@@ -160,10 +162,12 @@
       "authorUrl": "https://developer.android.com",
       "revision": "c72942584fff970dac86ced78b367fce0c441e52",
       "skillPaths": [
-        "system/edge-to-edge",
+        "camera/camerax",
         "jetpack-compose/adaptive",
         "jetpack-compose/ink/ink-custom-brush-builder",
         "navigation/navigation-event",
+        "system/edge-to-edge",
+        "wear/wear-compose-m3",
         "wear/wear-widgets"
       ]
     },
@@ -289,9 +293,146 @@
         "c-level-advisor/skills/change-management",
         "c-level-advisor/skills/culture-architect",
         "c-level-advisor/skills/internal-narrative",
+        "marketing-skill/skills/brand-guidelines",
         "marketing-skill/skills/business-name-fit",
+        "marketing-skill/skills/marketing-ideas",
+        "marketing-skill/skills/marketing-psychology",
         "marketing-skill/skills/marketing-strategy-pmm",
         "project-management/skills/meeting-analyzer"
+      ]
+    },
+    {
+      "id": "pm-skills",
+      "repo": "phuryn/pm-skills",
+      "path": ".",
+      "author": "Pawe\u0142 Huryn",
+      "copyright": "Pawel Huryn",
+      "authorUrl": "https://github.com/phuryn",
+      "revision": "9af7bfd0bc47fdad43c2eaa7a43cd13918e7aaef",
+      "skillPaths": [
+        "pm-data-analytics/skills/ab-test-analysis",
+        "pm-data-analytics/skills/cohort-analysis",
+        "pm-execution/skills/brainstorm-okrs",
+        "pm-execution/skills/job-stories",
+        "pm-execution/skills/outcome-roadmap",
+        "pm-execution/skills/pre-mortem",
+        "pm-execution/skills/prioritization-frameworks",
+        "pm-execution/skills/release-notes",
+        "pm-execution/skills/retro",
+        "pm-execution/skills/stakeholder-map",
+        "pm-execution/skills/summarize-meeting",
+        "pm-execution/skills/test-scenarios",
+        "pm-execution/skills/user-stories",
+        "pm-go-to-market/skills/beachhead-segment",
+        "pm-go-to-market/skills/competitive-battlecard",
+        "pm-market-research/skills/customer-journey-map",
+        "pm-market-research/skills/market-segments",
+        "pm-market-research/skills/sentiment-analysis",
+        "pm-market-research/skills/survey-design",
+        "pm-market-research/skills/user-personas",
+        "pm-marketing-growth/skills/marketing-ideas",
+        "pm-marketing-growth/skills/north-star-metric",
+        "pm-marketing-growth/skills/positioning-ideas",
+        "pm-product-discovery/skills/analyze-feature-requests",
+        "pm-product-discovery/skills/interview-script",
+        "pm-product-discovery/skills/opportunity-solution-tree",
+        "pm-product-discovery/skills/prioritize-assumptions",
+        "pm-product-discovery/skills/summarize-interview",
+        "pm-product-strategy/skills/lean-canvas",
+        "pm-product-strategy/skills/product-vision",
+        "pm-toolkit/skills/review-resume"
+      ]
+    },
+    {
+      "id": "addyosmani",
+      "repo": "addyosmani/agent-skills",
+      "path": "skills",
+      "author": "Addy Osmani",
+      "copyright": "Addy Osmani",
+      "authorUrl": "https://github.com/addyosmani",
+      "revision": "8c99fa36d90068c82d547f7c12a9d67a3e95f4ee",
+      "skillPaths": [
+        "skills/api-and-interface-design",
+        "skills/code-review-and-quality",
+        "skills/code-simplification",
+        "skills/documentation-and-adrs",
+        "skills/incremental-implementation",
+        "skills/interview-me",
+        "skills/planning-and-task-breakdown",
+        "skills/source-driven-development",
+        "skills/spec-driven-development",
+        "skills/test-driven-development"
+      ]
+    },
+    {
+      "id": "obsidian",
+      "repo": "obsidianmd/obsidian-skills",
+      "path": "plugins/obsidian/skills",
+      "author": "Obsidian",
+      "copyright": "Steph Ango (@kepano)",
+      "authorUrl": "https://github.com/obsidianmd",
+      "revision": "462a27fa456e43a68bd645fef457217326bfd369",
+      "skillPaths": [
+        "plugins/obsidian/skills/json-canvas",
+        "plugins/obsidian/skills/obsidian-bases",
+        "plugins/obsidian/skills/obsidian-markdown"
+      ]
+    },
+    {
+      "id": "vuejs-ai",
+      "repo": "vuejs-ai/skills",
+      "path": "skills",
+      "author": "Vue.js AI contributors",
+      "copyright": "hyf0, SerKo",
+      "authorUrl": "https://github.com/vuejs-ai",
+      "revision": "198f0cd8f7f9c0a3d9b566ccc16de6677519ee78",
+      "skillPaths": [
+        "skills/create-adaptable-composable",
+        "skills/vue-jsx-best-practices",
+        "skills/vue-options-api-best-practices",
+        "skills/vue-pinia-best-practices",
+        "skills/vue-router-best-practices",
+        "skills/vue-testing-best-practices"
+      ]
+    },
+    {
+      "id": "antfu",
+      "repo": "antfu/skills",
+      "path": "skills",
+      "author": "Anthony Fu",
+      "copyright": "Anthony Fu",
+      "authorUrl": "https://github.com/antfu",
+      "revision": "4a6bb39e7b45e26402eb215393c51ccf5df1ca4c",
+      "skillPaths": [
+        "skills/pinia",
+        "skills/unocss",
+        "skills/vite",
+        "skills/vitepress",
+        "skills/vitest"
+      ]
+    },
+    {
+      "id": "jeffallan",
+      "repo": "Jeffallan/claude-skills",
+      "path": "skills",
+      "author": "Jeff Allan",
+      "copyright": "Jeff Allan and contributors",
+      "authorUrl": "https://github.com/Jeffallan",
+      "revision": "67c1961b180dc92cf08983344627109e983e8f51",
+      "skillPaths": [
+        "skills/cli-developer",
+        "skills/code-documenter",
+        "skills/code-reviewer",
+        "skills/flutter-expert",
+        "skills/game-developer",
+        "skills/graphql-architect",
+        "skills/kotlin-specialist",
+        "skills/legacy-modernizer",
+        "skills/pandas-pro",
+        "skills/rust-engineer",
+        "skills/spark-engineer",
+        "skills/spec-miner",
+        "skills/the-fool"
       ]
     }
   ]
