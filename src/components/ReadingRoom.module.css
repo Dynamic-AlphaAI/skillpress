@@ -239,6 +239,23 @@
   opacity: 0.35;
   cursor: default;
 }
+.visitors {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8em;
+  margin-top: 18px;
+  color: #514f44;
+  font: 12px/1.5 var(--font-mono), monospace;
+}
+.visitors small {
+  color: #646252;
+  font-size: 10px;
+}
+.visitors strong {
+  color: #34392d;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
 .walkFrame,
 .loading {
   position: relative;

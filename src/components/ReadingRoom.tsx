@@ -9,6 +9,7 @@ import { TopicFilters } from "./TopicFilters";
 import type { Book, Library } from "@/lib/types";
 import { Book3D } from "./Book3D";
 import { LibraryIcon } from "./LibraryIcons";
+import { VisitorCounter } from "./VisitorCounter";
 import { bookThickness } from "./Shelf";
 import { playSound } from "./sound";
 import s from "./ReadingRoom.module.css";
@@ -198,6 +199,7 @@ export function ReadingRoom({
             </button>
           </div>
         </div>
+        <VisitorCounter />
       </section>
     </main>
   );
