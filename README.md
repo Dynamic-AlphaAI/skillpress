@@ -4,7 +4,7 @@ Agent skills, typeset and bound as books you can page through and then install. 
 
 ## Source libraries
 
-The catalogue contains **745 editions from 54 GitHub repositories**. Its 19 topic collections share 11 rooms and 144 occupied shelves. The main hall holds 566 editions across 119 shelves in 17 wall cases. Choose a topic first, then narrow by author or AI platform. Book notes show the publisher’s intended host or documented compatibility. [Collection guide and source review](docs/collections.md)
+The catalogue contains **745 editions from 54 GitHub repositories**. Its 19 topic collections share 11 rooms and 144 occupied shelves. The main hall holds 566 editions across 119 shelves in 24 wall cases. Twelve low cases let you browse from the floor, and twelve taller cases have rolling ladders. Choose a topic first, then narrow by author or AI platform. Book notes show the publisher’s intended host or documented compatibility. [Collection guide and source review](docs/collections.md)
 
 | GitHub repository | Subject matter | Editions | License |
 |---|---|---:|---|

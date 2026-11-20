@@ -35,6 +35,7 @@ export default function WalkingRoom({
   const [selection, setSelection] = useState("");
   const [pointed, setPointed] = useState("");
   const [onLadder, setOnLadder] = useState(false);
+  const [ladderAvailable, setLadderAvailable] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
   const rooms = useMemo(() => planRooms(books), [books]);
   const jacketArt = useMemo(() => rooms.flatMap(section => section.shelves.flatMap(shelf =>
@@ -45,7 +46,7 @@ export default function WalkingRoom({
     )),
   )), [rooms]);
   const room = rooms[roomIndex] ?? rooms[0];
-  const hasLadder = !unavailable && room?.shelves.some(row => row.upper);
+  const hasLadder = !unavailable && ladderAvailable;
   const shelf = room?.shelves[destination];
   const volumes = useMemo(() => shelf?.books ?? room?.shelves.flatMap((row) => row.books) ?? [], [shelf, room]);
   const chosen = volumes.find((b) => b.id === selection) ?? volumes[0];
@@ -90,6 +91,7 @@ export default function WalkingRoom({
     try {
       const world = createRoom(canvas.current, rooms, jackets.current!, {
         enterRoom,
+        ladderAvailable: setLadderAvailable,
         ladder: (row) => {
           setOnLadder(row !== null);
           setDestination(row ?? -1);

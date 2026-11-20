@@ -1,4 +1,5 @@
 import { groundRows, stackShelves } from "./roomLadder.ts";
+import { hallCaseCount, layOutFloor, type RoomFloor } from "./roomFloor.ts";
 import { categories } from "./categories.ts";
 import type { Book } from "./types";
 
@@ -30,15 +31,18 @@ export interface LibraryRoom {
   shelves: RoomShelf[];
   topics: string[];
   stacks: RoomShelf[][];
+  floor: RoomFloor;
 }
 
 type Section = Pick<LibraryRoom, "id" | "label" | "paint" | "runner">;
 
-function makeRoom(section: Section): LibraryRoom {
-  return { ...section, shelves: [], topics: [], stacks: [] };
+type RoomContents = Omit<LibraryRoom, "stacks" | "floor">;
+
+function makeRoom(section: Section): RoomContents {
+  return { ...section, shelves: [], topics: [] };
 }
 
-function shelve(room: LibraryRoom, label: string, books: Book[]) {
+function shelve(room: RoomContents, label: string, books: Book[]) {
   if (!books.length) return;
   room.topics.push(label);
   const count = Math.ceil(books.length / (room.id === "hall" ? 5 : 12));
@@ -70,11 +74,15 @@ export function planRooms(books: Book[]): LibraryRoom[] {
     shelve(wing, category.label, wingBooks);
   }
   const rooms = [hall, ...wings.filter((room) => room.shelves.length)];
-  for (const room of rooms) {
-    room.stacks = stackShelves(room.shelves, room === hall);
-    for (const stack of room.stacks) {
+  const floors = layOutFloor(rooms.map(room => room === hall
+    ? hallCaseCount(room.shelves.length, rooms.length - 1)
+    : Math.ceil(room.shelves.length / 4)));
+  return rooms.map((room, i) => {
+    const floor = floors[i];
+    const stacks = stackShelves(room.shelves, floor.bays);
+    for (const stack of stacks) {
       for (const shelf of stack.slice(groundRows)) shelf.upper = true;
     }
-  }
-  return rooms;
+    return { ...room, floor, stacks };
+  });
 }

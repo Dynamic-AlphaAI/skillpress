@@ -9,7 +9,8 @@ import { parseState, serializeState } from "../src/lib/browseState.ts";
 import { categories } from "../src/lib/categories.ts";
 import { categoryFor } from "../src/lib/classifyTopic.ts";
 import { collectionCredit, inCollection, platforms, providerNote, scopeLibrary } from "../src/lib/platforms.ts";
-import { canWalk, hallHalfWidth, layOutFloor, roomAt, walk } from "../src/lib/roomFloor.ts";
+import { canWalk, doorHalfWidth, hallHalfWidth, ladderRuns, roomAt, walk } from "../src/lib/roomFloor.ts";
+import { groundRows } from "../src/lib/roomLadder.ts";
 import { planRooms } from "../src/lib/roomShelves.ts";
 
 const catalog = JSON.parse(readFileSync("content/catalog.json"));
@@ -129,6 +130,32 @@ test("the hall draws from across each topic and keeps small collections together
   for (const id of ["pm-skills", "dbt-skills", "ui-skills"]) assert.ok(main.some(b => b.source.id === id), id);
 });
 
+test("both main hall walls have stocked cases in every span from the entrance past the last doorway", () => {
+  const [hall, ...wings] = planRooms(books);
+  const bays = hall.floor.bays.map((bay, i) => ({ ...bay, stack: hall.stacks[i] }));
+  const onRails = new Set(ladderRuns(bays).flat());
+  for (const side of [-1, 1]) {
+    const doors = wings.map(room => room.floor).filter(floor => floor.side === side).map(floor => floor.doorZ).sort((a, b) => a - b);
+    const wall = bays.filter(bay => bay.yaw === -side * Math.PI / 2);
+    const ends = [hall.floor.minZ, ...doors, hall.floor.maxZ];
+    for (let i = 1; i < ends.length; i++) {
+      const here = wall.filter(bay => bay.z > ends[i - 1] && bay.z < ends[i]).sort((a, b) => a.z - b.z);
+      assert.ok(here.length >= (i === 1 || i === ends.length - 1 ? 1 : 2), `Empty wall space on side ${side}, span ${i}`);
+      for (const [j, bay] of here.entries()) {
+        assert.ok(doors.every(z => Math.abs(z - bay.z) >= doorHalfWidth + 1.9 + 0.18));
+        if (j) assert.ok(bay.z - here[j - 1].z >= 3.8);
+      }
+    }
+    assert.ok(wall.some(bay => bay.stack.length <= groundRows));
+    assert.ok(wall.some(bay => bay.stack.length > groundRows));
+  }
+  for (const bay of bays) {
+    assert.ok(bay.stack.length > 0 && bay.stack.every(row => row.books.length));
+    assert.equal(onRails.has(bay), bay.stack.length > groundRows);
+    assert.deepEqual(bay.stack.map(row => !!row.upper), bay.stack.map((_, i) => i >= groundRows));
+  }
+});
+
 test("the full building and each platform floor shelve every book once and have reachable rooms", () => {
   for (const id of ["all", ...platforms.map(p => p.id)]) {
     const scope = scopeLibrary(library, id);
@@ -136,7 +163,7 @@ test("the full building and each platform floor shelve every book once and have 
     if (id === "all") assert.ok(rooms.length >= 11);
     const shelved = rooms.flatMap(r => r.stacks.flat(2).flatMap(s => s.books.map(b => b.id)));
     assert.deepEqual(shelved.sort(), scope.books.map(b => b.id).sort());
-    const floors = layOutFloor(rooms.map(r => r.stacks.length));
+    const floors = rooms.map(room => room.floor);
     for (const [index, room] of rooms.entries()) {
       assert.ok(room.shelves.every(s => s.books.length > 0));
       const floor = floors[index];

@@ -36,12 +36,14 @@ test("the entrance and every shelf viewing position are accessible across differ
   }
 });
 
-test("a large wheel step stops at the featured bookcases and the window table", () => {
-  const floors = layOutFloor([5, 2, 2]);
-  for (const bay of floors[0].bays.slice(0, 2)) {
-    const visitor = { x: bay.x, z: floors[0].entry.z };
-    walk(floors, visitor, 0, -80);
-    assert.ok(visitor.z > bay.z);
+test("a large wheel step stops in front of both end walls' bookcases and the window table", () => {
+  const floors = layOutFloor([8, 2, 2]);
+  const endCases = floors[0].bays.filter(bay => bay.yaw === 0 || bay.yaw === Math.PI);
+  assert.equal(endCases.length, 4);
+  for (const bay of endCases) {
+    const visitor = { x: bay.x, z: 0 };
+    walk(floors, visitor, 0, Math.sign(bay.z) * 80);
+    assert.ok(Math.abs(visitor.z - bay.z) >= 0.88);
   }
   const visitor = { ...floors[0].entry };
   walk(floors, visitor, 0, -80);

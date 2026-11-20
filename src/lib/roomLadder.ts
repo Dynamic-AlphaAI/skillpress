@@ -8,12 +8,19 @@ export const ladderSlope = 0.145;
 export const shelfBase = (rows: number) => rows === 1 ? 1.55 : 0.61;
 export const rowEyeHeight = (row: number, rows: number) => shelfBase(rows) + row * shelfSpacing + 0.35;
 
-/** Balance rows across wall cases while keeping the catalogue order. */
-export function stackShelves<T>(shelves: T[], hall: boolean): T[][] {
-  const count = Math.ceil(shelves.length / (hall ? 7 : 4));
-  return Array.from({ length: count }, (_, i) => shelves.slice(
-    Math.floor(i * shelves.length / count), Math.floor((i + 1) * shelves.length / count),
-  ));
+/** Fill every case from the floor first, then add upper rows only to the tall cases. */
+export function stackShelves<T>(shelves: T[], cases: readonly { low?: boolean }[]): T[][] {
+  const lower = Math.min(shelves.length, cases.length * groundRows);
+  const upper = shelves.length - lower;
+  const tallCount = cases.filter(bay => !bay.low).length;
+  const share = (rows: number, count: number, i: number) => Math.floor(rows / count) + Number(i < rows % count);
+  let cursor = 0, tallIndex = 0;
+  return cases.map((bay, i) => {
+    const start = cursor;
+    cursor += share(lower, cases.length, i);
+    if (!bay.low) cursor += share(upper, tallCount, tallIndex++);
+    return shelves.slice(start, cursor);
+  });
 }
 
 export function ladderFor(rows: number) {

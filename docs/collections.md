@@ -4,6 +4,8 @@ Choose a topic above the catalogue to browse what a skill does. Each edition has
 
 The main hall displays up to five editions per row. It draws three of every four editions within each ranked topic, giving newer and unranked titles a place near the entrance. The fourth goes to its subject room. Filtered collections of twelve editions or fewer fit entirely in the hall.
 
+Bookcases line both sides of the main aisle, with paired cases between adjacent doorways and cases flanking the windows at either end. Low cases have up to three rows you can browse from the floor. Rolling ladders serve the taller cases and stop clear of the doors. When a filter leaves fewer books, the hall spreads occupied cases along its walls.
+
 ## AI platform filters
 
 A **Built for** note identifies a host explicitly targeted by the publisher. A **Works with** note lists documented hosts when there is no designated primary host. A book’s subject alone does not establish compatibility. Shared platform links remain available below.

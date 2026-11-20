@@ -1,15 +1,16 @@
 import * as T from "three";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import type { LibraryRoom } from "@/lib/roomShelves";
-import { canWalk, doorHalfWidth, hallHalfWidth, ladderFootprint, ladderRuns, layOutFloor, roomAt, walk, wallPoint, type Position } from "@/lib/roomFloor";
+import { canWalk, doorHalfWidth, hallHalfWidth, ladderFootprint, ladderRuns, roomAt, walk, wallPoint, wallRectangle, type Position } from "@/lib/roomFloor";
 import { bindingBands } from "@/lib/jacketDesign";
 import type { Book } from "@/lib/types";
 import { playSound } from "./sound";
-import { eyeHeight, hallHeight, ladderFor, ladderSlope, railLimit, rowAtRise, shelfBase, shelfSpacing } from "@/lib/roomLadder";
+import { eyeHeight, groundRows, hallHeight, ladderFor, ladderSlope, railLimit, rowAtRise, shelfBase, shelfSpacing } from "@/lib/roomLadder";
 import { buildLadder } from "./libraryLadder";
 
 type SceneEvents = {
   ladder: (shelf: number | null) => void;
+  ladderAvailable: (available: boolean) => void;
   enterRoom: (index: number) => void;
   open: (id: string) => void;
   hover: (title: string) => void;
@@ -180,7 +181,7 @@ export function createRoom(
   scene.fog = new T.FogExp2("#a48d70", 0.026);
   const camera = new T.PerspectiveCamera(61, 1, 0.055, 65);
   camera.rotation.order = "YXZ";
-  const floors = layOutFloor(rooms.map((room) => room.stacks.length));
+  const floors = rooms.map(room => room.floor);
   const hall = floors[0];
   const front = hall.maxZ;
   const rear = hall.minZ;
@@ -528,7 +529,11 @@ export function createRoom(
   type Rail = typeof rails[number];
   const railByBay = new Map(rails.flatMap(rail => rail.cases.map(c => [c.bay, { rail, offset: c.offset }] as const)));
   const obstacles = rails.map(rail => rail.obstacle);
+  const caseFronts = rooms.map(room => room.floor.bays.map((bay, i) => ({
+    ...wallRectangle(bay, -1.9, 1.9, 0, 3.1), yaw: bay.yaw, tall: room.stacks[i].length > groundRows,
+  })));
   let mounted: Rail | null = null;
+  let ladderAvailable: boolean | undefined;
   let rise = 0;
   let descending = false;
   let lastRow = -1;
@@ -700,8 +705,24 @@ export function createRoom(
     events.hover("");
     events.ladder(null);
   }
+  function canUseLadder() {
+    if (mounted) return true;
+    if (!railsByRoom[currentRoom].length) return false;
+    const { x, z } = camera.position;
+    let bestFacing = -Infinity, available = true;
+    for (const bay of caseFronts[currentRoom]) {
+      if (x < bay.minX || x > bay.maxX || z < bay.minZ || z > bay.maxZ) continue;
+      // At a corner two cases can be in reach. Use the one the reader faces.
+      const facing = Math.cos(yaw - bay.yaw);
+      if (facing > bestFacing) {
+        bestFacing = facing;
+        available = bay.tall;
+      }
+    }
+    return available;
+  }
   function toggleLadder() {
-    if (paused) return;
+    if (paused || !canUseLadder()) return;
     if (!mounted) {
       const inRoom = railsByRoom[currentRoom];
       const distance = (rail: Rail) => {
@@ -806,6 +827,11 @@ export function createRoom(
       moveCamera(dt, T.MathUtils.clamp(f + stickForward, -1, 1), strafe, T.MathUtils.clamp(turn + stickTurn, -1, 1), scrollStep);
     }
     camera.rotation.set(pitch, yaw, 0, "YXZ");
+    const available = canUseLadder();
+    if (available !== ladderAvailable) {
+      ladderAvailable = available;
+      events.ladderAvailable(available);
+    }
     renderer.render(scene, camera);
     if (flight || descending || keys.size || scrollRemaining || stickTurn || stickForward) frame = requestAnimationFrame(render);
   }

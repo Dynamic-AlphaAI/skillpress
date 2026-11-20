@@ -87,6 +87,18 @@ try {
   const shelf = page.getByRole("combobox", { name: "Visit a shelf" });
   const useLadder = page.getByRole("button", { name: "Use ladder", exact: true });
   const stepOff = page.getByRole("button", { name: "Step off ladder" });
+  // Walk right to the low case beside the entrance, then try the ladder shortcut there.
+  const stepRight = page.getByRole("button", { name: "Step right", exact: true });
+  for (let i = 0; i < 8; i++) await stepRight.click();
+  await useLadder.waitFor({ state: "hidden" });
+  const lowCasePosition = await groundPosition();
+  assert.ok(lowCasePosition.x > 3.3);
+  await canvas.press("e");
+  assert.deepEqual(await groundPosition(), lowCasePosition);
+  assert.equal(await stepOff.count(), 0);
+  const stepLeft = page.getByRole("button", { name: "Step left", exact: true });
+  for (let i = 0; i < 8; i++) await stepLeft.press("Enter");
+  await useLadder.waitFor();
   for (const name of names) {
     await room.click();
     await page.getByRole("option", { name, exact: true }).click();
@@ -125,8 +137,8 @@ try {
   console.log(`Walked ${names.length} rooms and counted ${physical} physical editions.`);
 
   // Verify the analog control against the actual camera, including its motion after release.
-  await page.goto(base + "/?platform=deepseek");
-  await page.waitForFunction(() => document.querySelector('select[aria-label="AI platform"]')?.value === "deepseek");
+  await page.goto(base + "/?platform=codex");
+  await page.waitForFunction(() => document.querySelector('select[aria-label="AI platform"]')?.value === "codex");
   await page.getByRole("button", { name: "Enter library in expanded view" }).click();
   const expanded = page.locator("dialog:modal");
   await expanded.waitFor();

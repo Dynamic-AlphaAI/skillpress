@@ -1,19 +1,22 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { hallHeight, eyeHeight, groundRows, ladderFor, railLimit, rowAtRise, rowEyeHeight, stackShelves } from "../src/lib/roomLadder.ts";
-import { canWalk, doorHalfWidth, ladderFootprint, ladderRuns, layOutFloor, walk, wallPoint } from "../src/lib/roomFloor.ts";
+import { canWalk, doorHalfWidth, hallCaseCount, ladderFootprint, ladderRuns, layOutFloor, walk, wallPoint } from "../src/lib/roomFloor.ts";
 
 test("balanced cases keep each real shelf once and respect both ceiling heights", () => {
-  for (let count = 0; count <= 100; count++) {
+  for (let count = 0; count <= 260; count++) {
     const shelves = Array.from({ length: count }, (_, i) => i);
-    for (const hall of [true, false]) {
-      const stacks = stackShelves(shelves, hall);
+    const halls = [0, 1, 5, 10].map(wings => layOutFloor([hallCaseCount(count, wings), ...Array(wings).fill(1)])[0]);
+    const wing = layOutFloor([1, Math.ceil(count / 4)])[1];
+    for (const floor of [...halls, wing]) {
+      const stacks = stackShelves(shelves, floor.bays);
       assert.deepEqual(stacks.flat(), shelves);
-      for (const stack of stacks) {
-        assert.ok(stack.length > 0 && stack.length <= (hall ? 8 : 4));
+      for (const [i, stack] of stacks.entries()) {
+        assert.ok(stack.length > 0 && stack.length <= (floor.side ? 4 : 7));
+        if (floor.bays[i].low) assert.ok(stack.length <= groundRows);
         if (stack.length <= groundRows) continue;
         const ladder = ladderFor(stack.length);
-        assert.ok(ladder.top < (hall ? hallHeight : 4.1));
+        assert.ok(ladder.top < (floor.side ? 4.1 : hallHeight));
         assert.ok(ladder.maxRise > 0 && ladder.maxRise + eyeHeight < ladder.top);
         for (let row = groundRows; row < stack.length; row++) {
           const rise = rowEyeHeight(row, stack.length) - eyeHeight;
@@ -34,7 +37,7 @@ test("only cases with upper shelves carry a ladder, and a low case splits the ra
 });
 
 test("rails run along outside walls and stop before doorways", () => {
-  const floors = layOutFloor([14, 7, 6, 2, 3, 1]);
+  const floors = layOutFloor([16, 7, 6, 2, 3, 1]);
   const hall = floors[0];
   const rails = floor => ladderRuns(floor.bays.map(bay => ({ ...bay, stack: Array(floor.side ? 4 : 8).fill(null) })));
   const runs = rails(hall);
@@ -53,7 +56,7 @@ test("rails run along outside walls and stop before doorways", () => {
         const landing = wallPoint(origin, slide, foot + 0.65);
         const obstacles = [ladderFootprint(origin, slide, foot)];
         assert.ok(canWalk(floors, landing.x, landing.z, obstacles));
-        if (!floor.side && origin.yaw !== 0) {
+        if (!floor.side && Math.abs(origin.yaw) === Math.PI / 2) {
           for (const wing of floors.slice(1)) {
             if (wing.side === Math.sign(origin.x)) assert.ok(Math.abs(landing.z-wing.doorZ) > doorHalfWidth + 0.5);
           }
