@@ -53,6 +53,23 @@ These 20 repositories contributed 134 editions. The stars below are a GitHub sna
 | [anthropics/financial-services](https://github.com/anthropics/financial-services/tree/3e32c2287dcb637c184c01cc0ad82d6af7e9bb0f) | 41,403 | 4 | Apache-2.0 | Spreadsheet audits, earnings and variance analysis |
 | [mongodb/agent-skills](https://github.com/mongodb/agent-skills/tree/ff9a88211c5a9fa74012bfa8b797132d510f9b44) | 206 | 4 | Apache-2.0 | MongoDB schemas, query tuning and streams |
 
+## The November 20 marketing and analytics review
+
+Ten nominated repositories yielded 67 new editions from six sources. The table links to the exact revisions reviewed. All six additions use MIT terms for the selected folders. Reading and downloading the books requires no service connection. Running some workflows in an agent requires the tools below.
+
+| Pinned publisher | Editions | Using the workflows |
+|---|---:|---|
+| [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo/tree/468ed5b0d9e3249394783710e54abb02837e326b) | 17 | Some workflows use the Claude SEO plugin’s local checks and reference data. Install the upstream plugin to run those checks. |
+| [every-app/open-seo](https://github.com/every-app/open-seo/tree/af3f995fe3ebbe21298df152465a5436842354ee) | 12 | Live research uses an OpenSEO project and its MCP connection. Self-hosted DataForSEO lookups use your provider account and can incur charges. |
+| [ScrapeCreators/social-media-research-skills](https://github.com/ScrapeCreators/social-media-research-skills/tree/64ba7b4dea71e130d2712ffb6c1c1024b3b7c4b2) | 13 | Running live social research uses a ScrapeCreators API key and credits in your own agent. |
+| [TheCraigHewitt/seomachine](https://github.com/TheCraigHewitt/seomachine/tree/120e7b46dc07c98382cd4f68ac5b6515ab9f2604) | 1 | Growth Lead can work from the business goals, constraints and metrics you provide. |
+| [Ryze-AI-Adgent/open-seo-mcp-skills](https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills/tree/f587b0a69dc1ed92b65cdb241e4f14985b1031fd) | 8 | Live reports use the Ryze MCP connector and authorized data sources such as Google Search Console, GA4 or Google Ads. |
+| [PostHog/posthog](https://github.com/PostHog/posthog/tree/b7bb6c25dda489af1b71f2da4e3e9a7037f2ff8d) | 16 | These workflows use PostHog product tools and project data. Some need features such as experiments, heatmaps or AI visibility enabled in your PostHog project. |
+
+All 53 current skill names in [Corey Haines’s repository](https://github.com/coreyhaines31/marketingskills/tree/5b2b400eec1e7e1cec76245a715d0b0d4fd2a9c1) already had editions. Of [SEO Machine’s 26 skill files](https://github.com/TheCraigHewitt/seomachine/tree/120e7b46dc07c98382cd4f68ac5b6515ab9f2604/.claude/skills), 25 match [Corey’s earlier source files](https://github.com/coreyhaines31/marketingskills/tree/a04cb61a577a20d9ab0f3da2a2d99c17a0476ded/skills) byte for byte. Growth Lead is the distinct addition. Independent keyword research editions from OpenSEO and Ryze have their own credits and downloads.
+
+[Postiz](https://github.com/gitroomhq/postiz-app/tree/6be4874631fea453f99115a78fd543c71820ab45), [Umami](https://github.com/umami-software/umami/tree/aad2c4cedd5c0b3bc4d361843830a0bb47cf79c4) and [listmonk](https://github.com/knadh/listmonk/tree/e735e0b23421192a4c1b18b6221f4708b872fcd5) had no tracked `SKILL.md` files. For PostHog, the selected product folders are outside its separately licensed enterprise tree. For Claude SEO, each archive retains the skill’s local copyright notice when present and includes the full root MIT terms. The SEO Content Brief edition credits its named contributor, puneetindersingh.
+
 ## Reviewing and reproducing an import
 
 1. Verify the canonical repository, publisher and immutable commit. Inspect each candidate’s instructions, references, metadata and nearest license. Keep distinct authors’ editions. Skip reprints, redirect stubs, unlicensed material and folders with unreviewed executable files.

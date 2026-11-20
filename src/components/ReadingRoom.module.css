@@ -77,8 +77,14 @@
     serif;
   color: #f0e9d9;
 }
+.entranceActions { display: flex; align-items: stretch; gap: 8px; margin-top: 25px; }
+.expandEntrance {
+  display: grid; place-items: center; width: 44px;
+  color: #fff6de; background: #25271f60; border: 1px solid #f4edda9c; border-radius: 3px; cursor: pointer;
+}
+.expandEntrance:hover { background: #25271fa8; }
+.expandEntrance:focus-visible { outline: 2px solid #fff6de; outline-offset: 3px; }
 .enter {
-  margin-top: 25px;
   display: inline-flex;
   align-items: center;
   gap: 10px;

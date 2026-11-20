@@ -1,9 +1,31 @@
 .room {
+  position: relative;
+  inset: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  max-width: none;
+  max-height: none;
+  box-sizing: border-box;
+  color: #f9f3e4;
+  background: #252b22;
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
   width: 100%;
   height: 100%;
 }
+.room:modal {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: calc(100% - clamp(12px, 4vw, 64px));
+  height: calc(100dvh - clamp(16px, 5dvh, 64px));
+  border: 1px solid #a29470;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 18px 80px #0009;
+}
+.room::backdrop { background: #11130fbd; }
 .viewport {
   position: relative;
   min-height: 0;
@@ -24,8 +46,7 @@
   outline-offset: -2px;
 }
 .top,
-.instructions,
-.pad {
+.instructions {
   position: absolute;
   display: flex;
   align-items: center;
@@ -43,28 +64,34 @@
   pointer-events: none;
   z-index: 1;
 }
-.top span,
+.roomName,
 .exit,
-.instructions,
-.pad button {
+.resize,
+.instructions {
   background: #24261cdd;
   border: 1px solid #ded5ad4d;
   border-radius: 3px;
 }
-.top span,
-.exit {
+.roomName,
+.exit,
+.resize {
   display: inline-flex;
   align-items: center;
   gap: 7px;
   padding: 9px 11px;
 }
 .exit,
-.pad button {
+.resize {
   color: inherit;
   font: inherit;
   cursor: pointer;
   pointer-events: auto;
 }
+.roomName { margin-left: auto; min-width: 0; }
+.roomName span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.roomName svg, .exit, .resize { flex-shrink: 0; }
+.resize { justify-content: center; min-width: 38px; min-height: 35px; padding: 5px; }
+.resize:focus-visible, .exit:focus-visible { outline: 2px solid #f6d694; outline-offset: 2px; }
 .ladderAction {
   position: absolute;
   top: 57px;
@@ -86,6 +113,7 @@
   bottom: 15px;
   left: 16px;
   padding: 8px 11px;
+  max-width: calc(100% - 140px);
   font-size: 10px;
   pointer-events: none;
 }
@@ -93,18 +121,41 @@
   content: "·";
   margin-right: 8px;
 }
-.pad {
-  bottom: 15px;
-  right: 16px;
-  gap: 4px;
+.movement {
+  position: absolute; right: 18px; bottom: 9px;
+  display: grid; justify-items: center;
+  user-select: none; -webkit-user-select: none; touch-action: none;
 }
-.pad button {
-  width: 37px;
-  height: 35px;
-  font-size: 19px;
-  touch-action: none;
-  user-select: none;
+.stick {
+  position: relative; display: grid; place-items: center;
+  width: 80px; height: 80px; border-radius: 50%;
+  border: 1px solid #fff4d6ae;
+  background: transparent;
+  box-shadow: 0 0 0 1px #24231966, inset 0 0 0 3px #f5edd51c;
+  cursor: grab; touch-action: none; -webkit-tap-highlight-color: transparent;
 }
+.stick:active { cursor: grabbing; }
+.knob {
+  width: 43%; height: 43%; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle at 36% 27%, #65664e, #36392d 58%, #22251c);
+  border: 1px solid #d6ccaa; box-shadow: 0 2px 4px #17180f73;
+  transform: translate(var(--stick-x, 0px), var(--stick-y, 0px));
+}
+.sideSteps { display: flex; justify-content: center; }
+.sideSteps button {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  padding: 0; border: 0; border-radius: 4px; color: #fff9e6; background: transparent;
+  touch-action: none; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.sideSteps button span {
+  display: grid; place-items: center; width: 31px; height: 22px;
+  border: 1px solid #fff3d68c; border-radius: 12px;
+  background: #20231830; box-shadow: 0 1px 2px #13150f55;
+}
+.sideSteps svg { filter: drop-shadow(0 1px 1px #14160e); }
+.sideSteps button:active span { background: #2a2d2170; }
+.stick:focus-visible, .sideSteps button:focus-visible { outline: 2px solid #f6d694; outline-offset: 2px; }
+.controlHelp { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .desk {
   display: grid;
   grid-template-columns: minmax(0, 15rem) minmax(0, 18rem) minmax(0, 25rem) max-content;
@@ -271,23 +322,23 @@
   .choice { min-height: 44px; }
   .ladderAction { left: 10px; min-height: 44px; }
   .instructions {
-    bottom: 66px;
+    bottom: 15px;
     left: 10px;
     font-size: 9px;
   }
-  .instructions span:nth-child(2) {
+  .instructions span:not(:first-child) {
     display: none;
   }
-  .pad {
-    left: 10px;
-    right: auto;
-  }
-  .pad button {
-    width: 44px;
-    height: 44px;
-  }
+  .movement { right: 10px; bottom: 4px; }
+  .stick { width: 72px; height: 72px; }
   .top {
     left: 10px;
     right: 10px;
   }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .room:modal .desk { grid-template-columns: repeat(3, minmax(0, 1fr)) auto; padding: 4px 10px; gap: 6px; }
+  .room:modal .field { gap: 2px; }
+  .room:modal .trigger, .room:modal .read { min-height: 34px; }
 }

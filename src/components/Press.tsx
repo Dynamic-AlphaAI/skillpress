@@ -115,7 +115,7 @@ export function Press({ library }: { library: Library }) {
   const authorSources = library.sources.filter((src) => src.authorId === author);
   const bundle =
     authorSources.length === 1
-      ? { href: authorSources[0].download.zip, bytes: authorSources[0].download.bytes, label: `all ${authorSources[0].author}` }
+      ? { href: authorSources[0].download.zip, bytes: authorSources[0].download.bytes, label: `all skills from ${authorSources[0].repo}` }
       : { href: library.allDownload.zip, bytes: library.allDownload.bytes, label: `all ${books.length} skills` };
 
   function collectionState(platform: Collection): PressState {

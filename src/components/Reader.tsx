@@ -322,11 +322,14 @@ export function Reader(props: ReaderProps) {
   }, [props.book.id, attempt]);
   const { onClose } = props;
   useEffect(() => {
-    if (body !== null) return;
-    const escape = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const escape = (e: KeyboardEvent) => {
+      if (e.key !== "Escape" || e.defaultPrevented) return;
+      e.preventDefault();
+      onClose();
+    };
     window.addEventListener("keydown", escape);
     return () => window.removeEventListener("keydown", escape);
-  }, [body, onClose]);
+  }, [onClose]);
   if (body !== null) return <TypesetReader {...props} body={body} />;
   return <div className={s.overlay} role="dialog" aria-modal="true" aria-label={`${props.book.design.title}, reader`}>
     <header className={s.top}><button autoFocus className={s.uiBtn} onClick={onClose}>← Close</button></header>
@@ -537,7 +540,6 @@ function TypesetReader({ book, library, onClose, onInstall, startPage, body }: R
   /* --- keyboard --- */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") { onClose(); return; }
       if (e.target instanceof HTMLInputElement || e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === " " && e.target instanceof HTMLElement && e.target.closest("button, a")) return;
       if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
@@ -551,7 +553,7 @@ function TypesetReader({ book, library, onClose, onInstall, startPage, body }: R
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [step, jump, onClose, total]);
+  }, [step, jump, total]);
 
   /* --- swipe --- */
   const swipe = useRef<{ x: number; y: number } | null>(null);

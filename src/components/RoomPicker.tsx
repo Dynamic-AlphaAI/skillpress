@@ -10,11 +10,12 @@ interface RoomPickerProps {
   options: { value: string; label: string }[];
   onChange: (value: string) => void;
   side?: "top" | "bottom";
+  portalContainer?: HTMLElement | null;
   walkCanvas?: RefObject<HTMLCanvasElement | null>;
 }
 
 export const RoomPicker = memo(function RoomPicker({
-  label, accessibleLabel, value, options, onChange, walkCanvas, side = "top",
+  label, accessibleLabel, value, options, onChange, walkCanvas, portalContainer, side = "top",
 }: RoomPickerProps) {
   const id = useId();
   const pointerSelection = useRef(false);
@@ -27,7 +28,7 @@ export const RoomPicker = memo(function RoomPicker({
           <span className={s.value}><Select.Value /></span>
           <Select.Icon className={s.chevron}><LibraryIcon name="down" size={18} /></Select.Icon>
         </Select.Trigger>
-        <Select.Portal>
+        <Select.Portal container={portalContainer}>
           <Select.Content
             className={s.menu}
             aria-label={accessibleLabel}

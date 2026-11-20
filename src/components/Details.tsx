@@ -128,8 +128,8 @@ function GetSkill({ book }: { book: Book }) {
         </a>
       </div>
       <p className={s.hint}>
-        The .zip holds the whole <span className={s.mono}>{book.slug}/</span> folder — instructions plus the scripts and references
-        they call — ready to drop into a skills directory or upload to Claude.
+        The ZIP includes the publisher’s <span className={s.mono}>{book.slug}/</span> skill folder and license.
+        {book.source.bundleNote && <> {book.source.bundleNote}</>}
       </p>
 
       <div className={s.tabs} role="tablist" aria-label="Install method">
@@ -184,7 +184,11 @@ export function Details({
   const getRef = useRef<HTMLElement>(null);
   useEffect(() => {
     panelRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape" || e.defaultPrevented) return;
+      e.preventDefault();
+      onClose();
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);

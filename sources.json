@@ -1204,6 +1204,261 @@
         "copilot",
         "grok"
       ]
+    },
+    {
+      "id": "claude-seo",
+      "repo": "AgriciDaniel/claude-seo",
+      "path": "skills",
+      "author": "Agrici Daniel",
+      "authorUrl": "https://github.com/AgriciDaniel",
+      "revision": "468ed5b0d9e3249394783710e54abb02837e326b",
+      "bundleNote": "Some workflows use the Claude SEO plugin\u2019s local checks and reference data. Install the upstream plugin to run those checks.",
+      "platforms": [
+        "claude"
+      ],
+      "skillPaths": [
+        "skills/seo-backlinks",
+        "skills/seo-competitor-pages",
+        "skills/seo-content",
+        "skills/seo-content-brief",
+        "skills/seo-drift",
+        "skills/seo-ecommerce",
+        "skills/seo-geo",
+        "skills/seo-hreflang",
+        "skills/seo-images",
+        "skills/seo-local",
+        "skills/seo-maps",
+        "skills/seo-page",
+        "skills/seo-plan",
+        "skills/seo-programmatic",
+        "skills/seo-schema",
+        "skills/seo-sitemap",
+        "skills/seo-sxo"
+      ],
+      "topics": {
+        "skills/seo-backlinks": "search-discovery",
+        "skills/seo-content": "search-discovery",
+        "skills/seo-content-brief": "search-discovery",
+        "skills/seo-competitor-pages": "search-discovery",
+        "skills/seo-drift": "search-discovery",
+        "skills/seo-ecommerce": "search-discovery",
+        "skills/seo-geo": "search-discovery",
+        "skills/seo-hreflang": "search-discovery",
+        "skills/seo-images": "search-discovery",
+        "skills/seo-local": "search-discovery",
+        "skills/seo-maps": "search-discovery",
+        "skills/seo-page": "search-discovery",
+        "skills/seo-plan": "search-discovery",
+        "skills/seo-programmatic": "search-discovery",
+        "skills/seo-schema": "search-discovery",
+        "skills/seo-sitemap": "search-discovery",
+        "skills/seo-sxo": "search-discovery"
+      },
+      "plugin": {
+        "name": "claude-seo",
+        "marketplace": "agricidaniel-claude-seo",
+        "addMarketplace": "AgriciDaniel/claude-seo"
+      },
+      "credits": {
+        "skills/seo-content-brief": {
+          "author": "puneetindersingh",
+          "authorUrl": "https://github.com/puneetindersingh",
+          "copyright": "puneetindersingh"
+        }
+      }
+    },
+    {
+      "id": "open-seo",
+      "repo": "every-app/open-seo",
+      "path": "plugins/openseo/skills",
+      "author": "OpenSEO",
+      "authorUrl": "https://github.com/every-app",
+      "revision": "af3f995fe3ebbe21298df152465a5436842354ee",
+      "bundleNote": "Live research uses an OpenSEO project and its MCP connection. Self-hosted DataForSEO lookups use your provider account and can incur charges.",
+      "platforms": [
+        "chatgpt",
+        "codex",
+        "claude",
+        "cursor"
+      ],
+      "skillPaths": [
+        "plugins/openseo/skills/ai-prompt-research",
+        "plugins/openseo/skills/ai-visibility-audit",
+        "plugins/openseo/skills/competitive-landscape",
+        "plugins/openseo/skills/competitor-analysis",
+        "plugins/openseo/skills/keyword-clustering",
+        "plugins/openseo/skills/keyword-research",
+        "plugins/openseo/skills/link-prospecting",
+        "plugins/openseo/skills/local-seo",
+        "plugins/openseo/skills/seo-audit",
+        "plugins/openseo/skills/seo-coach",
+        "plugins/openseo/skills/seo-project-setup",
+        "plugins/openseo/skills/seo-report"
+      ],
+      "topics": {
+        "plugins/openseo/skills/ai-prompt-research": "search-discovery",
+        "plugins/openseo/skills/ai-visibility-audit": "search-discovery",
+        "plugins/openseo/skills/competitive-landscape": "search-discovery",
+        "plugins/openseo/skills/competitor-analysis": "search-discovery",
+        "plugins/openseo/skills/keyword-clustering": "search-discovery",
+        "plugins/openseo/skills/keyword-research": "search-discovery",
+        "plugins/openseo/skills/link-prospecting": "search-discovery",
+        "plugins/openseo/skills/local-seo": "search-discovery",
+        "plugins/openseo/skills/seo-audit": "search-discovery",
+        "plugins/openseo/skills/seo-coach": "search-discovery",
+        "plugins/openseo/skills/seo-project-setup": "search-discovery",
+        "plugins/openseo/skills/seo-report": "search-discovery"
+      },
+      "copyright": "Ben Senescu"
+    },
+    {
+      "id": "scrapecreators",
+      "repo": "ScrapeCreators/social-media-research-skills",
+      "path": "skills",
+      "author": "ScrapeCreators",
+      "authorUrl": "https://github.com/ScrapeCreators",
+      "revision": "64ba7b4dea71e130d2712ffb6c1c1024b3b7c4b2",
+      "bundleNote": "Running live social research uses a ScrapeCreators API key and credits in your own agent.",
+      "platforms": [
+        "claude",
+        "codex",
+        "cursor",
+        "copilot",
+        "gemini"
+      ],
+      "skillPaths": [
+        "skills/ad-library-teardown",
+        "skills/audience-research",
+        "skills/comment-mining",
+        "skills/competitor-social-research",
+        "skills/content-repurposing",
+        "skills/creator-profile-teardown",
+        "skills/influencer-prospecting",
+        "skills/outlier-post-finder",
+        "skills/product-demand-research",
+        "skills/scrapecreators-api",
+        "skills/social-listening-brief",
+        "skills/transcript-intelligence",
+        "skills/trend-discovery"
+      ],
+      "topics": {
+        "skills/ad-library-teardown": "campaigns-outreach",
+        "skills/competitor-social-research": "campaigns-outreach",
+        "skills/influencer-prospecting": "campaigns-outreach",
+        "skills/creator-profile-teardown": "campaigns-outreach",
+        "skills/outlier-post-finder": "campaigns-outreach",
+        "skills/audience-research": "research-planning",
+        "skills/comment-mining": "research-planning",
+        "skills/product-demand-research": "research-planning",
+        "skills/social-listening-brief": "research-planning",
+        "skills/trend-discovery": "research-planning",
+        "skills/content-repurposing": "writing-documents",
+        "skills/transcript-intelligence": "writing-documents",
+        "skills/scrapecreators-api": "software-development"
+      }
+    },
+    {
+      "id": "seo-machine",
+      "repo": "TheCraigHewitt/seomachine",
+      "path": ".claude/skills",
+      "author": "SEO Machine contributors",
+      "authorUrl": "https://github.com/TheCraigHewitt",
+      "revision": "120e7b46dc07c98382cd4f68ac5b6515ab9f2604",
+      "bundleNote": "Growth Lead can work from the business goals, constraints and metrics you provide.",
+      "platforms": [
+        "claude"
+      ],
+      "skillPaths": [
+        ".claude/skills/growth-lead"
+      ],
+      "topics": {
+        ".claude/skills/growth-lead": "research-planning"
+      },
+      "copyright": "Castos and SEO Machine Contributors"
+    },
+    {
+      "id": "ryze-seo",
+      "repo": "Ryze-AI-Adgent/open-seo-mcp-skills",
+      "path": "skills",
+      "author": "Ryze AI",
+      "authorUrl": "https://github.com/Ryze-AI-Adgent",
+      "revision": "f587b0a69dc1ed92b65cdb241e4f14985b1031fd",
+      "bundleNote": "Live reports use the Ryze MCP connector and authorized data sources such as Google Search Console, GA4 or Google Ads.",
+      "platforms": [
+        "claude"
+      ],
+      "skillPaths": [
+        "skills/ai-visibility",
+        "skills/backlink-check",
+        "skills/competitor-gap",
+        "skills/content-brief",
+        "skills/keyword-research",
+        "skills/rank-tracking",
+        "skills/seo-audit",
+        "skills/seo-vs-ads"
+      ],
+      "topics": {
+        "skills/ai-visibility": "search-discovery",
+        "skills/backlink-check": "search-discovery",
+        "skills/competitor-gap": "search-discovery",
+        "skills/content-brief": "search-discovery",
+        "skills/keyword-research": "search-discovery",
+        "skills/rank-tracking": "search-discovery",
+        "skills/seo-audit": "search-discovery",
+        "skills/seo-vs-ads": "search-discovery"
+      },
+      "plugin": {
+        "name": "open-seo-mcp-skills",
+        "marketplace": "ryze",
+        "addMarketplace": "Ryze-AI-Adgent/open-seo-mcp-skills"
+      }
+    },
+    {
+      "id": "posthog",
+      "repo": "PostHog/posthog",
+      "path": "products",
+      "author": "PostHog",
+      "authorUrl": "https://github.com/PostHog",
+      "revision": "b7bb6c25dda489af1b71f2da4e3e9a7037f2ff8d",
+      "bundleNote": "These workflows use PostHog product tools and project data. Some need features such as experiments, heatmaps or AI visibility enabled in your PostHog project.",
+      "platforms": [],
+      "skillPaths": [
+        "products/aeo/skills/analyzing-ai-citations",
+        "products/aeo/skills/setting-up-ai-visibility",
+        "products/dashboards/skills/building-a-dashboard",
+        "products/experiments/skills/creating-experiments",
+        "products/experiments/skills/diagnosing-experiment-health",
+        "products/experiments/skills/finding-experiments",
+        "products/product_analytics/skills/analyzing-funnel-correlation",
+        "products/product_analytics/skills/choosing-trend-or-slope-view",
+        "products/product_analytics/skills/creating-box-plot-insights",
+        "products/product_analytics/skills/exploring-autocapture-events",
+        "products/product_analytics/skills/formatting-insight-axes",
+        "products/surveys/skills/creating-surveys",
+        "products/web_analytics/skills/assessing-heatmaps",
+        "products/web_analytics/skills/exploring-live-traffic",
+        "products/web_analytics/skills/filtering-bot-traffic",
+        "products/web_analytics/skills/suggesting-path-cleaning-rules"
+      ],
+      "topics": {
+        "products/aeo/skills/analyzing-ai-citations": "search-discovery",
+        "products/aeo/skills/setting-up-ai-visibility": "search-discovery",
+        "products/dashboards/skills/building-a-dashboard": "data-analytics",
+        "products/web_analytics/skills/assessing-heatmaps": "data-analytics",
+        "products/web_analytics/skills/exploring-live-traffic": "data-analytics",
+        "products/web_analytics/skills/filtering-bot-traffic": "data-analytics",
+        "products/web_analytics/skills/suggesting-path-cleaning-rules": "data-analytics",
+        "products/product_analytics/skills/analyzing-funnel-correlation": "conversion-retention",
+        "products/product_analytics/skills/choosing-trend-or-slope-view": "data-analytics",
+        "products/product_analytics/skills/creating-box-plot-insights": "data-analytics",
+        "products/product_analytics/skills/exploring-autocapture-events": "data-analytics",
+        "products/product_analytics/skills/formatting-insight-axes": "data-analytics",
+        "products/experiments/skills/creating-experiments": "conversion-retention",
+        "products/experiments/skills/finding-experiments": "conversion-retention",
+        "products/experiments/skills/diagnosing-experiment-health": "conversion-retention",
+        "products/surveys/skills/creating-surveys": "research-planning"
+      },
+      "copyright": "PostHog Inc."
     }
   ]
 }

@@ -22,7 +22,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { assignEditionIds, skillIdentity, uniqueSkills } from "./unique-skills.mjs";
-import { safeSourceFile, trackedSourceFile, reviewedFileAllowed, validSkillPath } from "./source-files.mjs";
+import { safeSourceFile, trackedSourceFile, reviewedFileAllowed, validSkillPath, pointsToRootMIT } from "./source-files.mjs";
 import { zipSync } from "fflate";
 
 const LEADERBOARD_URL = "https://skills.sh";
@@ -83,12 +83,21 @@ function detectLicense(text) {
 }
 
 /** The skill's own license file, else the repository's. */
-function licenseFor(skillDir, repoDir, declared) {
+function licenseFor(skillDir, repoDir, declared, repo) {
   for (let parent = skillDir; parent !== repoDir; parent = dirname(parent)) {
     for (const name of ["LICENSE.txt", "LICENSE", "LICENSE.md"]) {
       if (!existsSync(join(parent, name))) continue;
       const file = trackedSourceFile(repoDir, join(parent, name));
-      return { file, bundled: parent === skillDir, id: detectLicense(readFileSync(file, "utf8")) };
+      const text = readFileSync(file, "utf8");
+      const rootLicense = join(repoDir, "LICENSE");
+      if (parent === skillDir && name === "LICENSE.txt" && !existsSync(join(skillDir, "LICENSE")) &&
+          pointsToRootMIT(text, repo) && existsSync(rootLicense)) {
+        trackedSourceFile(repoDir, rootLicense);
+        if (detectLicense(readFileSync(rootLicense, "utf8")) === "MIT") {
+          return { file: rootLicense, bundled: false, id: "MIT" };
+        }
+      }
+      return { file, bundled: parent === skillDir, id: detectLicense(text) };
     }
   }
   for (const name of ["LICENSE", "LICENSE.txt", "LICENSE.md"]) {
@@ -225,13 +234,24 @@ async function importLibrary(cleanup) {
       const dir = join(repoDir, sourcePath);
       execFileSync("git", ["-C", repoDir, "ls-files", "--error-unmatch", "--", `${sourcePath}/SKILL.md`]);
       const identity = skillIdentity(readFileSync(safeSourceFile(repoDir, join(dir, "SKILL.md")), "utf8"), `${source.repo}/${sourcePath}`);
-      const license = licenseFor(dir, repoDir, identity.license);
+      const license = licenseFor(dir, repoDir, identity.license, source.repo);
       if (!license.file || license.id === "See LICENSE") {
         if (source.skillPaths) throw new Error(`Review the redistribution license for ${source.repo}/${sourcePath}`);
         console.warn(`  Skipping ${source.repo}/${sourcePath}: redistribution license needs review.`);
         continue;
       }
-      skills.push({ platforms: source.editionPlatforms?.[slug], topic: source.topics?.[sourcePath], covers: source.covers?.[slug], slug, sourcePath, identity, license, author: source.author, source: source.id, repoDir, dir, installs: (installs ? installs.get(`${source.repo}/${slug}`) : previousCounts.get(`${source.id}/${slug}`)) ?? null, plugin: plugins.get(slug) ?? null });
+      const credit = source.credits?.[sourcePath];
+      skills.push({
+        slug, sourcePath, identity, license, repoDir, dir,
+        source: source.id,
+        author: credit?.author ?? source.author,
+        credit: credit && { ...credit, authorId: slugify(credit.author) },
+        platforms: source.editionPlatforms?.[slug],
+        topic: source.topics?.[sourcePath],
+        covers: source.covers?.[slug],
+        installs: (installs ? installs.get(`${source.repo}/${slug}`) : previousCounts.get(`${source.id}/${slug}`)) ?? null,
+        plugin: plugins.get(slug) ?? null,
+      });
     }
   }
 
@@ -279,6 +299,7 @@ async function importLibrary(cleanup) {
       sourcePath: skill.sourcePath,
       source: skill.source,
       ...(skill.platforms && { platforms: skill.platforms }),
+      ...(skill.credit && { credit: skill.credit }),
       ...(skill.topic && { topic: skill.topic }),
       ...(skill.covers && { covers: skill.covers }),
       rank: i + 1,

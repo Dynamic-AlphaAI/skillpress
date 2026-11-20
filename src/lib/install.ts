@@ -44,8 +44,12 @@ export function installMethods(book: Book): InstallMethod[] {
     });
   }
   if (book.platforms.includes("chatgpt")) {
-    const listing = book.source.id === "stripe" ? "https://chatgpt.com/plugins/stripe" :
-      book.source.id === "obsidian" ? "https://chatgpt.com/plugins/plugins_6aee4fde227881919d61b034b1c31096" : undefined;
+    const listings: Record<string, string | undefined> = {
+      stripe: "https://chatgpt.com/plugins/stripe",
+      obsidian: "https://chatgpt.com/plugins/plugins_6aee4fde227881919d61b034b1c31096",
+      "open-seo": "https://chatgpt.com/plugins/plugin_asdk_app_6abddd2c7e4c819191f1398c4bd8e9b3",
+    };
+    const listing = listings[book.source.id];
     methods.push({
       id: "chatgpt", label: "ChatGPT",
       note: listing ? "Open the publisher’s plugin in ChatGPT and install it in your workspace." :
@@ -94,7 +98,7 @@ export function installMethods(book: Book): InstallMethod[] {
       kind: "Claude Code",
       note:
         others.length > 6
-          ? `Installs the whole ${plugin} plugin — all ${skills.length} of its skills.${addMarketplace ? "" : " The marketplace ships with Claude Code."}`
+          ? `Installs the whole ${plugin} plugin, including this skill.${addMarketplace ? "" : " The marketplace ships with Claude Code."}`
           : others.length
             ? `Installs the ${plugin} set, which also includes ${others.join(", ")}.`
             : `Installs ${plugin} from the ${marketplace} marketplace.`,

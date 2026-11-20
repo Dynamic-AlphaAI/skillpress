@@ -54,6 +54,9 @@ export function ReadingRoom({
 }: RoomProps) {
   const collection = useRef<HTMLElement>(null);
   const enter = useRef<HTMLButtonElement>(null);
+  const expandEntrance = useRef<HTMLButtonElement>(null);
+  const openedFromExpandedEntrance = useRef(false);
+  const [expanded, setExpanded] = useState(false);
   const [page, setPage] = useState(0);
   const topicCount = new Set(books.map((b) => b.category)).size;
   const last = Math.max(0, Math.ceil(books.length / perPage) - 1);
@@ -63,9 +66,16 @@ export function ReadingRoom({
     setPage(to);
     collection.current?.scrollIntoView({ block: "start" });
   };
+  function enterLibrary(large: boolean) {
+    openedFromExpandedEntrance.current = large;
+    setExpanded(large);
+    playSound("step");
+    onWalk(true);
+  }
   function leave() {
+    setExpanded(false);
     onWalk(false);
-    requestAnimationFrame(() => enter.current?.focus({ preventScroll: true }));
+    requestAnimationFrame(() => (openedFromExpandedEntrance.current ? expandEntrance : enter).current?.focus({ preventScroll: true }));
   }
   return (
     <main className={s.home}>
@@ -75,6 +85,8 @@ export function ReadingRoom({
             key={`${category}:${author}`}
             books={books}
             paused={paused}
+            expanded={expanded}
+            onExpand={setExpanded}
             onOpen={onOpen}
             onExit={leave}
           />
@@ -95,22 +107,22 @@ export function ReadingRoom({
               <span className={s.rule} /> {platform === "all" ? "A library of agent skills" : `${platformLabel(platform)} collection`}
             </div>
             <h1 id="room-title">
-              The Reading <em>Room</em>
+              Enter the <em>library</em>
             </h1>
             <p>
               Walk the stacks, pull a volume from the shelf,
               <br className={s.lineBreak} /> and read the skills inside.
             </p>
-            <button
-              ref={enter}
-              className={s.enter}
-              onClick={() => {
-                playSound("step");
-                onWalk(true);
-              }}
-            >
-              <LibraryIcon name="walk" size={19} /> Enter the library <LibraryIcon name="arrow" size={17} />
-            </button>
+            <div className={s.entranceActions}>
+              <button ref={enter} className={s.enter} onClick={() => enterLibrary(false)}>
+                <LibraryIcon name="walk" size={19} /> Enter the library <LibraryIcon name="arrow" size={17} />
+              </button>
+              <button type="button" ref={expandEntrance} className={s.expandEntrance} aria-haspopup="dialog"
+                aria-label="Enter library in expanded view" title="Enter library in expanded view"
+                onClick={() => enterLibrary(true)}>
+                <LibraryIcon name="expand" size={19} />
+              </button>
+            </div>
           </div>
           <div className={s.roomLabel}>
             <LibraryIcon name="compass" size={17} /> 3D walkthrough

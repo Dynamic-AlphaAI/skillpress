@@ -13,7 +13,14 @@ interface Catalog {
   sources: Source[];
   ranking: Library["ranking"];
   allDownload: Library["allDownload"];
-  books: (Pick<Book, "id" | "slug" | "rank" | "installs" | "license" | "plugin" | "download"> & { source: string; sourcePath?: string; topic?: Book["category"]; platforms?: Book["platforms"]; covers?: Book["covers"] })[];
+  books: (Pick<Book, "id" | "slug" | "rank" | "installs" | "license" | "plugin" | "download"> & {
+    source: string;
+    sourcePath?: string;
+    credit?: Pick<Source, "author" | "authorId" | "authorUrl" | "copyright">;
+    topic?: Book["category"];
+    platforms?: Book["platforms"];
+    covers?: Book["covers"];
+  })[];
 }
 
 function slugify(text: string) {
@@ -129,7 +136,8 @@ export function loadLibrary(): Library {
   const catalog = readCatalog();
   const sources = new Map(catalog.sources.map((src) => [src.id, src]));
   const books: Book[] = catalog.books.map((entry) => {
-    const source = sources.get(entry.source)!;
+    const publisher = sources.get(entry.source)!;
+    const source = entry.credit ? { ...publisher, ...entry.credit } : publisher;
     const { data, content, originalTitle, headings } = parseEdition(entry, source);
     const words = content.split(/\s+/).filter(Boolean).length;
     const description = String(data.description ?? "").trim();
@@ -168,13 +176,15 @@ export function loadLibrary(): Library {
   // Keep install rank within each subject as the collection grows.
   const grouped = categories.flatMap(({ id }) => books.filter((book) => book.category === id));
 
-  const authors: Author[] = [];
-  for (const src of catalog.sources) {
-    const existing = authors.find((a) => a.id === src.authorId);
-    const count = books.filter((b) => b.source.id === src.id).length;
-    if (existing) existing.count += count;
-    else authors.push({ id: src.authorId, name: src.author, url: src.authorUrl, count });
+  const authorsById = new Map<string, Author>(catalog.sources.map(s => [
+    s.authorId, { id: s.authorId, name: s.author, url: s.authorUrl, count: 0 },
+  ]));
+  for (const { source } of books) {
+    const author = authorsById.get(source.authorId);
+    if (author) author.count++;
+    else authorsById.set(source.authorId, { id: source.authorId, name: source.author, url: source.authorUrl, count: 1 });
   }
+  const authors = [...authorsById.values()].filter(author => author.count);
 
   return { books: grouped, sources: catalog.sources, authors, ranking: catalog.ranking, allDownload: catalog.allDownload };
 }

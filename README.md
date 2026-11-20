@@ -4,7 +4,7 @@ Agent skills, typeset and bound as books you can page through and then install. 
 
 ## Source libraries
 
-The catalogue contains **625 editions from 45 GitHub repositories**. The 3D library has **11 rooms and 126 occupied shelves**. Browse by topic, author, or platform. The eight platform collections include both skills for a host and editions about that platform. Each book identifies its publisher and links to its exact upstream revision. [Collection guide and source review](docs/collections.md)
+The catalogue contains **692 editions from 51 GitHub repositories**. The 3D library has **11 rooms and 137 occupied shelves**. Browse by topic, author, or platform. The eight platform collections include both skills for a host and editions about that platform. Each book identifies its publisher and links to its exact upstream revision. [Collection guide and source review](docs/collections.md)
 
 | GitHub repository | Subject matter | Editions | License |
 |---|---|---:|---|
@@ -53,6 +53,12 @@ The catalogue contains **625 editions from 45 GitHub repositories**. The 3D libr
 | [langchain-ai/langchain-skills](https://github.com/langchain-ai/langchain-skills) | Building, tracing and monitoring LangChain agents | 3 | MIT |
 | [anthropics/financial-services](https://github.com/anthropics/financial-services) | Spreadsheet audits, earnings and variance analysis | 4 | Apache-2.0 |
 | [mongodb/agent-skills](https://github.com/mongodb/agent-skills) | MongoDB schemas, query tuning and streams | 4 | Apache-2.0 |
+| [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) | Search visibility, structured data and content quality | 17 | MIT |
+| [every-app/open-seo](https://github.com/every-app/open-seo) | Keyword research, competitive search and reporting | 12 | MIT |
+| [ScrapeCreators/social-media-research-skills](https://github.com/ScrapeCreators/social-media-research-skills) | Public social research and content analysis | 13 | MIT |
+| [TheCraigHewitt/seomachine](https://github.com/TheCraigHewitt/seomachine) | Growth strategy and prioritization | 1 | MIT |
+| [Ryze-AI-Adgent/open-seo-mcp-skills](https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills) | Search Console, GA4 and SEO research | 8 | MIT |
+| [PostHog/posthog](https://github.com/PostHog/posthog) | Funnels, web analytics, surveys and experiments | 16 | MIT |
 
 - **Ranking:** install counts from the [skills.sh](https://skills.sh) leaderboard. Skills it doesn't list yet appear at the end of their topic.
 - Books sit together by primary task across the catalogue, shelf, and 3D room. For example, **Testing & Code Review** includes browser testing, debugging, and reviewing changes. The **Author** filter narrows any topic to a particular author. Within each topic, books follow their install rank.
@@ -97,9 +103,9 @@ A GitHub Action (`.github/workflows/update-skills.yml`) runs `npm run import` ev
 
 Choose **Search** in the header to look up skills by keyword, title, publisher, topic, or words in the instructions. Results update as you type. Use **Topic** and **Author** to narrow them, then select a result to read the book. A link such as [a search for PDF extraction](https://skillpress.xyz/?q=pdf+extraction) restores the query. The full-text index is built from the same checked-in editions as the reader and loads when Search opens.
 
-Enter the Main Reading Hall to browse just over half the collection, arranged by topic in cases along the outside walls. Signed doorways on both sides open into Arts & Letters, Engineering Workshop, Research & Planning, Operations Room, Business & Commerce, Design Gallery, AI & Model Lab, Data Archive, Mobile Studio, and Infrastructure Room. Drag to look, scroll to walk, or step sideways with A/D and the on-screen arrows. Each matching edition has one physical place. The room, shelf, and volume pickers also work by keyboard and without WebGL. Small filtered collections fit entirely in the hall.
+Enter the Main Reading Hall to browse just over half the collection, arranged by topic in cases along the outside walls. Signed doorways on both sides open into Arts & Letters, Engineering Workshop, Research & Planning, Operations Room, Business & Commerce, Design Gallery, AI & Model Lab, Data Archive, Mobile Studio, and Infrastructure Room. Drag the joystick up or down to walk and left or right to turn. Tap the small buttons underneath for one sideways step, or hold to keep stepping. You can also drag the scene to look up and down, scroll to walk, or use the keyboard. The expand button at the entrance or inside the room opens a near-full-screen walkthrough. Closing the expanded view returns you to the same spot. Each matching edition has one physical place. The room, shelf, and volume pickers also work by keyboard and without WebGL. Small filtered collections fit entirely in the hall.
 
-Select any wall ladder or press **E** to board the nearest one in the current room. Neighboring cases on an uninterrupted wall share a rail. Scroll or use **W/S** to climb, use **A/D** to roll along the bookcase, and select a book to read. Press **E** or choose **Step off ladder** to return to the floor. Choosing an **Upper shelf** in the shelf picker takes you straight to that row.
+Select any wall ladder or press **E** to board the nearest one in the current room. Neighboring cases on an uninterrupted wall share a rail. Push the joystick up or down, scroll, or use **W/S** to climb. Use the sideways buttons or **A/D** to roll along the bookcase, and select a book to read. Press **E** or choose **Step off ladder** to return to the floor. Choosing an **Upper shelf** in the shelf picker takes you straight to that row.
 
 The sound control in the masthead and reader remembers your preference on this device. In a book’s details, drag the cover or press **Turn book** to inspect its boards, spine, and printed back.
 

@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useEffectEvent, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { planRooms } from "@/lib/roomShelves";
 import type { Book } from "@/lib/types";
 import { createRoom } from "./roomScene";
 import { EditionJacket } from "./EditionJacket";
 import { CoverArt } from "./CoverArt";
+import { WalkControls } from "./WalkControls";
 import { RoomPicker } from "./RoomPicker";
 import { LibraryIcon } from "./LibraryIcons";
 import s from "./WalkingRoom.module.css";
@@ -13,11 +14,15 @@ import s from "./WalkingRoom.module.css";
 export default function WalkingRoom({
   books,
   paused,
+  expanded,
+  onExpand,
   onOpen,
   onExit,
 }: {
   books: Book[];
   paused: boolean;
+  expanded: boolean;
+  onExpand: (value: boolean) => void;
   onOpen: (index: number) => void;
   onExit: () => void;
 }) {
@@ -53,7 +58,22 @@ export default function WalkingRoom({
     const index = books.findIndex((b) => b.id === id);
     if (index >= 0) onOpen(index);
   });
-  const holdStarted = useRef(0);
+  const [windowElement, setWindowElement] = useState<HTMLDialogElement | null>(null);
+  const resizeControl = useRef<HTMLButtonElement>(null);
+  const modal = expanded && !paused;
+  useLayoutEffect(() => {
+    if (!windowElement) return;
+    // The same canvas stays mounted while the dialog moves in and out of the top layer.
+    if (modal && !windowElement.matches(":modal")) {
+      if (windowElement.open) windowElement.close();
+      windowElement.showModal();
+      (canvas.current ?? resizeControl.current)?.focus({ preventScroll: true });
+    } else if (!modal && windowElement.matches(":modal")) {
+      windowElement.close();
+      windowElement.setAttribute("open", "");
+      if (!paused) resizeControl.current?.focus({ preventScroll: true });
+    }
+  }, [windowElement, modal, paused]);
   const focusOnEntry = useRef(true);
   useEffect(() => {
     if (!canvas.current || !rooms.length) return;
@@ -99,12 +119,25 @@ export default function WalkingRoom({
     setPointed("");
   }, []);
   return (
-    <section
+    <dialog open ref={setWindowElement} role={modal ? "dialog" : "region"} aria-modal={modal || undefined}
       className={s.room}
+      onCancel={event => {
+        event.preventDefault();
+        if (modal && !windowElement?.querySelector('[role="listbox"]')) onExpand(false);
+      }}
+      onClick={event => {
+        if (!modal || event.target !== event.currentTarget) return;
+        const rect = event.currentTarget.getBoundingClientRect();
+        if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) onExpand(false);
+      }}
       aria-label="Walk the library"
       onKeyDown={(e) => {
         if (e.key === "Escape" && !paused && !e.defaultPrevented && e.currentTarget.contains(e.target as Node)) {
-          if (onLadder) {
+          if (windowElement?.querySelector('[role="listbox"]')) return;
+          if (modal) {
+            e.preventDefault();
+            onExpand(false);
+          } else if (onLadder) {
             e.preventDefault();
             scene.current?.toggleLadder();
             canvas.current?.focus({ preventScroll: true });
@@ -126,15 +159,20 @@ export default function WalkingRoom({
         <canvas
           ref={canvas}
           tabIndex={0}
-          aria-label="Walkable library. Scroll up to walk forward or down to walk back. Use W A S D to move and left or right arrow to turn. Select a wall ladder, or press E for the nearest ladder. Scroll or use W and S to climb. Use A and D to roll along the wall and E to step off. Follow the signs to the subject rooms, or choose a room, shelf and volume below."
+          aria-label="Walkable library. Move the joystick up or down to walk and left or right to turn. Scroll up to walk forward or down to walk back. Use W A S D to move and left or right arrow to turn. Select a wall ladder, or press E for the nearest ladder. Scroll or use W and S to climb. Use A and D to roll along the wall and E to step off. Follow the signs to the subject rooms, or choose a room, shelf and volume below."
         />
         <div className={s.top}>
           <button onClick={onExit} className={s.exit}>
             ← Leave room
           </button>
-          <span>
-            <LibraryIcon name="compass" size={16} /> {room?.label ?? "Library"}{shelf && ` · ${shelf.label}`}
+          <span className={s.roomName}>
+            <LibraryIcon name="compass" size={16} /> <span>{room?.label ?? "Library"}{shelf && ` · ${shelf.label}`}</span>
           </span>
+          <button type="button" className={s.resize} ref={resizeControl}
+            aria-label={expanded ? "Close expanded view" : "Expand library"} title={expanded ? "Close expanded view" : "Expand library"}
+            onClick={() => onExpand(!expanded)}>
+            <LibraryIcon name={expanded ? "collapse" : "expand"} size={18} />
+          </button>
         </div>
         {!unavailable && room && (
           <button type="button" className={s.ladderAction} onClick={() => {
@@ -157,66 +195,29 @@ export default function WalkingRoom({
               {pointed ? (
                 <strong>{pointed}</strong>
               ) : onLadder ? (
-                <><span>↑ ↓ to climb</span><span>A/D to roll the ladder</span><span>Select a book to read</span></>
+                <><span>Joystick up or down to climb</span><span>Step sideways to roll the ladder</span></>
               ) : (
                 <>
+                  <span>Joystick to walk and turn</span>
                   <span>Drag to look around</span>
-                  <span>Scroll to walk · A/D to step sideways</span>
                   <span>{room?.id === "hall" && rooms.length > 1 ? "Follow the signs left or right" : "Select a spine to read"}</span>
                 </>
               )}
             </div>
-            <div className={s.pad} aria-label="Movement">
-              {(
-                [
-                  ["arrowleft", "↶", "Turn left"],
-                  ["a", "←", onLadder ? "Roll ladder left" : "Step left"],
-                  ["w", "↑", onLadder ? "Climb up" : "Walk forward"],
-                  ["s", "↓", onLadder ? "Climb down" : "Walk backward"],
-                  ["d", "→", onLadder ? "Roll ladder right" : "Step right"],
-                  ["arrowright", "↷", "Turn right"],
-                ] as const
-              ).map(([key, label, title]) => (
-                <button
-                  key={key}
-                  aria-label={title}
-                  title={title}
-                  onPointerDown={(e) => {
-                    holdStarted.current = performance.now();
-                    e.currentTarget.setPointerCapture(e.pointerId);
-                    scene.current?.setKey(key, true);
-                  }}
-                  onPointerUp={() => {
-                    scene.current?.setKey(key, false);
-                    if (performance.now() - holdStarted.current < 100) scene.current?.tap(key);
-                  }}
-                  onPointerCancel={() => scene.current?.setKey(key, false)}
-                  onKeyDown={(e) => {
-                    if (e.key === " " || e.key === "Enter") {
-                      e.preventDefault();
-                      scene.current?.setKey(key, true);
-                    }
-                  }}
-                  onKeyUp={() => scene.current?.setKey(key, false)}
-                  onBlur={() => scene.current?.setKey(key, false)}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
+            {!paused && <WalkControls key={modal ? "expanded" : "inline"} scene={scene} onLadder={onLadder} />}
           </>
         )}
       </div>
       <div className={s.desk}>
-        <RoomPicker label="Room" accessibleLabel="Visit a room" options={roomOptions}
+        <RoomPicker portalContainer={modal ? windowElement : undefined} label="Room" accessibleLabel="Visit a room" options={roomOptions}
           value={String(Math.max(0, rooms.indexOf(room)))} onChange={(value) => {
             const index = Number(value);
             if (scene.current && !unavailable) scene.current.visitRoom(index);
             else enterRoom(index);
           }} walkCanvas={canvas} />
-        <RoomPicker label="Shelf" accessibleLabel="Visit a shelf" options={shelfOptions}
+        <RoomPicker portalContainer={modal ? windowElement : undefined} label="Shelf" accessibleLabel="Visit a shelf" options={shelfOptions}
           value={String(shelf ? destination : -1)} onChange={go} walkCanvas={canvas} />
-        <RoomPicker label="Volume" accessibleLabel="Choose a volume" options={volumeOptions}
+        <RoomPicker portalContainer={modal ? windowElement : undefined} label="Volume" accessibleLabel="Choose a volume" options={volumeOptions}
           value={chosen?.id ?? ""} onChange={setSelection} />
         <button
           type="button"
@@ -229,6 +230,6 @@ export default function WalkingRoom({
           Read book <LibraryIcon name="arrow" size={16} />
         </button>
       </div>
-    </section>
+    </dialog>
   );
 }

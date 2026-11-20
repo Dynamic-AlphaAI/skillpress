@@ -21,7 +21,10 @@ export function trackedSourceFile(repoDir, file) {
 
 /** Permit ordinary directory names and the publisher conventions used for hidden skill roots. */
 export function validSkillPath(path) {
-  return typeof path === "string" && path.split("/").every(part =>
+  if (typeof path !== "string") return false;
+  const parts = path.split("/");
+  return parts.every((part, i) =>
+    (i === 0 && part === ".claude" && parts[1] === "skills" && parts.length >= 3) ||
     /^[a-z0-9][a-z0-9_-]*$/i.test(part) || [".agents", ".github", ".curated"].includes(part));
 }
 
@@ -32,4 +35,12 @@ export function reviewedFileAllowed(record, folder, assets = {}) {
   if (/\.md$/i.test(name) || /^(?:LICENSE|NOTICE)(?:\.txt)?$/i.test(name)) return true;
   return (name === "agents/openai.yaml" || /^assets\/[a-z\d_.-]+\.png$/i.test(name)) &&
     assets[match[2]] === match[1];
+}
+
+/** Some publishers keep the copyright notice in the skill and the full MIT terms at the root. */
+export function pointsToRootMIT(text, repo) {
+  const [reference, copyright, url, ...extra] = text.trim().split(/\r?\n/).filter(Boolean);
+  return reference === "MIT License - see repository root LICENSE file for complete terms." &&
+    /^Copyright \(c\) \d{4} [\w .'-]+$/i.test(copyright ?? "") &&
+    url?.toLowerCase() === `https://github.com/${repo.toLowerCase()}` && extra.length === 0;
 }

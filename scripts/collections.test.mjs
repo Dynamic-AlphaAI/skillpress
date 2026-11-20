@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import { unzipSync } from "fflate";
 import { parseSkill } from "./parse-skill.mjs";
-import { reviewedFileAllowed, validSkillPath } from "./source-files.mjs";
+import { pointsToRootMIT, reviewedFileAllowed, validSkillPath } from "./source-files.mjs";
 import { parseState, serializeState } from "../src/lib/browseState.ts";
 import { categories } from "../src/lib/categories.ts";
 import { categoryFor } from "../src/lib/classifyTopic.ts";
@@ -15,7 +15,8 @@ import { planRooms } from "../src/lib/roomShelves.ts";
 const catalog = JSON.parse(readFileSync("content/catalog.json"));
 const { sources } = JSON.parse(readFileSync("sources.json"));
 const books = catalog.books.map(book => {
-  const source = catalog.sources.find(s => s.id === book.source);
+  const publisher = catalog.sources.find(s => s.id === book.source);
+  const source = book.credit ? { ...publisher, ...book.credit } : publisher;
   const { data } = parseSkill(readFileSync(`content/skills/${book.id}/SKILL.md`, "utf8"), book.id);
   return { ...book, source, category: book.topic ?? categoryFor(source.repo, book.slug, data.description),
     platforms: [...new Set([...source.platforms, ...(book.platforms ?? [])])], covers: book.covers ?? [] };
@@ -61,8 +62,8 @@ test("each reviewed repository contributes licensed, attributed editions with th
 });
 
 test("reviewed folder and Git object rules reject traversal, scripts, linked files and unreviewed metadata", () => {
-  for (const p of [".agents/skills/example", "skills/.curated/define-goal", ".github/plugins/azure-cost"]) assert.ok(validSkillPath(p));
-  for (const p of ["../elsewhere", "/root", "a//b", "a/./b", "x/../../y", ".git/config", "a\\b"]) assert.equal(validSkillPath(p), false);
+  for (const p of [".claude/skills/growth-lead", ".agents/skills/example", "skills/.curated/define-goal", ".github/plugins/azure-cost"]) assert.ok(validSkillPath(p));
+  for (const p of [".claude/hooks/run", "folder/.claude/skills/private", "../elsewhere", "/root", "a//b", "a/./b", "x/../../y", ".git/config", "a\\b"]) assert.equal(validSkillPath(p), false);
   const folder = "skills/book", hash = "a".repeat(40);
   const record = (mode, name) => `${mode} blob ${hash}\t${folder}/${name}`;
   assert.ok(reviewedFileAllowed(record("100644", "references/a.md"), folder));
@@ -132,4 +133,22 @@ test("install guidance follows the actual host and accounts for the internal Gro
   assert.ok(methods("office-docx").find(m => m.id === "deepseek").link.href.includes(bookById("office-docx").source.commit));
   assert.equal(methods("stripe-best-practices").find(m => m.id === "chatgpt").link.href, "https://chatgpt.com/plugins/stripe");
   assert.ok(!methods("chatgpt-app-submission").some(m => m.id === "chatgpt"));
+});
+
+test("SEO accessions keep contributor credit, full license terms and independent authors’ editions", () => {
+  const published = id => books.filter(b => b.source.id === id);
+  assert.deepEqual(published("seo-machine").map(b => b.slug), ["growth-lead"]);
+  const brief = published("claude-seo").find(b => b.slug === "seo-content-brief");
+  assert.equal(brief.source.author, "puneetindersingh");
+  const files = unzipSync(readFileSync("public" + brief.download.zip));
+  const notice = Buffer.from(files[brief.slug + "/LICENSE.txt"]).toString();
+  assert.ok(pointsToRootMIT(notice, brief.source.repo));
+  assert.ok(!pointsToRootMIT(notice, "other/publisher"));
+  assert.ok(!pointsToRootMIT(notice + "\nAdditional use restrictions apply.", brief.source.repo));
+  assert.match(notice, /Copyright \(c\) 2026 puneetindersingh/);
+  assert.match(Buffer.from(files[brief.slug + "/LICENSE"]).toString(), /Permission is hereby granted/);
+  const keywordEditions = books.filter(b => b.slug === "keyword-research" && ["open-seo", "ryze-seo"].includes(b.source.id));
+  assert.equal(new Set(keywordEditions.map(b => b.id)).size, 2);
+  assert.equal(new Set(keywordEditions.map(b => b.source.author)).size, 2);
+  assert.ok(published("posthog").every(b => b.sourcePath.startsWith("products/") && b.license === "MIT"));
 });

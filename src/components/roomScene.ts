@@ -17,6 +17,9 @@ type SceneEvents = {
 };
 type Flight = { from: T.Vector3; to: T.Vector3; yaw: number; turn: number; pitch: number; targetPitch: number; elapsed: number };
 
+const walkSpeedMultiplier = 1.15;
+const lookSensitivity = 0.85;
+
 function paintTexture(w: number, h: number, paint: (ctx: CanvasRenderingContext2D) => void) {
   const canvas = document.createElement("canvas");
   canvas.width = w;
@@ -214,6 +217,8 @@ export function createRoom(
   let yaw = 0;
   let pitch = 0.08;
   const keys = new Set<string>();
+  let stickTurn = 0;
+  let stickForward = 0;
   const register = <M extends T.Material>(material: M) => {
     materials.add(material);
     return material;
@@ -732,13 +737,11 @@ export function createRoom(
       frame = requestAnimationFrame(render);
     }
   }
-  function moveCamera(dt: number, scrollStep = 0) {
-    const f = Number(keys.has("w") || keys.has("arrowup")) - Number(keys.has("s") || keys.has("arrowdown"));
-    const strafe = Number(keys.has("d")) - Number(keys.has("a"));
-    yaw += (Number(keys.has("arrowleft")) - Number(keys.has("arrowright"))) * dt * 1.6;
+  function moveCamera(dt: number, forwardSpeed: number, strafe: number, turn: number, scrollStep = 0) {
+    yaw -= turn * dt * 1.6 * lookSensitivity;
     if (mounted) {
       const previousRise = rise;
-      rise = T.MathUtils.clamp(rise + f * dt * 1.65 + scrollStep, 0, mounted.size.maxRise);
+      rise = T.MathUtils.clamp(rise + forwardSpeed * dt * 1.65 + scrollStep, 0, mounted.size.maxRise);
       mounted.slide = T.MathUtils.clamp(mounted.slide + strafe * dt * 2.2, -railLimit, mounted.span + railLimit);
       placeClimber();
       if (Math.floor(previousRise / 0.31) !== Math.floor(rise / 0.31)) playSound("step");
@@ -748,11 +751,12 @@ export function createRoom(
     right.set(Math.cos(yaw), 0, -Math.sin(yaw));
     move
       .copy(forward)
-      .multiplyScalar(f)
+      .multiplyScalar(forwardSpeed)
       .addScaledVector(right, strafe)
       .clampLength(0, 1)
       .multiplyScalar(dt * 2.8)
-      .addScaledVector(forward, scrollStep);
+      .addScaledVector(forward, scrollStep)
+      .multiplyScalar(walkSpeedMultiplier);
     const prevX = camera.position.x,
       prevZ = camera.position.z;
     walk(floors, camera.position, move.x, move.z, obstacles);
@@ -785,17 +789,21 @@ export function createRoom(
       yaw = flight.yaw + flight.turn * ease;
       pitch = flight.pitch * (1 - ease) + flight.targetPitch * ease;
       if (t === 1) flight = null;
-    } else if (keys.size || scrollRemaining) {
+    } else if (keys.size || scrollRemaining || stickTurn || stickForward) {
       const scrollStep = reduce.matches ? scrollRemaining : T.MathUtils.clamp(scrollRemaining, -4 * dt, 4 * dt);
       scrollRemaining -= scrollStep;
-      moveCamera(dt, scrollStep);
+      const f = Number(keys.has("w") || keys.has("arrowup")) - Number(keys.has("s") || keys.has("arrowdown"));
+      const strafe = Number(keys.has("d") || keys.has("step-right")) - Number(keys.has("a") || keys.has("step-left"));
+      const turn = Number(keys.has("arrowright")) - Number(keys.has("arrowleft"));
+      moveCamera(dt, T.MathUtils.clamp(f + stickForward, -1, 1), strafe, T.MathUtils.clamp(turn + stickTurn, -1, 1), scrollStep);
     }
     camera.rotation.set(pitch, yaw, 0, "YXZ");
     renderer.render(scene, camera);
-    if (flight || descending || keys.size || scrollRemaining) frame = requestAnimationFrame(render);
+    if (flight || descending || keys.size || scrollRemaining || stickTurn || stickForward) frame = requestAnimationFrame(render);
   }
   function stop() {
     keys.clear();
+    stickTurn = stickForward = 0;
     scrollRemaining = 0;
     pointerStart = null;
   }
@@ -917,8 +925,8 @@ export function createRoom(
     if (Math.hypot(dx, dy) > 4) pointerStart.drag = true;
     if (pointerStart.drag) {
       flight = null;
-      yaw = pointerStart.yaw - dx * 0.004;
-      pitch = T.MathUtils.clamp(pointerStart.pitch - dy * 0.003, -0.68, 0.62);
+      yaw = pointerStart.yaw - dx * 0.004 * lookSensitivity;
+      pitch = T.MathUtils.clamp(pointerStart.pitch - dy * 0.003 * lookSensitivity, -0.68, 0.62);
       events.hover("");
       canvas.style.cursor = "grabbing";
       redraw();
@@ -961,11 +969,19 @@ export function createRoom(
     visitRoom,
     toggleLadder,
     setKey,
-    tap(key: string) {
+    setStick(turn: number, f: number) {
       if (paused || descending) return;
-      keys.add(key);
-      moveCamera(0.14);
-      keys.delete(key);
+      stickTurn = turn;
+      stickForward = f;
+      if (turn || f) {
+        flight = null;
+        redraw();
+      }
+    },
+    stepSide(side: "left" | "right") {
+      if (paused || descending) return;
+      flight = null;
+      moveCamera(0.14, 0, side === "left" ? -1 : 1, 0);
       redraw();
     },
     pause(value: boolean) {
