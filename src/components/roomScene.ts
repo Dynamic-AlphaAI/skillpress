@@ -1,7 +1,7 @@
 import * as T from "three";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import type { LibraryRoom } from "@/lib/roomShelves";
-import { canWalk, doorHalfWidth, hallHalfWidth, ladderFootprint, layOutFloor, roomAt, walk, wallPoint, wallRuns, type Position } from "@/lib/roomFloor";
+import { canWalk, doorHalfWidth, hallHalfWidth, ladderFootprint, ladderRuns, layOutFloor, roomAt, walk, wallPoint, type Position } from "@/lib/roomFloor";
 import { bindingBands } from "@/lib/jacketDesign";
 import type { Book } from "@/lib/types";
 import { playSound } from "./sound";
@@ -504,7 +504,7 @@ export function createRoom(
   block(0.48, 0.86, rear + 0.9, 0.29, 0.055, 0.18, brass);
   block(0.48, 1.07, rear + 0.9, 0.035, 0.42, 0.035, brass);
   block(0.48, 1.27, rear + 0.9, 0.46, 0.12, 0.2, green);
-  const rails = rooms.flatMap((room, roomIndex) => wallRuns(bays.filter(bay => bay.roomIndex === roomIndex)).map(run => {
+  const railsByRoom = rooms.map((room, roomIndex) => ladderRuns(bays.filter(bay => bay.roomIndex === roomIndex)).map(run => {
     const origin = run[0];
     const cases = run.map(bay => ({
       bay, offset: Math.hypot(bay.x - origin.x, bay.z - origin.z), firstShelf: room.shelves.indexOf(bay.stack[0]),
@@ -524,6 +524,7 @@ export function createRoom(
     }
     return { roomIndex, origin, cases, span, size, rig, slide, obstacle: ladderFootprint(origin, slide, size.foot) };
   }));
+  const rails = railsByRoom.flat();
   type Rail = typeof rails[number];
   const railByBay = new Map(rails.flatMap(rail => rail.cases.map(c => [c.bay, { rail, offset: c.offset }] as const)));
   const obstacles = rails.map(rail => rail.obstacle);
@@ -532,13 +533,19 @@ export function createRoom(
   let descending = false;
   let lastRow = -1;
   const pickable: T.Mesh[] = [];
-  const shelfPositions: (Position & { height: number; rail: Rail; offset: number })[][] = rooms.map(() => []);
+  const shelfPositions: (Position & { height: number; ladder?: { rail: Rail; offset: number } })[][] = rooms.map(() => []);
   const paper = surface("#e4d6b8");
   const boards = new Map<string, T.Material>();
+  const covers = new Map<string, SVGSVGElement>();
+  for (const wrapper of jackets.children) {
+    const id = wrapper.getAttribute("data-jacket");
+    const svg = wrapper.querySelector("svg");
+    if (id && svg) covers.set(id, svg);
+  }
   const hitMaterial = register(new T.MeshBasicMaterial());
   for (const bay of bays) {
     const { roomIndex, stack, x, z, yaw: angle } = bay;
-    const position = railByBay.get(bay)!;
+    const ladder = railByBay.get(bay);
     const base = new T.Matrix4().makeRotationY(angle).setPosition(x, 0, z);
     const timber = (x: number, y: number, distance: number, w: number, h: number, d: number, m: T.Material) =>
       block(x, y, distance, w, h, d, m, base);
@@ -559,7 +566,7 @@ export function createRoom(
     stack.forEach((shelf, row) => {
       const deck = bottom + step * row;
       const shelfIndex = shelfPositions[roomIndex].length;
-      shelfPositions[roomIndex].push({ x, z, yaw: angle, height: deck + 0.35, ...position });
+      shelfPositions[roomIndex].push({ x, z, yaw: angle, height: deck + 0.35, ladder: shelf.upper ? ladder : undefined });
       timber(0, deck, 0.29, 3.68, 0.095, 0.48, walnut);
       timber(0, deck - 0.004, 0.54, 1.43, 0.104, 0.035, brass);
       const plaqueTexture = paintTexture(512, 48, (ctx) => {
@@ -601,7 +608,7 @@ export function createRoom(
           timber(x, y, center, w - 0.014, h - 0.012, d - 0.016, paper);
           for (const sign of [-1, 1]) timber(x + sign * (w / 2 - 0.004), y, center, 0.008, h, d, board);
         }
-        const artwork = jackets.querySelector<SVGSVGElement>(`[data-jacket="${CSS.escape(book.id)}"] svg`);
+        const artwork = covers.get(book.id);
         const map =
           faceOut && artwork
             ? jacketTexture(book, artwork, () => {
@@ -696,7 +703,7 @@ export function createRoom(
   function toggleLadder() {
     if (paused) return;
     if (!mounted) {
-      const inRoom = rails.filter(rail => rail.roomIndex === currentRoom);
+      const inRoom = railsByRoom[currentRoom];
       const distance = (rail: Rail) => {
         const foot = wallPoint(rail.origin, rail.slide, rail.size.foot);
         return Math.hypot(camera.position.x - foot.x, camera.position.z - foot.z);
@@ -715,7 +722,7 @@ export function createRoom(
     ray.setFromCamera(pointer, camera);
     const book = ray.intersectObjects(pickable, false).find(({ object }) => object.userData.room === currentRoom);
     if (!mounted) {
-      const inRoom = rails.filter(rail => rail.roomIndex === currentRoom);
+      const inRoom = railsByRoom[currentRoom];
       const rung = ray.intersectObjects(inRoom.map(rail => rail.rig.hit), false)[0];
       if (rung && (!book || rung.distance < book.distance)) {
         const target = inRoom.find(rail => rail.rig.hit === rung.object)!;
@@ -726,8 +733,9 @@ export function createRoom(
     const volume = book.object.userData.book as Book;
     const upper = book.object.userData.upper as number | undefined;
     const target = upper === undefined ? undefined : shelfPositions[currentRoom][upper];
-    if (target && (mounted !== target.rail || Math.abs(target.height - camera.position.y) > 1)) {
-      return { label: `Climb to ${volume.design.title}`, activate: () => mountLadder(target.rail, target.height - eyeHeight, target.offset + 0.45) };
+    if (target?.ladder && (mounted !== target.ladder.rail || Math.abs(target.height - camera.position.y) > 1)) {
+      const { rail, offset } = target.ladder;
+      return { label: `Climb to ${volume.design.title}`, activate: () => mountLadder(rail, target.height - eyeHeight, offset + 0.45) };
     }
     return { label: `${volume.design.title} · ${volume.source.author} · Open book`, activate: () => events.open(volume.id) };
   }
@@ -823,8 +831,8 @@ export function createRoom(
   function visit(index: number) {
     if (paused) return;
     const bay = shelfPositions[currentRoom][index];
-    if (bay && rooms[currentRoom].shelves[index].upper) {
-      mountLadder(bay.rail, bay.height - eyeHeight, bay.offset + 0.45);
+    if (bay?.ladder) {
+      mountLadder(bay.ladder.rail, bay.height - eyeHeight, bay.ladder.offset + 0.45);
       return;
     }
     stepOff();
@@ -876,7 +884,7 @@ export function createRoom(
   const controls = new Set(["w", "a", "s", "d", "arrowup", "arrowdown", "arrowleft", "arrowright"]);
   function keyDown(e: KeyboardEvent) {
     const k = e.key.toLowerCase();
-    if (k === "e" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    if (k === "e" && railsByRoom[currentRoom].length && !e.ctrlKey && !e.metaKey && !e.altKey) {
       e.preventDefault();
       if (!e.repeat) toggleLadder();
       return;

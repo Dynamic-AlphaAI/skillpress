@@ -1,11 +1,10 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { chromium } from "playwright";
-import { platforms } from "../src/lib/platforms.ts";
+import { categories } from "../src/lib/categories.ts";
 
 const base = new URL(process.argv[2] ?? "http://localhost:3000").origin;
 const catalog = JSON.parse(readFileSync(new URL("../content/catalog.json", import.meta.url)));
-const sourceById = new Map(catalog.sources.map(s => [s.id, s]));
 const browser = await chromium.launch({
   executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE,
   args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
@@ -28,13 +27,25 @@ function trackCamera() {
 try {
   const page = await openPage({ viewport: { width: 1240, height: 850 }, reducedMotion: "reduce" });
   await page.goto(base);
-  const nav = page.getByRole("navigation", { name: "Platform collections" });
-  for (const { id, label } of platforms) {
-    const expected = catalog.books.filter(b => [...sourceById.get(b.source).platforms, ...(b.platforms ?? []), ...(b.covers ?? [])].includes(id));
-    await nav.getByRole("link", { name: `${label} ${expected.length}`, exact: true }).click();
-    await page.getByRole("heading", { name: `${label} shelves` }).waitFor();
-    assert.equal(new URL(page.url()).searchParams.get("platform"), id);
+  const nav = page.getByRole("navigation", { name: "Topic collections" });
+  const links = nav.getByRole("link");
+  const labels = await links.allTextContents();
+  const counts = labels.map(label => Number(label.match(/\d+$/)[0]));
+  assert.equal(counts.reduce((a, b) => a + b, 0), catalog.books.length);
+  for (const { id, label } of categories) {
+    const link = links.filter({ hasText: label });
+    if (!await link.count()) continue;
+    await link.click();
+    await page.getByRole("heading", { name: label, exact: true }).waitFor();
+    assert.equal(new URL(page.url()).searchParams.get("category"), id);
   }
+  await page.goto(base + "/?category=writing-documents&q=slidev");
+  const slide = page.locator('a[href*="book=slidev&"]');
+  await slide.getByText("Built for Claude", { exact: true }).waitFor();
+  await slide.click();
+  await page.getByRole("dialog", { name: /reader/ }).waitFor();
+  await page.keyboard.press("Escape");
+  assert.equal(new URL(page.url()).searchParams.get("category"), "writing-documents");
   await page.goto(base + "/?platform=chatgpt&q=submission");
   const results = page.getByRole("list", { name: "Matching skills" });
   const link = results.locator('a[href*="book=chatgpt-app-submission"]');
@@ -72,21 +83,50 @@ try {
   assert.ok(names.includes("AI & Model Lab") && names.includes("Data Archive"));
   await page.keyboard.press("Escape");
   let physical = 0;
+  let shortRoom, tallRoom;
+  const shelf = page.getByRole("combobox", { name: "Visit a shelf" });
+  const useLadder = page.getByRole("button", { name: "Use ladder", exact: true });
+  const stepOff = page.getByRole("button", { name: "Step off ladder" });
   for (const name of names) {
     await room.click();
     await page.getByRole("option", { name, exact: true }).click();
+    await shelf.click();
+    const hasUpperShelf = await page.getByRole("option", { name: /Upper shelf/ }).count() > 0;
+    await page.keyboard.press("Escape");
+    assert.equal(await useLadder.count(), Number(hasUpperShelf), name);
+    assert.equal((await canvas.getAttribute("aria-label")).includes("ladder"), hasUpperShelf, name);
+    if (hasUpperShelf) tallRoom ??= name;
+    else shortRoom ??= name;
     await volume.click();
     physical += await page.getByRole("option").count();
     await page.keyboard.press("Escape");
   }
   assert.equal(physical, catalog.books.length);
-  await page.getByRole("button", { name: "Use ladder", exact: true }).click();
-  await page.getByRole("button", { name: "Step off ladder" }).click();
+  assert.ok(shortRoom && tallRoom);
+  await room.click();
+  await page.getByRole("option", { name: shortRoom, exact: true }).click();
+  const floorPosition = await groundPosition();
+  await canvas.press("e");
+  assert.deepEqual(await groundPosition(), floorPosition);
+  assert.equal(await stepOff.count(), 0);
+  await shelf.click();
+  await page.getByRole("option").nth(1).click();
+  await page.getByRole("button", { name: "Read book" }).click();
+  await page.getByRole("dialog", { name: /reader/ }).waitFor();
+  await page.keyboard.press("Escape");
+  await room.click();
+  await page.getByRole("option", { name: tallRoom, exact: true }).click();
+  await shelf.click();
+  await page.getByRole("option", { name: /Upper shelf/ }).first().click();
+  await stepOff.waitFor();
+  assert.ok(await page.evaluate(() => window.testCamera.position.y > 2));
+  await canvas.press("e");
+  await useLadder.waitFor();
   console.log(`Walked ${names.length} rooms and counted ${physical} physical editions.`);
 
   // Verify the analog control against the actual camera, including its motion after release.
   await page.goto(base + "/?platform=deepseek");
-  await page.getByRole("heading", { name: "DeepSeek shelves" }).waitFor();
+  await page.waitForFunction(() => document.querySelector('select[aria-label="AI platform"]')?.value === "deepseek");
   await page.getByRole("button", { name: "Enter library in expanded view" }).click();
   const expanded = page.locator("dialog:modal");
   await expanded.waitFor();
@@ -164,7 +204,7 @@ try {
   const mobile = await openPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: "reduce" });
   await mobile.addInitScript(trackCamera);
   await mobile.goto(base + "/?platform=deepseek");
-  await mobile.getByRole("heading", { name: "DeepSeek shelves" }).waitFor();
+  await mobile.waitForFunction(() => document.querySelector('select[aria-label="AI platform"]')?.value === "deepseek");
   await mobile.getByRole("button", { name: "Enter library in expanded view" }).tap();
   await mobile.waitForFunction(() => window.testCamera);
   const mobileRoom = mobile.locator("dialog:modal");
@@ -195,8 +235,9 @@ try {
     };
   });
   await mobile.goto(base + "/?platform=claude&walk");
-  await mobile.getByRole("combobox", { name: "Browse by platform" }).click();
-  await mobile.getByRole("option", { name: /^DeepSeek ·/ }).click();
+  await mobile.getByRole("combobox", { name: "AI platform" }).selectOption("deepseek");
+  await mobile.getByRole("combobox", { name: "Browse by topic" }).click();
+  await mobile.getByRole("option", { name: /^Design & Media ·/ }).click();
   await mobile.getByRole("button", { name: "Expand library" }).tap();
   await mobile.locator("dialog:modal").waitFor();
   const picker = mobile.getByRole("combobox", { name: "Choose a volume" });
@@ -205,9 +246,10 @@ try {
   await mobile.getByRole("button", { name: "Read book" }).click();
   await mobile.getByRole("dialog", { name: /reader/ }).waitFor();
   assert.equal(new URL(mobile.url()).searchParams.get("platform"), "deepseek");
+  assert.equal(new URL(mobile.url()).searchParams.get("category"), "design-media");
   assert.ok(await mobile.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   assert.deepEqual(errors, []);
-  console.log("Verified all eight collections, scoped search, reader history, attribution, download, ladder and mobile fallback.");
+  console.log("Verified topic collections, provider notes and filters, scoped search, reader history, downloads and mobile fallback.");
 } finally {
   await browser.close();
 }

@@ -227,6 +227,7 @@ async function importLibrary(cleanup) {
       authorUrl: source.authorUrl ?? null,
       copyright: source.copyright ?? source.author,
       platforms: source.platforms ?? [],
+      ...(source.primaryPlatform && { primaryPlatform: source.primaryPlatform }),
       series: source.series ?? null,
       bundleNote: source.bundleNote ?? null,
     });

@@ -172,6 +172,12 @@
   gap: 5px;
   min-width: 0;
 }
+.providerNote {
+  grid-column: 3 / -1;
+  margin-top: -6px;
+  color: #d6c9aa;
+  font: 10px/1.4 var(--font-mono), monospace;
+}
 .field label {
   color: #d5c49f;
   font: 500 10px/1.2 var(--font-mono), monospace;
@@ -312,6 +318,7 @@
   line-height: 1.4;
 }
 @media (max-width: 680px) {
+  .providerNote { grid-column: 1 / -1; margin-top: -3px; }
   .desk {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
     gap: 9px;

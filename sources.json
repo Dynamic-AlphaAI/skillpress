@@ -26,7 +26,7 @@
         "marketplace": "claude-plugins-official",
         "addMarketplace": null
       },
-      "bundleNote": "Superpowers skills are written to work together \u2014 using-superpowers teaches the agent when to reach for the rest \u2014 so the full set gets the most out of any one of them.",
+      "bundleNote": "Superpowers skills are written to work together — using-superpowers teaches the agent when to reach for the rest — so the full set gets the most out of any one of them.",
       "platforms": [
         "claude",
         "codex"
@@ -339,7 +339,8 @@
       ],
       "platforms": [
         "copilot"
-      ]
+      ],
+      "primaryPlatform": "copilot"
     },
     {
       "id": "wshobson",
@@ -426,47 +427,149 @@
       "id": "pm-skills",
       "repo": "phuryn/pm-skills",
       "path": ".",
-      "author": "Pawe\u0142 Huryn",
+      "author": "Paweł Huryn",
       "copyright": "Pawel Huryn",
       "authorUrl": "https://github.com/phuryn",
       "revision": "9af7bfd0bc47fdad43c2eaa7a43cd13918e7aaef",
       "skillPaths": [
         "pm-data-analytics/skills/ab-test-analysis",
         "pm-data-analytics/skills/cohort-analysis",
+        "pm-data-analytics/skills/sql-queries",
         "pm-execution/skills/brainstorm-okrs",
+        "pm-execution/skills/create-prd",
+        "pm-execution/skills/dummy-dataset",
         "pm-execution/skills/job-stories",
         "pm-execution/skills/outcome-roadmap",
         "pm-execution/skills/pre-mortem",
         "pm-execution/skills/prioritization-frameworks",
         "pm-execution/skills/release-notes",
         "pm-execution/skills/retro",
+        "pm-execution/skills/sprint-plan",
         "pm-execution/skills/stakeholder-map",
+        "pm-execution/skills/strategy-red-team",
         "pm-execution/skills/summarize-meeting",
         "pm-execution/skills/test-scenarios",
         "pm-execution/skills/user-stories",
+        "pm-execution/skills/wwas",
         "pm-go-to-market/skills/beachhead-segment",
         "pm-go-to-market/skills/competitive-battlecard",
+        "pm-go-to-market/skills/growth-loops",
+        "pm-go-to-market/skills/gtm-motions",
+        "pm-go-to-market/skills/gtm-strategy",
+        "pm-go-to-market/skills/ideal-customer-profile",
+        "pm-market-research/skills/competitor-analysis",
         "pm-market-research/skills/customer-journey-map",
         "pm-market-research/skills/market-segments",
+        "pm-market-research/skills/market-sizing",
         "pm-market-research/skills/sentiment-analysis",
         "pm-market-research/skills/survey-design",
         "pm-market-research/skills/user-personas",
+        "pm-market-research/skills/user-segmentation",
         "pm-marketing-growth/skills/marketing-ideas",
         "pm-marketing-growth/skills/north-star-metric",
         "pm-marketing-growth/skills/positioning-ideas",
+        "pm-marketing-growth/skills/product-name",
+        "pm-marketing-growth/skills/value-prop-statements",
         "pm-product-discovery/skills/analyze-feature-requests",
+        "pm-product-discovery/skills/brainstorm-experiments-existing",
+        "pm-product-discovery/skills/brainstorm-experiments-new",
+        "pm-product-discovery/skills/brainstorm-ideas-existing",
+        "pm-product-discovery/skills/brainstorm-ideas-new",
+        "pm-product-discovery/skills/identify-assumptions-existing",
+        "pm-product-discovery/skills/identify-assumptions-new",
         "pm-product-discovery/skills/interview-script",
+        "pm-product-discovery/skills/metrics-dashboard",
         "pm-product-discovery/skills/opportunity-solution-tree",
         "pm-product-discovery/skills/prioritize-assumptions",
+        "pm-product-discovery/skills/prioritize-features",
         "pm-product-discovery/skills/summarize-interview",
+        "pm-product-strategy/skills/ansoff-matrix",
+        "pm-product-strategy/skills/business-model",
         "pm-product-strategy/skills/lean-canvas",
+        "pm-product-strategy/skills/monetization-strategy",
+        "pm-product-strategy/skills/pestle-analysis",
+        "pm-product-strategy/skills/porters-five-forces",
+        "pm-product-strategy/skills/pricing-strategy",
+        "pm-product-strategy/skills/product-strategy",
         "pm-product-strategy/skills/product-vision",
+        "pm-product-strategy/skills/startup-canvas",
+        "pm-product-strategy/skills/swot-analysis",
+        "pm-product-strategy/skills/value-proposition",
+        "pm-toolkit/skills/grammar-check",
         "pm-toolkit/skills/review-resume"
       ],
       "platforms": [
         "claude",
         "codex"
-      ]
+      ],
+      "topics": {
+        "pm-data-analytics/skills/ab-test-analysis": "data-analytics",
+        "pm-data-analytics/skills/cohort-analysis": "data-analytics",
+        "pm-data-analytics/skills/sql-queries": "data-analytics",
+        "pm-execution/skills/brainstorm-okrs": "research-planning",
+        "pm-execution/skills/create-prd": "writing-documents",
+        "pm-execution/skills/dummy-dataset": "data-analytics",
+        "pm-execution/skills/job-stories": "research-planning",
+        "pm-execution/skills/outcome-roadmap": "research-planning",
+        "pm-execution/skills/pre-mortem": "research-planning",
+        "pm-execution/skills/prioritization-frameworks": "research-planning",
+        "pm-execution/skills/release-notes": "writing-documents",
+        "pm-execution/skills/retro": "team-communication",
+        "pm-execution/skills/sprint-plan": "research-planning",
+        "pm-execution/skills/stakeholder-map": "research-planning",
+        "pm-execution/skills/strategy-red-team": "research-planning",
+        "pm-execution/skills/summarize-meeting": "team-communication",
+        "pm-execution/skills/test-scenarios": "testing-review",
+        "pm-execution/skills/user-stories": "research-planning",
+        "pm-execution/skills/wwas": "research-planning",
+        "pm-go-to-market/skills/beachhead-segment": "campaigns-outreach",
+        "pm-go-to-market/skills/competitive-battlecard": "sales-pricing",
+        "pm-go-to-market/skills/growth-loops": "conversion-retention",
+        "pm-go-to-market/skills/gtm-motions": "campaigns-outreach",
+        "pm-go-to-market/skills/gtm-strategy": "campaigns-outreach",
+        "pm-go-to-market/skills/ideal-customer-profile": "sales-pricing",
+        "pm-market-research/skills/competitor-analysis": "research-planning",
+        "pm-market-research/skills/customer-journey-map": "research-planning",
+        "pm-market-research/skills/market-segments": "research-planning",
+        "pm-market-research/skills/market-sizing": "research-planning",
+        "pm-market-research/skills/sentiment-analysis": "data-analytics",
+        "pm-market-research/skills/survey-design": "research-planning",
+        "pm-market-research/skills/user-personas": "research-planning",
+        "pm-market-research/skills/user-segmentation": "research-planning",
+        "pm-marketing-growth/skills/marketing-ideas": "campaigns-outreach",
+        "pm-marketing-growth/skills/north-star-metric": "data-analytics",
+        "pm-marketing-growth/skills/positioning-ideas": "campaigns-outreach",
+        "pm-marketing-growth/skills/product-name": "campaigns-outreach",
+        "pm-marketing-growth/skills/value-prop-statements": "campaigns-outreach",
+        "pm-product-discovery/skills/analyze-feature-requests": "research-planning",
+        "pm-product-discovery/skills/brainstorm-experiments-existing": "research-planning",
+        "pm-product-discovery/skills/brainstorm-experiments-new": "research-planning",
+        "pm-product-discovery/skills/brainstorm-ideas-existing": "research-planning",
+        "pm-product-discovery/skills/brainstorm-ideas-new": "research-planning",
+        "pm-product-discovery/skills/identify-assumptions-existing": "research-planning",
+        "pm-product-discovery/skills/identify-assumptions-new": "research-planning",
+        "pm-product-discovery/skills/interview-script": "research-planning",
+        "pm-product-discovery/skills/metrics-dashboard": "data-analytics",
+        "pm-product-discovery/skills/opportunity-solution-tree": "research-planning",
+        "pm-product-discovery/skills/prioritize-assumptions": "research-planning",
+        "pm-product-discovery/skills/prioritize-features": "research-planning",
+        "pm-product-discovery/skills/summarize-interview": "research-planning",
+        "pm-product-strategy/skills/ansoff-matrix": "research-planning",
+        "pm-product-strategy/skills/business-model": "sales-pricing",
+        "pm-product-strategy/skills/lean-canvas": "research-planning",
+        "pm-product-strategy/skills/monetization-strategy": "sales-pricing",
+        "pm-product-strategy/skills/pestle-analysis": "research-planning",
+        "pm-product-strategy/skills/porters-five-forces": "research-planning",
+        "pm-product-strategy/skills/pricing-strategy": "sales-pricing",
+        "pm-product-strategy/skills/product-strategy": "research-planning",
+        "pm-product-strategy/skills/product-vision": "research-planning",
+        "pm-product-strategy/skills/startup-canvas": "research-planning",
+        "pm-product-strategy/skills/swot-analysis": "research-planning",
+        "pm-product-strategy/skills/value-proposition": "sales-pricing",
+        "pm-toolkit/skills/grammar-check": "writing-documents",
+        "pm-toolkit/skills/review-resume": "writing-documents"
+      },
+      "primaryPlatform": "claude"
     },
     {
       "id": "addyosmani",
@@ -605,7 +708,8 @@
       "bundleNote": "OpenAI retired this example repository in favor of openai/plugins. This edition preserves the cited revision.",
       "platforms": [
         "codex"
-      ]
+      ],
+      "primaryPlatform": "codex"
     },
     {
       "id": "openai-plugins",
@@ -627,7 +731,8 @@
         "chatgpt-app-submission": [
           "chatgpt"
         ]
-      }
+      },
+      "primaryPlatform": "codex"
     },
     {
       "id": "anthropic-work",
@@ -688,7 +793,8 @@
       },
       "platforms": [
         "claude"
-      ]
+      ],
+      "primaryPlatform": "claude"
     },
     {
       "id": "anthropic-plugins",
@@ -713,7 +819,8 @@
       },
       "platforms": [
         "claude"
-      ]
+      ],
+      "primaryPlatform": "claude"
     },
     {
       "id": "cursor-plugins",
@@ -758,7 +865,8 @@
         "add-dictation": [
           "grok"
         ]
-      }
+      },
+      "primaryPlatform": "cursor"
     },
     {
       "id": "grok-build",
@@ -824,7 +932,8 @@
       },
       "platforms": [
         "deepseek"
-      ]
+      ],
+      "primaryPlatform": "deepseek"
     },
     {
       "id": "gemini-skills",
@@ -1212,7 +1321,7 @@
       "author": "Agrici Daniel",
       "authorUrl": "https://github.com/AgriciDaniel",
       "revision": "468ed5b0d9e3249394783710e54abb02837e326b",
-      "bundleNote": "Some workflows use the Claude SEO plugin\u2019s local checks and reference data. Install the upstream plugin to run those checks.",
+      "bundleNote": "Some workflows use the Claude SEO plugin’s local checks and reference data. Install the upstream plugin to run those checks.",
       "platforms": [
         "claude"
       ],
@@ -1265,7 +1374,8 @@
           "authorUrl": "https://github.com/puneetindersingh",
           "copyright": "puneetindersingh"
         }
-      }
+      },
+      "primaryPlatform": "claude"
     },
     {
       "id": "open-seo",
@@ -1374,7 +1484,8 @@
       "topics": {
         ".claude/skills/growth-lead": "research-planning"
       },
-      "copyright": "Castos and SEO Machine Contributors"
+      "copyright": "Castos and SEO Machine Contributors",
+      "primaryPlatform": "claude"
     },
     {
       "id": "ryze-seo",
@@ -1459,6 +1570,104 @@
         "products/surveys/skills/creating-surveys": "research-planning"
       },
       "copyright": "PostHog Inc."
+    },
+    {
+      "id": "dbt-skills",
+      "repo": "dbt-labs/dbt-agent-skills",
+      "path": "skills",
+      "author": "dbt Labs",
+      "authorUrl": "https://github.com/dbt-labs",
+      "revision": "b8facde20b7a92c40ce3e6b86b71c4b92aa44040",
+      "platforms": [
+        "claude",
+        "codex",
+        "cursor",
+        "gemini",
+        "copilot"
+      ],
+      "bundleNote": "Warehouse queries and project workflows use your own dbt credentials and permissions.",
+      "skillPaths": [
+        "skills/dbt-extras/skills/creating-mermaid-dbt-dag",
+        "skills/dbt/skills/adding-dbt-unit-test",
+        "skills/dbt/skills/answering-natural-language-questions-with-dbt",
+        "skills/dbt/skills/building-dbt-semantic-layer",
+        "skills/dbt/skills/querying-the-dbt-information-schema",
+        "skills/dbt/skills/troubleshooting-dbt-job-errors",
+        "skills/dbt/skills/using-dbt-for-analytics-engineering",
+        "skills/dbt/skills/using-dbt-state",
+        "skills/dbt/skills/working-with-dbt-mesh"
+      ],
+      "topics": {
+        "skills/dbt-extras/skills/creating-mermaid-dbt-dag": "data-analytics",
+        "skills/dbt/skills/adding-dbt-unit-test": "testing-review",
+        "skills/dbt/skills/answering-natural-language-questions-with-dbt": "data-analytics",
+        "skills/dbt/skills/building-dbt-semantic-layer": "data-analytics",
+        "skills/dbt/skills/querying-the-dbt-information-schema": "databases",
+        "skills/dbt/skills/troubleshooting-dbt-job-errors": "testing-review",
+        "skills/dbt/skills/using-dbt-for-analytics-engineering": "data-analytics",
+        "skills/dbt/skills/using-dbt-state": "databases",
+        "skills/dbt/skills/working-with-dbt-mesh": "databases"
+      }
+    },
+    {
+      "id": "slidev",
+      "repo": "slidevjs/slidev",
+      "path": "skills",
+      "author": "Slidev",
+      "authorUrl": "https://github.com/slidevjs",
+      "revision": "437f139ccd4c8482a193b217922e7800a5b3baec",
+      "platforms": [
+        "claude"
+      ],
+      "bundleNote": "The Slidev project documents this presentation skill for Claude Code.",
+      "skillPaths": [
+        "skills/slidev"
+      ],
+      "topics": {
+        "skills/slidev": "writing-documents"
+      },
+      "primaryPlatform": "claude"
+    },
+    {
+      "id": "ui-skills",
+      "repo": "ibelick/ui-skills",
+      "path": "skills",
+      "author": "Julien Thibeaut",
+      "authorUrl": "https://github.com/ibelick",
+      "revision": "347d3189830f8ec3c4c041421bce19182a79dc7a",
+      "platforms": [],
+      "bundleNote": "Design engineering guidance from Julien Thibeaut. Improve UI includes the publisher’s OpenAI product manifest.",
+      "skillPaths": [
+        "skills/baseline-ui",
+        "skills/component-canvas",
+        "skills/create-canvas",
+        "skills/create-design-md",
+        "skills/device-frames",
+        "skills/fixing-accessibility",
+        "skills/fixing-metadata",
+        "skills/fixing-motion-performance",
+        "skills/improve-ui"
+      ],
+      "topics": {
+        "skills/baseline-ui": "design-media",
+        "skills/component-canvas": "design-media",
+        "skills/create-canvas": "design-media",
+        "skills/create-design-md": "design-media",
+        "skills/device-frames": "design-media",
+        "skills/fixing-accessibility": "design-media",
+        "skills/fixing-metadata": "search-discovery",
+        "skills/fixing-motion-performance": "software-development",
+        "skills/improve-ui": "design-media"
+      },
+      "editionPlatforms": {
+        "improve-ui": [
+          "codex",
+          "chatgpt"
+        ]
+      },
+      "reviewedAssets": {
+        "skills/improve-ui/agents/openai.yaml": "54b7aa85c942d5daf7d07fdd445ecb4d5ad5b963"
+      }
     }
   ]
 }

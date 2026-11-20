@@ -4,7 +4,7 @@ Agent skills, typeset and bound as books you can page through and then install. 
 
 ## Source libraries
 
-The catalogue contains **692 editions from 51 GitHub repositories**. The 3D library has **11 rooms and 137 occupied shelves**. Browse by topic, author, or platform. The eight platform collections include both skills for a host and editions about that platform. Each book identifies its publisher and links to its exact upstream revision. [Collection guide and source review](docs/collections.md)
+The catalogue contains **745 editions from 54 GitHub repositories**. Its 19 topic collections share 11 rooms and 144 occupied shelves. The main hall holds 566 editions across 119 shelves in 17 wall cases. Choose a topic first, then narrow by author or AI platform. Book notes show the publisher’s intended host or documented compatibility. [Collection guide and source review](docs/collections.md)
 
 | GitHub repository | Subject matter | Editions | License |
 |---|---|---:|---|
@@ -27,7 +27,7 @@ The catalogue contains **692 editions from 51 GitHub repositories**. The 3D libr
 | [github/awesome-copilot](https://github.com/github/awesome-copilot) | Technical writing, testing, design and planning | 38 | MIT |
 | [wshobson/agents](https://github.com/wshobson/agents) | Accessible interfaces, data and software engineering | 36 | MIT |
 | [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) | Communication, organizational change and marketing | 11 | MIT |
-| [phuryn/pm-skills](https://github.com/phuryn/pm-skills) | Product discovery, analytics and roadmaps | 31 | MIT |
+| [phuryn/pm-skills](https://github.com/phuryn/pm-skills) | Product discovery, analytics and roadmaps | 65 | MIT |
 | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | Software design, implementation and documentation | 10 | MIT |
 | [obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills) | Linked notes, visual canvases and note databases | 3 | MIT |
 | [vuejs-ai/skills](https://github.com/vuejs-ai/skills) | Vue components, routing, state management and testing | 6 | MIT |
@@ -59,6 +59,9 @@ The catalogue contains **692 editions from 51 GitHub repositories**. The 3D libr
 | [TheCraigHewitt/seomachine](https://github.com/TheCraigHewitt/seomachine) | Growth strategy and prioritization | 1 | MIT |
 | [Ryze-AI-Adgent/open-seo-mcp-skills](https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills) | Search Console, GA4 and SEO research | 8 | MIT |
 | [PostHog/posthog](https://github.com/PostHog/posthog) | Funnels, web analytics, surveys and experiments | 16 | MIT |
+| [dbt-labs/dbt-agent-skills](https://github.com/dbt-labs/dbt-agent-skills) | Analytics engineering, model testing and data lineage | 9 | Apache-2.0 |
+| [slidevjs/slidev](https://github.com/slidevjs/slidev) | Technical presentations in Markdown | 1 | MIT |
+| [ibelick/ui-skills](https://github.com/ibelick/ui-skills) | Accessibility, motion, design systems and UI composition | 9 | MIT |
 
 - **Ranking:** install counts from the [skills.sh](https://skills.sh) leaderboard. Skills it doesn't list yet appear at the end of their topic.
 - Books sit together by primary task across the catalogue, shelf, and 3D room. For example, **Testing & Code Review** includes browser testing, debugging, and reviewing changes. The **Author** filter narrows any topic to a particular author. Within each topic, books follow their install rank.
@@ -101,11 +104,11 @@ A GitHub Action (`.github/workflows/update-skills.yml`) runs `npm run import` ev
 
 ## Using it
 
-Choose **Search** in the header to look up skills by keyword, title, publisher, topic, or words in the instructions. Results update as you type. Use **Topic** and **Author** to narrow them, then select a result to read the book. A link such as [a search for PDF extraction](https://skillpress.xyz/?q=pdf+extraction) restores the query. The full-text index is built from the same checked-in editions as the reader and loads when Search opens.
+Choose **Search** in the header to look up skills by keyword, title, publisher, topic, or words in the instructions. Results update as you type. Choose a topic above the catalogue or use the author and platform filters to narrow them, then select a result to read the book. A link such as [a search for PDF extraction](https://skillpress.xyz/?q=pdf+extraction) restores the query. The full-text index is built from the same checked-in editions as the reader and loads when Search opens.
 
-Enter the Main Reading Hall to browse just over half the collection, arranged by topic in cases along the outside walls. Signed doorways on both sides open into Arts & Letters, Engineering Workshop, Research & Planning, Operations Room, Business & Commerce, Design Gallery, AI & Model Lab, Data Archive, Mobile Studio, and Infrastructure Room. Drag the joystick up or down to walk and left or right to turn. Tap the small buttons underneath for one sideways step, or hold to keep stepping. You can also drag the scene to look up and down, scroll to walk, or use the keyboard. The expand button at the entrance or inside the room opens a near-full-screen walkthrough. Closing the expanded view returns you to the same spot. Each matching edition has one physical place. The room, shelf, and volume pickers also work by keyboard and without WebGL. Small filtered collections fit entirely in the hall.
+Enter the Main Reading Hall to browse about three quarters of the collection, arranged by topic in cases along the outside walls. Signed doorways on both sides open into Arts & Letters, Engineering Workshop, Research & Planning, Operations Room, Business & Commerce, Design Gallery, AI & Model Lab, Data Archive, Mobile Studio, and Infrastructure Room. Drag the joystick up or down to walk and left or right to turn. Tap the small buttons underneath for one sideways step, or hold to keep stepping. You can also drag the scene to look up and down, scroll to walk, or use the keyboard. The expand button at the entrance or inside the room opens a near-full-screen walkthrough. Closing the expanded view returns you to the same spot. Each matching edition has one physical place. The room, shelf, and volume pickers also work by keyboard and without WebGL. Small filtered collections fit entirely in the hall.
 
-Select any wall ladder or press **E** to board the nearest one in the current room. Neighboring cases on an uninterrupted wall share a rail. Push the joystick up or down, scroll, or use **W/S** to climb. Use the sideways buttons or **A/D** to roll along the bookcase, and select a book to read. Press **E** or choose **Step off ladder** to return to the floor. Choosing an **Upper shelf** in the shelf picker takes you straight to that row.
+Browse the first three shelf rows from the floor. Bookcases with a fourth row or higher have a ladder, and neighboring tall cases share a rail. Select a ladder or press **E** to board the nearest one in that room. Push the joystick up or down, scroll, or use **W/S** to climb. Use the sideways buttons or **A/D** to roll along the bookcase, and select a book to read. Press **E** or choose **Step off ladder** to return to the floor. Choosing an **Upper shelf** in the shelf picker takes you straight to that row.
 
 The sound control in the masthead and reader remembers your preference on this device. In a book’s details, drag the cover or press **Turn book** to inspect its boards, spine, and printed back.
 

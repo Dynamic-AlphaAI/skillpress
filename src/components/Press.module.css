@@ -214,8 +214,7 @@
   background: #efede3; border-bottom: 1px solid #c9c5b5;
   font: 11px/1.2 var(--font-mono), monospace;
 }
-.collectionLabel { color: #515746; }
-.collectionLinks { display: flex; gap: 4px; overflow-x: auto; padding: 5px 2px; scrollbar-width: thin; }
+.collectionLinks { display: flex; gap: 4px; flex: 1; min-width: 0; overflow-x: auto; padding: 5px 2px; scrollbar-width: thin; }
 .collectionLinks a {
   display: inline-flex; align-items: baseline; gap: 5px; padding: 6px 9px;
   border-radius: 3px; text-decoration: none; white-space: nowrap; color: #393e31;
@@ -229,12 +228,13 @@
   .collectionLinks a { padding: 8px; }
 }
 
-.collectionPicker { display: none; }
+.collectionPicker { width: clamp(190px, 22vw, 300px); padding-block: 4px; }
+.collectionPicker > div { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px; }
+.collectionPicker label { color: #515746; }
+.collectionPicker button { min-height: 32px; font: 12px/1.2 var(--font-mono), monospace; }
 @media (max-width: 740px) {
   .collections { padding: 4px 14px; }
-  .collectionLinks, .collectionLabel { display: none; }
-  .collectionPicker { display: block; width: 100%; }
-  .collectionPicker > div { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px; }
-  .collectionPicker label { color: #515746; }
-  .collectionPicker button { min-height: 36px; font: 12px/1.2 var(--font-mono), monospace; }
+  .collectionLinks { display: none; }
+  .collectionPicker { width: 100%; padding: 0; }
+  .collectionPicker button { min-height: 36px; }
 }

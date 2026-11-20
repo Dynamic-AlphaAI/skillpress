@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useEffectEvent, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { planRooms } from "@/lib/roomShelves";
 import type { Book } from "@/lib/types";
+import { providerNote } from "@/lib/platforms";
 import { createRoom } from "./roomScene";
 import { EditionJacket } from "./EditionJacket";
 import { CoverArt } from "./CoverArt";
@@ -36,10 +37,19 @@ export default function WalkingRoom({
   const [onLadder, setOnLadder] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
   const rooms = useMemo(() => planRooms(books), [books]);
+  const jacketArt = useMemo(() => rooms.flatMap(section => section.shelves.flatMap(shelf =>
+    shelf.books.slice(0, shelf.faceOutCount).map(book => (
+      <span key={book.id} data-jacket={book.id}>
+        {book.design.jacket ? <EditionJacket book={book} /> : <CoverArt slug={book.id} design={book.design} />}
+      </span>
+    )),
+  )), [rooms]);
   const room = rooms[roomIndex] ?? rooms[0];
+  const hasLadder = !unavailable && room?.shelves.some(row => row.upper);
   const shelf = room?.shelves[destination];
   const volumes = useMemo(() => shelf?.books ?? room?.shelves.flatMap((row) => row.books) ?? [], [shelf, room]);
   const chosen = volumes.find((b) => b.id === selection) ?? volumes[0];
+  const provider = chosen && providerNote(chosen);
   const roomOptions = useMemo(() => rooms.map((section, i) => ({ value: String(i), label: section.label })), [rooms]);
   const shelfOptions = useMemo(() => [
     { value: "-1", label: "All shelves in this room" },
@@ -145,21 +155,14 @@ export default function WalkingRoom({
         }
       }}
     >
-      <div hidden ref={jackets} aria-hidden="true">
-        {rooms.flatMap((section) => section.shelves.flatMap((bay) =>
-          bay.books.slice(0, bay.faceOutCount)
-            .map((b) => (
-              <span key={b.id} data-jacket={b.id}>
-                {b.design.jacket ? <EditionJacket book={b} /> : <CoverArt slug={b.id} design={b.design} />}
-              </span>
-            )),
-        ))}
-      </div>
+      <div hidden ref={jackets} aria-hidden="true">{jacketArt}</div>
       <div className={s.viewport}>
         <canvas
           ref={canvas}
           tabIndex={0}
-          aria-label="Walkable library. Move the joystick up or down to walk and left or right to turn. Scroll up to walk forward or down to walk back. Use W A S D to move and left or right arrow to turn. Select a wall ladder, or press E for the nearest ladder. Scroll or use W and S to climb. Use A and D to roll along the wall and E to step off. Follow the signs to the subject rooms, or choose a room, shelf and volume below."
+          aria-label={"Walkable library. Move the joystick up or down to walk and left or right to turn. Scroll up to walk forward or down to walk back. Use W A S D to move and left or right arrow to turn. " +
+            (hasLadder ? "Select a wall ladder, or press E for the nearest ladder. Scroll or use W and S to climb. Use A and D to roll along the wall and E to step off. " : "") +
+            "Follow the signs to the subject rooms, or choose a room, shelf and volume below."}
         />
         <div className={s.top}>
           <button onClick={onExit} className={s.exit}>
@@ -174,7 +177,7 @@ export default function WalkingRoom({
             <LibraryIcon name={expanded ? "collapse" : "expand"} size={18} />
           </button>
         </div>
-        {!unavailable && room && (
+        {hasLadder && (
           <button type="button" className={s.ladderAction} onClick={() => {
             scene.current?.toggleLadder();
             canvas.current?.focus({ preventScroll: true });
@@ -229,6 +232,7 @@ export default function WalkingRoom({
         >
           Read book <LibraryIcon name="arrow" size={16} />
         </button>
+        {provider && <small className={s.providerNote}>{provider}</small>}
       </div>
     </dialog>
   );

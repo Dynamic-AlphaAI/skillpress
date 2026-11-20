@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import MiniSearch from "minisearch";
-import { collectionCredit, type Collection } from "@/lib/platforms";
+import { collectionCredit, providerNote, type Collection } from "@/lib/platforms";
 import { categoryById } from "@/lib/categories";
 import { createIndex, findBooks, searchOptions } from "@/lib/search";
 import type { Book, Library } from "@/lib/types";
@@ -33,32 +33,38 @@ function Results({ books, platform, hrefFor, onOpen }: BookLink & { books: Book[
   return (
     <>
       <ul className={s.results} aria-label="Matching skills">
-        {books.slice(0, limit).map((book) => (
-          <li key={book.id}>
-            <a href={hrefFor(book.id)} aria-label={`Read ${book.design.title} by ${book.source.author}`} onClick={(event) => {
-              if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
-              event.preventDefault();
-              onOpen(book.id);
-            }}>
-              <div className={s.cover} aria-hidden="true"><Cover book={book} /></div>
-              <div className={s.entry}>
-                <h2>{book.design.title}</h2>
-                <div className={s.credit}>{collectionCredit(book, platform)} · {categoryById(book.category)?.label}</div>
-                <p>{book.description}</p>
-              </div>
-              <LibraryIcon name="arrow" size={18} />
-            </a>
-          </li>
-        ))}
+        {books.slice(0, limit).map((book) => {
+          const provider = providerNote(book);
+          return (
+            <li key={book.id}>
+              <a href={hrefFor(book.id)} aria-label={`Read ${book.design.title} by ${book.source.author}`} onClick={(event) => {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+                event.preventDefault();
+                onOpen(book.id);
+              }}>
+                <div className={s.cover} aria-hidden="true"><Cover book={book} /></div>
+                <div className={s.entry}>
+                  <h2>{book.design.title}</h2>
+                  <div className={s.credit}>{collectionCredit(book, platform)} · {categoryById(book.category)?.label}</div>
+                  {provider && <small className={s.credit}>{provider}</small>}
+                  <p>{book.description}</p>
+                </div>
+                <LibraryIcon name="arrow" size={18} />
+              </a>
+            </li>
+          );
+        })}
       </ul>
       {books.length > limit && <button type="button" className={s.more} onClick={() => setLimit(limit + 16)}>Show more results</button>}
     </>
   );
 }
 
-export default function CatalogueSearch({ library, platform, query, author, category, onQuery, onFilter, onOpen, hrefFor }: BookLink & {
+export default function CatalogueSearch({ library, platform, onPlatform, query, author, category, onQuery, onFilter, onClear, onOpen, hrefFor }: BookLink & {
   library: Library;
   platform: Collection;
+  onPlatform: (value: Collection) => void;
+  onClear: () => void;
   query: string;
   author: string;
   category: string;
@@ -85,7 +91,7 @@ export default function CatalogueSearch({ library, platform, query, author, cate
   const matches = useMemo(() => findBooks(index ?? catalogue, byId, query), [index, catalogue, byId, query]);
   const results = matches.filter((book) => (author === "all" || book.source.authorId === author) &&
     (category === "all" || book.category === category));
-  const filtered = category !== "all" || author !== "all";
+  const filtered = category !== "all" || author !== "all" || platform !== "all";
   function clear() {
     onQuery("");
     input.current?.focus();
@@ -105,8 +111,8 @@ export default function CatalogueSearch({ library, platform, query, author, cate
           {query && <button type="button" onClick={clear} aria-label="Clear search"><LibraryIcon name="close" /></button>}
         </form>
         <div className={s.filters}>
-          <TopicFilters library={library} matches={matches} category={category} author={author} onFilter={onFilter} />
-          {filtered && <button type="button" className={s.reset} onClick={() => onFilter({ category: "all", author: "all" })}>Clear filters</button>}
+          <TopicFilters library={library} matches={matches} category={category} author={author} platform={platform} onPlatform={onPlatform} onFilter={onFilter} />
+          {filtered && <button type="button" className={s.reset} onClick={onClear}>Clear filters</button>}
         </div>
         <p role="status" className={s.count} tabIndex={-1} ref={count}>
           {results.length} {query.trim() ? (results.length === 1 ? "result" : "results") : (results.length === 1 ? "skill" : "skills")}
@@ -116,7 +122,7 @@ export default function CatalogueSearch({ library, platform, query, author, cate
           <button className={s.reset} type="button" onClick={() => { setFailed(false); setAttempt(attempt + 1); }}>Try again</button>
         </p>}
         {results.length ? (
-          <Results platform={platform} key={JSON.stringify([query, category, author])} books={results} hrefFor={hrefFor} onOpen={onOpen} />
+          <Results key={JSON.stringify([platform, query, category, author])} platform={platform} books={results} hrefFor={hrefFor} onOpen={onOpen} />
         ) : (index || failed) && (
           <div className={s.empty}><h2>No matching skills</h2><p>{filtered ? "Try another keyword or clear your filters." : "Try another keyword, author, or topic."}</p></div>
         )}

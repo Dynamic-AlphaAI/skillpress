@@ -13,6 +13,8 @@ export interface Source {
   id: string;
   repo: string;
   platforms: Platform[];
+  /** Host explicitly targeted by this publisher. Other supported hosts can also run the skill. */
+  primaryPlatform?: Platform;
   url: string;
   /** Folder in the repo that holds one directory per skill. */
   path: string;

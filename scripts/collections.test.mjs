@@ -8,7 +8,7 @@ import { pointsToRootMIT, reviewedFileAllowed, validSkillPath } from "./source-f
 import { parseState, serializeState } from "../src/lib/browseState.ts";
 import { categories } from "../src/lib/categories.ts";
 import { categoryFor } from "../src/lib/classifyTopic.ts";
-import { collectionCredit, inCollection, platforms, scopeLibrary } from "../src/lib/platforms.ts";
+import { collectionCredit, inCollection, platforms, providerNote, scopeLibrary } from "../src/lib/platforms.ts";
 import { canWalk, hallHalfWidth, layOutFloor, roomAt, walk } from "../src/lib/roomFloor.ts";
 import { planRooms } from "../src/lib/roomShelves.ts";
 
@@ -102,6 +102,31 @@ test("shared collections, search, walkthrough, details and reader URLs round-tri
   const invalid = parseState("?platform=deepseek&author=openai&book=define-goal&read", library);
   assert.deepEqual([invalid.author, invalid.book, invalid.reading], ["all", null, false]);
   assert.equal(parseState("?book=define-goal&read", library).book, "define-goal");
+});
+
+test("provider notes distinguish a publisher's intended host, compatibility and subject matter", () => {
+  for (const source of catalog.sources.filter(s => s.primaryPlatform)) {
+    assert.ok(source.platforms.includes(source.primaryPlatform), source.repo);
+  }
+  assert.equal(providerNote(bookById("slidev")), "Built for Claude");
+  const bridge = bookById("grok-run-output");
+  assert.ok(bridge.covers.includes("grok"));
+  assert.equal(providerNote(bridge), "Works with Claude");
+  assert.equal(providerNote(bookById("improve-ui")), "Works with Codex, ChatGPT");
+  assert.equal(providerNote(bookById("component-canvas")), null);
+});
+
+test("the hall draws from across each topic and keeps small collections together", () => {
+  const sample = Array.from({ length: 20 }, (_, i) => ({ ...books[0], id: String(i) }));
+  const [hall, wing] = planRooms(sample);
+  const volumes = room => room.shelves.flatMap(shelf => shelf.books);
+  assert.deepEqual(volumes(hall), sample.filter((_, i) => i % 4 !== 3));
+  assert.deepEqual(volumes(wing), sample.filter((_, i) => i % 4 === 3));
+  assert.equal(planRooms(sample.slice(0, 12)).length, 1);
+  assert.ok(hall.shelves.every(shelf => shelf.books.length <= 5));
+  const main = volumes(planRooms(books)[0]);
+  assert.ok(main.length >= books.length * 0.75);
+  for (const id of ["pm-skills", "dbt-skills", "ui-skills"]) assert.ok(main.some(b => b.source.id === id), id);
 });
 
 test("the full building and each platform floor shelve every book once and have reachable rooms", () => {

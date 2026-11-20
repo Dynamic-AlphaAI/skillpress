@@ -1,3 +1,5 @@
+import { groundRows } from "./roomLadder.ts";
+
 export const hallHalfWidth = 6.6;
 export const doorHalfWidth = 1.45;
 const wingHalfWidth = 4;
@@ -23,10 +25,11 @@ export function ladderFootprint(bay: Position, slide: number, foot: number): Rec
   return { minX: Math.min(a.x, b.x), maxX: Math.max(a.x, b.x), minZ: Math.min(a.z, b.z), maxZ: Math.max(a.z, b.z) };
 }
 
-/** Joined wall cases share a rail. A doorway, corner or gap starts another run. */
-export function wallRuns<T extends Position>(bays: T[]): T[][] {
+/** Adjacent tall cases share a ladder. Short cases, doorways and corners break the rail. */
+export function ladderRuns<T extends Position & { stack: readonly unknown[] }>(bays: T[]): T[][] {
   const along = (p: Position) => p.x * Math.cos(p.yaw) - p.z * Math.sin(p.yaw);
-  const ordered = [...bays].sort((a, b) => a.yaw - b.yaw || along(a) - along(b));
+  const ordered = bays.filter(bay => bay.stack.length > groundRows)
+    .sort((a, b) => a.yaw - b.yaw || along(a) - along(b));
   const runs: T[][] = [];
   for (const bay of ordered) {
     const run = runs.at(-1), previous = run?.at(-1);

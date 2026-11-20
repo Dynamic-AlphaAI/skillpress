@@ -204,6 +204,7 @@ export function Details({
   const stats: [string, string][] = [
     ["Rank", `No. ${book.rank} of ${library.books.length}`],
     ["Installs", book.installs !== null ? book.installs.toLocaleString("en-US") : "Not listed yet"],
+    ...(book.source.primaryPlatform ? [["Built for", platformLabel(book.source.primaryPlatform)] as [string, string]] : []),
     ...(book.platforms.length ? [["Runs in", book.platforms.map(platformLabel).join(", ")] as [string, string]] : []),
     ...(book.covers.length ? [["Covers", book.covers.map(platformLabel).join(", ")] as [string, string]] : []),
     ["Length", `${book.words.toLocaleString("en-US")} words`],

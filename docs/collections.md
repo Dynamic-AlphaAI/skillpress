@@ -1,8 +1,14 @@
 # Browsing the Skill Press collections
 
-Use the Collections bar above the catalogue to choose a platform. The number next to its name counts distinct editions. A book can belong to several collections. Within a collection, the author and topic filters apply to the reading room, shelf, featured view and keyword search. An edition occupies exactly one physical shelf in the current walkthrough.
+Choose a topic above the catalogue to browse what a skill does. Each edition has one primary topic and one physical shelf. Counts beside the topic names show the size of each collection for the selected AI platform. Author and platform filters also work in search, on the shelf and in the walkthrough.
 
-| Open a collection | What you will find |
+The main hall displays up to five editions per row. It draws three of every four editions within each ranked topic, giving newer and unranked titles a place near the entrance. The fourth goes to its subject room. Filtered collections of twelve editions or fewer fit entirely in the hall.
+
+## AI platform filters
+
+A **Built for** note identifies a host explicitly targeted by the publisher. A **Works with** note lists documented hosts when there is no designated primary host. A book’s subject alone does not establish compatibility. Shared platform links remain available below.
+
+| Filter by platform | What you will find |
 |---|---|
 | [ChatGPT](https://skillpress.xyz/?platform=chatgpt) | Workspace plugins, published ChatGPT skills and books about ChatGPT, including OpenAI’s app-submission guide |
 | [Codex](https://skillpress.xyz/?platform=codex) | OpenAI’s own Codex examples and other publishers’ documented Codex skills |
@@ -52,6 +58,15 @@ These 20 repositories contributed 134 editions. The stars below are a GitHub sna
 | [langchain-ai/langchain-skills](https://github.com/langchain-ai/langchain-skills/tree/0d4bed5b80fcdc658a6297cbc1093aaf49c06e39) | 1,349 | 3 | MIT | Building, tracing and monitoring LangChain agents |
 | [anthropics/financial-services](https://github.com/anthropics/financial-services/tree/3e32c2287dcb637c184c01cc0ad82d6af7e9bb0f) | 41,403 | 4 | Apache-2.0 | Spreadsheet audits, earnings and variance analysis |
 | [mongodb/agent-skills](https://github.com/mongodb/agent-skills/tree/ff9a88211c5a9fa74012bfa8b797132d510f9b44) | 206 | 4 | Apache-2.0 | MongoDB schemas, query tuning and streams |
+
+## Design, analytics and product planning accessions
+
+| Publisher revision | New editions | Topics |
+|---|---:|---|
+| [Product Compass](https://github.com/phuryn/pm-skills/tree/9af7bfd0bc47fdad43c2eaa7a43cd13918e7aaef) | 34 | Discovery, market research, pricing, requirements and writing. The publisher designs these skills for Claude Code and Cowork. |
+| [dbt Labs](https://github.com/dbt-labs/dbt-agent-skills/tree/b8facde20b7a92c40ce3e6b86b71c4b92aa44040) | 9 | Semantic models, data lineage, warehouse queries and unit tests. |
+| [Julien Thibeaut](https://github.com/ibelick/ui-skills/tree/347d3189830f8ec3c4c041421bce19182a79dc7a) | 9 | UI composition, design documentation, accessibility, metadata and animation performance. Improve UI declares ChatGPT and Codex in its product manifest. |
+| [Slidev](https://github.com/slidevjs/slidev/tree/437f139ccd4c8482a193b217922e7800a5b3baec/skills/slidev) | 1 | Markdown slide decks, speaker notes and interactive presentations. The publisher documents Claude Code as the host. |
 
 ## The November 20 marketing and analytics review
 

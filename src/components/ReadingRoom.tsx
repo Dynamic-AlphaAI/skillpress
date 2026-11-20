@@ -4,7 +4,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Fragment, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { collectionCredit, platformLabel, type Collection } from "@/lib/platforms";
+import { collectionCredit, providerNote, type Collection } from "@/lib/platforms";
 import { categoryById } from "@/lib/categories";
 import { TopicFilters } from "./TopicFilters";
 import type { Book, Library } from "@/lib/types";
@@ -27,6 +27,7 @@ const perPage = 8;
 
 interface RoomProps {
   platform: Collection;
+  onPlatform: (value: Collection) => void;
   library: Library;
   books: Book[];
   category: string;
@@ -41,6 +42,7 @@ interface RoomProps {
 
 export function ReadingRoom({
   platform,
+  onPlatform,
   library,
   books,
   category,
@@ -104,7 +106,7 @@ export function ReadingRoom({
           <div className={s.shade} />
           <div className={s.intro}>
             <div className={s.eyebrow}>
-              <span className={s.rule} /> {platform === "all" ? "A library of agent skills" : `${platformLabel(platform)} collection`}
+              <span className={s.rule} /> {categoryById(category)?.label ?? "A library of agent skills"}
             </div>
             <h1 id="room-title">
               Enter the <em>library</em>
@@ -136,12 +138,14 @@ export function ReadingRoom({
               <span className={s.rule} /> {books.length} volumes · {topicCount}{" "}
               {topicCount === 1 ? "topic" : "topics"}
             </div>
-            <h2 id="collection-title">{platform === "all" ? "On the shelves" : `${platformLabel(platform)} shelves`}</h2>
+            <h2 id="collection-title">{categoryById(category)?.label ?? "On the shelves"}</h2>
           </div>
           <TopicFilters
             library={library}
             category={category}
             author={author}
+            platform={platform}
+            onPlatform={onPlatform}
             onFilter={(patch) => {
               setPage(0);
               onFilter(patch);
@@ -152,9 +156,10 @@ export function ReadingRoom({
           {books.slice(start, start + perPage).map((book, offset) => {
             const index = start + offset;
             const startsTopic = offset === 0 || books[index - 1].category !== book.category;
+            const provider = providerNote(book);
             return (
               <Fragment key={book.id}>
-                {startsTopic && <h3 className={s.topicHeading}>{categoryById(book.category)?.label}</h3>}
+                {startsTopic && category === "all" && <h3 className={s.topicHeading}>{categoryById(book.category)?.label}</h3>}
                 <article className={s.card} style={{ "--jacket": book.design.bg } as CSSProperties}>
                   <button
                     className={s.display}
@@ -185,6 +190,7 @@ export function ReadingRoom({
                     <span>
                       <strong>{book.design.title}</strong>
                       <small>{collectionCredit(book, platform)}</small>
+                      {provider && <small>{provider}</small>}
                     </span>
                     <LibraryIcon name="arrow" size={17} />
                   </button>

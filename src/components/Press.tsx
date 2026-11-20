@@ -3,7 +3,8 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { parseState, serializeState, shelfFor, type PressState } from "@/lib/browseState";
-import { inCollection, platforms, scopeLibrary, type Collection } from "@/lib/platforms";
+import { scopeLibrary, type Collection } from "@/lib/platforms";
+import { categories } from "@/lib/categories";
 import { TopicFilters } from "./TopicFilters";
 import { formatBytes } from "@/lib/install";
 import type { Library } from "@/lib/types";
@@ -28,7 +29,12 @@ export function Press({ library }: { library: Library }) {
   const search = useSearch();
   const state = useMemo(() => parseState(search, library), [search, library]);
   const scoped = useMemo(() => scopeLibrary(library, state.platform), [library, state.platform]);
-  const collections = useMemo(() => [{ id: "all" as const, label: "All", count: books.length }, ...platforms.map(p => ({ ...p, count: books.filter(b => inCollection(b, p.id)).length }))], [books]);
+  const collections = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const book of scoped.books) counts.set(book.category, (counts.get(book.category) ?? 0) + 1);
+    return [{ id: "all", label: "All topics", count: scoped.books.length },
+      ...categories.filter(topic => counts.has(topic.id)).map(topic => ({ ...topic, count: counts.get(topic.id)! }))];
+  }, [scoped]);
   const { category, author, view, reading, details, walking } = state;
 
   // Every change goes through the URL, so reloads and shared links land in place.
@@ -46,13 +52,17 @@ export function Press({ library }: { library: Library }) {
   useEffect(() => {
     const strip = collectionLinks.current;
     const active = strip?.querySelector<HTMLElement>('[aria-current="page"]');
-    if (!strip || !active) return;
+    if (!strip) return;
+    if (!active) {
+      strip.scrollLeft = 0;
+      return;
+    }
     const bounds = strip.getBoundingClientRect();
     const link = active.getBoundingClientRect();
     if (link.left < bounds.left || link.right > bounds.right) {
       strip.scrollLeft += link.left - bounds.left - (bounds.width - link.width) / 2;
     }
-  }, [state.platform]);
+  }, [category, state.platform]);
 
   const lastControl = useRef<HTMLElement | null>(null);
   const hadOverlay = useRef(false);
@@ -118,11 +128,14 @@ export function Press({ library }: { library: Library }) {
       ? { href: authorSources[0].download.zip, bytes: authorSources[0].download.bytes, label: `all skills from ${authorSources[0].repo}` }
       : { href: library.allDownload.zip, bytes: library.allDownload.bytes, label: `all ${books.length} skills` };
 
-  function collectionState(platform: Collection): PressState {
+  function changePlatform(platform: Collection) {
     const next = scopeLibrary(library, platform);
     const keepAuthor = next.authors.some(a => a.id === author) ? author : "all";
     const keepTopic = shelfFor(next, category, keepAuthor).length ? category : "all";
-    return { ...state, platform, author: keepAuthor, category: keepTopic, book: null, reading: false, details: false, page: undefined };
+    update({ platform, author: keepAuthor, category: keepTopic, book: null, reading: false, details: false, page: undefined }, true);
+  }
+  function topicState(topic: string): PressState {
+    return { ...state, category: topic, author: "all", book: null, reading: false, details: false, page: undefined };
   }
 
   return (
@@ -159,33 +172,30 @@ export function Press({ library }: { library: Library }) {
           </a>
         </div>
       </header>
-      <nav className={s.collections} aria-label="Platform collections">
+      <nav className={s.collections} aria-label="Topic collections">
         <div className={s.collectionPicker}>
-          <RoomPicker label="Collection" accessibleLabel="Browse by platform" value={state.platform} side="bottom"
-            options={collections.map(p => ({ value: p.id, label: `${p.id === "all" ? "All platforms" : p.label} · ${p.count} skills` }))}
-            onChange={value => {
-              const chosen = collections.find(p => p.id === value);
-              if (chosen) update(collectionState(chosen.id), true);
-            }} />
+          <RoomPicker label="Topic" accessibleLabel="Browse by topic" value={category} side="bottom"
+            options={collections.map(p => ({ value: p.id, label: `${p.label} · ${p.count}` }))}
+            onChange={value => update(topicState(value), true)} />
         </div>
-        <span className={s.collectionLabel}>Collections</span>
         <div className={s.collectionLinks} ref={collectionLinks}>
-          {collections.map(({ id, label, count }) => {
-            const target = collectionState(id);
+          {collections.slice(1).map(({ id, label, count }) => {
+            const target = topicState(id);
             const query = serializeState(target, library).toString();
             return <a key={id} href={query ? `/?${query}` : "/"}
-              aria-current={id === state.platform ? "page" : undefined}
+              aria-current={id === category ? "page" : undefined}
               title={`${label} · ${count} skills`}
               onClick={event => {
                 if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || event.button !== 0) return;
                 event.preventDefault();
-                if (state.platform !== id) update(target, true);
+                if (category !== id || author !== "all") update(target, true);
               }}>{label} <small>{count}</small></a>;
           })}
         </div>
       </nav>
       {view === "search" ? (
-        <CatalogueSearch platform={state.platform} library={scoped} query={state.query} author={author} category={category} onFilter={filter}
+        <CatalogueSearch platform={state.platform} onPlatform={changePlatform} library={scoped} query={state.query} author={author} category={category} onFilter={filter}
+          onClear={() => update({ platform: "all", category: "all", author: "all", book: null }, true)}
           onQuery={(query) => update({ query, book: null })}
           hrefFor={(id) => `/?${serializeState({ ...state, book: id, reading: true, page: undefined }, library)}`}
           onOpen={(id) => {
@@ -193,12 +203,12 @@ export function Press({ library }: { library: Library }) {
             update({ book: id, reading: true, details: false, page: undefined }, true);
           }}
         />
-      ) : view === "library" ? <ReadingRoom platform={state.platform} key={state.platform} library={scoped} books={visible} author={author} category={category}
+      ) : view === "library" ? <ReadingRoom platform={state.platform} onPlatform={changePlatform} key={`${state.platform}:${category}:${author}`} library={scoped} books={visible} author={author} category={category}
         walking={walking} paused={!!(reading || details)}
         onWalk={(value) => update({ walking: value })} onFilter={filter} onOpen={open}
         onDetails={(i) => update({ book: visible[i].id, details: "info" })} /> : <>
       <div className={s.subbar}>
-        <TopicFilters library={scoped} category={category} author={author} onFilter={filter} />
+        <TopicFilters library={scoped} category={category} author={author} platform={state.platform} onPlatform={changePlatform} onFilter={filter} />
       </div>
 
       <TitleMarquee books={visible} active={active} onSelect={select} />

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { hallHeight, eyeHeight, groundRows, ladderFor, railLimit, rowAtRise, rowEyeHeight, stackShelves } from "../src/lib/roomLadder.ts";
-import { canWalk, doorHalfWidth, ladderFootprint, layOutFloor, walk, wallPoint, wallRuns } from "../src/lib/roomFloor.ts";
+import { canWalk, doorHalfWidth, ladderFootprint, ladderRuns, layOutFloor, walk, wallPoint } from "../src/lib/roomFloor.ts";
 
 test("balanced cases keep each real shelf once and respect both ceiling heights", () => {
   for (let count = 0; count <= 100; count++) {
@@ -11,6 +11,7 @@ test("balanced cases keep each real shelf once and respect both ceiling heights"
       assert.deepEqual(stacks.flat(), shelves);
       for (const stack of stacks) {
         assert.ok(stack.length > 0 && stack.length <= (hall ? 8 : 4));
+        if (stack.length <= groundRows) continue;
         const ladder = ladderFor(stack.length);
         assert.ok(ladder.top < (hall ? hallHeight : 4.1));
         assert.ok(ladder.maxRise > 0 && ladder.maxRise + eyeHeight < ladder.top);
@@ -24,15 +25,24 @@ test("balanced cases keep each real shelf once and respect both ceiling heights"
   }
 });
 
+test("only cases with upper shelves carry a ladder, and a low case splits the rail", () => {
+  const cases = [1, 2, 3, 4, 8, 3, 4].map((rows, i) => ({
+    x: i * 3.95, z: 0, yaw: 0, stack: Array(rows).fill(null),
+  }));
+  assert.deepEqual(ladderRuns(cases.slice(0, 3)), []);
+  assert.deepEqual(ladderRuns(cases), [[cases[3], cases[4]], [cases[6]]]);
+});
+
 test("rails run along outside walls and stop before doorways", () => {
   const floors = layOutFloor([14, 7, 6, 2, 3, 1]);
   const hall = floors[0];
-  const runs = wallRuns(hall.bays);
+  const rails = floor => ladderRuns(floor.bays.map(bay => ({ ...bay, stack: Array(floor.side ? 4 : 8).fill(null) })));
+  const runs = rails(hall);
   assert.ok(runs.some(run => run.length > 1 && run[0].yaw > 0));
   assert.ok(runs.some(run => run.length > 1 && run[0].yaw < 0));
   assert.equal(runs.flat().length, hall.bays.length);
   for (const floor of floors) {
-    for (const run of wallRuns(floor.bays)) {
+    for (const run of rails(floor)) {
       for (const bay of run) {
         const wallDistance = Math.min(bay.x-floor.minX,floor.maxX-bay.x,bay.z-floor.minZ,floor.maxZ-bay.z);
         assert.ok(Math.abs(wallDistance-0.18)<0.001);

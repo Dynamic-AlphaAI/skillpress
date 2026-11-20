@@ -10,7 +10,7 @@ export const rowEyeHeight = (row: number, rows: number) => shelfBase(rows) + row
 
 /** Balance rows across wall cases while keeping the catalogue order. */
 export function stackShelves<T>(shelves: T[], hall: boolean): T[][] {
-  const count = Math.ceil(shelves.length / (hall ? 8 : 4));
+  const count = Math.ceil(shelves.length / (hall ? 7 : 4));
   return Array.from({ length: count }, (_, i) => shelves.slice(
     Math.floor(i * shelves.length / count), Math.floor((i + 1) * shelves.length / count),
   ));

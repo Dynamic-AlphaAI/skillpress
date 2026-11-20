@@ -21,9 +21,15 @@ export function inCollection(book: Book, platform: Collection) {
 }
 
 export function collectionCredit(book: Book, platform: Collection) {
-  if (platform === "all") return book.source.author;
-  const role = book.platforms.includes(platform) ? "Runs in" : "Covers";
-  return `${book.source.author} · ${role} ${platformLabel(platform)}`;
+  if (platform === "all" || !book.covers.includes(platform) || book.platforms.includes(platform)) return book.source.author;
+  return `${book.source.author} · Covers ${platformLabel(platform)}`;
+}
+
+export function providerNote(book: Book): string | null {
+  const primary = book.source.primaryPlatform;
+  if (primary && book.platforms.includes(primary)) return `Built for ${platformLabel(primary)}`;
+  if (!book.platforms.length) return null;
+  return `Works with ${book.platforms.map(platformLabel).join(", ")}`;
 }
 
 export function scopeLibrary(library: Library, platform: Collection): Library {

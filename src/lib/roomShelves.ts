@@ -41,7 +41,7 @@ function makeRoom(section: Section): LibraryRoom {
 function shelve(room: LibraryRoom, label: string, books: Book[]) {
   if (!books.length) return;
   room.topics.push(label);
-  const count = Math.ceil(books.length / (room.id === "hall" ? 4 : 12));
+  const count = Math.ceil(books.length / (room.id === "hall" ? 5 : 12));
   for (let i = 0; i < count; i++) {
     const row = books.slice(Math.floor(i * books.length / count), Math.floor((i + 1) * books.length / count));
     room.shelves.push({
@@ -59,10 +59,15 @@ export function planRooms(books: Book[]): LibraryRoom[] {
   for (const category of categories) {
     const volumes = books.filter((book) => book.category === category.id);
     if (!volumes.length) continue;
-    const featured = books.length <= 12 ? volumes.length : Math.ceil(volumes.length * 0.55);
-    shelve(hall, category.label, volumes.slice(0, featured));
+    // Sample across the whole topic so newer, unranked books also reach the entrance.
+    const hallBooks: Book[] = [], wingBooks: Book[] = [];
+    volumes.forEach((book, i) => {
+      if (books.length > 12 && i % 4 === 3) wingBooks.push(book);
+      else hallBooks.push(book);
+    });
+    shelve(hall, category.label, hallBooks);
     const wing = wings.find((room) => room.id === category.room)!;
-    shelve(wing, category.label, volumes.slice(featured));
+    shelve(wing, category.label, wingBooks);
   }
   const rooms = [hall, ...wings.filter((room) => room.shelves.length)];
   for (const room of rooms) {

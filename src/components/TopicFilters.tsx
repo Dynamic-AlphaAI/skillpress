@@ -1,4 +1,4 @@
-import { categories } from "@/lib/categories";
+import { platforms, resolvePlatform, type Collection } from "@/lib/platforms";
 import type { Book, Library } from "@/lib/types";
 import { LibraryIcon } from "./LibraryIcons";
 import s from "./TopicFilters.module.css";
@@ -8,21 +8,20 @@ export function TopicFilters({
   matches = library.books,
   category,
   author,
+  platform,
+  onPlatform,
   onFilter,
 }: {
   library: Library;
   matches?: Book[];
   category: string;
   author: string;
+  platform: Collection;
+  onPlatform: (value: Collection) => void;
   onFilter: (patch: { category?: string; author?: string }) => void;
 }) {
-  const topics = new Map<string, number>();
   const authors = new Map<string, number>();
-  const onShelf = new Set(library.books.map((book) => book.category));
   for (const book of matches) {
-    if (author === "all" || author === book.source.authorId) {
-      topics.set(book.category, (topics.get(book.category) ?? 0) + 1);
-    }
     if (category === "all" || category === book.category) {
       authors.set(book.source.authorId, (authors.get(book.source.authorId) ?? 0) + 1);
     }
@@ -30,16 +29,10 @@ export function TopicFilters({
   return (
     <div className={s.filters}>
       <label>
-        <span>Topic</span>
-        <select value={category} onChange={(e) => onFilter({ category: e.target.value })}>
-          <option value="all">All topics</option>
-          {categories
-            .filter((topic) => onShelf.has(topic.id))
-            .map((topic) => (
-              <option key={topic.id} value={topic.id} disabled={!topics.has(topic.id)}>
-                {topic.label} ({topics.get(topic.id) ?? 0})
-              </option>
-            ))}
+        <span>AI platform</span>
+        <select aria-label="AI platform" value={platform} onChange={e => onPlatform(resolvePlatform(e.target.value))}>
+          <option value="all">Any platform</option>
+          {platforms.map(p => <option key={p.id} value={p.id}>{p.label}</option>)}
         </select>
         <LibraryIcon name="down" size={14} />
       </label>
