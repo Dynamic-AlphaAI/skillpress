@@ -280,3 +280,18 @@ test("Theo’s nine interdependent skills and T3 Code’s four contributor editi
   const bundle = unzipSync(readFileSync("public/downloads/tstack-skills.zip"));
   assert.ok(bundle["tstack-skills/babysit-pr/scripts/pr-wait"]);
 });
+
+test("Meng To’s editions keep distinct skill names, topic shelves and documented host filters", () => {
+  const editions = books.filter(b => b.source.repo === "MengTo/Skills");
+  assert.equal(editions.length, 209);
+  assert.equal(new Set(editions.map(b => b.slug)).size, editions.length);
+  assert.ok(editions.every(b => b.source.author === "Meng To" && b.license === "MIT" && b.source.readingEdition));
+  const bySlug = new Map(editions.map(b => [b.slug, b]));
+  for (const [slug, topic] of [
+    ["3d-metal-material", "3d-rendering"], ["fire-smoke-skill-vfx", "game-development"],
+    ["illustration-flat", "illustration"], ["pricing-page", "sales-pricing"], ["video-to-superprompt", "design-media"],
+  ]) assert.equal(bySlug.get(slug).category, topic);
+  assert.deepEqual(bySlug.get("browser-video-recording").platforms, ["codex"]);
+  assert.deepEqual(bySlug.get("workflow-threads-manager").platforms, ["claude"]);
+  assert.ok(bySlug.get("illustration-flat").platforms.includes("cursor"));
+});

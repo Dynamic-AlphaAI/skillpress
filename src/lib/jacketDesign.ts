@@ -38,7 +38,10 @@ const inks = [
 const subjects: Record<Topic, Illustration[]> = {
   "writing-documents": ["sheets", "weave", "arches"],
   "design-media": ["arches", "leaves", "weave", "orbits"],
+  illustration: ["leaves", "arches", "sheets"],
+  "3d-rendering": ["contours", "orbits", "weave"],
   "software-development": ["stairs", "weave", "arches", "sheets"],
+  "game-development": ["stairs", "signals", "weave"],
   "testing-review": ["weave", "signals", "orbits"],
   "ai-automation": ["orbits", "weave", "signals"],
   "research-planning": ["contours", "leaves", "stairs"],

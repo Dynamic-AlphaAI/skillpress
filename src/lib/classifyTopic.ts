@@ -4,7 +4,7 @@ type FiledTopic = Exclude<Topic, "unfiled">;
 
 // File each edition by its primary task. Repository + folder identifies an edition
 // even if another publisher later imports a different skill with the same name.
-const subjects: Record<FiledTopic, string[]> = {
+const subjects = {
   "payments-billing": [
     "stripe/ai/connect-recommend", "stripe/ai/metronome", "stripe/ai/stripe-best-practices",
     "stripe/ai/stripe-pay", "stripe/ai/upgrade-stripe", "stripe/ai/stripe-implementation-planner",
@@ -301,10 +301,10 @@ const subjects: Record<FiledTopic, string[]> = {
     "coreyhaines31/marketingskills/pricing", "coreyhaines31/marketingskills/offers",
     "googleworkspace/cli/persona-sales-ops", "googleworkspace/cli/recipe-log-deal-update",
   ],
-};
+} satisfies Partial<Record<FiledTopic, string[]>>;
 
 const editions = new Map<string, FiledTopic>();
-for (const topic of Object.keys(subjects) as FiledTopic[]) {
+for (const topic of Object.keys(subjects) as (keyof typeof subjects)[]) {
   for (const edition of subjects[topic]) {
     if (editions.has(edition)) throw new Error(`Multiple primary topics for ${edition}`);
     editions.set(edition, topic);
@@ -322,7 +322,10 @@ const signals: Record<FiledTopic, RegExp> = {
   "payments-billing": /\b(payment processing|payment integrations?|billing integration)\b/i,
   "identity-access": /\b(access management|identity verification|bot verification)\b/i,
   "writing-documents": /\b(copywriting|copy editing|proofread\w*|technical writing|word documents?|slide decks?|pdfs?)\b/i,
-  "design-media": /\b(visual design|graphic design|typography|illustration|image editing|video editing|animation)\b/i,
+  "design-media": /\b(visual design|graphic design|typography|image editing|video editing|animation)\b/i,
+  illustration: /\b(illustrations?|vector drawing|line art)\b/i,
+  "3d-rendering": /\b(3d rendering|physically based rendering|three\.js materials?)\b/i,
+  "game-development": /\b(game development|gameplay|game mechanics)\b/i,
   "software-development": /\b(api integration|web development|web applications?|git worktrees?|mcp servers?)\b/i,
   "testing-review": /\b(debugging|test automation|unit tests?|integration tests?|code review|test driven development)\b/i,
   "ai-automation": /\b(ai agents?|agent skills?|subagents?|workflow automation)\b/i,

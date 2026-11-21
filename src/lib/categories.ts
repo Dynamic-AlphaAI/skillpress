@@ -2,7 +2,10 @@
 export const categories = [
   { id: "writing-documents", label: "Writing & Documents", room: "studio" },
   { id: "design-media", label: "Design & Media", room: "gallery" },
+  { id: "illustration", label: "Illustration", room: "gallery" },
+  { id: "3d-rendering", label: "3D Graphics & Rendering", room: "gallery" },
   { id: "software-development", label: "Software & Web Development", room: "workshop" },
+  { id: "game-development", label: "Game Development", room: "workshop" },
   { id: "testing-review", label: "Testing & Code Review", room: "workshop" },
   { id: "ai-automation", label: "AI Agents & Automation", room: "models" },
   { id: "research-planning", label: "Research & Planning", room: "research" },

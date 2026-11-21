@@ -4,8 +4,24 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSyn
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
-import { parseSkill } from "./parse-skill.mjs";
+import { parseSkill, quoteSkillDescription } from "./parse-skill.mjs";
 import { safeSourceFile, trackedSourceFile } from "./source-files.mjs";
+
+test("quoting a publisher's literal description preserves its text and the Markdown body", () => {
+  const description = 'Render metal: polished, "brushed" or aged.';
+  for (const newline of ["\n", "\r\n"]) {
+    const body = ["# Rendering", "", "First: inspect the surface.", ""].join(newline);
+    const raw = ["---", "name: render-metal", "description: " + description, "---", body].join(newline);
+    assert.throws(() => parseSkill(raw, "fixture"));
+    const fixed = quoteSkillDescription(Buffer.from(raw), "fixture").toString();
+    assert.deepEqual(parseSkill(fixed, "fixture").data, { name: "render-metal", description });
+    assert.ok(fixed.endsWith(newline + "---" + newline + body));
+    for (const invalid of [raw.replace("---", "---js"), raw.replace("Render metal:", "!!tag text:"),
+      raw.replace("description:", "license: MIT" + newline + "description:")]) {
+      assert.throws(() => quoteSkillDescription(Buffer.from(invalid), "fixture"));
+    }
+  }
+});
 
 test("publisher frontmatter cannot execute JavaScript or YAML function tags", () => {
   globalThis.skillpressParserExecuted = false;

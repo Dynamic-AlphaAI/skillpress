@@ -87,6 +87,12 @@ All 53 current skill names in [Corey Haines’s repository](https://github.com/c
 
 [Postiz](https://github.com/gitroomhq/postiz-app/tree/6be4874631fea453f99115a78fd543c71820ab45), [Umami](https://github.com/umami-software/umami/tree/aad2c4cedd5c0b3bc4d361843830a0bb47cf79c4) and [listmonk](https://github.com/knadh/listmonk/tree/e735e0b23421192a4c1b18b6221f4708b872fcd5) had no tracked `SKILL.md` files. For PostHog, the selected product folders are outside its separately licensed enterprise tree. For Claude SEO, each archive retains the skill’s local copyright notice when present and includes the full root MIT terms. The SEO Content Brief edition credits its named contributor, puneetindersingh.
 
+## Meng To’s design and development collection
+
+Meng To’s 209 books are filed by task. The Design Gallery includes Illustration and 3D Graphics & Rendering, and the Engineering Workshop includes Game Development. Other editions appear alongside existing books on interface design, code review, publishing and automation. [Browse Meng To’s books](https://skillpress.xyz/?view=search&author=meng-to)
+
+The collection ZIP contains 209 skill documents, 170 companion Markdown files and the MIT notice with each edition. Thirteen source files use an unquoted colon in a one-line YAML description. The import quotes that field for compatibility with skill loaders and preserves the original wording and body. The pinned repository has the runnable demos, media and scripts for each skill. [Collection ZIP](https://skillpress.xyz/downloads/mengto-skills.zip) · [Publisher’s repository and license](https://github.com/MengTo/Skills/tree/3ec2dc0857d36e45d032d10063f62f2c773329a3)
+
 ## Theo Browne and T3 Code
 
 Theo Browne’s nine tstack skills share workflows for Claude Code and Codex. Council and Sol Loop cover model-assisted review. Full Send follows a change through merge, and Full Stop leaves the merge to the developer. Readers can download individual books or install the nine folders together from the collection ZIP. It includes the publisher’s Python PR watcher with its executable permission and the original editor metadata. [Browse Theo’s books](https://skillpress.xyz/?view=search&author=theo-browne) · [Pinned publisher instructions](https://github.com/t3dotgg/tstack/tree/11e37a74d0a6868c121cd0910ab2b3bd9873b92a)

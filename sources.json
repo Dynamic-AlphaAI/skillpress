@@ -1882,6 +1882,1323 @@
         ]
       },
       "bundleNote": "These contributor workflows use a T3 Code checkout. The publisher provides the app, device and browser panels, video assets, and scripts used by the original skills."
+    },
+    {
+      "id": "mengto",
+      "repo": "MengTo/Skills",
+      "path": "agent-skills",
+      "author": "Meng To",
+      "copyright": "Meng To",
+      "authorUrl": "https://github.com/MengTo",
+      "revision": "3ec2dc0857d36e45d032d10063f62f2c773329a3",
+      "skillPaths": [
+        "agent-skills/3d/3d-cloth-material",
+        "agent-skills/3d/3d-construction-sequence",
+        "agent-skills/3d/3d-falling-leaves",
+        "agent-skills/3d/3d-four-seasons",
+        "agent-skills/3d/3d-harbour-water",
+        "agent-skills/3d/3d-high-poly-models",
+        "agent-skills/3d/3d-high-resolution-textures",
+        "agent-skills/3d/3d-kasumidera-ultra-realism",
+        "agent-skills/3d/3d-metal-material",
+        "agent-skills/3d/3d-modular-buildings",
+        "agent-skills/3d/3d-orbit-inspect-demo",
+        "agent-skills/3d/3d-paper-material",
+        "agent-skills/3d/3d-retina-resolution",
+        "agent-skills/3d/3d-sky-background",
+        "agent-skills/3d/3d-sky-rays",
+        "agent-skills/3d/3d-survey-scan",
+        "agent-skills/3d/3d-ultra-realistic-water",
+        "agent-skills/3d/3d-underwater-god-rays",
+        "agent-skills/3d/3d-virtual-tour",
+        "agent-skills/3d/3d-wood-lighting-scorecard",
+        "agent-skills/3d/3d-wood-material",
+        "agent-skills/3d/forest-floor-specimen",
+        "agent-skills/3d/perching-butterfly",
+        "agent-skills/3d/relight-painted-surfaces",
+        "agent-skills/3d/woodland-chapter-cameras",
+        "agent-skills/codex/article-prompts-to-skills",
+        "agent-skills/codex/audit-reference-originality",
+        "agent-skills/codex/audit-verify-explain-grade-5",
+        "agent-skills/codex/browser-video-recording",
+        "agent-skills/codex/build-daily-inspiration-sites",
+        "agent-skills/codex/codex-gpt-image-2-5-flare",
+        "agent-skills/codex/daily-ui-inspiration-capture",
+        "agent-skills/codex/elevenlabs-tts",
+        "agent-skills/codex/generate-reference-inspired-brand-worlds",
+        "agent-skills/codex/html-to-interaction-prompts",
+        "agent-skills/codex/implement-fog-of-war",
+        "agent-skills/codex/iterate-until-verified",
+        "agent-skills/codex/optimize-web-animations",
+        "agent-skills/codex/performance-profiling",
+        "agent-skills/codex/publish-project-to-github",
+        "agent-skills/codex/stitched-full-page-capture",
+        "agent-skills/codex/video-to-superprompt",
+        "agent-skills/codex/web-technique-to-skill",
+        "agent-skills/codex/write-like-meng-on-x",
+        "agent-skills/codex/x-bookmark-quote-posts",
+        "agent-skills/game-combat/fire-smoke-skill-vfx",
+        "agent-skills/game-combat/game-dev-combat-animation",
+        "agent-skills/game-combat/game-dev-combat-skill-polish",
+        "agent-skills/game-combat/ice-frost-skill-vfx",
+        "agent-skills/game-combat/lightning-energy-skill-vfx",
+        "agent-skills/game-combat/water-crystal-skill-vfx",
+        "agent-skills/game-development/author-game-levels",
+        "agent-skills/game-development/build-3d-character-selector",
+        "agent-skills/game-development/build-game-audio-feedback",
+        "agent-skills/game-development/build-game-camera-controls",
+        "agent-skills/game-development/build-game-changelog",
+        "agent-skills/game-development/build-game-inventory",
+        "agent-skills/game-development/build-game-map-editor",
+        "agent-skills/game-development/build-game-monster-system",
+        "agent-skills/game-development/build-hybrid-game-assets",
+        "agent-skills/game-development/build-isometric-arpg",
+        "agent-skills/game-development/build-lens-raindrops",
+        "agent-skills/game-development/build-mobile-threejs-games",
+        "agent-skills/game-development/build-point-cloud-scan",
+        "agent-skills/game-development/build-rigged-game-assets",
+        "agent-skills/game-development/build-threejs-enemy-systems",
+        "agent-skills/game-development/build-ultra-realistic-game-interiors",
+        "agent-skills/game-development/build-vesperfall-review-assets",
+        "agent-skills/game-development/create-game-vfx",
+        "agent-skills/game-development/design-action-combat",
+        "agent-skills/game-development/design-game-encounters",
+        "agent-skills/game-development/game-dev-character-model",
+        "agent-skills/game-development/optimize-threejs-games",
+        "agent-skills/game-development/ship-web-games",
+        "agent-skills/game-development/test-playable-web-games",
+        "agent-skills/game-development/tune-enemy-ai",
+        "agent-skills/illustration/illustration-bold-pop",
+        "agent-skills/illustration/illustration-flat",
+        "agent-skills/illustration/illustration-flat-with-black",
+        "agent-skills/illustration/illustration-framed-panel",
+        "agent-skills/illustration/illustration-grainy-gouache",
+        "agent-skills/illustration/illustration-halftone-line",
+        "agent-skills/illustration/illustration-ink-sketch",
+        "agent-skills/illustration/illustration-isometric-mono",
+        "agent-skills/illustration/illustration-line-interior",
+        "agent-skills/illustration/illustration-one-line",
+        "agent-skills/illustration/illustration-outlined-cartoon",
+        "agent-skills/illustration/illustration-teal-spot",
+        "agent-skills/illustration/illustration-two-colour-brush",
+        "agent-skills/illustration/illustration-vintage-emblem",
+        "agent-skills/media/aura-asset-images",
+        "agent-skills/media/create-ai-avatar",
+        "agent-skills/media/digital-twin",
+        "agent-skills/media/html-explainer-video",
+        "agent-skills/media/html-reel",
+        "agent-skills/media/unsplash-asset-images",
+        "agent-skills/media/url-to-motion-design",
+        "agent-skills/ui/audit-ai-design-slop",
+        "agent-skills/ui/design-first-ui-prompting",
+        "agent-skills/ui/moss-glass-controls",
+        "agent-skills/ui/no-ai-design-slop",
+        "agent-skills/ui/segmented-field-menu",
+        "agent-skills/video-editing/genjutsu-scene",
+        "agent-skills/video-editing/making-of-film",
+        "agent-skills/web-design/add-mouse-driven-orbit",
+        "agent-skills/web-design/add-shader-cursor-trail",
+        "agent-skills/web-design/agency-grid-layout-minimal",
+        "agent-skills/web-design/ambient-section-particles",
+        "agent-skills/web-design/animation-on-scroll",
+        "agent-skills/web-design/animation-systems",
+        "agent-skills/web-design/atmosphere-background",
+        "agent-skills/web-design/background-grid-webgl",
+        "agent-skills/web-design/beam-glow-states",
+        "agent-skills/web-design/beautiful-shadows",
+        "agent-skills/web-design/blue-cloudy-clean-modern",
+        "agent-skills/web-design/blue-laser-clean-glass-layout",
+        "agent-skills/web-design/book-serif-index",
+        "agent-skills/web-design/bright-green-tech-system-webgl",
+        "agent-skills/web-design/build-awwwards-quality-sites",
+        "agent-skills/web-design/build-interactive-particle-trail",
+        "agent-skills/web-design/build-threejs-scroll-worlds",
+        "agent-skills/web-design/build-wireframe-scan-reveal",
+        "agent-skills/web-design/cinematic-gsap-lenis-motion-system",
+        "agent-skills/web-design/cinematic-scroll-storytelling",
+        "agent-skills/web-design/clean-minimal-beige-light-mode",
+        "agent-skills/web-design/cobejs",
+        "agent-skills/web-design/company-logos",
+        "agent-skills/web-design/compose-a-woodland-landing-page",
+        "agent-skills/web-design/container-lines",
+        "agent-skills/web-design/corner-diagonals",
+        "agent-skills/web-design/corner-lasers",
+        "agent-skills/web-design/css-alpha-masking",
+        "agent-skills/web-design/css-border-gradient",
+        "agent-skills/web-design/dark-blue-contrasting-clean",
+        "agent-skills/web-design/dark-glass-clean-layout",
+        "agent-skills/web-design/dither-ascii-ink-hover",
+        "agent-skills/web-design/dither-background",
+        "agent-skills/web-design/dither-laser-dark-mode",
+        "agent-skills/web-design/documentary-brutalist-agency",
+        "agent-skills/web-design/editorial-portfolio-chapters",
+        "agent-skills/web-design/editorial-service-booking",
+        "agent-skills/web-design/editorial-tech",
+        "agent-skills/web-design/falling-leaves",
+        "agent-skills/web-design/fire-paper-loader",
+        "agent-skills/web-design/framed-grid-layout",
+        "agent-skills/web-design/framed-tech-dark-border-gradient",
+        "agent-skills/web-design/funky-purple-container-tech",
+        "agent-skills/web-design/generate-ledger-logo-register",
+        "agent-skills/web-design/glass-dark-mode-clock",
+        "agent-skills/web-design/glass-dark-ui",
+        "agent-skills/web-design/globe-gl",
+        "agent-skills/web-design/globe-particles",
+        "agent-skills/web-design/gooey-blob-system",
+        "agent-skills/web-design/gsap",
+        "agent-skills/web-design/gsap-scrolltrigger-storytelling",
+        "agent-skills/web-design/high-contrast-skeuomorphic-clean",
+        "agent-skills/web-design/horizontal-scroll-scenes",
+        "agent-skills/web-design/html-demo",
+        "agent-skills/web-design/image-first-grid-layout",
+        "agent-skills/web-design/landing-page",
+        "agent-skills/web-design/light-mode-paper-technical",
+        "agent-skills/web-design/liquid-metal-border",
+        "agent-skills/web-design/marquee-loop",
+        "agent-skills/web-design/masked-reveal",
+        "agent-skills/web-design/matterjs",
+        "agent-skills/web-design/mesh-gradient-dark-blue-clean",
+        "agent-skills/web-design/neoclassical-ledger-ui",
+        "agent-skills/web-design/nested-container-clean-agency",
+        "agent-skills/web-design/nested-container-frames",
+        "agent-skills/web-design/number-details",
+        "agent-skills/web-design/operational-enterprise-ai",
+        "agent-skills/web-design/orange-clean-paper-saas",
+        "agent-skills/web-design/painted-product-showcase",
+        "agent-skills/web-design/paper-cinder-transition",
+        "agent-skills/web-design/pointer-trail-emitter",
+        "agent-skills/web-design/pollen-pointer-trail",
+        "agent-skills/web-design/pricing-page",
+        "agent-skills/web-design/product-proof-saas",
+        "agent-skills/web-design/progressive-blur",
+        "agent-skills/web-design/reveal-hover-effect",
+        "agent-skills/web-design/scroll-mesh-survey",
+        "agent-skills/web-design/scroll-progress-timeline",
+        "agent-skills/web-design/scroll-scrubbed-object-handoff",
+        "agent-skills/web-design/scroll-scrubbed-visual-sequence",
+        "agent-skills/web-design/scroll-scrubbed-word-reveal",
+        "agent-skills/web-design/scroll-world-storytelling",
+        "agent-skills/web-design/shaders-cursor-ripples",
+        "agent-skills/web-design/skeuomorphic-ui",
+        "agent-skills/web-design/solar-duotone-bold",
+        "agent-skills/web-design/split-layout-technical",
+        "agent-skills/web-design/staggered-word-reveal",
+        "agent-skills/web-design/sylva-field-guide-layout",
+        "agent-skills/web-design/tailwindcss",
+        "agent-skills/web-design/tech-green-dark-mode-modern",
+        "agent-skills/web-design/technical-wireframe-info-layout",
+        "agent-skills/web-design/thinking-orbs",
+        "agent-skills/web-design/threejs",
+        "agent-skills/web-design/threejs-landscape",
+        "agent-skills/web-design/threejs-towers",
+        "agent-skills/web-design/threejs-weather",
+        "agent-skills/web-design/unicorn-studio",
+        "agent-skills/web-design/vantajs",
+        "agent-skills/web-design/webgl-3d-object",
+        "agent-skills/web-design/webgl-landing-steering",
+        "agent-skills/web-design/webgl-laser",
+        "agent-skills/workflow/workflow-progress-screenshots",
+        "agent-skills/workflow/workflow-score-to-target",
+        "agent-skills/workflow/workflow-ship-change",
+        "agent-skills/workflow/workflow-threads-manager"
+      ],
+      "topics": {
+        "agent-skills/3d/3d-cloth-material": "3d-rendering",
+        "agent-skills/3d/3d-construction-sequence": "3d-rendering",
+        "agent-skills/3d/3d-falling-leaves": "3d-rendering",
+        "agent-skills/3d/3d-four-seasons": "3d-rendering",
+        "agent-skills/3d/3d-harbour-water": "3d-rendering",
+        "agent-skills/3d/3d-high-poly-models": "3d-rendering",
+        "agent-skills/3d/3d-high-resolution-textures": "3d-rendering",
+        "agent-skills/3d/3d-kasumidera-ultra-realism": "3d-rendering",
+        "agent-skills/3d/3d-metal-material": "3d-rendering",
+        "agent-skills/3d/3d-modular-buildings": "3d-rendering",
+        "agent-skills/3d/3d-orbit-inspect-demo": "3d-rendering",
+        "agent-skills/3d/3d-paper-material": "3d-rendering",
+        "agent-skills/3d/3d-retina-resolution": "3d-rendering",
+        "agent-skills/3d/3d-sky-background": "3d-rendering",
+        "agent-skills/3d/3d-sky-rays": "3d-rendering",
+        "agent-skills/3d/3d-survey-scan": "3d-rendering",
+        "agent-skills/3d/3d-ultra-realistic-water": "3d-rendering",
+        "agent-skills/3d/3d-underwater-god-rays": "3d-rendering",
+        "agent-skills/3d/3d-virtual-tour": "3d-rendering",
+        "agent-skills/3d/3d-wood-lighting-scorecard": "3d-rendering",
+        "agent-skills/3d/3d-wood-material": "3d-rendering",
+        "agent-skills/3d/forest-floor-specimen": "3d-rendering",
+        "agent-skills/3d/perching-butterfly": "3d-rendering",
+        "agent-skills/3d/relight-painted-surfaces": "3d-rendering",
+        "agent-skills/3d/woodland-chapter-cameras": "3d-rendering",
+        "agent-skills/codex/article-prompts-to-skills": "ai-automation",
+        "agent-skills/codex/audit-reference-originality": "testing-review",
+        "agent-skills/codex/audit-verify-explain-grade-5": "testing-review",
+        "agent-skills/codex/browser-video-recording": "design-media",
+        "agent-skills/codex/build-daily-inspiration-sites": "design-media",
+        "agent-skills/codex/codex-gpt-image-2-5-flare": "design-media",
+        "agent-skills/codex/daily-ui-inspiration-capture": "design-media",
+        "agent-skills/codex/elevenlabs-tts": "design-media",
+        "agent-skills/codex/generate-reference-inspired-brand-worlds": "design-media",
+        "agent-skills/codex/html-to-interaction-prompts": "design-media",
+        "agent-skills/codex/implement-fog-of-war": "game-development",
+        "agent-skills/codex/iterate-until-verified": "testing-review",
+        "agent-skills/codex/optimize-web-animations": "testing-review",
+        "agent-skills/codex/performance-profiling": "testing-review",
+        "agent-skills/codex/publish-project-to-github": "software-development",
+        "agent-skills/codex/stitched-full-page-capture": "design-media",
+        "agent-skills/codex/video-to-superprompt": "design-media",
+        "agent-skills/codex/web-technique-to-skill": "ai-automation",
+        "agent-skills/codex/write-like-meng-on-x": "campaigns-outreach",
+        "agent-skills/codex/x-bookmark-quote-posts": "campaigns-outreach",
+        "agent-skills/game-combat/fire-smoke-skill-vfx": "game-development",
+        "agent-skills/game-combat/game-dev-combat-animation": "game-development",
+        "agent-skills/game-combat/game-dev-combat-skill-polish": "game-development",
+        "agent-skills/game-combat/ice-frost-skill-vfx": "game-development",
+        "agent-skills/game-combat/lightning-energy-skill-vfx": "game-development",
+        "agent-skills/game-combat/water-crystal-skill-vfx": "game-development",
+        "agent-skills/game-development/author-game-levels": "game-development",
+        "agent-skills/game-development/build-3d-character-selector": "game-development",
+        "agent-skills/game-development/build-game-audio-feedback": "game-development",
+        "agent-skills/game-development/build-game-camera-controls": "game-development",
+        "agent-skills/game-development/build-game-changelog": "game-development",
+        "agent-skills/game-development/build-game-inventory": "game-development",
+        "agent-skills/game-development/build-game-map-editor": "game-development",
+        "agent-skills/game-development/build-game-monster-system": "game-development",
+        "agent-skills/game-development/build-hybrid-game-assets": "game-development",
+        "agent-skills/game-development/build-isometric-arpg": "game-development",
+        "agent-skills/game-development/build-lens-raindrops": "3d-rendering",
+        "agent-skills/game-development/build-mobile-threejs-games": "game-development",
+        "agent-skills/game-development/build-point-cloud-scan": "3d-rendering",
+        "agent-skills/game-development/build-rigged-game-assets": "game-development",
+        "agent-skills/game-development/build-threejs-enemy-systems": "game-development",
+        "agent-skills/game-development/build-ultra-realistic-game-interiors": "game-development",
+        "agent-skills/game-development/build-vesperfall-review-assets": "game-development",
+        "agent-skills/game-development/create-game-vfx": "game-development",
+        "agent-skills/game-development/design-action-combat": "game-development",
+        "agent-skills/game-development/design-game-encounters": "game-development",
+        "agent-skills/game-development/game-dev-character-model": "game-development",
+        "agent-skills/game-development/optimize-threejs-games": "game-development",
+        "agent-skills/game-development/ship-web-games": "game-development",
+        "agent-skills/game-development/test-playable-web-games": "testing-review",
+        "agent-skills/game-development/tune-enemy-ai": "game-development",
+        "agent-skills/illustration/illustration-bold-pop": "illustration",
+        "agent-skills/illustration/illustration-flat": "illustration",
+        "agent-skills/illustration/illustration-flat-with-black": "illustration",
+        "agent-skills/illustration/illustration-framed-panel": "illustration",
+        "agent-skills/illustration/illustration-grainy-gouache": "illustration",
+        "agent-skills/illustration/illustration-halftone-line": "illustration",
+        "agent-skills/illustration/illustration-ink-sketch": "illustration",
+        "agent-skills/illustration/illustration-isometric-mono": "illustration",
+        "agent-skills/illustration/illustration-line-interior": "illustration",
+        "agent-skills/illustration/illustration-one-line": "illustration",
+        "agent-skills/illustration/illustration-outlined-cartoon": "illustration",
+        "agent-skills/illustration/illustration-teal-spot": "illustration",
+        "agent-skills/illustration/illustration-two-colour-brush": "illustration",
+        "agent-skills/illustration/illustration-vintage-emblem": "illustration",
+        "agent-skills/media/aura-asset-images": "design-media",
+        "agent-skills/media/create-ai-avatar": "design-media",
+        "agent-skills/media/digital-twin": "design-media",
+        "agent-skills/media/html-explainer-video": "design-media",
+        "agent-skills/media/html-reel": "design-media",
+        "agent-skills/media/unsplash-asset-images": "design-media",
+        "agent-skills/media/url-to-motion-design": "design-media",
+        "agent-skills/ui/audit-ai-design-slop": "testing-review",
+        "agent-skills/ui/design-first-ui-prompting": "design-media",
+        "agent-skills/ui/moss-glass-controls": "design-media",
+        "agent-skills/ui/no-ai-design-slop": "design-media",
+        "agent-skills/ui/segmented-field-menu": "design-media",
+        "agent-skills/video-editing/genjutsu-scene": "design-media",
+        "agent-skills/video-editing/making-of-film": "design-media",
+        "agent-skills/web-design/add-mouse-driven-orbit": "design-media",
+        "agent-skills/web-design/add-shader-cursor-trail": "design-media",
+        "agent-skills/web-design/agency-grid-layout-minimal": "design-media",
+        "agent-skills/web-design/ambient-section-particles": "design-media",
+        "agent-skills/web-design/animation-on-scroll": "design-media",
+        "agent-skills/web-design/animation-systems": "design-media",
+        "agent-skills/web-design/atmosphere-background": "design-media",
+        "agent-skills/web-design/background-grid-webgl": "design-media",
+        "agent-skills/web-design/beam-glow-states": "design-media",
+        "agent-skills/web-design/beautiful-shadows": "design-media",
+        "agent-skills/web-design/blue-cloudy-clean-modern": "design-media",
+        "agent-skills/web-design/blue-laser-clean-glass-layout": "design-media",
+        "agent-skills/web-design/book-serif-index": "design-media",
+        "agent-skills/web-design/bright-green-tech-system-webgl": "design-media",
+        "agent-skills/web-design/build-awwwards-quality-sites": "design-media",
+        "agent-skills/web-design/build-interactive-particle-trail": "design-media",
+        "agent-skills/web-design/build-threejs-scroll-worlds": "design-media",
+        "agent-skills/web-design/build-wireframe-scan-reveal": "design-media",
+        "agent-skills/web-design/cinematic-gsap-lenis-motion-system": "design-media",
+        "agent-skills/web-design/cinematic-scroll-storytelling": "design-media",
+        "agent-skills/web-design/clean-minimal-beige-light-mode": "design-media",
+        "agent-skills/web-design/cobejs": "design-media",
+        "agent-skills/web-design/company-logos": "design-media",
+        "agent-skills/web-design/compose-a-woodland-landing-page": "design-media",
+        "agent-skills/web-design/container-lines": "design-media",
+        "agent-skills/web-design/corner-diagonals": "design-media",
+        "agent-skills/web-design/corner-lasers": "design-media",
+        "agent-skills/web-design/css-alpha-masking": "design-media",
+        "agent-skills/web-design/css-border-gradient": "design-media",
+        "agent-skills/web-design/dark-blue-contrasting-clean": "design-media",
+        "agent-skills/web-design/dark-glass-clean-layout": "design-media",
+        "agent-skills/web-design/dither-ascii-ink-hover": "design-media",
+        "agent-skills/web-design/dither-background": "design-media",
+        "agent-skills/web-design/dither-laser-dark-mode": "design-media",
+        "agent-skills/web-design/documentary-brutalist-agency": "design-media",
+        "agent-skills/web-design/editorial-portfolio-chapters": "design-media",
+        "agent-skills/web-design/editorial-service-booking": "design-media",
+        "agent-skills/web-design/editorial-tech": "design-media",
+        "agent-skills/web-design/falling-leaves": "design-media",
+        "agent-skills/web-design/fire-paper-loader": "design-media",
+        "agent-skills/web-design/framed-grid-layout": "design-media",
+        "agent-skills/web-design/framed-tech-dark-border-gradient": "design-media",
+        "agent-skills/web-design/funky-purple-container-tech": "design-media",
+        "agent-skills/web-design/generate-ledger-logo-register": "design-media",
+        "agent-skills/web-design/glass-dark-mode-clock": "design-media",
+        "agent-skills/web-design/glass-dark-ui": "design-media",
+        "agent-skills/web-design/globe-gl": "design-media",
+        "agent-skills/web-design/globe-particles": "design-media",
+        "agent-skills/web-design/gooey-blob-system": "design-media",
+        "agent-skills/web-design/gsap": "design-media",
+        "agent-skills/web-design/gsap-scrolltrigger-storytelling": "design-media",
+        "agent-skills/web-design/high-contrast-skeuomorphic-clean": "design-media",
+        "agent-skills/web-design/horizontal-scroll-scenes": "design-media",
+        "agent-skills/web-design/html-demo": "design-media",
+        "agent-skills/web-design/image-first-grid-layout": "design-media",
+        "agent-skills/web-design/landing-page": "design-media",
+        "agent-skills/web-design/light-mode-paper-technical": "design-media",
+        "agent-skills/web-design/liquid-metal-border": "design-media",
+        "agent-skills/web-design/marquee-loop": "design-media",
+        "agent-skills/web-design/masked-reveal": "design-media",
+        "agent-skills/web-design/matterjs": "software-development",
+        "agent-skills/web-design/mesh-gradient-dark-blue-clean": "design-media",
+        "agent-skills/web-design/neoclassical-ledger-ui": "design-media",
+        "agent-skills/web-design/nested-container-clean-agency": "design-media",
+        "agent-skills/web-design/nested-container-frames": "design-media",
+        "agent-skills/web-design/number-details": "design-media",
+        "agent-skills/web-design/operational-enterprise-ai": "design-media",
+        "agent-skills/web-design/orange-clean-paper-saas": "design-media",
+        "agent-skills/web-design/painted-product-showcase": "design-media",
+        "agent-skills/web-design/paper-cinder-transition": "design-media",
+        "agent-skills/web-design/pointer-trail-emitter": "design-media",
+        "agent-skills/web-design/pollen-pointer-trail": "design-media",
+        "agent-skills/web-design/pricing-page": "sales-pricing",
+        "agent-skills/web-design/product-proof-saas": "design-media",
+        "agent-skills/web-design/progressive-blur": "design-media",
+        "agent-skills/web-design/reveal-hover-effect": "design-media",
+        "agent-skills/web-design/scroll-mesh-survey": "design-media",
+        "agent-skills/web-design/scroll-progress-timeline": "design-media",
+        "agent-skills/web-design/scroll-scrubbed-object-handoff": "design-media",
+        "agent-skills/web-design/scroll-scrubbed-visual-sequence": "design-media",
+        "agent-skills/web-design/scroll-scrubbed-word-reveal": "design-media",
+        "agent-skills/web-design/scroll-world-storytelling": "design-media",
+        "agent-skills/web-design/shaders-cursor-ripples": "design-media",
+        "agent-skills/web-design/skeuomorphic-ui": "design-media",
+        "agent-skills/web-design/solar-duotone-bold": "design-media",
+        "agent-skills/web-design/split-layout-technical": "design-media",
+        "agent-skills/web-design/staggered-word-reveal": "design-media",
+        "agent-skills/web-design/sylva-field-guide-layout": "design-media",
+        "agent-skills/web-design/tailwindcss": "software-development",
+        "agent-skills/web-design/tech-green-dark-mode-modern": "design-media",
+        "agent-skills/web-design/technical-wireframe-info-layout": "design-media",
+        "agent-skills/web-design/thinking-orbs": "design-media",
+        "agent-skills/web-design/threejs": "3d-rendering",
+        "agent-skills/web-design/threejs-landscape": "3d-rendering",
+        "agent-skills/web-design/threejs-towers": "3d-rendering",
+        "agent-skills/web-design/threejs-weather": "3d-rendering",
+        "agent-skills/web-design/unicorn-studio": "design-media",
+        "agent-skills/web-design/vantajs": "design-media",
+        "agent-skills/web-design/webgl-3d-object": "3d-rendering",
+        "agent-skills/web-design/webgl-landing-steering": "design-media",
+        "agent-skills/web-design/webgl-laser": "design-media",
+        "agent-skills/workflow/workflow-progress-screenshots": "team-communication",
+        "agent-skills/workflow/workflow-score-to-target": "testing-review",
+        "agent-skills/workflow/workflow-ship-change": "software-development",
+        "agent-skills/workflow/workflow-threads-manager": "ai-automation"
+      },
+      "platforms": [],
+      "editionPlatforms": {
+        "*": [
+          "codex",
+          "claude",
+          "cursor"
+        ],
+        "workflow-threads-manager": [
+          "claude"
+        ],
+        "article-prompts-to-skills": [
+          "codex"
+        ],
+        "audit-reference-originality": [
+          "codex"
+        ],
+        "audit-verify-explain-grade-5": [
+          "codex"
+        ],
+        "browser-video-recording": [
+          "codex"
+        ],
+        "build-daily-inspiration-sites": [
+          "codex"
+        ],
+        "codex-gpt-image-2-5-flare": [
+          "codex"
+        ],
+        "daily-ui-inspiration-capture": [
+          "codex"
+        ],
+        "elevenlabs-tts": [
+          "codex"
+        ],
+        "generate-reference-inspired-brand-worlds": [
+          "codex"
+        ],
+        "html-to-interaction-prompts": [
+          "codex"
+        ],
+        "implement-fog-of-war": [
+          "codex"
+        ],
+        "iterate-until-verified": [
+          "codex"
+        ],
+        "optimize-web-animations": [
+          "codex"
+        ],
+        "performance-profiling": [
+          "codex"
+        ],
+        "publish-project-to-github": [
+          "codex"
+        ],
+        "stitched-full-page-capture": [
+          "codex"
+        ],
+        "video-to-superprompt": [
+          "codex"
+        ],
+        "web-technique-to-skill": [
+          "codex"
+        ],
+        "write-like-meng-on-x": [
+          "codex"
+        ],
+        "x-bookmark-quote-posts": [
+          "codex"
+        ]
+      },
+      "quoteDescriptions": [
+        "agent-skills/3d/3d-metal-material",
+        "agent-skills/game-combat/fire-smoke-skill-vfx",
+        "agent-skills/game-combat/ice-frost-skill-vfx",
+        "agent-skills/game-combat/lightning-energy-skill-vfx",
+        "agent-skills/game-combat/water-crystal-skill-vfx",
+        "agent-skills/illustration/illustration-bold-pop",
+        "agent-skills/illustration/illustration-flat",
+        "agent-skills/illustration/illustration-flat-with-black",
+        "agent-skills/illustration/illustration-isometric-mono",
+        "agent-skills/illustration/illustration-outlined-cartoon",
+        "agent-skills/illustration/illustration-teal-spot",
+        "agent-skills/illustration/illustration-two-colour-brush",
+        "agent-skills/illustration/illustration-vintage-emblem"
+      ],
+      "readingFiles": {
+        "agent-skills/3d/3d-cloth-material": [
+          "agent-skills/3d/3d-cloth-material/SKILL.md",
+          "agent-skills/3d/3d-cloth-material/PROMPT.md"
+        ],
+        "agent-skills/3d/3d-construction-sequence": [
+          "agent-skills/3d/3d-construction-sequence/SKILL.md"
+        ],
+        "agent-skills/3d/3d-falling-leaves": [
+          "agent-skills/3d/3d-falling-leaves/SKILL.md",
+          "agent-skills/3d/3d-falling-leaves/REFERENCES.md"
+        ],
+        "agent-skills/3d/3d-four-seasons": [
+          "agent-skills/3d/3d-four-seasons/SKILL.md",
+          "agent-skills/3d/3d-four-seasons/REFERENCES.md"
+        ],
+        "agent-skills/3d/3d-harbour-water": [
+          "agent-skills/3d/3d-harbour-water/SKILL.md"
+        ],
+        "agent-skills/3d/3d-high-poly-models": [
+          "agent-skills/3d/3d-high-poly-models/SKILL.md",
+          "agent-skills/3d/3d-high-poly-models/REFERENCES.md"
+        ],
+        "agent-skills/3d/3d-high-resolution-textures": [
+          "agent-skills/3d/3d-high-resolution-textures/SKILL.md",
+          "agent-skills/3d/3d-high-resolution-textures/REFERENCES.md"
+        ],
+        "agent-skills/3d/3d-kasumidera-ultra-realism": [
+          "agent-skills/3d/3d-kasumidera-ultra-realism/SKILL.md",
+          "agent-skills/3d/3d-kasumidera-ultra-realism/REFERENCES.md",
+          "agent-skills/3d/3d-kasumidera-ultra-realism/references/creator-steering.md",
+          "agent-skills/3d/3d-kasumidera-ultra-realism/references/director-prompts.md",
+          "agent-skills/3d/3d-kasumidera-ultra-realism/references/frame-credits.md",
+          "agent-skills/3d/3d-kasumidera-ultra-realism/references/generation-prompts.md",
+          "agent-skills/3d/3d-kasumidera-ultra-realism/references/play-and-deliver.md",
+          "agent-skills/3d/3d-kasumidera-ultra-realism/references/scene-recipes.md"
+        ],
+        "agent-skills/3d/3d-metal-material": [
+          "agent-skills/3d/3d-metal-material/SKILL.md",
+          "agent-skills/3d/3d-metal-material/PROMPT.md"
+        ],
+        "agent-skills/3d/3d-modular-buildings": [
+          "agent-skills/3d/3d-modular-buildings/SKILL.md"
+        ],
+        "agent-skills/3d/3d-orbit-inspect-demo": [
+          "agent-skills/3d/3d-orbit-inspect-demo/SKILL.md",
+          "agent-skills/3d/3d-orbit-inspect-demo/PROMPT.md"
+        ],
+        "agent-skills/3d/3d-paper-material": [
+          "agent-skills/3d/3d-paper-material/SKILL.md",
+          "agent-skills/3d/3d-paper-material/PROMPT.md"
+        ],
+        "agent-skills/3d/3d-retina-resolution": [
+          "agent-skills/3d/3d-retina-resolution/SKILL.md",
+          "agent-skills/3d/3d-retina-resolution/REFERENCES.md"
+        ],
+        "agent-skills/3d/3d-sky-background": [
+          "agent-skills/3d/3d-sky-background/SKILL.md",
+          "agent-skills/3d/3d-sky-background/REFERENCES.md"
+        ],
+        "agent-skills/3d/3d-sky-rays": [
+          "agent-skills/3d/3d-sky-rays/SKILL.md",
+          "agent-skills/3d/3d-sky-rays/REFERENCES.md"
+        ],
+        "agent-skills/3d/3d-survey-scan": [
+          "agent-skills/3d/3d-survey-scan/SKILL.md"
+        ],
+        "agent-skills/3d/3d-ultra-realistic-water": [
+          "agent-skills/3d/3d-ultra-realistic-water/SKILL.md",
+          "agent-skills/3d/3d-ultra-realistic-water/references/ocean.md"
+        ],
+        "agent-skills/3d/3d-underwater-god-rays": [
+          "agent-skills/3d/3d-underwater-god-rays/SKILL.md"
+        ],
+        "agent-skills/3d/3d-virtual-tour": [
+          "agent-skills/3d/3d-virtual-tour/SKILL.md",
+          "agent-skills/3d/3d-virtual-tour/REFERENCES.md"
+        ],
+        "agent-skills/3d/3d-wood-lighting-scorecard": [
+          "agent-skills/3d/3d-wood-lighting-scorecard/SKILL.md",
+          "agent-skills/3d/3d-wood-lighting-scorecard/PROMPT.md",
+          "agent-skills/3d/3d-wood-lighting-scorecard/references/rubric.md"
+        ],
+        "agent-skills/3d/3d-wood-material": [
+          "agent-skills/3d/3d-wood-material/SKILL.md",
+          "agent-skills/3d/3d-wood-material/PROMPT.md"
+        ],
+        "agent-skills/3d/forest-floor-specimen": [
+          "agent-skills/3d/forest-floor-specimen/SKILL.md"
+        ],
+        "agent-skills/3d/perching-butterfly": [
+          "agent-skills/3d/perching-butterfly/SKILL.md"
+        ],
+        "agent-skills/3d/relight-painted-surfaces": [
+          "agent-skills/3d/relight-painted-surfaces/SKILL.md"
+        ],
+        "agent-skills/3d/woodland-chapter-cameras": [
+          "agent-skills/3d/woodland-chapter-cameras/SKILL.md"
+        ],
+        "agent-skills/codex/article-prompts-to-skills": [
+          "agent-skills/codex/article-prompts-to-skills/SKILL.md",
+          "agent-skills/codex/article-prompts-to-skills/references/example-packages.md"
+        ],
+        "agent-skills/codex/audit-reference-originality": [
+          "agent-skills/codex/audit-reference-originality/SKILL.md",
+          "agent-skills/codex/audit-reference-originality/references/audit-rubric.md"
+        ],
+        "agent-skills/codex/audit-verify-explain-grade-5": [
+          "agent-skills/codex/audit-verify-explain-grade-5/SKILL.md"
+        ],
+        "agent-skills/codex/browser-video-recording": [
+          "agent-skills/codex/browser-video-recording/SKILL.md"
+        ],
+        "agent-skills/codex/build-daily-inspiration-sites": [
+          "agent-skills/codex/build-daily-inspiration-sites/SKILL.md",
+          "agent-skills/codex/build-daily-inspiration-sites/references/thread-brief-contract.md"
+        ],
+        "agent-skills/codex/codex-gpt-image-2-5-flare": [
+          "agent-skills/codex/codex-gpt-image-2-5-flare/SKILL.md"
+        ],
+        "agent-skills/codex/daily-ui-inspiration-capture": [
+          "agent-skills/codex/daily-ui-inspiration-capture/SKILL.md"
+        ],
+        "agent-skills/codex/elevenlabs-tts": [
+          "agent-skills/codex/elevenlabs-tts/SKILL.md"
+        ],
+        "agent-skills/codex/generate-reference-inspired-brand-worlds": [
+          "agent-skills/codex/generate-reference-inspired-brand-worlds/SKILL.md",
+          "agent-skills/codex/generate-reference-inspired-brand-worlds/references/example-prompts.md"
+        ],
+        "agent-skills/codex/html-to-interaction-prompts": [
+          "agent-skills/codex/html-to-interaction-prompts/SKILL.md"
+        ],
+        "agent-skills/codex/implement-fog-of-war": [
+          "agent-skills/codex/implement-fog-of-war/SKILL.md",
+          "agent-skills/codex/implement-fog-of-war/references/mechanics.md",
+          "agent-skills/codex/implement-fog-of-war/references/validation.md"
+        ],
+        "agent-skills/codex/iterate-until-verified": [
+          "agent-skills/codex/iterate-until-verified/SKILL.md",
+          "agent-skills/codex/iterate-until-verified/REFERENCES.md"
+        ],
+        "agent-skills/codex/optimize-web-animations": [
+          "agent-skills/codex/optimize-web-animations/SKILL.md",
+          "agent-skills/codex/optimize-web-animations/references/browser-profiling.md"
+        ],
+        "agent-skills/codex/performance-profiling": [
+          "agent-skills/codex/performance-profiling/SKILL.md",
+          "agent-skills/codex/performance-profiling/references/energy-diagnostics.md",
+          "agent-skills/codex/performance-profiling/references/launch-optimization.md",
+          "agent-skills/codex/performance-profiling/references/memory-profiling.md",
+          "agent-skills/codex/performance-profiling/references/time-profiler.md"
+        ],
+        "agent-skills/codex/publish-project-to-github": [
+          "agent-skills/codex/publish-project-to-github/SKILL.md",
+          "agent-skills/codex/publish-project-to-github/assets/README-template.md",
+          "agent-skills/codex/publish-project-to-github/references/github-pages.md"
+        ],
+        "agent-skills/codex/stitched-full-page-capture": [
+          "agent-skills/codex/stitched-full-page-capture/SKILL.md"
+        ],
+        "agent-skills/codex/video-to-superprompt": [
+          "agent-skills/codex/video-to-superprompt/SKILL.md",
+          "agent-skills/codex/video-to-superprompt/references/superprompt-template.md"
+        ],
+        "agent-skills/codex/web-technique-to-skill": [
+          "agent-skills/codex/web-technique-to-skill/SKILL.md"
+        ],
+        "agent-skills/codex/write-like-meng-on-x": [
+          "agent-skills/codex/write-like-meng-on-x/SKILL.md",
+          "agent-skills/codex/write-like-meng-on-x/references/content-source-map.md",
+          "agent-skills/codex/write-like-meng-on-x/references/voice-profile.md"
+        ],
+        "agent-skills/codex/x-bookmark-quote-posts": [
+          "agent-skills/codex/x-bookmark-quote-posts/SKILL.md"
+        ],
+        "agent-skills/game-combat/fire-smoke-skill-vfx": [
+          "agent-skills/game-combat/fire-smoke-skill-vfx/SKILL.md",
+          "agent-skills/game-combat/fire-smoke-skill-vfx/references/scorecard.md"
+        ],
+        "agent-skills/game-combat/game-dev-combat-animation": [
+          "agent-skills/game-combat/game-dev-combat-animation/SKILL.md",
+          "agent-skills/game-combat/game-dev-combat-animation/references/review.md",
+          "agent-skills/game-combat/game-dev-combat-animation/references/rules.md",
+          "agent-skills/game-combat/game-dev-combat-animation/references/techniques.md",
+          "agent-skills/game-combat/game-dev-combat-animation/references/thornvigil.md",
+          "agent-skills/game-combat/game-dev-combat-animation/references/traps.md",
+          "agent-skills/game-combat/game-dev-combat-animation/templates/ab-judge-prompt.md",
+          "agent-skills/game-combat/game-dev-combat-animation/templates/critic-prompt.md"
+        ],
+        "agent-skills/game-combat/game-dev-combat-skill-polish": [
+          "agent-skills/game-combat/game-dev-combat-skill-polish/SKILL.md",
+          "agent-skills/game-combat/game-dev-combat-skill-polish/references/rubric-art.md",
+          "agent-skills/game-combat/game-dev-combat-skill-polish/references/rubric-readability.md",
+          "agent-skills/game-combat/game-dev-combat-skill-polish/templates/judge-prompt.md"
+        ],
+        "agent-skills/game-combat/ice-frost-skill-vfx": [
+          "agent-skills/game-combat/ice-frost-skill-vfx/SKILL.md",
+          "agent-skills/game-combat/ice-frost-skill-vfx/references/scorecard.md"
+        ],
+        "agent-skills/game-combat/lightning-energy-skill-vfx": [
+          "agent-skills/game-combat/lightning-energy-skill-vfx/SKILL.md",
+          "agent-skills/game-combat/lightning-energy-skill-vfx/references/scorecard.md"
+        ],
+        "agent-skills/game-combat/water-crystal-skill-vfx": [
+          "agent-skills/game-combat/water-crystal-skill-vfx/SKILL.md",
+          "agent-skills/game-combat/water-crystal-skill-vfx/references/scorecard.md"
+        ],
+        "agent-skills/game-development/author-game-levels": [
+          "agent-skills/game-development/author-game-levels/SKILL.md"
+        ],
+        "agent-skills/game-development/build-3d-character-selector": [
+          "agent-skills/game-development/build-3d-character-selector/SKILL.md",
+          "agent-skills/game-development/build-3d-character-selector/references/character-production.md"
+        ],
+        "agent-skills/game-development/build-game-audio-feedback": [
+          "agent-skills/game-development/build-game-audio-feedback/SKILL.md"
+        ],
+        "agent-skills/game-development/build-game-camera-controls": [
+          "agent-skills/game-development/build-game-camera-controls/SKILL.md"
+        ],
+        "agent-skills/game-development/build-game-changelog": [
+          "agent-skills/game-development/build-game-changelog/SKILL.md",
+          "agent-skills/game-development/build-game-changelog/references/reference-architecture.md"
+        ],
+        "agent-skills/game-development/build-game-inventory": [
+          "agent-skills/game-development/build-game-inventory/SKILL.md"
+        ],
+        "agent-skills/game-development/build-game-map-editor": [
+          "agent-skills/game-development/build-game-map-editor/SKILL.md",
+          "agent-skills/game-development/build-game-map-editor/references/vesperfall-implementation.md"
+        ],
+        "agent-skills/game-development/build-game-monster-system": [
+          "agent-skills/game-development/build-game-monster-system/SKILL.md",
+          "agent-skills/game-development/build-game-monster-system/references/monster-contract.md"
+        ],
+        "agent-skills/game-development/build-hybrid-game-assets": [
+          "agent-skills/game-development/build-hybrid-game-assets/SKILL.md"
+        ],
+        "agent-skills/game-development/build-isometric-arpg": [
+          "agent-skills/game-development/build-isometric-arpg/SKILL.md"
+        ],
+        "agent-skills/game-development/build-lens-raindrops": [
+          "agent-skills/game-development/build-lens-raindrops/SKILL.md"
+        ],
+        "agent-skills/game-development/build-mobile-threejs-games": [
+          "agent-skills/game-development/build-mobile-threejs-games/SKILL.md"
+        ],
+        "agent-skills/game-development/build-point-cloud-scan": [
+          "agent-skills/game-development/build-point-cloud-scan/SKILL.md"
+        ],
+        "agent-skills/game-development/build-rigged-game-assets": [
+          "agent-skills/game-development/build-rigged-game-assets/SKILL.md",
+          "agent-skills/game-development/build-rigged-game-assets/references/catalog-and-testing.md",
+          "agent-skills/game-development/build-rigged-game-assets/references/requirements.md"
+        ],
+        "agent-skills/game-development/build-threejs-enemy-systems": [
+          "agent-skills/game-development/build-threejs-enemy-systems/SKILL.md"
+        ],
+        "agent-skills/game-development/build-ultra-realistic-game-interiors": [
+          "agent-skills/game-development/build-ultra-realistic-game-interiors/SKILL.md",
+          "agent-skills/game-development/build-ultra-realistic-game-interiors/references/gameplay.md",
+          "agent-skills/game-development/build-ultra-realistic-game-interiors/references/prompts-and-review.md",
+          "agent-skills/game-development/build-ultra-realistic-game-interiors/references/rendering.md"
+        ],
+        "agent-skills/game-development/build-vesperfall-review-assets": [
+          "agent-skills/game-development/build-vesperfall-review-assets/SKILL.md",
+          "agent-skills/game-development/build-vesperfall-review-assets/references/catalog-contract.md"
+        ],
+        "agent-skills/game-development/create-game-vfx": [
+          "agent-skills/game-development/create-game-vfx/SKILL.md"
+        ],
+        "agent-skills/game-development/design-action-combat": [
+          "agent-skills/game-development/design-action-combat/SKILL.md"
+        ],
+        "agent-skills/game-development/design-game-encounters": [
+          "agent-skills/game-development/design-game-encounters/SKILL.md"
+        ],
+        "agent-skills/game-development/game-dev-character-model": [
+          "agent-skills/game-development/game-dev-character-model/SKILL.md"
+        ],
+        "agent-skills/game-development/optimize-threejs-games": [
+          "agent-skills/game-development/optimize-threejs-games/SKILL.md"
+        ],
+        "agent-skills/game-development/ship-web-games": [
+          "agent-skills/game-development/ship-web-games/SKILL.md"
+        ],
+        "agent-skills/game-development/test-playable-web-games": [
+          "agent-skills/game-development/test-playable-web-games/SKILL.md"
+        ],
+        "agent-skills/game-development/tune-enemy-ai": [
+          "agent-skills/game-development/tune-enemy-ai/SKILL.md"
+        ],
+        "agent-skills/illustration/illustration-bold-pop": [
+          "agent-skills/illustration/illustration-bold-pop/SKILL.md",
+          "agent-skills/illustration/illustration-bold-pop/references/craft.md"
+        ],
+        "agent-skills/illustration/illustration-flat": [
+          "agent-skills/illustration/illustration-flat/SKILL.md",
+          "agent-skills/illustration/illustration-flat/references/craft.md"
+        ],
+        "agent-skills/illustration/illustration-flat-with-black": [
+          "agent-skills/illustration/illustration-flat-with-black/SKILL.md",
+          "agent-skills/illustration/illustration-flat-with-black/references/craft.md"
+        ],
+        "agent-skills/illustration/illustration-framed-panel": [
+          "agent-skills/illustration/illustration-framed-panel/SKILL.md",
+          "agent-skills/illustration/illustration-framed-panel/references/craft.md"
+        ],
+        "agent-skills/illustration/illustration-grainy-gouache": [
+          "agent-skills/illustration/illustration-grainy-gouache/SKILL.md",
+          "agent-skills/illustration/illustration-grainy-gouache/references/craft.md"
+        ],
+        "agent-skills/illustration/illustration-halftone-line": [
+          "agent-skills/illustration/illustration-halftone-line/SKILL.md",
+          "agent-skills/illustration/illustration-halftone-line/references/craft.md"
+        ],
+        "agent-skills/illustration/illustration-ink-sketch": [
+          "agent-skills/illustration/illustration-ink-sketch/SKILL.md",
+          "agent-skills/illustration/illustration-ink-sketch/references/craft.md"
+        ],
+        "agent-skills/illustration/illustration-isometric-mono": [
+          "agent-skills/illustration/illustration-isometric-mono/SKILL.md",
+          "agent-skills/illustration/illustration-isometric-mono/references/craft.md"
+        ],
+        "agent-skills/illustration/illustration-line-interior": [
+          "agent-skills/illustration/illustration-line-interior/SKILL.md",
+          "agent-skills/illustration/illustration-line-interior/references/craft.md"
+        ],
+        "agent-skills/illustration/illustration-one-line": [
+          "agent-skills/illustration/illustration-one-line/SKILL.md",
+          "agent-skills/illustration/illustration-one-line/references/craft.md"
+        ],
+        "agent-skills/illustration/illustration-outlined-cartoon": [
+          "agent-skills/illustration/illustration-outlined-cartoon/SKILL.md",
+          "agent-skills/illustration/illustration-outlined-cartoon/references/craft.md"
+        ],
+        "agent-skills/illustration/illustration-teal-spot": [
+          "agent-skills/illustration/illustration-teal-spot/SKILL.md",
+          "agent-skills/illustration/illustration-teal-spot/references/craft.md"
+        ],
+        "agent-skills/illustration/illustration-two-colour-brush": [
+          "agent-skills/illustration/illustration-two-colour-brush/SKILL.md",
+          "agent-skills/illustration/illustration-two-colour-brush/references/craft.md"
+        ],
+        "agent-skills/illustration/illustration-vintage-emblem": [
+          "agent-skills/illustration/illustration-vintage-emblem/SKILL.md",
+          "agent-skills/illustration/illustration-vintage-emblem/references/craft.md"
+        ],
+        "agent-skills/media/aura-asset-images": [
+          "agent-skills/media/aura-asset-images/SKILL.md"
+        ],
+        "agent-skills/media/create-ai-avatar": [
+          "agent-skills/media/create-ai-avatar/SKILL.md",
+          "agent-skills/media/create-ai-avatar/references/footage.md",
+          "agent-skills/media/create-ai-avatar/references/heygen.md",
+          "agent-skills/media/create-ai-avatar/references/judging.md"
+        ],
+        "agent-skills/media/digital-twin": [
+          "agent-skills/media/digital-twin/SKILL.md",
+          "agent-skills/media/digital-twin/references/audit.md",
+          "agent-skills/media/digital-twin/references/cinematic.md",
+          "agent-skills/media/digital-twin/references/consent.md",
+          "agent-skills/media/digital-twin/references/costs.md",
+          "agent-skills/media/digital-twin/references/fil-workflow.md",
+          "agent-skills/media/digital-twin/references/identity-template.md",
+          "agent-skills/media/digital-twin/references/judging.md",
+          "agent-skills/media/digital-twin/references/references.md",
+          "agent-skills/media/digital-twin/references/speaking.md",
+          "agent-skills/media/digital-twin/references/stills.md",
+          "agent-skills/media/digital-twin/references/video.md",
+          "agent-skills/media/digital-twin/references/voice.md",
+          "agent-skills/media/digital-twin/references/workspace.md"
+        ],
+        "agent-skills/media/html-explainer-video": [
+          "agent-skills/media/html-explainer-video/SKILL.md",
+          "agent-skills/media/html-explainer-video/references/camera.md",
+          "agent-skills/media/html-explainer-video/references/checks.md",
+          "agent-skills/media/html-explainer-video/references/fil-editor.md",
+          "agent-skills/media/html-explainer-video/references/format.md",
+          "agent-skills/media/html-explainer-video/references/looks.md",
+          "agent-skills/media/html-explainer-video/references/sound.md"
+        ],
+        "agent-skills/media/html-reel": [
+          "agent-skills/media/html-reel/SKILL.md",
+          "agent-skills/media/html-reel/references/fil-editor.md",
+          "agent-skills/media/html-reel/references/formula.md",
+          "agent-skills/media/html-reel/references/judging.md",
+          "agent-skills/media/html-reel/references/retime.md",
+          "agent-skills/media/html-reel/references/source.md",
+          "agent-skills/media/html-reel/references/structures.md"
+        ],
+        "agent-skills/media/unsplash-asset-images": [
+          "agent-skills/media/unsplash-asset-images/SKILL.md"
+        ],
+        "agent-skills/media/url-to-motion-design": [
+          "agent-skills/media/url-to-motion-design/SKILL.md",
+          "agent-skills/media/url-to-motion-design/references/builder-brief.md",
+          "agent-skills/media/url-to-motion-design/references/judge.md",
+          "agent-skills/media/url-to-motion-design/references/lab.md",
+          "agent-skills/media/url-to-motion-design/references/publish.md",
+          "agent-skills/media/url-to-motion-design/references/scene-contract.md",
+          "agent-skills/media/url-to-motion-design/references/seven-to-eight.md"
+        ],
+        "agent-skills/ui/audit-ai-design-slop": [
+          "agent-skills/ui/audit-ai-design-slop/SKILL.md",
+          "agent-skills/ui/audit-ai-design-slop/REFERENCES.md"
+        ],
+        "agent-skills/ui/design-first-ui-prompting": [
+          "agent-skills/ui/design-first-ui-prompting/SKILL.md",
+          "agent-skills/ui/design-first-ui-prompting/ARTICLE.md",
+          "agent-skills/ui/design-first-ui-prompting/REFERENCES.md"
+        ],
+        "agent-skills/ui/moss-glass-controls": [
+          "agent-skills/ui/moss-glass-controls/SKILL.md"
+        ],
+        "agent-skills/ui/no-ai-design-slop": [
+          "agent-skills/ui/no-ai-design-slop/SKILL.md",
+          "agent-skills/ui/no-ai-design-slop/ARTICLE.md",
+          "agent-skills/ui/no-ai-design-slop/REFERENCES.md"
+        ],
+        "agent-skills/ui/segmented-field-menu": [
+          "agent-skills/ui/segmented-field-menu/SKILL.md"
+        ],
+        "agent-skills/video-editing/genjutsu-scene": [
+          "agent-skills/video-editing/genjutsu-scene/SKILL.md",
+          "agent-skills/video-editing/genjutsu-scene/references/greymourn.md",
+          "agent-skills/video-editing/genjutsu-scene/references/judge-prompt.md"
+        ],
+        "agent-skills/video-editing/making-of-film": [
+          "agent-skills/video-editing/making-of-film/SKILL.md",
+          "agent-skills/video-editing/making-of-film/assets/judge-prompt.md",
+          "agent-skills/video-editing/making-of-film/references/camera-and-twin.md",
+          "agent-skills/video-editing/making-of-film/references/greymourn.md",
+          "agent-skills/video-editing/making-of-film/references/judging.md",
+          "agent-skills/video-editing/making-of-film/references/look.md",
+          "agent-skills/video-editing/making-of-film/references/motion.md",
+          "agent-skills/video-editing/making-of-film/references/render.md",
+          "agent-skills/video-editing/making-of-film/references/script.md",
+          "agent-skills/video-editing/making-of-film/references/structure.md",
+          "agent-skills/video-editing/making-of-film/references/voice.md"
+        ],
+        "agent-skills/web-design/add-mouse-driven-orbit": [
+          "agent-skills/web-design/add-mouse-driven-orbit/SKILL.md"
+        ],
+        "agent-skills/web-design/add-shader-cursor-trail": [
+          "agent-skills/web-design/add-shader-cursor-trail/SKILL.md",
+          "agent-skills/web-design/add-shader-cursor-trail/references/implementation.md"
+        ],
+        "agent-skills/web-design/agency-grid-layout-minimal": [
+          "agent-skills/web-design/agency-grid-layout-minimal/SKILL.md"
+        ],
+        "agent-skills/web-design/ambient-section-particles": [
+          "agent-skills/web-design/ambient-section-particles/SKILL.md",
+          "agent-skills/web-design/ambient-section-particles/REFERENCES.md"
+        ],
+        "agent-skills/web-design/animation-on-scroll": [
+          "agent-skills/web-design/animation-on-scroll/SKILL.md"
+        ],
+        "agent-skills/web-design/animation-systems": [
+          "agent-skills/web-design/animation-systems/SKILL.md"
+        ],
+        "agent-skills/web-design/atmosphere-background": [
+          "agent-skills/web-design/atmosphere-background/SKILL.md"
+        ],
+        "agent-skills/web-design/background-grid-webgl": [
+          "agent-skills/web-design/background-grid-webgl/SKILL.md"
+        ],
+        "agent-skills/web-design/beam-glow-states": [
+          "agent-skills/web-design/beam-glow-states/SKILL.md",
+          "agent-skills/web-design/beam-glow-states/REFERENCES.md"
+        ],
+        "agent-skills/web-design/beautiful-shadows": [
+          "agent-skills/web-design/beautiful-shadows/SKILL.md"
+        ],
+        "agent-skills/web-design/blue-cloudy-clean-modern": [
+          "agent-skills/web-design/blue-cloudy-clean-modern/SKILL.md"
+        ],
+        "agent-skills/web-design/blue-laser-clean-glass-layout": [
+          "agent-skills/web-design/blue-laser-clean-glass-layout/SKILL.md"
+        ],
+        "agent-skills/web-design/book-serif-index": [
+          "agent-skills/web-design/book-serif-index/SKILL.md"
+        ],
+        "agent-skills/web-design/bright-green-tech-system-webgl": [
+          "agent-skills/web-design/bright-green-tech-system-webgl/SKILL.md"
+        ],
+        "agent-skills/web-design/build-awwwards-quality-sites": [
+          "agent-skills/web-design/build-awwwards-quality-sites/SKILL.md"
+        ],
+        "agent-skills/web-design/build-interactive-particle-trail": [
+          "agent-skills/web-design/build-interactive-particle-trail/SKILL.md"
+        ],
+        "agent-skills/web-design/build-threejs-scroll-worlds": [
+          "agent-skills/web-design/build-threejs-scroll-worlds/SKILL.md",
+          "agent-skills/web-design/build-threejs-scroll-worlds/references/kage-anatomy.md",
+          "agent-skills/web-design/build-threejs-scroll-worlds/references/quality-and-qa.md",
+          "agent-skills/web-design/build-threejs-scroll-worlds/references/realtime-architecture.md",
+          "agent-skills/web-design/build-threejs-scroll-worlds/references/world-bible.md"
+        ],
+        "agent-skills/web-design/build-wireframe-scan-reveal": [
+          "agent-skills/web-design/build-wireframe-scan-reveal/SKILL.md"
+        ],
+        "agent-skills/web-design/cinematic-gsap-lenis-motion-system": [
+          "agent-skills/web-design/cinematic-gsap-lenis-motion-system/SKILL.md",
+          "agent-skills/web-design/cinematic-gsap-lenis-motion-system/REFERENCES.md"
+        ],
+        "agent-skills/web-design/cinematic-scroll-storytelling": [
+          "agent-skills/web-design/cinematic-scroll-storytelling/SKILL.md",
+          "agent-skills/web-design/cinematic-scroll-storytelling/REFERENCES.md"
+        ],
+        "agent-skills/web-design/clean-minimal-beige-light-mode": [
+          "agent-skills/web-design/clean-minimal-beige-light-mode/SKILL.md"
+        ],
+        "agent-skills/web-design/cobejs": [
+          "agent-skills/web-design/cobejs/SKILL.md",
+          "agent-skills/web-design/cobejs/REFERENCES.md"
+        ],
+        "agent-skills/web-design/company-logos": [
+          "agent-skills/web-design/company-logos/SKILL.md"
+        ],
+        "agent-skills/web-design/compose-a-woodland-landing-page": [
+          "agent-skills/web-design/compose-a-woodland-landing-page/SKILL.md"
+        ],
+        "agent-skills/web-design/container-lines": [
+          "agent-skills/web-design/container-lines/SKILL.md"
+        ],
+        "agent-skills/web-design/corner-diagonals": [
+          "agent-skills/web-design/corner-diagonals/SKILL.md"
+        ],
+        "agent-skills/web-design/corner-lasers": [
+          "agent-skills/web-design/corner-lasers/SKILL.md"
+        ],
+        "agent-skills/web-design/css-alpha-masking": [
+          "agent-skills/web-design/css-alpha-masking/SKILL.md"
+        ],
+        "agent-skills/web-design/css-border-gradient": [
+          "agent-skills/web-design/css-border-gradient/SKILL.md"
+        ],
+        "agent-skills/web-design/dark-blue-contrasting-clean": [
+          "agent-skills/web-design/dark-blue-contrasting-clean/SKILL.md"
+        ],
+        "agent-skills/web-design/dark-glass-clean-layout": [
+          "agent-skills/web-design/dark-glass-clean-layout/SKILL.md"
+        ],
+        "agent-skills/web-design/dither-ascii-ink-hover": [
+          "agent-skills/web-design/dither-ascii-ink-hover/SKILL.md"
+        ],
+        "agent-skills/web-design/dither-background": [
+          "agent-skills/web-design/dither-background/SKILL.md"
+        ],
+        "agent-skills/web-design/dither-laser-dark-mode": [
+          "agent-skills/web-design/dither-laser-dark-mode/SKILL.md"
+        ],
+        "agent-skills/web-design/documentary-brutalist-agency": [
+          "agent-skills/web-design/documentary-brutalist-agency/SKILL.md",
+          "agent-skills/web-design/documentary-brutalist-agency/REFERENCES.md"
+        ],
+        "agent-skills/web-design/editorial-portfolio-chapters": [
+          "agent-skills/web-design/editorial-portfolio-chapters/SKILL.md",
+          "agent-skills/web-design/editorial-portfolio-chapters/ARTICLE.md",
+          "agent-skills/web-design/editorial-portfolio-chapters/REFERENCES.md"
+        ],
+        "agent-skills/web-design/editorial-service-booking": [
+          "agent-skills/web-design/editorial-service-booking/SKILL.md",
+          "agent-skills/web-design/editorial-service-booking/REFERENCES.md"
+        ],
+        "agent-skills/web-design/editorial-tech": [
+          "agent-skills/web-design/editorial-tech/SKILL.md"
+        ],
+        "agent-skills/web-design/falling-leaves": [
+          "agent-skills/web-design/falling-leaves/SKILL.md"
+        ],
+        "agent-skills/web-design/fire-paper-loader": [
+          "agent-skills/web-design/fire-paper-loader/SKILL.md",
+          "agent-skills/web-design/fire-paper-loader/PROMPT.md"
+        ],
+        "agent-skills/web-design/framed-grid-layout": [
+          "agent-skills/web-design/framed-grid-layout/SKILL.md"
+        ],
+        "agent-skills/web-design/framed-tech-dark-border-gradient": [
+          "agent-skills/web-design/framed-tech-dark-border-gradient/SKILL.md"
+        ],
+        "agent-skills/web-design/funky-purple-container-tech": [
+          "agent-skills/web-design/funky-purple-container-tech/SKILL.md"
+        ],
+        "agent-skills/web-design/generate-ledger-logo-register": [
+          "agent-skills/web-design/generate-ledger-logo-register/SKILL.md",
+          "agent-skills/web-design/generate-ledger-logo-register/references/generation-prompt.md"
+        ],
+        "agent-skills/web-design/glass-dark-mode-clock": [
+          "agent-skills/web-design/glass-dark-mode-clock/SKILL.md"
+        ],
+        "agent-skills/web-design/glass-dark-ui": [
+          "agent-skills/web-design/glass-dark-ui/SKILL.md"
+        ],
+        "agent-skills/web-design/globe-gl": [
+          "agent-skills/web-design/globe-gl/SKILL.md"
+        ],
+        "agent-skills/web-design/globe-particles": [
+          "agent-skills/web-design/globe-particles/SKILL.md"
+        ],
+        "agent-skills/web-design/gooey-blob-system": [
+          "agent-skills/web-design/gooey-blob-system/SKILL.md"
+        ],
+        "agent-skills/web-design/gsap": [
+          "agent-skills/web-design/gsap/SKILL.md",
+          "agent-skills/web-design/gsap/REFERENCES.md"
+        ],
+        "agent-skills/web-design/gsap-scrolltrigger-storytelling": [
+          "agent-skills/web-design/gsap-scrolltrigger-storytelling/SKILL.md"
+        ],
+        "agent-skills/web-design/high-contrast-skeuomorphic-clean": [
+          "agent-skills/web-design/high-contrast-skeuomorphic-clean/SKILL.md"
+        ],
+        "agent-skills/web-design/horizontal-scroll-scenes": [
+          "agent-skills/web-design/horizontal-scroll-scenes/SKILL.md",
+          "agent-skills/web-design/horizontal-scroll-scenes/PROMPT.md"
+        ],
+        "agent-skills/web-design/html-demo": [
+          "agent-skills/web-design/html-demo/SKILL.md",
+          "agent-skills/web-design/html-demo/references/brief.md",
+          "agent-skills/web-design/html-demo/references/contract.md",
+          "agent-skills/web-design/html-demo/references/film.md"
+        ],
+        "agent-skills/web-design/image-first-grid-layout": [
+          "agent-skills/web-design/image-first-grid-layout/SKILL.md"
+        ],
+        "agent-skills/web-design/landing-page": [
+          "agent-skills/web-design/landing-page/SKILL.md",
+          "agent-skills/web-design/landing-page/REFERENCES.md"
+        ],
+        "agent-skills/web-design/light-mode-paper-technical": [
+          "agent-skills/web-design/light-mode-paper-technical/SKILL.md"
+        ],
+        "agent-skills/web-design/liquid-metal-border": [
+          "agent-skills/web-design/liquid-metal-border/SKILL.md",
+          "agent-skills/web-design/liquid-metal-border/REFERENCES.md"
+        ],
+        "agent-skills/web-design/marquee-loop": [
+          "agent-skills/web-design/marquee-loop/SKILL.md"
+        ],
+        "agent-skills/web-design/masked-reveal": [
+          "agent-skills/web-design/masked-reveal/SKILL.md"
+        ],
+        "agent-skills/web-design/matterjs": [
+          "agent-skills/web-design/matterjs/SKILL.md"
+        ],
+        "agent-skills/web-design/mesh-gradient-dark-blue-clean": [
+          "agent-skills/web-design/mesh-gradient-dark-blue-clean/SKILL.md"
+        ],
+        "agent-skills/web-design/neoclassical-ledger-ui": [
+          "agent-skills/web-design/neoclassical-ledger-ui/SKILL.md"
+        ],
+        "agent-skills/web-design/nested-container-clean-agency": [
+          "agent-skills/web-design/nested-container-clean-agency/SKILL.md"
+        ],
+        "agent-skills/web-design/nested-container-frames": [
+          "agent-skills/web-design/nested-container-frames/SKILL.md"
+        ],
+        "agent-skills/web-design/number-details": [
+          "agent-skills/web-design/number-details/SKILL.md"
+        ],
+        "agent-skills/web-design/operational-enterprise-ai": [
+          "agent-skills/web-design/operational-enterprise-ai/SKILL.md",
+          "agent-skills/web-design/operational-enterprise-ai/REFERENCES.md"
+        ],
+        "agent-skills/web-design/orange-clean-paper-saas": [
+          "agent-skills/web-design/orange-clean-paper-saas/SKILL.md"
+        ],
+        "agent-skills/web-design/painted-product-showcase": [
+          "agent-skills/web-design/painted-product-showcase/SKILL.md"
+        ],
+        "agent-skills/web-design/paper-cinder-transition": [
+          "agent-skills/web-design/paper-cinder-transition/SKILL.md",
+          "agent-skills/web-design/paper-cinder-transition/PROMPT.md"
+        ],
+        "agent-skills/web-design/pointer-trail-emitter": [
+          "agent-skills/web-design/pointer-trail-emitter/SKILL.md"
+        ],
+        "agent-skills/web-design/pollen-pointer-trail": [
+          "agent-skills/web-design/pollen-pointer-trail/SKILL.md"
+        ],
+        "agent-skills/web-design/pricing-page": [
+          "agent-skills/web-design/pricing-page/SKILL.md",
+          "agent-skills/web-design/pricing-page/REFERENCES.md"
+        ],
+        "agent-skills/web-design/product-proof-saas": [
+          "agent-skills/web-design/product-proof-saas/SKILL.md",
+          "agent-skills/web-design/product-proof-saas/REFERENCES.md"
+        ],
+        "agent-skills/web-design/progressive-blur": [
+          "agent-skills/web-design/progressive-blur/SKILL.md"
+        ],
+        "agent-skills/web-design/reveal-hover-effect": [
+          "agent-skills/web-design/reveal-hover-effect/SKILL.md",
+          "agent-skills/web-design/reveal-hover-effect/REFERENCES.md"
+        ],
+        "agent-skills/web-design/scroll-mesh-survey": [
+          "agent-skills/web-design/scroll-mesh-survey/SKILL.md"
+        ],
+        "agent-skills/web-design/scroll-progress-timeline": [
+          "agent-skills/web-design/scroll-progress-timeline/SKILL.md",
+          "agent-skills/web-design/scroll-progress-timeline/REFERENCES.md"
+        ],
+        "agent-skills/web-design/scroll-scrubbed-object-handoff": [
+          "agent-skills/web-design/scroll-scrubbed-object-handoff/SKILL.md"
+        ],
+        "agent-skills/web-design/scroll-scrubbed-visual-sequence": [
+          "agent-skills/web-design/scroll-scrubbed-visual-sequence/SKILL.md",
+          "agent-skills/web-design/scroll-scrubbed-visual-sequence/REFERENCES.md"
+        ],
+        "agent-skills/web-design/scroll-scrubbed-word-reveal": [
+          "agent-skills/web-design/scroll-scrubbed-word-reveal/SKILL.md",
+          "agent-skills/web-design/scroll-scrubbed-word-reveal/REFERENCES.md"
+        ],
+        "agent-skills/web-design/scroll-world-storytelling": [
+          "agent-skills/web-design/scroll-world-storytelling/SKILL.md",
+          "agent-skills/web-design/scroll-world-storytelling/REFERENCES.md"
+        ],
+        "agent-skills/web-design/shaders-cursor-ripples": [
+          "agent-skills/web-design/shaders-cursor-ripples/SKILL.md",
+          "agent-skills/web-design/shaders-cursor-ripples/REFERENCES.md"
+        ],
+        "agent-skills/web-design/skeuomorphic-ui": [
+          "agent-skills/web-design/skeuomorphic-ui/SKILL.md"
+        ],
+        "agent-skills/web-design/solar-duotone-bold": [
+          "agent-skills/web-design/solar-duotone-bold/SKILL.md"
+        ],
+        "agent-skills/web-design/split-layout-technical": [
+          "agent-skills/web-design/split-layout-technical/SKILL.md"
+        ],
+        "agent-skills/web-design/staggered-word-reveal": [
+          "agent-skills/web-design/staggered-word-reveal/SKILL.md"
+        ],
+        "agent-skills/web-design/sylva-field-guide-layout": [
+          "agent-skills/web-design/sylva-field-guide-layout/SKILL.md"
+        ],
+        "agent-skills/web-design/tailwindcss": [
+          "agent-skills/web-design/tailwindcss/SKILL.md",
+          "agent-skills/web-design/tailwindcss/REFERENCES.md"
+        ],
+        "agent-skills/web-design/tech-green-dark-mode-modern": [
+          "agent-skills/web-design/tech-green-dark-mode-modern/SKILL.md"
+        ],
+        "agent-skills/web-design/technical-wireframe-info-layout": [
+          "agent-skills/web-design/technical-wireframe-info-layout/SKILL.md"
+        ],
+        "agent-skills/web-design/thinking-orbs": [
+          "agent-skills/web-design/thinking-orbs/SKILL.md",
+          "agent-skills/web-design/thinking-orbs/REFERENCES.md"
+        ],
+        "agent-skills/web-design/threejs": [
+          "agent-skills/web-design/threejs/SKILL.md",
+          "agent-skills/web-design/threejs/REFERENCES.md"
+        ],
+        "agent-skills/web-design/threejs-landscape": [
+          "agent-skills/web-design/threejs-landscape/SKILL.md"
+        ],
+        "agent-skills/web-design/threejs-towers": [
+          "agent-skills/web-design/threejs-towers/SKILL.md"
+        ],
+        "agent-skills/web-design/threejs-weather": [
+          "agent-skills/web-design/threejs-weather/SKILL.md"
+        ],
+        "agent-skills/web-design/unicorn-studio": [
+          "agent-skills/web-design/unicorn-studio/SKILL.md",
+          "agent-skills/web-design/unicorn-studio/REFERENCES.md"
+        ],
+        "agent-skills/web-design/vantajs": [
+          "agent-skills/web-design/vantajs/SKILL.md",
+          "agent-skills/web-design/vantajs/REFERENCES.md"
+        ],
+        "agent-skills/web-design/webgl-3d-object": [
+          "agent-skills/web-design/webgl-3d-object/SKILL.md"
+        ],
+        "agent-skills/web-design/webgl-landing-steering": [
+          "agent-skills/web-design/webgl-landing-steering/SKILL.md",
+          "agent-skills/web-design/webgl-landing-steering/REFERENCES.md"
+        ],
+        "agent-skills/web-design/webgl-laser": [
+          "agent-skills/web-design/webgl-laser/SKILL.md"
+        ],
+        "agent-skills/workflow/workflow-progress-screenshots": [
+          "agent-skills/workflow/workflow-progress-screenshots/SKILL.md"
+        ],
+        "agent-skills/workflow/workflow-score-to-target": [
+          "agent-skills/workflow/workflow-score-to-target/SKILL.md",
+          "agent-skills/workflow/workflow-score-to-target/templates/critic-prompt.md",
+          "agent-skills/workflow/workflow-score-to-target/templates/scorecard.md"
+        ],
+        "agent-skills/workflow/workflow-ship-change": [
+          "agent-skills/workflow/workflow-ship-change/SKILL.md"
+        ],
+        "agent-skills/workflow/workflow-threads-manager": [
+          "agent-skills/workflow/workflow-threads-manager/SKILL.md"
+        ]
+      },
+      "bundleNote": "Includes the skill instructions and available written guides and templates. The publisher’s repository provides the runnable demos, helper scripts and media assets."
     }
   ]
 }
