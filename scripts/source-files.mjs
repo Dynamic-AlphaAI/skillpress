@@ -44,3 +44,16 @@ export function pointsToRootMIT(text, repo) {
     /^Copyright \(c\) \d{4} [\w .'-]+$/i.test(copyright ?? "") &&
     url?.toLowerCase() === `https://github.com/${repo.toLowerCase()}` && extra.length === 0;
 }
+
+/** Explicitly selected Markdown from a pinned tree, including a skill's external reference chapters. */
+export function reviewedReadingFiles(folder, files, records) {
+  if (!Array.isArray(files) || !files.includes(folder + "/SKILL.md") || new Set(files).size !== files.length) {
+    throw new Error("Incomplete or duplicate reading selection for " + folder);
+  }
+  const regular = new Set(records.filter(line => /^100644 blob [a-f0-9]{40}\t/.test(line)).map(line => line.slice(line.indexOf("\t") + 1)));
+  for (const path of files) {
+    if (!/^(?:[a-z0-9_-]+\/)*[a-z0-9_-][a-z0-9_.-]*\.md$/i.test(path) || !regular.has(path)) {
+      throw new Error("Unreviewed or unsupported reading file: " + path);
+    }
+  }
+}

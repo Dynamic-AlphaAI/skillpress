@@ -22,7 +22,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { assignEditionIds, skillIdentity, uniqueSkills } from "./unique-skills.mjs";
-import { safeSourceFile, trackedSourceFile, reviewedFileAllowed, validSkillPath, pointsToRootMIT } from "./source-files.mjs";
+import { safeSourceFile, trackedSourceFile, reviewedFileAllowed, validSkillPath, pointsToRootMIT, reviewedReadingFiles } from "./source-files.mjs";
 import { zipSync } from "fflate";
 
 const LEADERBOARD_URL = "https://skills.sh";
@@ -83,7 +83,7 @@ function detectLicense(text) {
 }
 
 /** The skill's own license file, else the repository's. */
-function licenseFor(skillDir, repoDir, declared, repo) {
+function licenseFor(skillDir, repoDir, declared, repo, readingEdition) {
   for (let parent = skillDir; parent !== repoDir; parent = dirname(parent)) {
     for (const name of ["LICENSE.txt", "LICENSE", "LICENSE.md"]) {
       if (!existsSync(join(parent, name))) continue;
@@ -104,7 +104,12 @@ function licenseFor(skillDir, repoDir, declared, repo) {
     const file = join(repoDir, name);
     if (!existsSync(file)) continue;
     trackedSourceFile(repoDir, file);
-    const id = detectLicense(readFileSync(file, "utf8"));
+    const text = readFileSync(file, "utf8");
+    // These dual grants expressly license written content separately from executable code.
+    if (readingEdition && text.includes("2. Content (") && text.includes("is licensed under Creative Commons Attribution 4.0 International, CC BY 4.0")) {
+      return { file, bundled: false, id: "CC-BY-4.0" };
+    }
+    const id = detectLicense(text);
     if (declared === "mit" && id !== "MIT") {
       return { file: join(root, "scripts/licenses/MIT.txt"), bundled: false, id: "MIT", repositoryLicense: file };
     }
@@ -114,11 +119,15 @@ function licenseFor(skillDir, repoDir, declared, repo) {
 }
 
 /** Zip entries for a skill folder under `prefix/`, adding the repo license when the folder has none. */
-function skillEntries(skillDir, repoDir, prefix, license) {
+function skillEntries(skillDir, repoDir, prefix, license, readingFiles) {
   const entries = {};
-  const files = trackedFiles(skillDir, repoDir);
+  const files = readingFiles ? readingFiles.map(path => safeSourceFile(repoDir, join(repoDir, path))) : trackedFiles(skillDir, repoDir);
   for (const file of files) {
-    entries[`${prefix}/${relative(skillDir, file).split(sep).join("/")}`] = [readFileSync(file), { mtime: MTIME }];
+    // Preserve repo-relative paths for companion guides outside the upstream skill directory.
+    const base = file.startsWith(skillDir + sep) ? skillDir : repoDir;
+    const name = prefix + "/" + relative(base, file).split(sep).join("/");
+    if (entries[name]) throw new Error("Duplicate archive path: " + name);
+    entries[name] = [readFileSync(file), { mtime: MTIME }];
   }
   if (license.file && !license.bundled) entries[`${prefix}/LICENSE`] = [readFileSync(license.file), { mtime: MTIME }];
   for (const name of ["NOTICE", "NOTICE.txt", "THIRD_PARTY_NOTICES.md"]) {
@@ -161,13 +170,14 @@ function cloneSource(source, cleanup) {
     execFileSync("git", ["-C", dir, "init", "-q"]);
     const git = (...args) => execFileSync("git", ["-C", dir, ...args]);
     git("remote", "add", "origin", remote);
-    if (source.skillPaths) {
+    const sparse = source.skillPaths && !source.readingFiles;
+    if (sparse) {
       if (!source.skillPaths.every(validSkillPath)) throw new Error(`Invalid skill folder in ${source.repo}`);
       git("config", "remote.origin.promisor", "true");
       git("config", "remote.origin.partialclonefilter", "blob:none");
       git("sparse-checkout", "set", "--cone", "--", ...source.skillPaths);
     }
-    git("fetch", "--depth", "1", "-q", ...(source.skillPaths ? ["--filter=blob:none"] : []), "origin", source.revision);
+    git("fetch", "--depth", "1", "-q", ...(sparse ? ["--filter=blob:none"] : []), "origin", source.revision);
     execFileSync("git", ["-C", dir, "checkout", "-q", "--detach", "FETCH_HEAD"]);
   } else {
     execFileSync("git", ["clone", "--depth", "1", "-q", remote, dir], { stdio: "inherit" });
@@ -176,10 +186,17 @@ function cloneSource(source, cleanup) {
 }
 
 function publishedFolders(source, repoDir) {
+  if (source.readingFiles && !source.skillPaths?.length) throw new Error(`Specify the upstream skill paths for ${source.repo}`);
   if (source.skillPaths) {
     if (!/^[a-f0-9]{40}$/.test(source.revision ?? "")) throw new Error(`Pin reviewed folders in ${source.repo}`);
     return source.skillPaths.map((sourcePath) => {
       if (!validSkillPath(sourcePath)) throw new Error(`Invalid skill path: ${sourcePath}`);
+      if (source.readingFiles) {
+        const readingFiles = source.readingFiles[sourcePath];
+        const records = execFileSync("git", ["-C", repoDir, "ls-tree", "-rz", "HEAD"]).toString().split("\0").filter(Boolean);
+        reviewedReadingFiles(sourcePath, readingFiles, records);
+        return { sourcePath, slug: sourcePath.split("/").at(-1), readingFiles };
+      }
       const records = execFileSync("git", ["-C", repoDir, "ls-tree", "-rz", "HEAD", "--", sourcePath])
         .toString().split("\0").filter(Boolean);
       if (!records.length || records.some((file) => !reviewedFileAllowed(file, sourcePath, source.reviewedAssets))) {
@@ -228,14 +245,16 @@ async function importLibrary(cleanup) {
       copyright: source.copyright ?? source.author,
       platforms: source.platforms ?? [],
       ...(source.primaryPlatform && { primaryPlatform: source.primaryPlatform }),
+      ...(source.readingFiles && { readingEdition: true }),
       series: source.series ?? null,
       bundleNote: source.bundleNote ?? null,
     });
-    for (const { slug, sourcePath } of folders) {
+    for (const { slug: folderSlug, sourcePath, readingFiles } of folders) {
       const dir = join(repoDir, sourcePath);
       execFileSync("git", ["-C", repoDir, "ls-files", "--error-unmatch", "--", `${sourcePath}/SKILL.md`]);
       const identity = skillIdentity(readFileSync(safeSourceFile(repoDir, join(dir, "SKILL.md")), "utf8"), `${source.repo}/${sourcePath}`);
-      const license = licenseFor(dir, repoDir, identity.license, source.repo);
+      const slug = readingFiles ? identity.name : folderSlug;
+      const license = licenseFor(dir, repoDir, identity.license, source.repo, Boolean(readingFiles));
       if (!license.file || license.id === "See LICENSE") {
         if (source.skillPaths) throw new Error(`Review the redistribution license for ${source.repo}/${sourcePath}`);
         console.warn(`  Skipping ${source.repo}/${sourcePath}: redistribution license needs review.`);
@@ -243,7 +262,7 @@ async function importLibrary(cleanup) {
       }
       const credit = source.credits?.[sourcePath];
       skills.push({
-        slug, sourcePath, identity, license, repoDir, dir,
+        slug, sourcePath, identity, license, repoDir, dir, readingFiles,
         source: source.id,
         author: credit?.author ?? source.author,
         credit: credit && { ...credit, authorId: slugify(credit.author) },
@@ -281,11 +300,19 @@ async function importLibrary(cleanup) {
     if (license.file) cpSync(license.file, join(to, "LICENSE.txt"));
 
     // The folder inside the zip keeps the skill's own name, which is what agents expect.
-    const { entries, files } = skillEntries(skill.dir, skill.repoDir, skill.slug, license);
+    const { entries, files } = skillEntries(skill.dir, skill.repoDir, skill.slug, license, skill.readingFiles);
     const zip = zipSync(entries, { level: 9 });
     writeFileSync(join(stagedDownloads, `${id}.zip`), zip);
     mkdirSync(join(stagedDownloads, id), { recursive: true });
-    cpSync(join(skill.dir, "SKILL.md"), join(stagedDownloads, id, "SKILL.md"));
+    const standalone = join(stagedDownloads, id, "SKILL.md");
+    cpSync(join(skill.dir, "SKILL.md"), standalone);
+    if (skill.readingFiles) {
+      const source = sourceInfo.find(entry => entry.id === skill.source);
+      const original = source.url + "/blob/" + source.commit + "/" + skill.sourcePath + "/SKILL.md";
+      const credit = skill.readingFiles.includes("docs/CREDITS.md") ? "\nCredits: " + source.url + "/blob/" + source.commit + "/docs/CREDITS.md" : "";
+      const notice = "\n\n<!-- Edition source: " + original + "\nAuthor: " + skill.author + credit + "\n" + readFileSync(license.file, "utf8").trim() + "\n-->\n";
+      writeFileSync(standalone, notice, { flag: "a" });
+    }
     for (const [path, value] of Object.entries(entries)) {
       perSource[skill.source][`${skill.source}-skills/${path}`] = value;
       everything[`skillpress/${skill.source}/${path}`] = value;

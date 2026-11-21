@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import { unzipSync } from "fflate";
 import { parseSkill } from "./parse-skill.mjs";
-import { pointsToRootMIT, reviewedFileAllowed, validSkillPath } from "./source-files.mjs";
+import { pointsToRootMIT, reviewedFileAllowed, reviewedReadingFiles, validSkillPath } from "./source-files.mjs";
 import { parseState, serializeState } from "../src/lib/browseState.ts";
 import { categories } from "../src/lib/categories.ts";
 import { categoryFor } from "../src/lib/classifyTopic.ts";
@@ -47,7 +47,16 @@ test("each reviewed repository contributes licensed, attributed editions with th
       const doc = readFileSync(`content/skills/${b.id}/SKILL.md`);
       const license = readFileSync(`content/skills/${b.id}/LICENSE.txt`);
       assert.ok(Object.entries(zip).some(([name, bytes]) => /\/LICENSE(?:\.txt|\.md)?$/i.test(name) && license.equals(bytes)));
-      assert.ok(doc.equals(readFileSync("public" + b.download.skillMd)));
+      const standalone = readFileSync("public" + b.download.skillMd);
+      if (source.readingFiles) {
+        assert.ok(imported.readingEdition);
+        assert.ok(standalone.subarray(0, doc.length).equals(doc));
+        const attribution = standalone.subarray(doc.length).toString();
+        assert.ok(attribution.includes(source.author) && attribution.includes(imported.commit) && attribution.includes(license.toString().trim()));
+        const selected = source.readingFiles[b.sourcePath].map(path =>
+          b.slug + "/" + (path.startsWith(b.sourcePath + "/") ? path.slice(b.sourcePath.length + 1) : path));
+        assert.deepEqual(Object.keys(zip).filter(name => !/\/(?:LICENSE|NOTICE)$/.test(name)).sort(), selected.sort());
+      } else assert.ok(doc.equals(standalone));
       assert.ok(doc.equals(zip[b.slug + "/SKILL.md"]));
       for (const [name, bytes] of Object.entries(zip)) {
         const buf = Buffer.from(bytes);
@@ -72,6 +81,20 @@ test("reviewed folder and Git object rules reject traversal, scripts, linked fil
     assert.equal(reviewedFileAllowed(record(mode, name), folder), false);
   }
   assert.ok(reviewedFileAllowed(record("100644", "agents/openai.yaml"), folder, { [folder + "/agents/openai.yaml"]: hash }));
+});
+
+test("reading selections require every file to be regular Markdown in the pinned tree", () => {
+  const folder = "agent-os/skill", base = folder + "/SKILL.md", guide = "docs/Guide.md";
+  const record = (path, mode = "100644") => mode + " blob " + "f".repeat(40) + "\t" + path;
+  const files = [base, guide];
+  assert.doesNotThrow(() => reviewedReadingFiles(folder, files, files.map(p => record(p))));
+  for (const path of ["../leak.md", ".git/config.md", "docs/../guide.md", "scripts/tool.sh", "docs/linked.md", "docs/missing.md"]) {
+    const records = [record(base)];
+    if (!path.includes("missing")) records.push(record(path, path.includes("linked") ? "120000" : "100644"));
+    assert.throws(() => reviewedReadingFiles(folder, [base, path], records));
+  }
+  assert.throws(() => reviewedReadingFiles(folder, files, [record(base), record(guide, "100755")]));
+  assert.throws(() => reviewedReadingFiles(folder, [guide], [record(guide)]));
 });
 
 test("platform browsing separates publisher, documented host, and subject; all counts are distinct editions", () => {
@@ -203,4 +226,21 @@ test("SEO accessions keep contributor credit, full license terms and independent
   assert.equal(new Set(keywordEditions.map(b => b.id)).size, 2);
   assert.equal(new Set(keywordEditions.map(b => b.source.author)).size, 2);
   assert.ok(published("posthog").every(b => b.sourcePath.startsWith("products/") && b.license === "MIT"));
+});
+
+test("Mirza's four editions retain their license, subject, setup guide and original folder identity", async () => {
+  const { installMethods } = await import("../src/lib/install.ts");
+  const expected = {
+    "app-store-compliance": ["mobile-development", "CC-BY-4.0"],
+    foundry: ["ai-automation", "MIT"],
+    "hetzner-provision": ["cloud-infrastructure", "CC-BY-4.0"],
+    "xentral-api": ["software-development", "MIT"],
+  };
+  const byAuthor = books.filter(b => b.source.authorId === "mirza-iqbal");
+  assert.deepEqual(byAuthor.map(b => b.id).sort(), Object.keys(expected).sort());
+  for (const b of byAuthor) {
+    assert.deepEqual([b.category, b.license], expected[b.id]);
+    assert.equal(installMethods(b)[0].link.href, b.source.url + "/tree/" + b.source.commit + "#readme");
+  }
+  assert.equal(bookById("app-store-compliance").sourcePath, "agent-os/skill");
 });

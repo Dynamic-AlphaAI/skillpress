@@ -121,6 +121,7 @@ interface PageCtx {
 
 function licenseLine(license: string, holder: string) {
   if (license === "Apache-2.0") return `Text © ${holder}. Licensed under the Apache License, Version 2.0.`;
+  if (license === "CC-BY-4.0") return `Text © ${holder}. Licensed under Creative Commons Attribution 4.0 International.`;
   if (license === "MIT") return `Text © ${holder}. Licensed under the MIT License.`;
   if (license === "MPL-2.0") return `Text © ${holder}. Licensed under the Mozilla Public License 2.0.`;
   if (license === "GPL-2.0-or-later") return `Text © ${holder}. Licensed under the GNU General Public License, version 2 or later.`;
@@ -255,13 +256,13 @@ function SideView({ side, index, ctx }: { side: Side; index: number; ctx: PageCt
           </p>
           <div className={s.colophonInstall}>
             <div className={s.epiLabel}>Install this skill</div>
-            <code>
+            {book.source.readingEdition ? <a href={book.source.url + "/tree/" + book.source.commit + "#readme"} target="_blank" rel="noopener noreferrer">Publisher’s setup guide ↗</a> : <code>
               npx skills add {book.sourceUrl}
               <br />
               --skill {book.skillName}
-            </code>
+            </code>}
             <button type="button" onClick={ctx.onInstall}>
-              More ways to install, and downloads →
+              {book.source.readingEdition ? "Get the reading edition →" : "More ways to install, and downloads →"}
             </button>
           </div>
         </div>

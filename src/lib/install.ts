@@ -24,6 +24,12 @@ export function installMethods(book: Book): InstallMethod[] {
   const clone = '"$skill_checkout"';
   const methods: InstallMethod[] = [];
 
+  if (book.source.readingEdition) {
+    return [{
+      id: "publisher", label: "Publisher setup", note: "Use the publisher’s setup guide for the tools and files used by this edition.",
+      link: { href: url + "/tree/" + book.source.commit + "#readme", label: "Open the publisher’s setup guide" },
+    }];
+  }
   if (book.source.id === "grok-build") {
     return [{
       id: "upstream", label: "Grok Build bridge", note: bundleNote!,

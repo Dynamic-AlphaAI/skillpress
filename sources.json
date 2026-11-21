@@ -1668,6 +1668,128 @@
       "reviewedAssets": {
         "skills/improve-ui/agents/openai.yaml": "54b7aa85c942d5daf7d07fdd445ecb4d5ad5b963"
       }
+    },
+    {
+      "id": "mirza-app-store-compliance",
+      "repo": "mjmirza/app-store-compliance",
+      "path": "agent-os",
+      "author": "Mirza Iqbal",
+      "copyright": "Mirza Iqbal",
+      "authorUrl": "https://github.com/mjmirza",
+      "revision": "943e8556c567950db3e9fd1f9a52ddb1b2e0ba3a",
+      "skillPaths": [
+        "agent-os/skill"
+      ],
+      "readingFiles": {
+        "agent-os/skill": [
+          "agent-os/skill/SKILL.md",
+          "docs/CREDITS.md",
+          "docs/PRE-SUBMISSION-CHECKLIST.md",
+          "docs/MISTAKE-PATTERNS.md",
+          "templates/REVIEW-NOTES-TEMPLATE.md"
+        ]
+      },
+      "topics": {
+        "agent-os/skill": "mobile-development"
+      },
+      "platforms": [
+        "claude",
+        "codex"
+      ],
+      "bundleNote": "Includes the submission checklist, rejection guide and review-notes template. The automated audit uses the publisher’s guard and reference data. Check the current Apple and Google policies before submitting."
+    },
+    {
+      "id": "mirza-foundry",
+      "repo": "mjmirza/foundry",
+      "path": "foundry",
+      "author": "Mirza Iqbal",
+      "copyright": "Mirza Iqbal",
+      "authorUrl": "https://github.com/mjmirza",
+      "revision": "9d12b91357d16baf0f061404c7d09960502298c6",
+      "skillPaths": [
+        "foundry"
+      ],
+      "readingFiles": {
+        "foundry": [
+          "foundry/SKILL.md",
+          "foundry/references/anti-patterns.md",
+          "foundry/references/commands.md",
+          "foundry/references/context-engineering.md",
+          "foundry/references/hooks.md",
+          "foundry/references/mcp-servers.md",
+          "foundry/references/portability.md",
+          "foundry/references/principles.md",
+          "foundry/references/security.md",
+          "foundry/references/settings-and-config.md",
+          "foundry/references/skills.md",
+          "foundry/references/subagents.md",
+          "foundry/references/testing-and-evals.md"
+        ]
+      },
+      "topics": {
+        "foundry": "ai-automation"
+      },
+      "platforms": [
+        "claude",
+        "codex",
+        "gemini",
+        "cursor",
+        "copilot"
+      ],
+      "bundleNote": "Includes the portable skill and its twelve reference chapters. The publisher supplies the optional checker scripts and assistant-specific installers."
+    },
+    {
+      "id": "mirza-hetzner-mcp",
+      "repo": "mjmirza/hetzner-mcp",
+      "path": "skills",
+      "author": "Mirza Iqbal",
+      "copyright": "Mirza Iqbal",
+      "authorUrl": "https://github.com/mjmirza",
+      "revision": "d4637f3419c14f40b8b990af27019c08ee05ffe8",
+      "skillPaths": [
+        "skills/hetzner-provision"
+      ],
+      "readingFiles": {
+        "skills/hetzner-provision": [
+          "skills/hetzner-provision/SKILL.md",
+          "docs/CREDITS.md",
+          "docs/SETUP.md"
+        ]
+      },
+      "topics": {
+        "skills/hetzner-provision": "cloud-infrastructure"
+      },
+      "platforms": [
+        "claude",
+        "cursor",
+        "codex"
+      ],
+      "bundleNote": "Running this workflow requires the Hetzner MCP server and your own Hetzner credentials. Review the price before authorizing billable resources."
+    },
+    {
+      "id": "mirza-xentral-mcp",
+      "repo": "mjmirza/xentral-mcp",
+      "path": "skills",
+      "author": "Mirza Iqbal",
+      "copyright": "Mirza Iqbal",
+      "authorUrl": "https://github.com/mjmirza",
+      "revision": "79d0437b442612a8c2fda024177333f310c1c517",
+      "skillPaths": [
+        "skills/xentral-api"
+      ],
+      "readingFiles": {
+        "skills/xentral-api": [
+          "skills/xentral-api/SKILL.md",
+          "skills/xentral-api/FLOWS-AND-GAPS.md",
+          "skills/xentral-api/references/auth-and-conventions.md",
+          "skills/xentral-api/references/endpoint-inventory.md"
+        ]
+      },
+      "topics": {
+        "skills/xentral-api": "software-development"
+      },
+      "platforms": [],
+      "bundleNote": "Includes the workflow map, API conventions and endpoint inventory. The publisher’s checkout contains the full OpenAPI specifications and the Xentral MCP server."
     }
   ]
 }

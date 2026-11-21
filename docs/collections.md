@@ -87,6 +87,19 @@ All 53 current skill names in [Corey Haines’s repository](https://github.com/c
 
 [Postiz](https://github.com/gitroomhq/postiz-app/tree/6be4874631fea453f99115a78fd543c71820ab45), [Umami](https://github.com/umami-software/umami/tree/aad2c4cedd5c0b3bc4d361843830a0bb47cf79c4) and [listmonk](https://github.com/knadh/listmonk/tree/e735e0b23421192a4c1b18b6221f4708b872fcd5) had no tracked `SKILL.md` files. For PostHog, the selected product folders are outside its separately licensed enterprise tree. For Claude SEO, each archive retains the skill’s local copyright notice when present and includes the full root MIT terms. The SEO Content Brief edition credits its named contributor, puneetindersingh.
 
+## Mirza Iqbal’s four reading editions
+
+Find these books with the [Mirza Iqbal author filter](https://skillpress.xyz/?author=mirza-iqbal). Each edition uses a revision from before the publisher’s license change. The copyright page and downloads identify the license that shipped with that revision. Foundry’s portable skill is represented once across its assistant-specific formats.
+
+| Pinned source | Skill and topic | Using the edition |
+|---|---|---|
+| [mjmirza/app-store-compliance](https://github.com/mjmirza/app-store-compliance/tree/943e8556c567950db3e9fd1f9a52ddb1b2e0ba3a) | App Store Compliance Audit · Mobile App Development | Includes the submission checklist, rejection guide and review-notes template. The automated audit uses the publisher’s guard and reference data. Check the current Apple and Google policies before submitting. |
+| [mjmirza/foundry](https://github.com/mjmirza/foundry/tree/9d12b91357d16baf0f061404c7d09960502298c6) | Foundry · AI Agents & Automation | Includes the portable skill and its twelve reference chapters. The publisher supplies the optional checker scripts and assistant-specific installers. |
+| [mjmirza/hetzner-mcp](https://github.com/mjmirza/hetzner-mcp/tree/d4637f3419c14f40b8b990af27019c08ee05ffe8) | Hetzner Provision · Cloud & Infrastructure | Running this workflow requires the Hetzner MCP server and your own Hetzner credentials. Review the price before authorizing billable resources. |
+| [mjmirza/xentral-mcp](https://github.com/mjmirza/xentral-mcp/tree/79d0437b442612a8c2fda024177333f310c1c517) | Xentral API Knowledge Base · Software & Web Development | Includes the workflow map, API conventions and endpoint inventory. The publisher’s checkout contains the full OpenAPI specifications and the Xentral MCP server. |
+
+The App Store and Hetzner reading editions use the publisher’s CC BY 4.0 content grant and retain the original credits. Foundry and Xentral use revisions with an MIT repository license. Xentral’s upstream checkout provides the third-party API specifications. The reading ZIPs contain the files listed in `readingFiles` in `sources.json`. Each path is relative to its pinned repository and must be a tracked, non-executable Markdown file. A separately downloaded SKILL.md also carries source attribution and the license terms.
+
 ## Reviewing and reproducing an import
 
 1. Verify the canonical repository, publisher and immutable commit. Inspect each candidate’s instructions, references, metadata and nearest license. Keep distinct authors’ editions. Skip reprints, redirect stubs, unlicensed material and folders with unreviewed executable files.

@@ -128,7 +128,8 @@ function GetSkill({ book }: { book: Book }) {
         </a>
       </div>
       <p className={s.hint}>
-        The ZIP includes the publisher’s <span className={s.mono}>{book.slug}/</span> skill folder and license.
+        {book.source.readingEdition ? "The ZIP contains the original skill instructions, selected guides and the edition’s license." :
+          <>The ZIP includes the publisher’s <span className={s.mono}>{book.slug}/</span> skill folder and license.</>}
         {book.source.bundleNote && <> {book.source.bundleNote}</>}
       </p>
 
