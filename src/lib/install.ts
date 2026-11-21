@@ -10,7 +10,7 @@ export interface InstallMethod {
   /** Copyable text: a prompt or shell/slash commands. Absent for click-through steps. */
   copy?: string;
   steps?: string[];
-  link?: { href: string; label: string };
+  link?: { href: string; label: string; download?: boolean };
 }
 
 /**
@@ -24,6 +24,13 @@ export function installMethods(book: Book): InstallMethod[] {
   const clone = '"$skill_checkout"';
   const methods: InstallMethod[] = [];
 
+  if (book.source.installTogether) {
+    return [{
+      id: "collection", label: "Install collection", note: bundleNote!,
+      steps: ["Extract the collection ZIP and copy the skill folders into ~/.claude/skills/ for Claude Code or ~/.codex/skills/ for Codex."],
+      link: { href: book.source.download.zip, label: "Download the complete skill collection", download: true },
+    }];
+  }
   if (book.source.readingEdition) {
     return [{
       id: "publisher", label: "Publisher setup", note: "Use the publisher’s setup guide for the tools and files used by this edition.",

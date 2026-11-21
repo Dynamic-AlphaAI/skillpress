@@ -1790,6 +1790,98 @@
       },
       "platforms": [],
       "bundleNote": "Includes the workflow map, API conventions and endpoint inventory. The publisher’s checkout contains the full OpenAPI specifications and the Xentral MCP server."
+    },
+    {
+      "id": "tstack",
+      "repo": "t3dotgg/tstack",
+      "path": "skills",
+      "author": "Theo Browne",
+      "copyright": "Theo Browne",
+      "authorUrl": "https://github.com/t3dotgg",
+      "revision": "11e37a74d0a6868c121cd0910ab2b3bd9873b92a",
+      "skillPaths": [
+        "skills/babysit-pr",
+        "skills/council",
+        "skills/file-pr",
+        "skills/full-send",
+        "skills/full-stop",
+        "skills/leaving-pr-comments",
+        "skills/modernize",
+        "skills/sol-loop",
+        "skills/takeover"
+      ],
+      "topics": {
+        "skills/babysit-pr": "testing-review",
+        "skills/council": "testing-review",
+        "skills/file-pr": "software-development",
+        "skills/full-send": "software-development",
+        "skills/full-stop": "software-development",
+        "skills/leaving-pr-comments": "team-communication",
+        "skills/modernize": "software-development",
+        "skills/sol-loop": "testing-review",
+        "skills/takeover": "software-development"
+      },
+      "platforms": [
+        "claude",
+        "codex"
+      ],
+      "installTogether": true,
+      "standaloneNotice": true,
+      "bundleNote": "Several tstack skills call each other. Install all nine together for the full workflow. GitHub operations use an authenticated GitHub CLI. Council and Sol Loop require access to other models. Babysit PR includes a Python 3 helper.",
+      "descriptions": {
+        "skills/council": "Get independent reviews from three AI model providers and reconcile their findings.",
+        "skills/full-send": "Verify a change, get it reviewed, open and monitor its pull request, then merge when ready.",
+        "skills/full-stop": "Prepare and verify a pull request through review and CI, leaving the merge to the developer.",
+        "skills/sol-loop": "Iterate on a change with a GPT Sol reviewer until both agents agree on the result."
+      },
+      "reviewedAssets": {
+        "skills/full-send/agents/openai.yaml": "93a19aae4e566b531b95b7aed37df7c3d5c8313e",
+        "skills/full-stop/agents/openai.yaml": "fe4b5e7605ef9f69690fcaee2018b593de734a30",
+        "skills/leaving-pr-comments/agents/openai.yaml": "aea24ef867ffc43b64141740dc1a0e2afd74e17c",
+        "skills/modernize/agents/openai.yaml": "c2e52704b2365490c491fdb023baec20aa7e9d36"
+      },
+      "reviewedScripts": {
+        "skills/babysit-pr/scripts/pr-wait": "33d45e5e3828e8dd9f159aee98b8974ebeb56098"
+      }
+    },
+    {
+      "id": "t3-code",
+      "repo": "pingdotgg/t3code",
+      "path": ".agents/skills",
+      "author": "T3 Code",
+      "copyright": "T3 Tools Inc.",
+      "authorUrl": "https://t3.codes",
+      "revision": "e7b1b88bef19d5dd83e692b5b70b195f4251a608",
+      "skillPaths": [
+        ".agents/skills/contribution-triage",
+        ".agents/skills/launch-video",
+        ".agents/skills/test-t3-app",
+        ".agents/skills/test-t3-mobile"
+      ],
+      "topics": {
+        ".agents/skills/contribution-triage": "testing-review",
+        ".agents/skills/launch-video": "design-media",
+        ".agents/skills/test-t3-app": "testing-review",
+        ".agents/skills/test-t3-mobile": "testing-review"
+      },
+      "platforms": [],
+      "readingFiles": {
+        ".agents/skills/contribution-triage": [
+          ".agents/skills/contribution-triage/SKILL.md",
+          "CONTRIBUTING.md"
+        ],
+        ".agents/skills/launch-video": [
+          ".agents/skills/launch-video/SKILL.md"
+        ],
+        ".agents/skills/test-t3-app": [
+          ".agents/skills/test-t3-app/SKILL.md",
+          ".agents/skills/test-t3-app/references/sqlite-fixtures.md"
+        ],
+        ".agents/skills/test-t3-mobile": [
+          ".agents/skills/test-t3-mobile/SKILL.md"
+        ]
+      },
+      "bundleNote": "These contributor workflows use a T3 Code checkout. The publisher provides the app, device and browser panels, video assets, and scripts used by the original skills."
     }
   ]
 }

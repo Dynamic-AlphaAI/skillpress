@@ -530,6 +530,11 @@ for (const [slug, title, subtitle, topic] of marketingBooks) {
 
 // Some upstream headings are API command names or simply “Overview”.
 const coverTitles: Record<string, string> = {
+  "sol-loop": "Sol Loop",
+  "contribution-triage": "Contribution Triage",
+  "launch-video": "Launch Video",
+  "test-t3-app": "Testing T3 Code on Web and Desktop",
+  "test-t3-mobile": "Testing T3 Code on Mobile",
   "obsidian-markdown": "Obsidian Flavored Markdown",
   "obsidian-bases": "Building Obsidian Bases",
   "json-canvas": "Drawing with JSON Canvas",

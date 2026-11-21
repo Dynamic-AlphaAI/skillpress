@@ -48,15 +48,17 @@ test("each reviewed repository contributes licensed, attributed editions with th
       const license = readFileSync(`content/skills/${b.id}/LICENSE.txt`);
       assert.ok(Object.entries(zip).some(([name, bytes]) => /\/LICENSE(?:\.txt|\.md)?$/i.test(name) && license.equals(bytes)));
       const standalone = readFileSync("public" + b.download.skillMd);
-      if (source.readingFiles) {
-        assert.ok(imported.readingEdition);
+      if (source.readingFiles || source.standaloneNotice) {
         assert.ok(standalone.subarray(0, doc.length).equals(doc));
         const attribution = standalone.subarray(doc.length).toString();
         assert.ok(attribution.includes(source.author) && attribution.includes(imported.commit) && attribution.includes(license.toString().trim()));
+      } else assert.ok(doc.equals(standalone));
+      if (source.readingFiles) {
+        assert.ok(imported.readingEdition);
         const selected = source.readingFiles[b.sourcePath].map(path =>
           b.slug + "/" + (path.startsWith(b.sourcePath + "/") ? path.slice(b.sourcePath.length + 1) : path));
         assert.deepEqual(Object.keys(zip).filter(name => !/\/(?:LICENSE|NOTICE)$/.test(name)).sort(), selected.sort());
-      } else assert.ok(doc.equals(standalone));
+      }
       assert.ok(doc.equals(zip[b.slug + "/SKILL.md"]));
       for (const [name, bytes] of Object.entries(zip)) {
         const buf = Buffer.from(bytes);
@@ -65,7 +67,8 @@ test("each reviewed repository contributes licensed, attributed editions with th
         const rel = name.slice(b.slug.length + 1);
         if (/\.md$|^(LICENSE|NOTICE)(\.txt)?$/i.test(rel)) continue;
         const hash = createHash("sha1").update(`blob ${buf.length}\0`).update(buf).digest("hex");
-        assert.equal(source.reviewedAssets?.[b.sourcePath + "/" + rel], hash);
+        const path = b.sourcePath + "/" + rel;
+        assert.equal(source.reviewedAssets?.[path] ?? source.reviewedScripts?.[path], hash);
       }
     }
   }
@@ -81,6 +84,11 @@ test("reviewed folder and Git object rules reject traversal, scripts, linked fil
     assert.equal(reviewedFileAllowed(record(mode, name), folder), false);
   }
   assert.ok(reviewedFileAllowed(record("100644", "agents/openai.yaml"), folder, { [folder + "/agents/openai.yaml"]: hash }));
+  const script = "scripts/pr-wait", approved = { [folder + "/" + script]: hash };
+  assert.ok(reviewedFileAllowed(record("100755", script), folder, {}, approved));
+  for (const mode of ["100644", "120000"]) assert.equal(reviewedFileAllowed(record(mode, script), folder, {}, approved), false);
+  assert.equal(reviewedFileAllowed(record("100755", script), folder, approved), false);
+  assert.equal(reviewedFileAllowed(record("100755", script).replace(hash, "b".repeat(40)), folder, {}, approved), false);
 });
 
 test("reading selections require every file to be regular Markdown in the pinned tree", () => {
@@ -88,6 +96,11 @@ test("reading selections require every file to be regular Markdown in the pinned
   const record = (path, mode = "100644") => mode + " blob " + "f".repeat(40) + "\t" + path;
   const files = [base, guide];
   assert.doesNotThrow(() => reviewedReadingFiles(folder, files, files.map(p => record(p))));
+  const hidden = ".agents/skills/launch-video", markdown = hidden + "/SKILL.md";
+  assert.doesNotThrow(() => reviewedReadingFiles(hidden, [markdown], [record(markdown)]));
+  for (const path of [hidden + "/../elsewhere.md", hidden + "/.private.md", ".agents/other.md"]) {
+    assert.throws(() => reviewedReadingFiles(hidden, [markdown, path], [record(markdown), record(path)]));
+  }
   for (const path of ["../leak.md", ".git/config.md", "docs/../guide.md", "scripts/tool.sh", "docs/linked.md", "docs/missing.md"]) {
     const records = [record(base)];
     if (!path.includes("missing")) records.push(record(path, path.includes("linked") ? "120000" : "100644"));
@@ -243,4 +256,27 @@ test("Mirza's four editions retain their license, subject, setup guide and origi
     assert.equal(installMethods(b)[0].link.href, b.source.url + "/tree/" + b.source.commit + "#readme");
   }
   assert.equal(bookById("app-store-compliance").sourcePath, "agent-os/skill");
+});
+
+test("Theo’s nine interdependent skills and T3 Code’s four contributor editions have distinct credits and downloads", async () => {
+  const { installMethods } = await import("../src/lib/install.ts");
+  const stacks = books.filter(b => b.source.authorId === "theo-browne");
+  const team = books.filter(b => b.source.authorId === "t3-code");
+  assert.equal(stacks.length, 9);
+  assert.equal(team.length, 4);
+  for (const b of stacks) {
+    assert.equal(b.source.copyright, "Theo Browne");
+    assert.deepEqual(b.platforms, ["claude", "codex"]);
+    assert.equal(installMethods(b)[0].link.href, "/downloads/tstack-skills.zip");
+  }
+  for (const b of team) {
+    assert.equal(b.source.copyright, "T3 Tools Inc.");
+    assert.equal(installMethods(b)[0].id, "publisher");
+    assert.match(b.sourcePath, /^\.agents\/skills\//);
+  }
+  assert.equal(bookById("launch-video").category, "design-media");
+  assert.equal(bookById("leaving-pr-comments").category, "team-communication");
+  assert.match(bookById("full-stop").description, /merge to the developer/);
+  const bundle = unzipSync(readFileSync("public/downloads/tstack-skills.zip"));
+  assert.ok(bundle["tstack-skills/babysit-pr/scripts/pr-wait"]);
 });

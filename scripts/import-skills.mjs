@@ -119,7 +119,7 @@ function licenseFor(skillDir, repoDir, declared, repo, readingEdition) {
 }
 
 /** Zip entries for a skill folder under `prefix/`, adding the repo license when the folder has none. */
-function skillEntries(skillDir, repoDir, prefix, license, readingFiles) {
+function skillEntries(skillDir, repoDir, prefix, license, readingFiles, reviewedScripts) {
   const entries = {};
   const files = readingFiles ? readingFiles.map(path => safeSourceFile(repoDir, join(repoDir, path))) : trackedFiles(skillDir, repoDir);
   for (const file of files) {
@@ -127,7 +127,8 @@ function skillEntries(skillDir, repoDir, prefix, license, readingFiles) {
     const base = file.startsWith(skillDir + sep) ? skillDir : repoDir;
     const name = prefix + "/" + relative(base, file).split(sep).join("/");
     if (entries[name]) throw new Error("Duplicate archive path: " + name);
-    entries[name] = [readFileSync(file), { mtime: MTIME }];
+    const executable = reviewedScripts?.[relative(repoDir, file).split(sep).join("/")];
+    entries[name] = [readFileSync(file), executable ? { mtime: MTIME, os: 3, attrs: 0o100755 << 16 } : { mtime: MTIME }];
   }
   if (license.file && !license.bundled) entries[`${prefix}/LICENSE`] = [readFileSync(license.file), { mtime: MTIME }];
   for (const name of ["NOTICE", "NOTICE.txt", "THIRD_PARTY_NOTICES.md"]) {
@@ -170,7 +171,8 @@ function cloneSource(source, cleanup) {
     execFileSync("git", ["-C", dir, "init", "-q"]);
     const git = (...args) => execFileSync("git", ["-C", dir, ...args]);
     git("remote", "add", "origin", remote);
-    const sparse = source.skillPaths && !source.readingFiles;
+    const sparse = source.skillPaths && (!source.readingFiles || Object.entries(source.readingFiles)
+      .every(([folder, files]) => files.every(file => file.startsWith(folder + "/") || !file.includes("/"))));
     if (sparse) {
       if (!source.skillPaths.every(validSkillPath)) throw new Error(`Invalid skill folder in ${source.repo}`);
       git("config", "remote.origin.promisor", "true");
@@ -193,13 +195,14 @@ function publishedFolders(source, repoDir) {
       if (!validSkillPath(sourcePath)) throw new Error(`Invalid skill path: ${sourcePath}`);
       if (source.readingFiles) {
         const readingFiles = source.readingFiles[sourcePath];
-        const records = execFileSync("git", ["-C", repoDir, "ls-tree", "-rz", "HEAD"]).toString().split("\0").filter(Boolean);
+        if (!Array.isArray(readingFiles)) throw new Error("Missing reading selection for " + sourcePath);
+        const records = execFileSync("git", ["-C", repoDir, "ls-tree", "-rz", "HEAD", "--", ...readingFiles]).toString().split("\0").filter(Boolean);
         reviewedReadingFiles(sourcePath, readingFiles, records);
         return { sourcePath, slug: sourcePath.split("/").at(-1), readingFiles };
       }
       const records = execFileSync("git", ["-C", repoDir, "ls-tree", "-rz", "HEAD", "--", sourcePath])
         .toString().split("\0").filter(Boolean);
-      if (!records.length || records.some((file) => !reviewedFileAllowed(file, sourcePath, source.reviewedAssets))) {
+      if (!records.length || records.some((file) => !reviewedFileAllowed(file, sourcePath, source.reviewedAssets, source.reviewedScripts))) {
         throw new Error(`Unexpected file in reviewed folder in ${source.repo}/${sourcePath}`);
       }
       return { slug: sourcePath.split("/").at(-1), sourcePath };
@@ -246,6 +249,7 @@ async function importLibrary(cleanup) {
       platforms: source.platforms ?? [],
       ...(source.primaryPlatform && { primaryPlatform: source.primaryPlatform }),
       ...(source.readingFiles && { readingEdition: true }),
+      ...(source.installTogether && { installTogether: true }),
       series: source.series ?? null,
       bundleNote: source.bundleNote ?? null,
     });
@@ -262,12 +266,14 @@ async function importLibrary(cleanup) {
       }
       const credit = source.credits?.[sourcePath];
       skills.push({
-        slug, sourcePath, identity, license, repoDir, dir, readingFiles,
+        slug, sourcePath, identity, license, repoDir, dir, readingFiles, reviewedScripts: source.reviewedScripts,
+        standaloneNotice: Boolean(readingFiles || source.standaloneNotice),
         source: source.id,
         author: credit?.author ?? source.author,
         credit: credit && { ...credit, authorId: slugify(credit.author) },
         platforms: source.editionPlatforms?.[slug],
         topic: source.topics?.[sourcePath],
+        description: source.descriptions?.[sourcePath],
         covers: source.covers?.[slug],
         installs: (installs ? installs.get(`${source.repo}/${slug}`) : previousCounts.get(`${source.id}/${slug}`)) ?? null,
         plugin: plugins.get(slug) ?? null,
@@ -300,16 +306,16 @@ async function importLibrary(cleanup) {
     if (license.file) cpSync(license.file, join(to, "LICENSE.txt"));
 
     // The folder inside the zip keeps the skill's own name, which is what agents expect.
-    const { entries, files } = skillEntries(skill.dir, skill.repoDir, skill.slug, license, skill.readingFiles);
+    const { entries, files } = skillEntries(skill.dir, skill.repoDir, skill.slug, license, skill.readingFiles, skill.reviewedScripts);
     const zip = zipSync(entries, { level: 9 });
     writeFileSync(join(stagedDownloads, `${id}.zip`), zip);
     mkdirSync(join(stagedDownloads, id), { recursive: true });
     const standalone = join(stagedDownloads, id, "SKILL.md");
     cpSync(join(skill.dir, "SKILL.md"), standalone);
-    if (skill.readingFiles) {
+    if (skill.standaloneNotice) {
       const source = sourceInfo.find(entry => entry.id === skill.source);
       const original = source.url + "/blob/" + source.commit + "/" + skill.sourcePath + "/SKILL.md";
-      const credit = skill.readingFiles.includes("docs/CREDITS.md") ? "\nCredits: " + source.url + "/blob/" + source.commit + "/docs/CREDITS.md" : "";
+      const credit = skill.readingFiles?.includes("docs/CREDITS.md") ? "\nCredits: " + source.url + "/blob/" + source.commit + "/docs/CREDITS.md" : "";
       const notice = "\n\n<!-- Edition source: " + original + "\nAuthor: " + skill.author + credit + "\n" + readFileSync(license.file, "utf8").trim() + "\n-->\n";
       writeFileSync(standalone, notice, { flag: "a" });
     }
@@ -329,6 +335,7 @@ async function importLibrary(cleanup) {
       ...(skill.platforms && { platforms: skill.platforms }),
       ...(skill.credit && { credit: skill.credit }),
       ...(skill.topic && { topic: skill.topic }),
+      ...(skill.description && { description: skill.description }),
       ...(skill.covers && { covers: skill.covers }),
       rank: i + 1,
       installs: skill.installs,

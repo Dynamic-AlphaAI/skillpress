@@ -206,8 +206,7 @@ function SideView({ side, index, ctx }: { side: Side; index: number; ctx: PageCt
             )}
           </p>
           <p>
-            This edition contains the skill’s instructions only. Scripts, reference files, and assets that ship with the skill
-            remain in the source repository.
+            The reader presents the publisher’s skill instructions. Open the download panel for companion files and setup details.
           </p>
           <p className={s.mono}>Skill Press · {fmtDate(library.ranking.fetchedAt)}</p>
         </div>
@@ -256,7 +255,7 @@ function SideView({ side, index, ctx }: { side: Side; index: number; ctx: PageCt
           </p>
           <div className={s.colophonInstall}>
             <div className={s.epiLabel}>Install this skill</div>
-            {book.source.readingEdition ? <a href={book.source.url + "/tree/" + book.source.commit + "#readme"} target="_blank" rel="noopener noreferrer">Publisher’s setup guide ↗</a> : <code>
+            {book.source.readingEdition || book.source.installTogether ? <a href={book.source.url + "/tree/" + book.source.commit + "#readme"} target="_blank" rel="noopener noreferrer">Publisher’s setup guide ↗</a> : <code>
               npx skills add {book.sourceUrl}
               <br />
               --skill {book.skillName}

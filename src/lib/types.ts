@@ -17,6 +17,8 @@ export interface Source {
   primaryPlatform?: Platform;
   /** Download contains selected reading material. The publisher provides runtime setup. */
   readingEdition?: boolean;
+  /** Some publishers distribute interdependent skills together. */
+  installTogether?: boolean;
   url: string;
   /** Folder in the repo that holds one directory per skill. */
   path: string;

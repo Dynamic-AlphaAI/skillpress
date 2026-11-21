@@ -18,6 +18,7 @@ interface Catalog {
     sourcePath?: string;
     credit?: Pick<Source, "author" | "authorId" | "authorUrl" | "copyright">;
     topic?: Book["category"];
+    description?: string;
     platforms?: Book["platforms"];
     covers?: Book["covers"];
   })[];
@@ -140,7 +141,7 @@ export function loadLibrary(): Library {
     const source = entry.credit ? { ...publisher, ...entry.credit } : publisher;
     const { data, content, originalTitle, headings } = parseEdition(entry, source);
     const words = content.split(/\s+/).filter(Boolean).length;
-    const description = String(data.description ?? "").trim();
+    const description = entry.description ?? String(data.description ?? "").trim();
     const category = entry.topic ?? categoryFor(source.repo, entry.slug, description);
 
     return {

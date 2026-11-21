@@ -130,7 +130,7 @@ function GetSkill({ book }: { book: Book }) {
       <p className={s.hint}>
         {book.source.readingEdition ? "The ZIP contains the original skill instructions, selected guides and the edition’s license." :
           <>The ZIP includes the publisher’s <span className={s.mono}>{book.slug}/</span> skill folder and license.</>}
-        {book.source.bundleNote && <> {book.source.bundleNote}</>}
+        {book.source.bundleNote && !book.source.installTogether && <> {book.source.bundleNote}</>}
       </p>
 
       <div className={s.tabs} role="tablist" aria-label="Install method">
@@ -159,8 +159,8 @@ function GetSkill({ book }: { book: Book }) {
           </ol>
         )}
         {current.link && (
-          <a className={s.more} href={current.link.href} target="_blank" rel="noopener noreferrer">
-            {current.link.label} ↗
+          <a className={s.more} href={current.link.href} download={current.link.download} target={current.link.download ? undefined : "_blank"} rel="noopener noreferrer">
+            {current.link.label} {current.link.download ? "↓" : "↗"}
           </a>
         )}
       </div>

@@ -1,0 +1,73 @@
+---
+name: full-stop
+description: Trigger this if the user says 'full stop', even as a closing "Full stop." that reads like emphasis.
+---
+
+# Full Stop
+
+Do the same work as `full-send`, but stop with the PR ready for the user to merge.
+Never merge it.
+
+Read [full-send](../full-send/SKILL.md) and follow its workflow, proof rules,
+review, and babysitting steps. An explicit "full stop" request authorizes that
+work without a separate "full send" request. That includes full-send's
+testing permission. A "full stop" request is the permission for the test
+methods Proof needs, even when a project file says to ask first, for
+example before computer use. Use those methods directly. Its merge
+permission does not apply. The overrides below take precedence.
+
+## No merging
+
+You may commit, push, rebase, fix conflicts, and use `--force-with-lease` on
+this task's branch. Never merge, enable auto-merge, enter a merge queue, push
+to the default branch, bypass branch protection, or delegate those actions.
+
+Disable existing auto-merge and remove the PR from any merge queue before
+work begins; check again before each push. Report these changes. If you
+cannot prevent automatic merging, report the blocker before proceeding.
+
+## Stop at the gate
+
+Use full-send's merge gate as the readiness check. Replace its merge and
+final report steps with a handoff. Proof and review must cover the final diff;
+recheck behavior changes and meaningful conflict fixes before handoff.
+
+Fetch the target branch and check the live PR's head, base, checks, reviews,
+and mergeability. Confirm it is open, not a draft, and not set to merge
+without the user. If someone else merged it, report that instead.
+
+- **Ready to merge:** the merge gate passes. Leave the PR open and unmerged.
+- **Waiting for required approval:** only human approval remains. Confirm
+  that this is the actual blocker.
+- **Blocked:** explain what prevents readiness, what you tried, and what is
+  needed. Follow full-send's rules for asking the user.
+
+In T3 Code, call `unwatch_pull_request` before the handoff or a question.
+Report the PR link, final head, verdict, proof, reviewer outcome, and remaining
+risks. State whether the PR is still open and unmerged.
+
+
+<!-- Edition source: https://github.com/t3dotgg/tstack/blob/11e37a74d0a6868c121cd0910ab2b3bd9873b92a/skills/full-stop/SKILL.md
+Author: Theo Browne
+MIT License
+
+Copyright (c) 2026 Theo Browne
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->

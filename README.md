@@ -4,7 +4,7 @@ Agent skills, typeset and bound as books you can page through and then install. 
 
 ## Source libraries
 
-The catalogue contains **749 editions from 58 GitHub repositories**. Its 19 topic collections share 11 rooms and 146 occupied shelves. The main hall holds 568 editions across 121 shelves in 28 wall cases. Low cases let you browse from the floor, and taller cases have rolling ladders. Choose a topic first, then narrow by author or AI platform. Book notes show the publisher’s intended host or documented compatibility. [Collection guide and source review](docs/collections.md)
+The catalogue contains **762 editions from 60 GitHub repositories**. Its 19 topic collections share 11 rooms and 149 occupied shelves. The main hall holds 578 editions across 123 shelves in 28 wall cases. Low cases let you browse from the floor, and taller cases have rolling ladders. Choose a topic first, then narrow by author or AI platform. Book notes show the publisher’s intended host or documented compatibility. [Collection guide and source review](docs/collections.md)
 
 | GitHub repository | Subject matter | Editions | License |
 |---|---|---:|---|
@@ -66,6 +66,8 @@ The catalogue contains **749 editions from 58 GitHub repositories**. Its 19 topi
 | [mjmirza/foundry](https://github.com/mjmirza/foundry/tree/9d12b91357d16baf0f061404c7d09960502298c6) | Authoring and reviewing agent tooling | 1 | MIT |
 | [mjmirza/hetzner-mcp](https://github.com/mjmirza/hetzner-mcp/tree/d4637f3419c14f40b8b990af27019c08ee05ffe8) | Provisioning Hetzner Cloud infrastructure | 1 | CC BY 4.0 (text) |
 | [mjmirza/xentral-mcp](https://github.com/mjmirza/xentral-mcp/tree/79d0437b442612a8c2fda024177333f310c1c517) | Xentral ERP integration development | 1 | MIT |
+| [t3dotgg/tstack](https://github.com/t3dotgg/tstack/tree/11e37a74d0a6868c121cd0910ab2b3bd9873b92a) | Theo Browne’s code review and pull request workflows | 9 | MIT |
+| [pingdotgg/t3code](https://github.com/pingdotgg/t3code/tree/e7b1b88bef19d5dd83e692b5b70b195f4251a608/.agents/skills) | T3 Code contributor triage, testing and launch videos | 4 | MIT |
 
 - **Ranking:** install counts from the [skills.sh](https://skills.sh) leaderboard. Skills it doesn't list yet appear at the end of their topic.
 - Books sit together by primary task across the catalogue, shelf, and 3D room. For example, **Testing & Code Review** includes browser testing, debugging, and reviewing changes. The **Author** filter narrows any topic to a particular author. Within each topic, books follow their install rank.

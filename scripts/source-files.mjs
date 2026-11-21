@@ -28,13 +28,16 @@ export function validSkillPath(path) {
     /^[a-z0-9][a-z0-9_-]*$/i.test(part) || [".agents", ".github", ".curated"].includes(part));
 }
 
-export function reviewedFileAllowed(record, folder, assets = {}) {
-  const match = /^100644 blob ([a-f0-9]{40})\t([^\t\r\n]+)$/.exec(record);
-  if (!match || !match[2].startsWith(folder + "/")) return false;
-  const name = match[2].slice(folder.length + 1);
+export function reviewedFileAllowed(record, folder, assets = {}, scripts = {}) {
+  const match = /^(100644|100755) blob ([a-f0-9]{40})\t([^\t\r\n]+)$/.exec(record);
+  if (!match) return false;
+  const [, mode, hash, path] = match;
+  if (!path.startsWith(folder + "/")) return false;
+  const name = path.slice(folder.length + 1);
+  if (mode === "100755") return /^scripts\/[a-z\d_-]+(?:\.py)?$/i.test(name) && scripts[path] === hash;
   if (/\.md$/i.test(name) || /^(?:LICENSE|NOTICE)(?:\.txt)?$/i.test(name)) return true;
   return (name === "agents/openai.yaml" || /^assets\/[a-z\d_.-]+\.png$/i.test(name)) &&
-    assets[match[2]] === match[1];
+    assets[path] === hash;
 }
 
 /** Some publishers keep the copyright notice in the skill and the full MIT terms at the root. */
@@ -52,7 +55,8 @@ export function reviewedReadingFiles(folder, files, records) {
   }
   const regular = new Set(records.filter(line => /^100644 blob [a-f0-9]{40}\t/.test(line)).map(line => line.slice(line.indexOf("\t") + 1)));
   for (const path of files) {
-    if (!/^(?:[a-z0-9_-]+\/)*[a-z0-9_-][a-z0-9_.-]*\.md$/i.test(path) || !regular.has(path)) {
+    const local = path.startsWith(folder + "/") && validSkillPath(folder) ? path.slice(folder.length + 1) : path;
+    if (!/^(?:[a-z0-9_-]+\/)*[a-z0-9_-][a-z0-9_.-]*\.md$/i.test(local) || !regular.has(path)) {
       throw new Error("Unreviewed or unsupported reading file: " + path);
     }
   }
