@@ -10,6 +10,9 @@ import { CoverArt } from "./CoverArt";
 import { WalkControls } from "./WalkControls";
 import { RoomPicker } from "./RoomPicker";
 import { LibraryIcon } from "./LibraryIcons";
+import { planSponsorSpots, type SponsorCreative } from "@/lib/sponsors";
+import { useSponsorBookings } from "./useSponsorBookings";
+import { SponsorDialog } from "./SponsorDialog";
 import s from "./WalkingRoom.module.css";
 
 export default function WalkingRoom({
@@ -38,6 +41,29 @@ export default function WalkingRoom({
   const [ladderAvailable, setLadderAvailable] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
   const rooms = useMemo(() => planRooms(books), [books]);
+  const spots = useMemo(() => rooms.length ? planSponsorSpots(rooms[0]) : [], [rooms]);
+  const [spotId, setSpotId] = useState<string | null>(null);
+  const [previews, setPreviews] = useState<Record<string, SponsorCreative>>({});
+  const selectedSpot = spots.find(spot => spot.id === spotId);
+  const { inventory, notice, checkout, release, ownsHold } = useSponsorBookings(setSpotId);
+  const overrides = useMemo(() => {
+    const result = { ...previews };
+    for (const [id, booking] of Object.entries(inventory.bookings)) {
+      if (booking.status === "paid" && booking.creative) result[id] = booking.creative;
+    }
+    return result;
+  }, [previews, inventory.bookings]);
+  const rendered = useRef(new Map<string, string>());
+  const syncSigns = useEffectEvent((world: ReturnType<typeof createRoom>) => {
+    for (const spot of spots) {
+      const creative = overrides[spot.id];
+      const signature = creative ? JSON.stringify(creative) : undefined;
+      if (rendered.current.get(spot.id) === signature) continue;
+      world.previewSponsor(spot, creative);
+      if (signature) rendered.current.set(spot.id, signature);
+      else rendered.current.delete(spot.id);
+    }
+  });
   const jacketArt = useMemo(() => rooms.flatMap(section => section.shelves.flatMap(shelf =>
     shelf.books.slice(0, shelf.faceOutCount).map(book => (
       <span key={book.id} data-jacket={book.id}>
@@ -89,8 +115,9 @@ export default function WalkingRoom({
   useEffect(() => {
     if (!canvas.current || !rooms.length) return;
     try {
-      const world = createRoom(canvas.current, rooms, jackets.current!, {
+      const world = createRoom(canvas.current, rooms, jackets.current!, spots, {
         enterRoom,
+        sponsor: setSpotId,
         ladderAvailable: setLadderAvailable,
         ladder: (row) => {
           setOnLadder(row !== null);
@@ -106,6 +133,8 @@ export default function WalkingRoom({
         },
       });
       scene.current = world;
+      rendered.current.clear();
+      syncSigns(world);
       if (focusOnEntry.current) {
         canvas.current.focus({ preventScroll: true });
         focusOnEntry.current = false;
@@ -119,10 +148,13 @@ export default function WalkingRoom({
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setUnavailable(true);
     }
-  }, [rooms, enterRoom]);
+  }, [rooms, spots, enterRoom]);
   useEffect(() => {
-    scene.current?.pause(paused);
-  }, [paused, rooms]);
+    if (scene.current) syncSigns(scene.current);
+  }, [overrides]);
+  useEffect(() => {
+    scene.current?.pause(paused || !!selectedSpot);
+  }, [paused, rooms, selectedSpot]);
   const go = useCallback((shelf: string) => {
     const value = Number(shelf);
     scene.current?.visit(value);
@@ -135,7 +167,7 @@ export default function WalkingRoom({
       className={s.room}
       onCancel={event => {
         event.preventDefault();
-        if (modal && !windowElement?.querySelector('[role="listbox"]')) onExpand(false);
+        if (!selectedSpot && modal && !windowElement?.querySelector('[role="listbox"]')) onExpand(false);
       }}
       onClick={event => {
         if (!modal || event.target !== event.currentTarget) return;
@@ -170,6 +202,8 @@ export default function WalkingRoom({
           <button onClick={onExit} className={s.exit}>
             ← Leave room
           </button>
+          {room?.id === "hall" && <button type="button" className={s.exit} aria-haspopup="dialog"
+            onClick={() => setSpotId(spots[0].id)}>Sponsors</button>}
           <span className={s.roomName}>
             <LibraryIcon name="compass" size={16} /> <span>{room?.label ?? "Library"}{shelf && ` · ${shelf.label}`}</span>
           </span>
@@ -209,7 +243,7 @@ export default function WalkingRoom({
                 </>
               )}
             </div>
-            {!paused && <WalkControls key={modal ? "expanded" : "inline"} scene={scene} onLadder={onLadder} />}
+            {!paused && !selectedSpot && <WalkControls key={modal ? "expanded" : "inline"} scene={scene} onLadder={onLadder} />}
           </>
         )}
       </div>
@@ -236,6 +270,24 @@ export default function WalkingRoom({
         </button>
         {provider && <small className={s.providerNote}>{provider}</small>}
       </div>
+      {selectedSpot && <SponsorDialog spots={spots} spot={selectedSpot} preview={previews[selectedSpot.id]}
+        inventory={inventory} notice={notice?.spot === selectedSpot.id ? notice.text : undefined}
+        ownsHold={ownsHold(selectedSpot.id)} onCheckout={creative => checkout(selectedSpot.id, creative)}
+        onRelease={() => release(selectedSpot.id)} onSelect={setSpotId} onClose={() => setSpotId(null)} canView={!unavailable}
+        onView={() => { scene.current?.viewSponsor(selectedSpot); setSpotId(null); }}
+        onPreview={creative => {
+          if (inventory.bookings[selectedSpot.id]?.status === "paid") return;
+          setPreviews(previous => {
+            const next = { ...previous };
+            if (creative) next[selectedSpot.id] = creative;
+            else delete next[selectedSpot.id];
+            return next;
+          });
+          if (!unavailable) {
+            scene.current?.viewSponsor(selectedSpot);
+            setSpotId(null);
+          }
+        }} />}
     </dialog>
   );
 }

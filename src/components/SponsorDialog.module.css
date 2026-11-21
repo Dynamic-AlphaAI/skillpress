@@ -1,0 +1,42 @@
+.dialog {
+  box-sizing: border-box; width: min(29rem, calc(100vw - 24px)); max-height: calc(100dvh - 26px);
+  margin: auto; padding: 20px; overflow: auto; overscroll-behavior: contain;
+  border: 1px solid #ab9974; border-radius: 5px; background: #f6f0e2; color: #293329;
+  box-shadow: 0 18px 68px #171c1880; font: 16px/1.4 var(--font-book), Georgia, serif;
+}
+.dialog::backdrop { background: #171c17a8; }
+.dialog header, .actions, .brand { display: flex; align-items: center; gap: 12px; }
+.dialog header { justify-content: space-between; margin-bottom: 12px; }
+.dialog header > span, .body small { font: 11px/1.4 var(--font-mono), monospace; color: #565e4a; }
+.dialog header button { display: grid; place-items: center; width: 40px; height: 40px; }
+.dialog button, .dialog a { cursor: pointer; }
+.dialog header button, .actions button, .actions a {
+  border: 1px solid #a99f87; border-radius: 3px; background: transparent; color: #273328;
+}
+.dialog label { color: #404d3d; }
+.body { border-top: 1px solid #c8bea3; margin-top: 18px; padding-top: 16px; }
+.body h2 { font: 34px/1.1 var(--font-serif), Georgia, serif; margin: 0; overflow-wrap: anywhere; }
+.body p { margin: 5px 0 10px; }
+.brand img { object-fit: contain; flex: 0 0 auto; border-radius: 6px; }
+.brand div { min-width: 0; overflow-wrap: anywhere; }
+.actions { flex-wrap: wrap; margin-top: 12px; }
+.actions button, .actions a { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 7px 12px; text-decoration: none; font: 12px/1.4 var(--font-mono), monospace; overflow-wrap: anywhere; }
+.actions a, .actions .primary { background: #303c31; color: #faf3de; border-color: #303c31; }
+.form { display: grid; gap: 10px; margin-top: 12px; }
+.form .actions { margin: 1px 0 0; }
+.form label { display: grid; gap: 4px; font: 12px/1.4 var(--font-mono), monospace; }
+.form input { box-sizing: border-box; width: 100%; min-width: 0; background: #fffaf0; border: 1px solid #aba48f; border-radius: 3px; padding: 9px; color: #202a22; font: 16px var(--font-book),Georgia,serif; }
+.form input::file-selector-button { background: #e7dfcd; border: 1px solid #ada48e; border-radius: 2px; color: #2c352d; padding: 5px 8px; margin-right: 8px; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form [role="alert"] { color: #822f27; }
+.dialog :focus-visible { outline: 2px solid #977342; outline-offset: 2px; }
+@media (max-width: 440px) { .dialog { padding: 15px; } .fields { grid-template-columns: 1fr; } }
+.body .terms { border-top: 1px solid #c8bea3; padding-top: 14px; margin-top: 16px; }
+.terms strong { font: 20px/1.4 var(--font-serif), Georgia, serif; }
+.actions button:disabled { opacity: .55; cursor: default; }
+.upload { display: grid; gap: 5px; }
+.body .upload p { margin: 0; font-size: 15px; }
+.proof { margin: 0; padding: 10px; border: 1px solid #c8bea3; border-radius: 3px; }
+.proof figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px; margin-bottom: 7px; font: 12px/1.4 var(--font-mono), monospace; }
+.proof figcaption span { color: #565e4a; }
+.proof canvas { display: block; width: auto; height: auto; max-width: 100%; max-height: 150px; margin: auto; }

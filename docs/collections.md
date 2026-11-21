@@ -94,3 +94,25 @@ All 53 current skill names in [Corey Haines’s repository](https://github.com/c
 3. Run `npm run import`. To reproduce an earlier release for a source without a manifest pin, use its commit from that release’s `content/catalog.json` and supply the local checkout with `--src id=/path/to/checkout`. The importer stages its output, verifies Git provenance, and retains existing edition IDs. If the popularity service is unavailable, it retains the last saved install counts.
 4. Run `npm test`, `npm run lint`, and `npm run build`. The tests compare individual, repository and full-library ZIP contents, cover the metadata and path restrictions, round-trip shared links, and walk every room in every platform collection.
 5. Run `npx playwright install chromium`, start the production build with `npm start`, then run `npm run test:browser -- http://localhost:3000`. Pass the public origin to the same check after deployment. It exercises a real WebGL camera, room and volume pickers, a ladder, mobile browsing without WebGL, scoped search, reader history and a ZIP download.
+
+## Main hall sponsorships
+
+Visitors can book any available wood wall panel for **$20 USD** or a double-sided hanging sign for **$75 USD**. Each purchase covers one placement for 30 consecutive days, starting when the confirmed payment publishes the artwork. Checkout charges once. Wall panels are numbered from the entrance, and filtered halls show the placements that fit.
+
+Armadai (`ceiling-1`), Crawlrr (`ceiling-2`) and Sftir (`east-03`) are house sponsors. Their signs are available for purchase at the same rates. House art stays visible while a visitor previews a design or goes to checkout. A paid booking replaces it across the library. The house artwork or vacant panel automatically returns at the end of the term.
+
+Select a sign in the hall or choose **Sponsors**. Choose **Book this spot** on a house sign to enter a logo, name, slogan and HTTPS destination. Previews are private to the current walkthrough. Buyers can pay from the same form. An open Stripe Checkout session holds that exact placement for up to 31 minutes. Returning via Stripe’s back link releases it. An active paid placement shows its end time.
+
+For both placement types, a 512 × 512 px square mark uses the logo space most efficiently. Trim excess margins and choose artwork that reads against dark green. PNG and WebP support transparency. JPEG also works, and each file can be up to 2 MB. Rectangular logos keep their proportions. The upload form shows the original dimensions and previews the exact sign layout while the buyer edits the text.
+
+### Payment configuration
+
+Set the server-only environment variables `SKILLPRESS_STRIPE_LIVE_KEY` and `BLOB_READ_WRITE_TOKEN` for the Skill Press project. Use a private Vercel Blob store. In Stripe, configure `https://skillpress.xyz/api/sponsors/webhook` for `checkout.session.completed` and `checkout.session.expired`, then set its signing secret as `SKILLPRESS_STRIPE_WEBHOOK_SECRET` and redeploy. For development, use a Stripe sandbox key under the same variable name and the signing secret from a Stripe CLI listener forwarding to the local route. Local, preview and production bookings have separate paths, as do Stripe live and test data.
+
+Stripe hosts card entry. The return handler and signed webhook verify payment against the stored session, amount, currency and placement. Inventory reads also reconcile pending sessions with Stripe when buyers close the tab or a webhook is delayed. Conditional writes to the private inventory prevent double booking. The public inventory exposes only active artwork and placement availability. Uploaded logos are decoded and re-encoded as WebP, and only active paid logos are served.
+
+House artwork is configured in `src/lib/sponsors.ts`. The initial logos are bundled in `public/sponsors` from [Armadai](https://armadai.sh/landing/3d/apple-touch-icon.png), [Crawlrr](https://crawlrr.com/icon-192.png) and [Sftir](https://sftir.com/apple-touch-icon.png).
+
+Run `npm test` for term, price, privacy and replay checks. Run `node scripts/check-sponsors.mjs http://localhost:3000` against a running build to exercise sign selection in 3D, house links, previews and the mobile fallback.
+
+For a Stripe sandbox integration check, run a local server with the sandbox key and private Blob credentials, then run `node scripts/check-sponsor-checkout.mjs http://localhost:3000` with the same sandbox key in its environment. The check races two buyers for each house placement price, inspects the server-selected amount in Stripe, resumes the winning session, and cancels it.

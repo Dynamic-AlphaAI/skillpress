@@ -7,12 +7,15 @@ import type { Book } from "@/lib/types";
 import { playSound } from "./sound";
 import { eyeHeight, groundRows, hallHeight, ladderFor, ladderSlope, railLimit, rowAtRise, shelfBase, shelfSpacing } from "@/lib/roomLadder";
 import { buildLadder } from "./libraryLadder";
+import type { SponsorSpot } from "@/lib/sponsors";
+import { createSponsorSigns } from "./sponsorSigns";
 
 type SceneEvents = {
   ladder: (shelf: number | null) => void;
   ladderAvailable: (available: boolean) => void;
   enterRoom: (index: number) => void;
   open: (id: string) => void;
+  sponsor: (id: string) => void;
   hover: (title: string) => void;
   lost: () => void;
 };
@@ -171,6 +174,7 @@ export function createRoom(
   canvas: HTMLCanvasElement,
   rooms: LibraryRoom[],
   jackets: HTMLDivElement,
+  spots: SponsorSpot[],
   events: SceneEvents,
 ) {
   const renderer = new T.WebGLRenderer({ canvas, antialias: true, powerPreference: "low-power" });
@@ -331,6 +335,8 @@ export function createRoom(
     plaque.rotation.y = angle;
     scene.add(plaque);
   }
+  const sponsorSigns = createSponsorSigns(scene, spots, redraw);
+  const signOccluders: T.Box3[] = [];
   // Draw the hall perimeter in segments so every opening leads onto the floor of its wing.
   const hallPaint = surface(rooms[0].paint);
   function hallWall(side: number, start: number, end: number) {
@@ -373,13 +379,15 @@ export function createRoom(
         const sideX = side * hallHalfWidth;
         block(sideX, 4.1 + upperWall / 2, z, 0.18, upperWall, depth, hallPaint);
         block(sideX, 4.1, z, 0.42, 0.15, depth, walnut);
-        for (let panelZ = front - 1.05; panelZ > rear + 0.88; panelZ -= 2.15) {
-          block(sideX, 5.0, panelZ, 0.24, 1.45, 1.82, walnut);
-          block(sideX, 5.0, panelZ, 0.27, 1.29, 1.64, panel);
-          block(sideX, 6.94, panelZ, 0.25, 1.83, 1.78, dark);
-          block(sideX, 6.94, panelZ, 0.28, 1.66, 1.61, clerestory);
-          block(sideX, 6.94, panelZ, 0.30, 1.66, 0.045, walnut);
-          block(sideX, 7.31, panelZ, 0.30, 0.047, 1.61, walnut);
+        for (const spot of spots.filter(s => s.kind === "wall" && Math.sign(s.x) === side)) {
+          block(sideX, spot.y, spot.z, 0.24, spot.height + 0.16, 1.82, walnut);
+          block(sideX, spot.y, spot.z, 0.27, spot.height, spot.width, panel);
+          const sill = Math.max(6.025, spot.y + spot.height / 2 + 0.17);
+          const windowHeight = 7.855 - sill, center = sill + windowHeight / 2;
+          block(sideX, center, spot.z, 0.25, windowHeight, 1.78, dark);
+          block(sideX, center, spot.z, 0.28, windowHeight - 0.17, 1.61, clerestory);
+          block(sideX, center, spot.z, 0.30, windowHeight - 0.17, 0.045, walnut);
+          block(sideX, center + windowHeight * 0.2, spot.z, 0.30, 0.047, 1.61, walnut);
         }
       }
       for (const wallZ of [rear, front]) {
@@ -393,6 +401,14 @@ export function createRoom(
         block(0, 4.1, wallZ, width, 0.15, 0.42, walnut);
       }
       sign(room.label, [], 0, 4.57, rear + 0.13, 0, 3.55, 0.52);
+      for (const spot of spots.filter(s => s.kind === "hanging")) {
+        const top = spot.y + spot.height / 2;
+        block(0, spot.y, spot.z, spot.width + .15, spot.height + .15, .145, walnut);
+        for (const sx of [-spot.width * .36, spot.width * .36]) {
+          block(sx, (hallHeight + top) / 2, spot.z, .028, hallHeight - top, .028, brass);
+          block(sx, top + .08, spot.z, .13, .12, .11, brass);
+        }
+      }
       for (let beamZ = front - 1.45; beamZ > rear; beamZ -= 4.3) {
         block(0, hallHeight - 0.18, beamZ, width, 0.21, 0.19, dark);
         lamps.push({ x: 0, z: beamZ, drop: hallHeight - 4.15 });
@@ -427,6 +443,7 @@ export function createRoom(
     sign(room.label, room.topics, edge + r.side * 1.1, 1.88, r.minZ + 0.14, 0, 1.66, 0.84);
     // Suspended aisle signs can be read face-on while approaching from the entrance.
     const signX = r.side * 2.06;
+    signOccluders.push(new T.Box3().setFromCenterAndSize(new T.Vector3(signX, 3.49, z), new T.Vector3(2.76, .43, .09)));
     const title = r.side < 0 ? "←  " + room.label : room.label + "  →";
     block(signX, 3.49, z, 2.76, 0.43, 0.07, dark);
     for (const offset of [-1.02, 1.02]) block(signX + offset, (3.7 + hallHeight) / 2, z, 0.02, hallHeight - 3.7, 0.02, brass);
@@ -557,6 +574,9 @@ export function createRoom(
     const bottom = shelfBase(stack.length);
     const step = shelfSpacing;
     const top = bottom + stack.length * step;
+    if (roomIndex === 0) {
+      signOccluders.push(new T.Box3(new T.Vector3(-1.9, 0, -.04), new T.Vector3(1.9, top + .06, .59)).applyMatrix4(base));
+    }
     timber(0, top / 2, 0.07, 3.69, top, 0.18, dark);
     for (const x of [-1.78, 1.78]) {
       timber(x, top / 2, 0.26, 0.13, top, 0.39, walnut);
@@ -742,13 +762,19 @@ export function createRoom(
     pointer.set(((e.clientX - r.left) / r.width) * 2 - 1, (-(e.clientY - r.top) / r.height) * 2 + 1);
     ray.setFromCamera(pointer, camera);
     const book = ray.intersectObjects(pickable, false).find(({ object }) => object.userData.room === currentRoom);
-    if (!mounted) {
-      const inRoom = railsByRoom[currentRoom];
-      const rung = ray.intersectObjects(inRoom.map(rail => rail.rig.hit), false)[0];
-      if (rung && (!book || rung.distance < book.distance)) {
-        const target = inRoom.find(rail => rail.rig.hit === rung.object)!;
-        return { label: "Use ladder", activate: () => mountLadder(target) };
+    const inRoom = railsByRoom[currentRoom];
+    const rung = mounted ? undefined : ray.intersectObjects(inRoom.map(rail => rail.rig.hit), false)[0];
+    const sign = currentRoom === 0 ? ray.intersectObjects(sponsorSigns.faces, false)[0] : undefined;
+    if (sign && sign.distance < (book?.distance ?? Infinity) && sign.distance < (rung?.distance ?? Infinity)) {
+      const point = new T.Vector3();
+      if (!signOccluders.some(box => ray.ray.intersectBox(box, point) && ray.ray.origin.distanceTo(point) < sign.distance)) {
+        const spot: SponsorSpot = sign.object.userData.sponsorSpot;
+        return { label: sign.object.userData.sponsorName ?? "Sponsor this spot", activate: () => events.sponsor(spot.id) };
       }
+    }
+    if (rung && (!book || rung.distance < book.distance)) {
+      const target = inRoom.find(rail => rail.rig.hit === rung.object)!;
+      return { label: "Use ladder", activate: () => mountLadder(target) };
     }
     if (!book) return;
     const volume = book.object.userData.book as Book;
@@ -999,6 +1025,23 @@ export function createRoom(
   canvas.addEventListener("webglcontextlost", lost, opts);
   resize();
   return {
+    previewSponsor: sponsorSigns.preview,
+    viewSponsor(spot: SponsorSpot) {
+      stop();
+      stepOff();
+      flight = null;
+      currentRoom = 0;
+      events.enterRoom(0);
+      const distance = 5.4;
+      const frontView = Math.min(hall.maxZ - 1.3, spot.z + distance);
+      const rearView = Math.max(hall.minZ + 1.8, spot.z - distance);
+      const z = spot.kind === "wall" ? T.MathUtils.clamp(spot.z, rear + 2, front - 2)
+        : frontView - spot.z >= spot.z - rearView ? frontView : rearView;
+      camera.position.set(spot.x + Math.sin(spot.yaw) * (spot.kind === "wall" ? distance : 0), eyeHeight, z);
+      yaw = Math.atan2(camera.position.x - spot.x, z - spot.z);
+      pitch = Math.atan2(spot.y - eyeHeight, Math.hypot(camera.position.x - spot.x, z - spot.z));
+      redraw();
+    },
     visit,
     visitRoom,
     toggleLadder,
@@ -1029,6 +1072,7 @@ export function createRoom(
       observer.disconnect();
       eventsController.abort();
       stop();
+      sponsorSigns.dispose();
       geometries.forEach((g) => g.dispose());
       materials.forEach((m) => m.dispose());
       textures.forEach((t) => t.dispose());
