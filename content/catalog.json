@@ -1375,7 +1375,7 @@
   "ranking": {
     "source": "https://skills.sh",
     "metric": "installs",
-    "fetchedAt": "2026-11-25T17:23:41.049Z"
+    "fetchedAt": "2026-11-26T17:03:04.966Z"
   },
   "allDownload": {
     "zip": "/downloads/skillpress-all.zip",
@@ -1389,7 +1389,7 @@
       "source": "pocock-skills",
       "topic": "software-development",
       "rank": 1,
-      "installs": 1310332,
+      "installs": 1314766,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1406,7 +1406,7 @@
       "source": "pocock-skills",
       "topic": "testing-review",
       "rank": 2,
-      "installs": 1284245,
+      "installs": 1288956,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1423,7 +1423,7 @@
       "source": "pocock-skills",
       "topic": "team-communication",
       "rank": 3,
-      "installs": 1178908,
+      "installs": 1183361,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1439,7 +1439,7 @@
       "sourcePath": "skills/frontend-design",
       "source": "anthropic",
       "rank": 4,
-      "installs": 1168136,
+      "installs": 1173016,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -1474,7 +1474,7 @@
       "source": "pocock-skills",
       "topic": "research-planning",
       "rank": 5,
-      "installs": 1120797,
+      "installs": 1125206,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1491,7 +1491,7 @@
       "source": "pocock-skills",
       "topic": "research-planning",
       "rank": 6,
-      "installs": 1028820,
+      "installs": 1034226,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1508,7 +1508,7 @@
       "source": "pocock-skills",
       "topic": "software-development",
       "rank": 7,
-      "installs": 998964,
+      "installs": 1003634,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1525,7 +1525,7 @@
       "source": "pocock-skills",
       "topic": "team-communication",
       "rank": 8,
-      "installs": 990972,
+      "installs": 994952,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1542,7 +1542,7 @@
       "source": "pocock-skills",
       "topic": "research-planning",
       "rank": 9,
-      "installs": 851171,
+      "installs": 855661,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1559,7 +1559,7 @@
       "source": "pocock-skills",
       "topic": "writing-documents",
       "rank": 10,
-      "installs": 615657,
+      "installs": 619542,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1576,7 +1576,7 @@
       "source": "pocock-skills",
       "topic": "writing-documents",
       "rank": 11,
-      "installs": 598753,
+      "installs": 603119,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1592,7 +1592,7 @@
       "sourcePath": "skills/supabase-postgres-best-practices",
       "source": "supabase",
       "rank": 12,
-      "installs": 498151,
+      "installs": 499324,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1609,7 +1609,7 @@
       "source": "prisma-skills",
       "topic": "databases",
       "rank": 13,
-      "installs": 449807,
+      "installs": 451419,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1625,7 +1625,7 @@
       "sourcePath": "skills/brainstorming",
       "source": "superpowers",
       "rank": 14,
-      "installs": 442802,
+      "installs": 444141,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -1662,7 +1662,7 @@
       "sourcePath": "skills/skill-creator",
       "source": "anthropic",
       "rank": 15,
-      "installs": 442569,
+      "installs": 443606,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -1697,7 +1697,7 @@
       "source": "prisma-skills",
       "topic": "databases",
       "rank": 16,
-      "installs": 433822,
+      "installs": 435386,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1713,7 +1713,7 @@
       "sourcePath": "skills/supabase",
       "source": "supabase",
       "rank": 17,
-      "installs": 375332,
+      "installs": 376175,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -1729,7 +1729,7 @@
       "sourcePath": "skills/systematic-debugging",
       "source": "superpowers",
       "rank": 18,
-      "installs": 348072,
+      "installs": 349546,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -1767,7 +1767,7 @@
       "source": "neon-skills",
       "topic": "databases",
       "rank": 19,
-      "installs": 320214,
+      "installs": 321044,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -1783,7 +1783,7 @@
       "sourcePath": "skills/writing-plans",
       "source": "superpowers",
       "rank": 20,
-      "installs": 316044,
+      "installs": 317252,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -1820,7 +1820,7 @@
       "sourcePath": "skills/using-superpowers",
       "source": "superpowers",
       "rank": 21,
-      "installs": 298307,
+      "installs": 299324,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -1857,7 +1857,7 @@
       "sourcePath": "skills/requesting-code-review",
       "source": "superpowers",
       "rank": 22,
-      "installs": 292722,
+      "installs": 293865,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -1894,7 +1894,7 @@
       "sourcePath": "skills/test-driven-development",
       "source": "superpowers",
       "rank": 23,
-      "installs": 292310,
+      "installs": 293521,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -1931,7 +1931,7 @@
       "sourcePath": "skills/verification-before-completion",
       "source": "superpowers",
       "rank": 24,
-      "installs": 290270,
+      "installs": 291590,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -1968,7 +1968,7 @@
       "sourcePath": "skills/executing-plans",
       "source": "superpowers",
       "rank": 25,
-      "installs": 273260,
+      "installs": 274352,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -2005,7 +2005,7 @@
       "sourcePath": "skills/copywriting",
       "source": "marketing",
       "rank": 26,
-      "installs": 267620,
+      "installs": 268863,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2080,7 +2080,7 @@
       "sourcePath": "skills/subagent-driven-development",
       "source": "superpowers",
       "rank": 27,
-      "installs": 267409,
+      "installs": 268467,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -2117,7 +2117,7 @@
       "sourcePath": "skills/seo-audit",
       "source": "marketing",
       "rank": 28,
-      "installs": 266465,
+      "installs": 267595,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2192,7 +2192,7 @@
       "sourcePath": "skills/pptx",
       "source": "anthropic",
       "rank": 29,
-      "installs": 263780,
+      "installs": 264610,
       "license": "Apache-2.0",
       "plugin": {
         "name": "document-skills",
@@ -2218,7 +2218,7 @@
       "sourcePath": "skills/receiving-code-review",
       "source": "superpowers",
       "rank": 30,
-      "installs": 250578,
+      "installs": 251644,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -2255,7 +2255,7 @@
       "sourcePath": "skills/dispatching-parallel-agents",
       "source": "superpowers",
       "rank": 31,
-      "installs": 246330,
+      "installs": 247363,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -2292,7 +2292,7 @@
       "sourcePath": "skills/writing-skills",
       "source": "superpowers",
       "rank": 32,
-      "installs": 245922,
+      "installs": 246936,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -2329,7 +2329,7 @@
       "sourcePath": "skills/using-git-worktrees",
       "source": "superpowers",
       "rank": 33,
-      "installs": 245259,
+      "installs": 246269,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -2366,7 +2366,7 @@
       "sourcePath": "skills/finishing-a-development-branch",
       "source": "superpowers",
       "rank": 34,
-      "installs": 242605,
+      "installs": 243618,
       "license": "MIT",
       "plugin": {
         "name": "superpowers",
@@ -2403,7 +2403,7 @@
       "sourcePath": "skills/pdf",
       "source": "anthropic",
       "rank": 35,
-      "installs": 237402,
+      "installs": 238142,
       "license": "Apache-2.0",
       "plugin": {
         "name": "document-skills",
@@ -2429,7 +2429,7 @@
       "sourcePath": "skills/playwright-cli",
       "source": "playwright",
       "rank": 36,
-      "installs": 227544,
+      "installs": 228867,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -2445,7 +2445,7 @@
       "sourcePath": "skills/docx",
       "source": "anthropic",
       "rank": 37,
-      "installs": 225978,
+      "installs": 226691,
       "license": "Apache-2.0",
       "plugin": {
         "name": "document-skills",
@@ -2471,7 +2471,7 @@
       "sourcePath": "skills/webapp-testing",
       "source": "anthropic",
       "rank": 38,
-      "installs": 214518,
+      "installs": 215428,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -2505,7 +2505,7 @@
       "sourcePath": "skills/xlsx",
       "source": "anthropic",
       "rank": 39,
-      "installs": 205982,
+      "installs": 206696,
       "license": "Apache-2.0",
       "plugin": {
         "name": "document-skills",
@@ -2532,7 +2532,7 @@
       "source": "firebase-skills",
       "topic": "cloud-infrastructure",
       "rank": 40,
-      "installs": 190894,
+      "installs": 191352,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -2548,7 +2548,7 @@
       "sourcePath": "skills/content-strategy",
       "source": "marketing",
       "rank": 41,
-      "installs": 187106,
+      "installs": 188001,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2623,7 +2623,7 @@
       "sourcePath": "skills/marketing-psychology",
       "source": "marketing",
       "rank": 42,
-      "installs": 186639,
+      "installs": 187494,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2699,7 +2699,7 @@
       "source": "firebase-skills",
       "topic": "cloud-infrastructure",
       "rank": 43,
-      "installs": 184968,
+      "installs": 185405,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -2716,7 +2716,7 @@
       "source": "firebase-skills",
       "topic": "cloud-infrastructure",
       "rank": 44,
-      "installs": 184253,
+      "installs": 184689,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -2735,7 +2735,7 @@
         "chatgpt"
       ],
       "rank": 45,
-      "installs": 174511,
+      "installs": 175463,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2810,7 +2810,7 @@
       "sourcePath": "skills/copy-editing",
       "source": "marketing",
       "rank": 46,
-      "installs": 170447,
+      "installs": 171264,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2885,7 +2885,7 @@
       "sourcePath": "skills/programmatic-seo",
       "source": "marketing",
       "rank": 47,
-      "installs": 169108,
+      "installs": 169833,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -2960,7 +2960,7 @@
       "sourcePath": "skills/cloudflare",
       "source": "cloudflare",
       "rank": 48,
-      "installs": 168167,
+      "installs": 169295,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -2976,7 +2976,7 @@
       "sourcePath": "skills/marketing-ideas",
       "source": "marketing",
       "rank": 49,
-      "installs": 165214,
+      "installs": 165918,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3051,7 +3051,7 @@
       "sourcePath": "skills/wrangler",
       "source": "cloudflare",
       "rank": 50,
-      "installs": 158430,
+      "installs": 159510,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -3067,7 +3067,7 @@
       "sourcePath": "skills/workers-best-practices",
       "source": "cloudflare",
       "rank": 51,
-      "installs": 155607,
+      "installs": 156689,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -3083,7 +3083,7 @@
       "sourcePath": "skills/ad-creative",
       "source": "marketing",
       "rank": 52,
-      "installs": 155406,
+      "installs": 156225,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3159,7 +3159,7 @@
       "source": "firebase-skills",
       "topic": "databases",
       "rank": 53,
-      "installs": 150452,
+      "installs": 150912,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -3175,7 +3175,7 @@
       "sourcePath": "skills/mcp-builder",
       "source": "anthropic",
       "rank": 54,
-      "installs": 147890,
+      "installs": 148423,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -3209,7 +3209,7 @@
       "sourcePath": "skills/cold-email",
       "source": "marketing",
       "rank": 55,
-      "installs": 146410,
+      "installs": 147132,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3285,7 +3285,7 @@
       "source": "firebase-skills",
       "topic": "testing-review",
       "rank": 56,
-      "installs": 146276,
+      "installs": 146709,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -3301,7 +3301,7 @@
       "sourcePath": "skills/site-architecture",
       "source": "marketing",
       "rank": 57,
-      "installs": 141559,
+      "installs": 142284,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3376,7 +3376,7 @@
       "sourcePath": "skills/canvas-design",
       "source": "anthropic",
       "rank": 58,
-      "installs": 140133,
+      "installs": 140842,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -3410,7 +3410,7 @@
       "sourcePath": "skills/web-perf",
       "source": "cloudflare",
       "rank": 59,
-      "installs": 137918,
+      "installs": 138945,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -3426,7 +3426,7 @@
       "sourcePath": "skills/durable-objects",
       "source": "cloudflare",
       "rank": 60,
-      "installs": 137727,
+      "installs": 138763,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -3442,7 +3442,7 @@
       "sourcePath": "skills/churn-prevention",
       "source": "marketing",
       "rank": 61,
-      "installs": 137695,
+      "installs": 138347,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3517,7 +3517,7 @@
       "sourcePath": "skills/sales-enablement",
       "source": "marketing",
       "rank": 62,
-      "installs": 136578,
+      "installs": 137269,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3593,7 +3593,7 @@
       "source": "firebase-skills",
       "topic": "cloud-infrastructure",
       "rank": 63,
-      "installs": 135776,
+      "installs": 136207,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -3609,7 +3609,7 @@
       "sourcePath": "skills/customer-research",
       "source": "marketing",
       "rank": 64,
-      "installs": 134414,
+      "installs": 135150,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3684,7 +3684,7 @@
       "sourcePath": "skills/agents-sdk",
       "source": "cloudflare",
       "rank": 65,
-      "installs": 133028,
+      "installs": 134047,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -3700,7 +3700,7 @@
       "sourcePath": "skills/lead-magnets",
       "source": "marketing",
       "rank": 66,
-      "installs": 130478,
+      "installs": 131158,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3775,7 +3775,7 @@
       "sourcePath": "skills/revops",
       "source": "marketing",
       "rank": 67,
-      "installs": 130028,
+      "installs": 130676,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -3850,7 +3850,7 @@
       "sourcePath": "skills/cloudflare-email-service",
       "source": "cloudflare",
       "rank": 68,
-      "installs": 128262,
+      "installs": 129222,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -3867,7 +3867,7 @@
       "source": "prisma-skills",
       "topic": "databases",
       "rank": 69,
-      "installs": 125475,
+      "installs": 127053,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -3883,7 +3883,7 @@
       "sourcePath": "skills/web-artifacts-builder",
       "source": "anthropic",
       "rank": 70,
-      "installs": 124050,
+      "installs": 124466,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -3917,7 +3917,7 @@
       "sourcePath": "skills/brand-guidelines",
       "source": "anthropic",
       "rank": 71,
-      "installs": 123872,
+      "installs": 124276,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -3951,7 +3951,7 @@
       "sourcePath": "skills/cloudflare-one",
       "source": "cloudflare",
       "rank": 72,
-      "installs": 119675,
+      "installs": 120635,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -3967,7 +3967,7 @@
       "sourcePath": "skills/turnstile-spin",
       "source": "cloudflare",
       "rank": 73,
-      "installs": 118942,
+      "installs": 119907,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -3983,7 +3983,7 @@
       "sourcePath": "skills/cloudflare-one-migrations",
       "source": "cloudflare",
       "rank": 74,
-      "installs": 115058,
+      "installs": 116011,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -3994,87 +3994,12 @@
       }
     },
     {
-      "id": "competitor-profiling",
-      "slug": "competitor-profiling",
-      "sourcePath": "skills/competitor-profiling",
-      "source": "marketing",
-      "rank": 75,
-      "installs": 113079,
-      "license": "MIT",
-      "plugin": {
-        "name": "marketing-skills",
-        "marketplace": "marketingskills",
-        "addMarketplace": "coreyhaines31/marketingskills",
-        "skills": [
-          "ab-testing",
-          "ad-creative",
-          "ads",
-          "ai-seo",
-          "analytics",
-          "aso",
-          "attribution",
-          "churn-prevention",
-          "co-marketing",
-          "cold-email",
-          "community-marketing",
-          "competitor-profiling",
-          "competitors",
-          "content-strategy",
-          "conversion-tracking",
-          "copy-editing",
-          "copywriting",
-          "cro",
-          "customer-research",
-          "directory-submissions",
-          "emails",
-          "events",
-          "free-tools",
-          "image",
-          "influencer-marketing",
-          "launch",
-          "lead-magnets",
-          "link-building",
-          "marketing-council",
-          "marketing-ideas",
-          "marketing-loops",
-          "marketing-plan",
-          "marketing-psychology",
-          "offers",
-          "onboarding",
-          "paywalls",
-          "popups",
-          "pricing",
-          "product-marketing",
-          "programmatic-seo",
-          "prospecting",
-          "public-relations",
-          "referrals",
-          "reverse-engineer-marketing",
-          "revops",
-          "sales-enablement",
-          "schema",
-          "seo-audit",
-          "signup",
-          "site-architecture",
-          "sms",
-          "social",
-          "video"
-        ]
-      },
-      "download": {
-        "zip": "/downloads/competitor-profiling.zip",
-        "skillMd": "/downloads/competitor-profiling/SKILL.md",
-        "bytes": 17780,
-        "files": 5
-      }
-    },
-    {
       "id": "cro",
       "slug": "cro",
       "sourcePath": "skills/cro",
       "source": "marketing",
-      "rank": 76,
-      "installs": 113032,
+      "rank": 75,
+      "installs": 113898,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -4144,12 +4069,87 @@
       }
     },
     {
+      "id": "competitor-profiling",
+      "slug": "competitor-profiling",
+      "sourcePath": "skills/competitor-profiling",
+      "source": "marketing",
+      "rank": 76,
+      "installs": 113774,
+      "license": "MIT",
+      "plugin": {
+        "name": "marketing-skills",
+        "marketplace": "marketingskills",
+        "addMarketplace": "coreyhaines31/marketingskills",
+        "skills": [
+          "ab-testing",
+          "ad-creative",
+          "ads",
+          "ai-seo",
+          "analytics",
+          "aso",
+          "attribution",
+          "churn-prevention",
+          "co-marketing",
+          "cold-email",
+          "community-marketing",
+          "competitor-profiling",
+          "competitors",
+          "content-strategy",
+          "conversion-tracking",
+          "copy-editing",
+          "copywriting",
+          "cro",
+          "customer-research",
+          "directory-submissions",
+          "emails",
+          "events",
+          "free-tools",
+          "image",
+          "influencer-marketing",
+          "launch",
+          "lead-magnets",
+          "link-building",
+          "marketing-council",
+          "marketing-ideas",
+          "marketing-loops",
+          "marketing-plan",
+          "marketing-psychology",
+          "offers",
+          "onboarding",
+          "paywalls",
+          "popups",
+          "pricing",
+          "product-marketing",
+          "programmatic-seo",
+          "prospecting",
+          "public-relations",
+          "referrals",
+          "reverse-engineer-marketing",
+          "revops",
+          "sales-enablement",
+          "schema",
+          "seo-audit",
+          "signup",
+          "site-architecture",
+          "sms",
+          "social",
+          "video"
+        ]
+      },
+      "download": {
+        "zip": "/downloads/competitor-profiling.zip",
+        "skillMd": "/downloads/competitor-profiling/SKILL.md",
+        "bytes": 17780,
+        "files": 5
+      }
+    },
+    {
       "id": "social",
       "slug": "social",
       "sourcePath": "skills/social",
       "source": "marketing",
       "rank": 77,
-      "installs": 107984,
+      "installs": 108868,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -4224,7 +4224,7 @@
       "sourcePath": "skills/theme-factory",
       "source": "anthropic",
       "rank": 78,
-      "installs": 107198,
+      "installs": 107694,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -4258,7 +4258,7 @@
       "sourcePath": "skills/community-marketing",
       "source": "marketing",
       "rank": 79,
-      "installs": 106565,
+      "installs": 107225,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -4333,7 +4333,7 @@
       "sourcePath": "skills/product-marketing",
       "source": "marketing",
       "rank": 80,
-      "installs": 104926,
+      "installs": 105729,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -4408,7 +4408,7 @@
       "sourcePath": "skills/image",
       "source": "marketing",
       "rank": 81,
-      "installs": 104860,
+      "installs": 105525,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -4478,31 +4478,12 @@
       }
     },
     {
-      "id": "stripe-best-practices",
-      "slug": "stripe-best-practices",
-      "sourcePath": "skills/stripe-best-practices",
-      "source": "stripe",
-      "platforms": [
-        "chatgpt"
-      ],
-      "rank": 82,
-      "installs": 104653,
-      "license": "MIT",
-      "plugin": null,
-      "download": {
-        "zip": "/downloads/stripe-best-practices.zip",
-        "skillMd": "/downloads/stripe-best-practices/SKILL.md",
-        "bytes": 29185,
-        "files": 8
-      }
-    },
-    {
       "id": "video",
       "slug": "video",
       "sourcePath": "skills/video",
       "source": "marketing",
-      "rank": 83,
-      "installs": 104500,
+      "rank": 82,
+      "installs": 105209,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -4572,12 +4553,31 @@
       }
     },
     {
+      "id": "stripe-best-practices",
+      "slug": "stripe-best-practices",
+      "sourcePath": "skills/stripe-best-practices",
+      "source": "stripe",
+      "platforms": [
+        "chatgpt"
+      ],
+      "rank": 83,
+      "installs": 104838,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/stripe-best-practices.zip",
+        "skillMd": "/downloads/stripe-best-practices/SKILL.md",
+        "bytes": 29185,
+        "files": 8
+      }
+    },
+    {
       "id": "analytics",
       "slug": "analytics",
       "sourcePath": "skills/analytics",
       "source": "marketing",
       "rank": 84,
-      "installs": 103109,
+      "installs": 103840,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -4652,7 +4652,7 @@
       "sourcePath": "skills/directory-submissions",
       "source": "marketing",
       "rank": 85,
-      "installs": 102284,
+      "installs": 102919,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -4722,28 +4722,12 @@
       }
     },
     {
-      "id": "typescript-advanced-types",
-      "slug": "typescript-advanced-types",
-      "sourcePath": "plugins/javascript-typescript/skills/typescript-advanced-types",
-      "source": "wshobson",
-      "rank": 86,
-      "installs": 102247,
-      "license": "MIT",
-      "plugin": null,
-      "download": {
-        "zip": "/downloads/typescript-advanced-types.zip",
-        "skillMd": "/downloads/typescript-advanced-types/SKILL.md",
-        "bytes": 7128,
-        "files": 3
-      }
-    },
-    {
       "id": "ads",
       "slug": "ads",
       "sourcePath": "skills/ads",
       "source": "marketing",
-      "rank": 87,
-      "installs": 101948,
+      "rank": 86,
+      "installs": 102690,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -4813,12 +4797,28 @@
       }
     },
     {
+      "id": "typescript-advanced-types",
+      "slug": "typescript-advanced-types",
+      "sourcePath": "plugins/javascript-typescript/skills/typescript-advanced-types",
+      "source": "wshobson",
+      "rank": 87,
+      "installs": 102476,
+      "license": "MIT",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/typescript-advanced-types.zip",
+        "skillMd": "/downloads/typescript-advanced-types/SKILL.md",
+        "bytes": 7128,
+        "files": 3
+      }
+    },
+    {
       "id": "algorithmic-art",
       "slug": "algorithmic-art",
       "sourcePath": "skills/algorithmic-art",
       "source": "anthropic",
       "rank": 88,
-      "installs": 99808,
+      "installs": 100199,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -4852,7 +4852,7 @@
       "sourcePath": "skills/pricing",
       "source": "marketing",
       "rank": 89,
-      "installs": 99243,
+      "installs": 100062,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -4927,7 +4927,7 @@
       "sourcePath": "plugins/obsidian/skills/obsidian-markdown",
       "source": "obsidian",
       "rank": 90,
-      "installs": 99209,
+      "installs": 99657,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -4943,7 +4943,7 @@
       "sourcePath": "skills/schema",
       "source": "marketing",
       "rank": 91,
-      "installs": 98058,
+      "installs": 98841,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -5018,7 +5018,7 @@
       "sourcePath": "skills/co-marketing",
       "source": "marketing",
       "rank": 92,
-      "installs": 96656,
+      "installs": 97299,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -5093,7 +5093,7 @@
       "sourcePath": "skills/launch",
       "source": "marketing",
       "rank": 93,
-      "installs": 96442,
+      "installs": 97141,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -5168,7 +5168,7 @@
       "sourcePath": "skills/emails",
       "source": "marketing",
       "rank": 94,
-      "installs": 96125,
+      "installs": 96820,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -5243,7 +5243,7 @@
       "sourcePath": "skills/competitors",
       "source": "marketing",
       "rank": 95,
-      "installs": 95883,
+      "installs": 96560,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -5318,7 +5318,7 @@
       "sourcePath": "skills/code-review-and-quality",
       "source": "addyosmani",
       "rank": 96,
-      "installs": 95334,
+      "installs": 95963,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -5334,7 +5334,7 @@
       "sourcePath": "skills/ab-testing",
       "source": "marketing",
       "rank": 97,
-      "installs": 94755,
+      "installs": 95444,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -5409,7 +5409,7 @@
       "sourcePath": "skills/sandbox-stable",
       "source": "cloudflare",
       "rank": 98,
-      "installs": 93902,
+      "installs": 94854,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -5425,7 +5425,7 @@
       "sourcePath": "skills/sandbox-next",
       "source": "cloudflare",
       "rank": 99,
-      "installs": 93049,
+      "installs": 93997,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -5441,7 +5441,7 @@
       "sourcePath": "skills/sandbox-migrate-to-next",
       "source": "cloudflare",
       "rank": 100,
-      "installs": 92939,
+      "installs": 93887,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -5457,7 +5457,7 @@
       "sourcePath": "skills/aso",
       "source": "marketing",
       "rank": 101,
-      "installs": 92429,
+      "installs": 93073,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -5532,7 +5532,7 @@
       "sourcePath": "skills/onboarding",
       "source": "marketing",
       "rank": 102,
-      "installs": 90680,
+      "installs": 91356,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -5607,7 +5607,7 @@
       "sourcePath": "skills/free-tools",
       "source": "marketing",
       "rank": 103,
-      "installs": 90385,
+      "installs": 91027,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -5682,7 +5682,7 @@
       "sourcePath": "skills/internal-comms",
       "source": "anthropic",
       "rank": 104,
-      "installs": 89832,
+      "installs": 90156,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -5716,7 +5716,7 @@
       "sourcePath": "skills/referrals",
       "source": "marketing",
       "rank": 105,
-      "installs": 88971,
+      "installs": 89635,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -5791,7 +5791,7 @@
       "sourcePath": "skills/signup",
       "source": "marketing",
       "rank": 106,
-      "installs": 88328,
+      "installs": 88986,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -5866,7 +5866,7 @@
       "sourcePath": "skills/paywalls",
       "source": "marketing",
       "rank": 107,
-      "installs": 87265,
+      "installs": 87922,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -5936,28 +5936,12 @@
       }
     },
     {
-      "id": "gws-gmail",
-      "slug": "gws-gmail",
-      "sourcePath": "skills/gws-gmail",
-      "source": "googleworkspace",
-      "rank": 108,
-      "installs": 87016,
-      "license": "Apache-2.0",
-      "plugin": null,
-      "download": {
-        "zip": "/downloads/gws-gmail.zip",
-        "skillMd": "/downloads/gws-gmail/SKILL.md",
-        "bytes": 5182,
-        "files": 2
-      }
-    },
-    {
       "id": "popups",
       "slug": "popups",
       "sourcePath": "skills/popups",
       "source": "marketing",
-      "rank": 109,
-      "installs": 86915,
+      "rank": 108,
+      "installs": 87564,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -6027,12 +6011,28 @@
       }
     },
     {
+      "id": "gws-gmail",
+      "slug": "gws-gmail",
+      "sourcePath": "skills/gws-gmail",
+      "source": "googleworkspace",
+      "rank": 109,
+      "installs": 87187,
+      "license": "Apache-2.0",
+      "plugin": null,
+      "download": {
+        "zip": "/downloads/gws-gmail.zip",
+        "skillMd": "/downloads/gws-gmail/SKILL.md",
+        "bytes": 5182,
+        "files": 2
+      }
+    },
+    {
       "id": "marketing-plan",
       "slug": "marketing-plan",
       "sourcePath": "skills/marketing-plan",
       "source": "marketing",
       "rank": 110,
-      "installs": 86201,
+      "installs": 86915,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -6107,7 +6107,7 @@
       "sourcePath": "plugins/obsidian/skills/obsidian-bases",
       "source": "obsidian",
       "rank": 111,
-      "installs": 84984,
+      "installs": 85375,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -6123,7 +6123,7 @@
       "sourcePath": "skills/spec-driven-development",
       "source": "addyosmani",
       "rank": 112,
-      "installs": 84627,
+      "installs": 85155,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -6139,7 +6139,7 @@
       "sourcePath": "skills/slack-gif-creator",
       "source": "anthropic",
       "rank": 113,
-      "installs": 84187,
+      "installs": 84489,
       "license": "Apache-2.0",
       "plugin": {
         "name": "example-skills",
@@ -6173,7 +6173,7 @@
       "sourcePath": "skills/claude-api",
       "source": "anthropic",
       "rank": 114,
-      "installs": 84064,
+      "installs": 84422,
       "license": "Apache-2.0",
       "plugin": {
         "name": "claude-api",
@@ -6196,7 +6196,7 @@
       "sourcePath": "skills/documentation-and-adrs",
       "source": "addyosmani",
       "rank": 115,
-      "installs": 83313,
+      "installs": 83840,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -6212,7 +6212,7 @@
       "sourcePath": "skills/planning-and-task-breakdown",
       "source": "addyosmani",
       "rank": 116,
-      "installs": 83285,
+      "installs": 83809,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -6228,7 +6228,7 @@
       "sourcePath": "skills/prospecting",
       "source": "marketing",
       "rank": 117,
-      "installs": 83046,
+      "installs": 83737,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -6303,7 +6303,7 @@
       "sourcePath": "skills/api-and-interface-design",
       "source": "addyosmani",
       "rank": 118,
-      "installs": 82504,
+      "installs": 83064,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -6319,7 +6319,7 @@
       "sourcePath": "skills/code-simplification",
       "source": "addyosmani",
       "rank": 119,
-      "installs": 82496,
+      "installs": 83038,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -6335,7 +6335,7 @@
       "sourcePath": "skills/test-driven-development",
       "source": "addyosmani",
       "rank": 120,
-      "installs": 80921,
+      "installs": 81427,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -6351,7 +6351,7 @@
       "sourcePath": "skills/sms",
       "source": "marketing",
       "rank": 121,
-      "installs": 80526,
+      "installs": 81157,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -6426,7 +6426,7 @@
       "sourcePath": "skills/incremental-implementation",
       "source": "addyosmani",
       "rank": 122,
-      "installs": 80507,
+      "installs": 81011,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -6442,7 +6442,7 @@
       "sourcePath": "plugins/obsidian/skills/json-canvas",
       "source": "obsidian",
       "rank": 123,
-      "installs": 79380,
+      "installs": 79759,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -6458,7 +6458,7 @@
       "sourcePath": "skills/gws-drive",
       "source": "googleworkspace",
       "rank": 124,
-      "installs": 78939,
+      "installs": 79090,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -6474,7 +6474,7 @@
       "sourcePath": "plugins/expo/skills/expo-dev-client",
       "source": "expo",
       "rank": 125,
-      "installs": 78778,
+      "installs": 79007,
       "license": "MIT",
       "plugin": null,
       "download": {
@@ -6490,7 +6490,7 @@
       "sourcePath": "skills/gws-gmail-send",
       "source": "googleworkspace",
       "rank": 126,
-      "installs": 77632,
+      "installs": 77750,
       "license": "Apache-2.0",
       "plugin": null,
       "download": {
@@ -6506,7 +6506,7 @@
       "sourcePath": "skills/offers",
       "source": "marketing",
       "rank": 127,
-      "installs": 76792,
+      "installs": 77540,
       "license": "MIT",
       "plugin": {
         "name": "marketing-skills",
@@ -6581,7 +6581,7 @@
       "sourcePath": "skills/source-driven-development",
       "source": "addyosmani",
       "rank": 128,
-      "installs": 76740,
+      "installs": 77232,
       "license": "MIT",
       "plugin": null,
       "download": {
