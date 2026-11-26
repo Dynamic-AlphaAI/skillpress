@@ -9,8 +9,10 @@ import { eyeHeight, groundRows, hallHeight, ladderFor, ladderSlope, railLimit, r
 import { buildLadder } from "./libraryLadder";
 import type { SponsorSpot } from "@/lib/sponsors";
 import { createSponsorSigns } from "./sponsorSigns";
+import { artworkQueue, nearbyBooks } from "@/lib/roomResources";
 
 type SceneEvents = {
+  artwork: (ids: string[]) => void;
   ladder: (shelf: number | null) => void;
   ladderAvailable: (available: boolean) => void;
   enterRoom: (index: number) => void;
@@ -51,8 +53,9 @@ function woodGrain() {
 }
 
 /** A single material per spine preserves its catalogue typography and publisher colours. */
-function spineTexture(book: Book) {
-  return paintTexture(128, 512, (ctx) => {
+function spineTexture(book: Book, compact: boolean) {
+  return paintTexture(compact ? 64 : 128, compact ? 256 : 512, (ctx) => {
+    if (compact) ctx.scale(0.5, 0.5);
     const d = book.design;
     ctx.fillStyle = d.bg;
     ctx.fillRect(0, 0, 128, 512);
@@ -91,11 +94,11 @@ function spineTexture(book: Book) {
 
 // Browsers disallow external subresources when an SVG is rasterized as an image.
 // Embed just the local illustration used by this face before sending it to WebGL.
-async function jacketImageUrl(svg: SVGElement, plate?: string) {
+async function jacketImageUrl(svg: SVGElement, signal: AbortSignal, plate?: string) {
   const image = svg.querySelector("image");
   if (image && plate) {
     try {
-      const response = await fetch(plate);
+      const response = await fetch(plate, { signal });
       if (!response.ok) throw new Error("Illustration unavailable");
       const blob = await response.blob();
       const data = await new Promise<string>((resolve, reject) => {
@@ -109,13 +112,15 @@ async function jacketImageUrl(svg: SVGElement, plate?: string) {
       image.remove(); // The printed vector artwork underneath still fills the panel.
     }
   }
+  signal.throwIfAborted();
   return URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(svg)], { type: "image/svg+xml" }));
 }
 
-function jacketTexture(book: Book, art: SVGSVGElement, ready: () => void) {
+function jacketTexture(book: Book, art: SVGSVGElement, ready: () => void, compact: boolean, queue: ReturnType<typeof artworkQueue>) {
   const d = book.design;
-  const texture = paintTexture(256, 384, (ctx) => {
-    ctx.scale(2 / 3, 2 / 3);
+  const width = compact ? 128 : 256;
+  const texture = paintTexture(width, width * 1.5, (ctx) => {
+    ctx.scale(width / 384, width / 384);
     ctx.fillStyle = d.bg;
     ctx.fillRect(0, 0, 384, 576);
   });
@@ -125,9 +130,24 @@ function jacketTexture(book: Book, art: SVGSVGElement, ready: () => void) {
   copy.setAttribute("width", "384");
   copy.setAttribute("height", "576");
   const img = new Image();
+  const controller = new AbortController();
+  let url: string | undefined;
+  let finish: (() => void) | undefined;
+  function releaseImage() {
+    if (url) URL.revokeObjectURL(url);
+    url = undefined;
+    img.onload = img.onerror = null;
+    img.removeAttribute("src");
+    finish?.();
+  }
+  texture.addEventListener("dispose", () => {
+    controller.abort();
+    releaseImage();
+    canvas.width = canvas.height = 1;
+  });
   img.onload = () => {
+    if (controller.signal.aborted) return;
     ctx.drawImage(img, 0, 0, 384, 576);
-    URL.revokeObjectURL(img.src);
     if (!d.jacket) {
       const top = d.titleAt === "top" ? 44 : 393;
       if (d.motif === "marble") {
@@ -163,9 +183,17 @@ function jacketTexture(book: Book, art: SVGSVGElement, ready: () => void) {
     ctx.fillRect(0, 0, 23, 576);
     texture.needsUpdate = true;
     ready();
+    releaseImage();
   };
-  img.onerror = () => URL.revokeObjectURL(img.src);
-  void jacketImageUrl(copy, d.jacket?.plate).then((url) => { img.src = url; });
+  img.onerror = releaseImage;
+  queue.add(() => new Promise<void>((resolve) => {
+    finish = resolve;
+    void jacketImageUrl(copy, controller.signal, d.jacket?.plate).then((value) => {
+      url = value;
+      if (controller.signal.aborted) releaseImage();
+      else img.src = value;
+    }).catch(releaseImage);
+  }), controller.signal);
   return texture;
 }
 
@@ -177,8 +205,9 @@ export function createRoom(
   spots: SponsorSpot[],
   events: SceneEvents,
 ) {
-  const renderer = new T.WebGLRenderer({ canvas, antialias: true, powerPreference: "low-power" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.65));
+  const compact = window.matchMedia("(pointer: coarse)").matches || window.innerWidth <= 680;
+  const renderer = new T.WebGLRenderer({ canvas, antialias: !compact, powerPreference: "low-power" });
+  const imageQueue = artworkQueue(compact ? 3 : 6);
   renderer.outputColorSpace = T.SRGBColorSpace;
   const scene = new T.Scene();
   scene.background = new T.Color("#78654d");
@@ -208,6 +237,7 @@ export function createRoom(
   const boxMatrix = new T.Matrix4();
   let dead = false;
   let paused = false;
+  let hidden = document.hidden;
   let frame = 0;
   let last = 0;
   let flight: Flight | null = {
@@ -558,12 +588,11 @@ export function createRoom(
   const shelfPositions: (Position & { height: number; ladder?: { rail: Rail; offset: number } })[][] = rooms.map(() => []);
   const paper = surface("#e4d6b8");
   const boards = new Map<string, T.Material>();
-  const covers = new Map<string, SVGSVGElement>();
-  for (const wrapper of jackets.children) {
-    const id = wrapper.getAttribute("data-jacket");
-    const svg = wrapper.querySelector("svg");
-    if (id && svg) covers.set(id, svg);
-  }
+  const bookFaces: { book: Book; faceOut: boolean; mesh: T.Mesh; base: T.Material; position: T.Vector3 }[] = [];
+  type BookFace = typeof bookFaces[number];
+  const resident = new Map<BookFace, T.MeshStandardMaterial>();
+  let nearby: BookFace[] = [];
+  const lastArtworkPosition = new T.Vector3(Infinity, Infinity, Infinity);
   const hitMaterial = register(new T.MeshBasicMaterial());
   for (const bay of bays) {
     const { roomIndex, stack, x, z, yaw: angle } = bay;
@@ -632,22 +661,17 @@ export function createRoom(
         } else {
           timber(x, y, center, w - 0.014, h - 0.012, d - 0.016, paper);
           for (const sign of [-1, 1]) timber(x + sign * (w / 2 - 0.004), y, center, 0.008, h, d, board);
+          timber(x, y, front - 0.006, w, h, 0.012, board);
         }
-        const artwork = covers.get(book.id);
-        const map =
-          faceOut && artwork
-            ? jacketTexture(book, artwork, () => {
-                if (!dead) redraw();
-              })
-            : spineTexture(book);
-        textures.add(map);
-        map.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
         const geo = new T.PlaneGeometry(w, h);
         geometries.add(geo);
-        const binding = new T.Mesh(geo, surface("#fff5e3", map));
+        const binding = new T.Mesh(geo, board);
+        binding.name = `book/${book.id}`;
+        binding.visible = false;
         binding.position.set(x, y, front + 0.002);
         binding.applyMatrix4(base);
         scene.add(binding);
+        bookFaces.push({ book, faceOut, mesh: binding, base: board, position: binding.position });
         // The sides, page block and cover all open the same edition.
         const hitBox = new T.Mesh(unit, hitMaterial);
         hitBox.position.set(x, y, center);
@@ -669,6 +693,47 @@ export function createRoom(
     parts.forEach((g) => g.dispose());
   }
   buckets.clear();
+
+  function releaseBook(face: BookFace, material: T.MeshStandardMaterial) {
+    face.mesh.visible = false;
+    face.mesh.material = face.base;
+    material.map?.dispose();
+    const image = material.map?.image;
+    if (image instanceof HTMLCanvasElement) image.width = image.height = 1;
+    material.dispose();
+    resident.delete(face);
+  }
+  function refreshArtwork() {
+    if (dead) return;
+    const covers = new Map<string, SVGSVGElement>();
+    for (const wrapper of jackets.children) {
+      const svg = wrapper.querySelector("svg");
+      if (svg) covers.set(wrapper.getAttribute("data-jacket")!, svg);
+    }
+    for (const face of nearby) {
+      if (resident.has(face)) continue;
+      const artwork = covers.get(face.book.id);
+      if (face.faceOut && !artwork) continue;
+      const map = face.faceOut
+        ? jacketTexture(face.book, artwork!, redraw, compact, imageQueue)
+        : spineTexture(face.book, compact);
+      map.anisotropy = compact ? 1 : Math.min(4, renderer.capabilities.getMaxAnisotropy());
+      const material = new T.MeshStandardMaterial({ color: "#fff5e3", map, roughness: 0.8 });
+      face.mesh.material = material;
+      face.mesh.visible = true;
+      resident.set(face, material);
+    }
+    redraw();
+  }
+  function updateArtwork() {
+    if (lastArtworkPosition.distanceToSquared(camera.position) < 0.6 ** 2) return;
+    lastArtworkPosition.copy(camera.position);
+    nearby = nearbyBooks(bookFaces, camera.position, compact ? 64 : 160, compact ? 16 : 24);
+    const wanted = new Set(nearby);
+    for (const [face, material] of resident) if (!wanted.has(face)) releaseBook(face, material);
+    events.artwork(nearby.filter(face => face.faceOut).map(face => face.book.id));
+    refreshArtwork();
+  }
 
   const ray = new T.Raycaster();
   const pointer = new T.Vector2();
@@ -761,7 +826,7 @@ export function createRoom(
     const r = canvas.getBoundingClientRect();
     pointer.set(((e.clientX - r.left) / r.width) * 2 - 1, (-(e.clientY - r.top) / r.height) * 2 + 1);
     ray.setFromCamera(pointer, camera);
-    const book = ray.intersectObjects(pickable, false).find(({ object }) => object.userData.room === currentRoom);
+    const book = ray.intersectObjects(pickable.filter(object => object.userData.room === currentRoom), false)[0];
     const inRoom = railsByRoom[currentRoom];
     const rung = mounted ? undefined : ray.intersectObjects(inRoom.map(rail => rail.rig.hit), false)[0];
     const sign = currentRoom === 0 ? ray.intersectObjects(sponsorSigns.faces, false)[0] : undefined;
@@ -787,7 +852,7 @@ export function createRoom(
     return { label: `${volume.design.title} · ${volume.source.author} · Open book`, activate: () => events.open(volume.id) };
   }
   function redraw() {
-    if (!frame && !dead && !paused) {
+    if (!frame && !dead && !paused && !hidden) {
       last = performance.now();
       frame = requestAnimationFrame(render);
     }
@@ -829,7 +894,7 @@ export function createRoom(
   }
   function render(now: number) {
     frame = 0;
-    if (dead || paused) return;
+    if (dead || paused || hidden) return;
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
     if (descending) {
@@ -853,13 +918,20 @@ export function createRoom(
       moveCamera(dt, T.MathUtils.clamp(f + stickForward, -1, 1), strafe, T.MathUtils.clamp(turn + stickTurn, -1, 1), scrollStep);
     }
     camera.rotation.set(pitch, yaw, 0, "YXZ");
+    updateArtwork();
     const available = canUseLadder();
     if (available !== ladderAvailable) {
       ladderAvailable = available;
       events.ladderAvailable(available);
     }
-    renderer.render(scene, camera);
-    if (flight || descending || keys.size || scrollRemaining || stickTurn || stickForward) frame = requestAnimationFrame(render);
+    try {
+      renderer.render(scene, camera);
+    } catch {
+      dispose();
+      events.lost();
+      return;
+    }
+    if (!frame && (flight || descending || keys.size || scrollRemaining || stickTurn || stickForward)) frame = requestAnimationFrame(render);
   }
   function stop() {
     keys.clear();
@@ -920,7 +992,13 @@ export function createRoom(
   function resize() {
     const { width, height } = canvas.getBoundingClientRect();
     if (!width || !height) return;
-    renderer.setSize(width, height, false);
+    if (dead) return;
+    const ratio = Math.min(window.devicePixelRatio || 1, compact ? 1.25 : 1.65, Math.sqrt((compact ? 1_000_000 : 3_000_000) / (width * height)));
+    const w = Math.floor(width * ratio), h = Math.floor(height * ratio);
+    if (canvas.width !== w || canvas.height !== h) {
+      renderer.setPixelRatio(ratio);
+      renderer.setSize(width, height, false);
+    }
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     redraw();
@@ -966,7 +1044,7 @@ export function createRoom(
     redraw();
   }
   function press(e: PointerEvent) {
-    if (e.button !== 0 || paused) return;
+    if (e.button !== 0 || paused || pointerStart) return;
     canvas.focus({ preventScroll: true });
     canvas.setPointerCapture(e.pointerId);
     pointerStart = { id: e.pointerId, x: e.clientX, y: e.clientY, yaw, pitch, drag: false };
@@ -1002,11 +1080,23 @@ export function createRoom(
   function leave() {
     events.hover("");
   }
+  function cancelLook(e: PointerEvent) {
+    if (pointerStart?.id !== e.pointerId) return;
+    pointerStart = null;
+    canvas.style.cursor = "grab";
+  }
   function lost(e: Event) {
     e.preventDefault();
-    stop();
-    paused = true;
+    dispose();
     events.lost();
+  }
+  function visibility() {
+    hidden = document.hidden;
+    if (hidden) {
+      stop();
+      cancelAnimationFrame(frame);
+      frame = 0;
+    } else redraw();
   }
   const observer = new ResizeObserver(resize);
   observer.observe(canvas);
@@ -1015,16 +1105,44 @@ export function createRoom(
   canvas.addEventListener("pointerdown", press, opts);
   canvas.addEventListener("pointermove", point, opts);
   canvas.addEventListener("pointerup", release, opts);
-  canvas.addEventListener("pointercancel", stop, opts);
+  canvas.addEventListener("pointercancel", cancelLook, opts);
+  canvas.addEventListener("lostpointercapture", cancelLook, opts);
   canvas.addEventListener("pointerleave", leave, opts);
   canvas.addEventListener("keydown", keyDown, opts);
   canvas.addEventListener("wheel", wheel, { ...opts, passive: false });
   window.addEventListener("keyup", keyUp, opts);
   canvas.addEventListener("blur", stop, opts);
   window.addEventListener("blur", stop, opts);
+  document.addEventListener("visibilitychange", visibility, opts);
   canvas.addEventListener("webglcontextlost", lost, opts);
   resize();
+  function dispose() {
+    if (dead) return;
+    dead = true;
+    cancelAnimationFrame(frame);
+    frame = 0;
+    observer.disconnect();
+    eventsController.abort();
+    stop();
+    imageQueue.dispose();
+    for (const [face, material] of resident) releaseBook(face, material);
+    sponsorSigns.dispose();
+    geometries.forEach((g) => g.dispose());
+    materials.forEach((m) => m.dispose());
+    textures.forEach((t) => t.dispose());
+    geometries.clear();
+    materials.clear();
+    textures.clear();
+    bookFaces.length = 0;
+    pickable.length = 0;
+    nearby = [];
+    scene.clear();
+    renderer.dispose();
+    // Strict Mode may immediately reuse a mounted canvas. Release detached devices only.
+    queueMicrotask(() => { if (!canvas.isConnected) renderer.forceContextLoss(); });
+  }
   return {
+    refreshArtwork,
     previewSponsor: sponsorSigns.preview,
     viewSponsor(spot: SponsorSpot) {
       stop();
@@ -1062,25 +1180,11 @@ export function createRoom(
       redraw();
     },
     pause(value: boolean) {
+      if (dead) return;
       paused = value;
       stop();
       if (!value) redraw();
     },
-    dispose() {
-      dead = true;
-      cancelAnimationFrame(frame);
-      observer.disconnect();
-      eventsController.abort();
-      stop();
-      sponsorSigns.dispose();
-      geometries.forEach((g) => g.dispose());
-      materials.forEach((m) => m.dispose());
-      textures.forEach((t) => t.dispose());
-      renderer.dispose();
-      // Strict Mode may immediately reuse a mounted canvas. Release detached devices only.
-      queueMicrotask(() => {
-        if (!canvas.isConnected) renderer.forceContextLoss();
-      });
-    },
+    dispose,
   };
 }

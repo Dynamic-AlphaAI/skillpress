@@ -40,6 +40,7 @@ export default function WalkingRoom({
   const [onLadder, setOnLadder] = useState(false);
   const [ladderAvailable, setLadderAvailable] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
+  const [artworkIds, setArtworkIds] = useState<string[]>([]);
   const rooms = useMemo(() => planRooms(books), [books]);
   const spots = useMemo(() => rooms.length ? planSponsorSpots(rooms[0]) : [], [rooms]);
   const [spotId, setSpotId] = useState<string | null>(null);
@@ -64,13 +65,14 @@ export default function WalkingRoom({
       else rendered.current.delete(spot.id);
     }
   });
-  const jacketArt = useMemo(() => rooms.flatMap(section => section.shelves.flatMap(shelf =>
-    shelf.books.slice(0, shelf.faceOutCount).map(book => (
+  const jacketArt = useMemo(() => {
+    const wanted = new Set(artworkIds);
+    return books.filter(book => wanted.has(book.id)).map(book => (
       <span key={book.id} data-jacket={book.id}>
         {book.design.jacket ? <EditionJacket book={book} /> : <CoverArt slug={book.id} design={book.design} />}
       </span>
-    )),
-  )), [rooms]);
+    ));
+  }, [books, artworkIds]);
   const room = rooms[roomIndex] ?? rooms[0];
   const hasLadder = !unavailable && ladderAvailable;
   const shelf = room?.shelves[destination];
@@ -113,9 +115,10 @@ export default function WalkingRoom({
   }, [windowElement, modal, paused]);
   const focusOnEntry = useRef(true);
   useEffect(() => {
-    if (!canvas.current || !rooms.length) return;
+    if (unavailable || !canvas.current || !rooms.length) return;
     try {
       const world = createRoom(canvas.current, rooms, jackets.current!, spots, {
+        artwork: setArtworkIds,
         enterRoom,
         sponsor: setSpotId,
         ladderAvailable: setLadderAvailable,
@@ -128,6 +131,8 @@ export default function WalkingRoom({
         open: openBook,
         hover: setPointed,
         lost: () => {
+          scene.current = null;
+          setArtworkIds([]);
           setUnavailable(true);
           setOnLadder(false);
         },
@@ -148,7 +153,10 @@ export default function WalkingRoom({
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setUnavailable(true);
     }
-  }, [rooms, spots, enterRoom]);
+  }, [rooms, spots, enterRoom, unavailable]);
+  useEffect(() => {
+    scene.current?.refreshArtwork();
+  }, [jacketArt]);
   useEffect(() => {
     if (scene.current) syncSigns(scene.current);
   }, [overrides]);

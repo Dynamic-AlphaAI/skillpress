@@ -46,7 +46,9 @@ export const RoomPicker = memo(function RoomPicker({
               pointerSelection.current = false;
             }}
           >
-            <Select.ScrollUpButton className={s.scrollUp}><LibraryIcon name="down" size={16} /></Select.ScrollUpButton>
+            <div className={s.scrollSlot}>
+              <Select.ScrollUpButton className={s.scrollUp}><LibraryIcon name="down" size={16} /></Select.ScrollUpButton>
+            </div>
             <Select.Viewport className={s.choices}>
               {options.map((option) => (
                 <Select.Item
@@ -62,7 +64,9 @@ export const RoomPicker = memo(function RoomPicker({
                 </Select.Item>
               ))}
             </Select.Viewport>
-            <Select.ScrollDownButton className={s.scrollDown}><LibraryIcon name="down" size={16} /></Select.ScrollDownButton>
+            <div className={s.scrollSlot}>
+              <Select.ScrollDownButton className={s.scrollDown}><LibraryIcon name="down" size={16} /></Select.ScrollDownButton>
+            </div>
           </Select.Content>
         </Select.Portal>
       </Select.Root>

@@ -192,6 +192,9 @@
   border-radius: 3px;
   cursor: pointer;
 }
+.trigger, .read, .choice, .exit, .resize, .ladderAction {
+  touch-action: manipulation;
+}
 .trigger {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 40px;
@@ -296,6 +299,8 @@
   color: #686044;
   background: #eee8d8;
 }
+/* Keep options still when scroll arrows appear between a touch and its click. */
+.scrollSlot { height: 23px; flex-shrink: 0; background: #eee8d8; }
 .fallback {
   position: absolute;
   inset: 0;
@@ -337,7 +342,9 @@
     display: none;
   }
   .movement { right: 10px; bottom: 4px; }
-  .stick { width: 72px; height: 72px; }
+  .stick { width: 88px; height: 88px; }
+  .exit, .resize { min-height: 44px; }
+  .resize { min-width: 44px; }
   .top {
     left: 10px;
     right: 10px;

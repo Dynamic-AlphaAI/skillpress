@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "node --test scripts/*.test.mjs",
     "import": "node scripts/import-skills.mjs",
-    "test:browser": "node scripts/check-browsing.mjs"
+    "test:browser": "node scripts/check-browsing.mjs",
+    "test:mobile": "node scripts/check-mobile-room.mjs"
   },
   "dependencies": {
     "@radix-ui/react-select": "2.4.1",
